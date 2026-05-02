@@ -1,0 +1,587 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap");
+
+/* ─── Bicofino Design System — Palette ─── */
+:root {
+  --bf-bg:          #f2f8ff;
+  --bf-black:       #2a2c2b;
+  --bf-power-black: #061015;
+  --bf-white:       #ffffff;
+  --bf-steel:       #6d7886;
+  --bf-aluminium:   #e2eaf2;
+  --bf-platinum:    #a8c9e5;
+  --bf-crema:       #f3ebd4;
+  --bf-caffe:       #33111a;
+  --bf-champagne:   #d8d7d3;
+  --bf-cacao:       #5e4c41;
+  --bf-spfc:        #f0535e;
+  --bf-sep:         #2fd298;
+  --bf-torino:      #821324;
+  --bf-como:        #0d8aff;
+  --bf-venezia:     #38e0e3;
+  --bf-fiorentina:  #711cfe;
+  --current-accent: var(--bf-torino);
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+  --sp-9: 6rem;
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 360ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bf-bg);
+  color: var(--bf-black);
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6, .text-balance {
+  text-wrap: balance;
+}
+
+p, .text-pretty {
+  text-wrap: pretty;
+}
+
+::selection {
+  background: #2a2c2b;
+  color: #f2f8ff;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 1.5px solid rgba(42, 44, 43, 0.6);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ─── Scrollbar — minimal ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(42, 44, 43, 0.15); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(42, 44, 43, 0.3); }
+
+/* ─── Sidebar scrollbar — on dark ─── */
+.bf-sidebar::-webkit-scrollbar-thumb { background: rgba(242, 248, 255, 0.1); }
+.bf-sidebar::-webkit-scrollbar-thumb:hover { background: rgba(242, 248, 255, 0.2); }
+
+/* ─── Scroll helpers ─── */
+#main-content { scroll-behavior: smooth; }
+section { scroll-margin-top: 48px; }
+
+/* ─── Motion keyframes ─── */
+@keyframes bf-reveal-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes bf-text-reveal-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bf-focus-reveal-in {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bf-metric-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
+/* ─── Motion demo bars — all travel 0→100%, speed is the only variable ─── */
+@keyframes bf-motion-bar-fast {
+  from { width: 0;    }
+  to   { width: 100%; }
+}
+
+@keyframes bf-motion-bar-base {
+  from { width: 0;    }
+  to   { width: 100%; }
+}
+
+@keyframes bf-motion-bar-slow {
+  from { width: 0;    }
+  to   { width: 100%; }
+}
+
+.bf-motion-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  border-radius: 3px;
+  background: var(--current-accent);
+  animation-timing-function: ease-in-out;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
+.bf-motion-bar--fast { animation-name: bf-motion-bar-fast; animation-duration: 960ms;  }
+.bf-motion-bar--base { animation-name: bf-motion-bar-base; animation-duration: 1600ms; }
+.bf-motion-bar--slow { animation-name: bf-motion-bar-slow; animation-duration: 2880ms; }
+
+/* ─── Progress bar ─── */
+.bf-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--current-accent);
+  z-index: 9999;
+  pointer-events: none;
+  transition: width 80ms linear;
+  will-change: width;
+}
+
+/* ─── Load reveal — hero stagger, fires on mount via CSS ─── */
+.bf-load-stagger .bf-stagger-item {
+  animation: bf-reveal-up 380ms cubic-bezier(0.2, 0, 0, 1) backwards;
+}
+
+/* ─── Scroll reveal — waiting / triggered ─── */
+.bf-reveal {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.bf-reveal.is-visible {
+  animation: bf-reveal-up 380ms cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+/* ─── Text reveal — headings and key typographic blocks ─── */
+.bf-text-reveal {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.bf-text-reveal.is-visible {
+  animation: bf-text-reveal-in 440ms cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+/* ─── Focus reveal — editorial blocks ─── */
+.bf-focus-reveal {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+.bf-focus-reveal.is-visible {
+  animation: none;
+}
+
+/* ─── Metric stagger — controlled data/content rhythm ─── */
+.bf-metric-stagger .bf-metric-item {
+  opacity: 0;
+  transform: translateY(12px) scale(0.98);
+  will-change: transform, opacity;
+}
+.bf-metric-stagger.is-visible .bf-metric-item {
+  animation: bf-metric-in 360ms cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+.bf-metric-stagger.is-visible .bf-metric-item:nth-child(1)  { animation-delay: 0ms;   }
+.bf-metric-stagger.is-visible .bf-metric-item:nth-child(2)  { animation-delay: 70ms;  }
+.bf-metric-stagger.is-visible .bf-metric-item:nth-child(3)  { animation-delay: 140ms; }
+.bf-metric-stagger.is-visible .bf-metric-item:nth-child(4)  { animation-delay: 210ms; }
+.bf-metric-stagger.is-visible .bf-metric-item:nth-child(5)  { animation-delay: 280ms; }
+.bf-metric-stagger.is-visible .bf-metric-item:nth-child(6)  { animation-delay: 340ms; }
+.bf-metric-stagger.is-visible .bf-metric-item:nth-child(7)  { animation-delay: 380ms; }
+.bf-metric-stagger.is-visible .bf-metric-item:nth-child(n+8) { animation-delay: 400ms; }
+
+/* ─── Stagger grid — waiting / triggered ─── */
+.bf-stagger-parent .bf-stagger-item {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.bf-stagger-parent.is-visible .bf-stagger-item {
+  animation: bf-reveal-up 360ms cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+.bf-stagger-parent.is-visible .bf-stagger-item:nth-child(1)  { animation-delay: 0ms;   }
+.bf-stagger-parent.is-visible .bf-stagger-item:nth-child(2)  { animation-delay: 55ms;  }
+.bf-stagger-parent.is-visible .bf-stagger-item:nth-child(3)  { animation-delay: 110ms; }
+.bf-stagger-parent.is-visible .bf-stagger-item:nth-child(4)  { animation-delay: 165ms; }
+.bf-stagger-parent.is-visible .bf-stagger-item:nth-child(5)  { animation-delay: 220ms; }
+.bf-stagger-parent.is-visible .bf-stagger-item:nth-child(6)  { animation-delay: 275ms; }
+.bf-stagger-parent.is-visible .bf-stagger-item:nth-child(7)  { animation-delay: 310ms; }
+.bf-stagger-parent.is-visible .bf-stagger-item:nth-child(8)  { animation-delay: 340ms; }
+.bf-stagger-parent.is-visible .bf-stagger-item:nth-child(n+9) { animation-delay: 360ms; }
+
+/* ─── Performance Intelligence — chart draw ─── */
+@keyframes bf-chart-draw-trad {
+  from { stroke-dashoffset: var(--tlen, 640); }
+  to   { stroke-dashoffset: 0; }
+}
+@keyframes bf-chart-draw-bico {
+  from { stroke-dashoffset: var(--blen, 660); }
+  to   { stroke-dashoffset: 0; }
+}
+@keyframes bf-area-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes bf-float-label-in {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── On Field — Athlete Image System ─── */
+/* Keyframes kept only for AthleteStatCard internal use */
+@keyframes of-label-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes of-icon-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes of-stat-count {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── On Field — Layout classes ─── */
+
+/* Section-level padding blocks */
+.of-header-block {
+  padding: 80px 72px 56px;
+  border-bottom: 1px solid rgba(42,44,43,0.08);
+}
+.of-intro-block {
+  padding: 56px 72px 0;
+}
+.of-demo-block {
+  padding: 48px 72px 64px;
+}
+.of-catalog-block {
+  padding: 0 72px 80px;
+}
+
+/* Main layout: desktop = flex row, mobile = stacked */
+.of-main-layout {
+  display: flex;
+  gap: 0;
+}
+
+/* Left nav */
+.of-left-nav {
+  width: 148px;
+  flex-shrink: 0;
+  padding-top: 8px;
+  padding-right: 24px;
+}
+
+/* Central panel */
+.of-central-panel {
+  flex: 1;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid rgba(42,44,43,0.08);
+  position: relative;
+  overflow: hidden;
+  min-height: 560px;
+}
+
+/* Panel inner grid: info col | portrait col | right col */
+.of-panel-grid {
+  display: grid;
+  grid-template-columns: 260px 1fr 140px;
+  height: 100%;
+}
+
+/* Info column */
+.of-info-col {
+  padding: 36px 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  z-index: 2;
+  position: relative;
+}
+
+/* Portrait column — athlete image */
+.of-portrait-col {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Athlete wrapper — fills portrait column, image anchored to bottom */
+.of-athlete-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 45%;
+  transform: translateX(-50%);
+  width: clamp(240px, 82%, 460px);
+  height: 110%;
+  z-index: 3;
+}
+
+/* Right metadata column */
+.of-right-col {
+  padding: 32px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 2;
+  position: relative;
+  border-left: 1px solid rgba(42,44,43,0.08);
+}
+
+/* Asset catalog row */
+.of-catalog-row {
+  display: grid;
+  grid-template-columns: 180px 240px 120px 1fr;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(42,44,43,0.08);
+  align-items: start;
+  gap: 16px;
+  min-width: 640px;
+}
+.of-catalog-head {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(42,44,43,0.16);
+}
+
+/* Player nav item — horizontal mode override */
+.of-player-item {
+  white-space: nowrap;
+}
+
+/* ── Tablet (768px–1023px) ── */
+@media (max-width: 1023px) {
+  .of-header-block  { padding: 56px 40px 40px; }
+  .of-intro-block   { padding: 40px 40px 0; }
+  .of-demo-block    { padding: 32px 40px 48px; }
+  .of-catalog-block { padding: 0 40px 64px; }
+
+  .of-main-layout {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Left nav becomes horizontal scroll rail */
+  .of-left-nav {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    padding: 0;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+  .of-left-nav > p {
+    display: none; /* hide "Player" heading label */
+  }
+  .of-player-item {
+    border-left: none !important;
+    border-bottom: 2px solid transparent;
+    padding-left: 0 !important;
+    padding: 6px 14px !important;
+  }
+
+  /* Panel grid: 2-col on tablet — right metadata drops below portrait */
+  .of-panel-grid {
+    grid-template-columns: minmax(180px, 240px) 1fr;
+  }
+
+  /* Right col spans both columns as a horizontal row below */
+  .of-right-col {
+    grid-column: 1 / -1;
+    border-left: none;
+    border-top: 1px solid rgba(42,44,43,0.08);
+    padding: 20px 24px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  /* Right col children flow as compact inline blocks */
+  .of-right-col > .of-label {
+    flex: 0 0 auto;
+  }
+
+  .of-central-panel {
+    min-height: 440px;
+  }
+
+  /* Portrait: re-center and allow it to breathe with the wider column */
+  .of-athlete-wrap {
+    left: 50%;
+    width: clamp(180px, 76%, 360px);
+    height: 105%;
+  }
+}
+
+/* ── Mobile (<768px) ── */
+@media (max-width: 767px) {
+  .of-header-block  { padding: 40px 20px 32px; }
+  .of-intro-block   { padding: 32px 20px 0; }
+  .of-demo-block    { padding: 24px 20px 40px; }
+  .of-catalog-block { padding: 0 20px 48px; }
+
+  .of-main-layout {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* Left nav: compact horizontal scroll */
+  .of-left-nav {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    padding: 0;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .of-left-nav > p {
+    display: none;
+  }
+  .of-player-item {
+    border-left: none !important;
+    border-bottom: 2px solid transparent;
+    padding: 5px 12px !important;
+    padding-left: 12px !important;
+  }
+
+  /* Panel grid: stack vertically */
+  .of-panel-grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .of-central-panel {
+    min-height: unset;
+    border-radius: 8px;
+  }
+
+  /* Info column fills full width */
+  .of-info-col {
+    padding: 24px 20px 20px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* Portrait col: natural height, centered, no absolute positioning */
+  .of-portrait-col {
+    position: relative;
+    width: 100%;
+    height: clamp(300px, 68vw, 480px);
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background: #f8fafc;
+    border-top: 1px solid rgba(42,44,43,0.06);
+  }
+
+  .of-athlete-wrap {
+    position: relative;
+    bottom: unset;
+    left: unset;
+    transform: none;
+    width: clamp(200px, 78%, 380px);
+    height: 100%;
+    margin: 0 auto;
+  }
+
+  /* Right col stacks below, removes border-left, goes full width */
+  .of-right-col {
+    border-left: none;
+    border-top: 1px solid rgba(42,44,43,0.08);
+    padding: 20px 20px 24px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  /* Each item in right col stays as narrow block */
+  .of-right-col > .of-label {
+    flex: 0 0 auto;
+    min-width: 80px;
+  }
+}
+
+/* ── Mobile S (≤375px) ── */
+@media (max-width: 375px) {
+  .of-header-block  { padding: 32px 16px 24px; }
+  .of-intro-block   { padding: 24px 16px 0; }
+  .of-demo-block    { padding: 20px 16px 32px; }
+  .of-catalog-block { padding: 0 16px 40px; }
+
+  .of-portrait-col {
+    height: clamp(240px, 70vw, 360px);
+  }
+
+  .of-athlete-wrap {
+    width: clamp(180px, 82%, 300px);
+  }
+}
+
+
+/* ─── Reduced motion — honour user preference ─── */
+@media (prefers-reduced-motion: reduce) {
+  .bf-progress { display: none; }
+
+  .bf-load-stagger .bf-stagger-item,
+  .bf-reveal,
+  .bf-reveal.is-visible,
+  .bf-text-reveal,
+  .bf-text-reveal.is-visible,
+  .bf-stagger-parent .bf-stagger-item,
+  .bf-stagger-parent.is-visible .bf-stagger-item,
+  .bf-metric-stagger .bf-metric-item,
+  .bf-metric-stagger.is-visible .bf-metric-item {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .bf-focus-reveal,
+  .bf-focus-reveal.is-visible {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  .bf-motion-bar--fast { animation: none !important; width: 100%; }
+  .bf-motion-bar--base { animation: none !important; width: 100%; }
+  .bf-motion-bar--slow { animation: none !important; width: 100%; }
+
+}
+
+/* ─── Editorial Text Composition ─── */
+.editorial-prose {
+  max-width: 720px;
+  line-height: 1.75;
+}
+.editorial-prose p {
+  text-wrap: pretty;
+}

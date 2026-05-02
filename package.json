@@ -1,0 +1,13 @@
+{
+  "name": "bicofino",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "docs": "cd apps/docs-site && npm run dev",
+    "storybook": "cd apps/storybook && npm run storybook",
+    "web": "cd apps/web && npm run dev",
+    "install:docs": "cd apps/docs-site && npm install",
+    "install:storybook": "cd apps/storybook && npm install",
+    "install:all": "npm run install:docs && npm run install:storybook"
+  }
+}

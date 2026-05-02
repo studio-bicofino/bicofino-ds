@@ -1,0 +1,57 @@
+/* ─── Bicofino Design System — CSS Tokens ─── */
+/* Single source of truth for all CSS custom properties.  */
+/* Import this file in any app to get the full token set.  */
+
+:root {
+  /* ── Palette · Básicas ── */
+  --bf-bg:          #f2f8ff;
+  --bf-black:       #2a2c2b;
+  --bf-power-black: #061015;
+  --bf-white:       #ffffff;
+  --bf-steel:       #6d7886;
+  --bf-aluminium:   #e2eaf2;
+  --bf-platinum:    #a8c9e5;
+
+  /* ── Palette · Especiais ── */
+  --bf-crema:      #f3ebd4;
+  --bf-caffe:      #33111a;
+  --bf-champagne:  #d8d7d3;
+  --bf-cacao:      #5e4c41;
+  --bf-nocciola:   #d8d7d3;
+
+  /* ── Palette · Destaques (max 10% surface) ── */
+  --bf-spfc:       #f0535e;
+  --bf-sep:        #2fd298;
+  --bf-usa:        #05185c;
+  --bf-niederland: #fe4600;
+  --bf-australia:  #e5ff78;
+  --bf-benfica:    #ed0007;
+  --bf-miami:      #f4b3cb;
+  --bf-napoli:     #77deff;
+  --bf-torino:     #821324;
+  --bf-como:       #0d8aff;
+  --bf-venezia:    #38e0e3;
+  --bf-fiorentina: #711cfe;
+
+  /* ── Spacing ── */
+  --sp-1: 0.25rem;  /* 4px  */
+  --sp-2: 0.5rem;   /* 8px  */
+  --sp-3: 0.75rem;  /* 12px */
+  --sp-4: 1rem;     /* 16px */
+  --sp-5: 1.5rem;   /* 24px */
+  --sp-6: 2rem;     /* 32px */
+  --sp-7: 3rem;     /* 48px */
+  --sp-8: 4rem;     /* 64px */
+  --sp-9: 6rem;     /* 96px */
+
+  /* ── Motion ── */
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 360ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ── Border ── */
+  --bf-hairline: 1px solid rgba(42, 44, 43, 0.08);
+  --bf-border:   rgba(42, 44, 43, 0.12);
+  --radius:      2px;
+}
