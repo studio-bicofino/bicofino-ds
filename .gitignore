@@ -41,3 +41,9 @@ storybook-static/
 
 # Turbo
 .turbo/
+
+# Large local folders
+AI-OS-BASE/
+assets Bicofino/
+bicofino/
+legacy/
