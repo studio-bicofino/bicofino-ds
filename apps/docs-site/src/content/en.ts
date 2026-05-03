@@ -1,8 +1,8 @@
 export const en = {
   // TopBar
   'topbar.title': 'Bicofino',
-  'topbar.subtitle': 'Design System',
-  'topbar.version': 'v2.0',
+  'topbar.subtitle': 'Brand System',
+  'topbar.version': 'V1.0',
   'topbar.date': '// april · 2026',
 
   // Overview

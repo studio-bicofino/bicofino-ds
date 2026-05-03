@@ -71,6 +71,7 @@ Atualizado em: 03 mai 2026
 ## Changelog
 
 ### 03 mai 2026
+- **Topbar Editorial Refinement** — A topbar do docs-site foi refinada para um padrão "quiet luxury". Remoção de altura fixa substituída por padding (24px verticais), alinhamento vertical e responsividade aprimorados via flex-wrap. O texto da topbar agora exibe "Bicofino · Brand System · V1.0" com ajustes finos de fontWeight e color para criar uma hierarquia sutil.
 - **i18n — Brand System** — Suporte bilíngue (PT-BR / EN) implementado em todas as 6 seções do Brand System: Cover, Índice, Fundamentos, Posicionamento, Núcleo da Marca e Universo Verbal. Conteúdo extraído para `brandSystemContent.ts` (objeto `bsContent` com chaves `br` e `en`). Cada componente de seção foi patchado com `useLang()` — sem reescrita completa do arquivo. O componente `P` agora usa atributo `lang` dinâmico. Build TypeScript passou limpo; deploy via push para `main` (commit `61a30f8`).
 
 ### 02 mai 2026

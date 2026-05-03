@@ -100,6 +100,52 @@ function PageFooter({ line }: { line: string }) {
 }
 
 /* ─── Header bar ─── */
+function TopBarLangToggle() {
+  const { lang, setLang } = useLang()
+  const options: { code: 'en' | 'br'; label: string; activeColor: string }[] = [
+    { code: 'en', label: 'EN', activeColor: C.como },
+    { code: 'br', label: 'BR', activeColor: C.sep },
+  ]
+  return (
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      background: 'rgba(42,44,43,0.06)',
+      borderRadius: 4,
+      padding: 2,
+      gap: 1,
+    }}>
+      {options.map(({ code, label, activeColor }) => {
+        const isActive = lang === code
+        return (
+          <button
+            key={code}
+            onClick={() => setLang(code)}
+            aria-pressed={isActive}
+            style={{
+              fontFamily: mono,
+              fontSize: 9,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              color: isActive ? C.white : C.steel,
+              background: isActive ? activeColor : 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              padding: '5px 9px',
+              borderRadius: 3,
+              fontWeight: isActive ? 600 : 400,
+              transition: 'background 200ms cubic-bezier(0.2,0,0,1), color 200ms cubic-bezier(0.2,0,0,1)',
+              lineHeight: 1,
+            }}
+          >
+            {label}
+          </button>
+        )
+      })}
+    </div>
+  )
+}
+
 function TopBar() {
   const { t } = useLang()
   return (
@@ -109,23 +155,26 @@ function TopBar() {
       zIndex: 10,
       background: C.bg,
       borderBottom: hairline,
-      padding: `0 ${H_PAD}px`,
-      height: 48,
+      padding: `24px ${H_PAD}px`,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
+      flexWrap: 'wrap',
+      rowGap: 16,
     }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        {[t('topbar.title'), t('topbar.subtitle'), t('topbar.version')].map((s, i) => (
-          <React.Fragment key={s}>
-            {i > 0 && <span style={{ color: C.aluminium, fontSize: 13 }}>·</span>}
-            <span style={{ fontFamily: sans, fontSize: 12, color: i === 0 ? C.black : C.steel, fontWeight: i === 0 ? 600 : 400 }}>{s}</span>
-          </React.Fragment>
-        ))}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(8px, 1.5vw, 12px)', whiteSpace: 'nowrap' }}>
+        <span style={{ fontFamily: sans, fontSize: 13, color: C.black, fontWeight: 400 }}>{t('topbar.title')}</span>
+        <span style={{ color: C.aluminium, fontSize: 13 }}>·</span>
+        <span style={{ fontFamily: sans, fontSize: 13, color: C.black, fontWeight: 600 }}>{t('topbar.subtitle')}</span>
+        <span style={{ color: C.aluminium, fontSize: 13 }}>·</span>
+        <span style={{ fontFamily: sans, fontSize: 12, color: C.steel, fontWeight: 400 }}>{t('topbar.version')}</span>
       </div>
-      <p style={{ fontFamily: mono, fontSize: 10, color: C.steel, margin: 0, letterSpacing: '0.08em' }}>
-        {t('topbar.date')}
-      </p>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 24, whiteSpace: 'nowrap' }}>
+        <TopBarLangToggle />
+        <p style={{ fontFamily: mono, fontSize: 10, color: C.steel, margin: 0, letterSpacing: '0.08em', display: 'flex', alignItems: 'center' }}>
+          {t('topbar.date')}
+        </p>
+      </div>
     </div>
   )
 }

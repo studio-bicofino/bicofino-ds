@@ -90,7 +90,7 @@ a {
 
 /* ─── Scroll helpers ─── */
 #main-content { scroll-behavior: smooth; }
-section { scroll-margin-top: 48px; }
+section { scroll-margin-top: 88px; }
 
 /* ─── Motion keyframes ─── */
 @keyframes bf-reveal-up {
