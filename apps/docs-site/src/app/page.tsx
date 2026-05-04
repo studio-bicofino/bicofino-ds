@@ -1163,7 +1163,7 @@ const TOP_ROW_LOGOS = [
   '/assets/on-field/sponsors/sponsor-btg.svg',
   '/assets/on-field/sponsors/sponsor-redbull.svg',
   '/assets/on-field/sponsors/sponsor-montblanc.svg',
-  '/assets/on-field/sponsors/sponsor-nike.svg',
+  '/assets/on-field/sponsors/sponsor-nike-swoosh.svg',
   '/assets/on-field/sponsors/sponsor-procter-gamble.svg',
   '/assets/on-field/sponsors/sponsor-ubs.svg',
   '/assets/on-field/sponsors/sponsor-illy.svg',
@@ -1176,7 +1176,7 @@ const BOTTOM_ROW_LOGOS = [
   '/assets/on-field/sponsors/sponsor-playstation.svg',
   '/assets/on-field/sponsors/sponsor-zegna.svg',
   '/assets/on-field/sponsors/sponsor-bombardier.svg',
-  '/assets/on-field/sponsors/sponsor-adidas-originals.svg',
+  '/assets/on-field/sponsors/sponsor-on-cloud.svg',
   '/assets/on-field/sponsors/sponsor-ralph-lauren.svg',
   '/assets/on-field/sponsors/sponsor-perrier.svg',
   '/assets/on-field/sponsors/sponsor-cape.svg',
@@ -1221,8 +1221,8 @@ function SponsorsCarousel() {
           to   { transform: translateX(0); }
         }
         .bf-sponsor-track { display: flex; will-change: transform; backface-visibility: hidden; }
-        .bf-sponsor-track--left  { animation: bf-scroll-left  52s linear infinite; }
-        .bf-sponsor-track--right { animation: bf-scroll-right 58s linear infinite; }
+        .bf-sponsor-track--left  { animation: bf-scroll-left  40s linear infinite; }
+        .bf-sponsor-track--right { animation: bf-scroll-right 45s linear infinite; }
         .bf-sponsor-track:hover  { animation-play-state: paused; }
       `}</style>
 

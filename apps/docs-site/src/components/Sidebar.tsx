@@ -165,7 +165,14 @@ export default function Sidebar() {
     >
       {/* Wordmark + meta */}
       <div style={{ padding: '36px 24px 28px' }}>
-        <BicofinoLogo color={C.text} width={120} />
+        <a
+          href="#"
+          onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
+          style={{ display: 'block', lineHeight: 0 }}
+          aria-label="Voltar ao início"
+        >
+          <BicofinoLogo color={C.text} width={120} />
+        </a>
         <div style={{ marginTop: 20, display: 'flex', flexDirection: 'column', gap: 5 }}>
           {(['// Brand System', '// v1.0 • maio 2026', '// São Paulo • BR'] as const).map(line => (
             <p key={line} style={{ fontFamily: mono, fontSize: 9, color: C.muted, margin: 0, letterSpacing: '0.06em' }}>
