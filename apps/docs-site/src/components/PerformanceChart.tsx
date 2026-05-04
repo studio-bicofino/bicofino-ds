@@ -3,10 +3,10 @@
 import { useEffect, useRef, useState } from 'react'
 
 const C = {
-  black:    '#2a2c2b',
-  white:    '#ffffff',
-  steel:    '#6d7886',
-  bg:       '#f2f8ff',
+  black: 'var(--bf-text-primary)',
+  white: 'var(--bf-surface)',
+  steel: 'var(--bf-text-secondary)',
+  bg:    'var(--bf-bg-page)',
 }
 const mono = '"JetBrains Mono", monospace'
 const ease = 'cubic-bezier(0.2,0,0,1)'
@@ -75,7 +75,7 @@ function Toggle<T extends string>({
               color: active ? C.black : 'rgba(109,120,134,0.45)',
               background: 'transparent',
               border: 'none',
-              borderBottom: `1px solid ${active ? C.black : 'rgba(42,44,43,0.1)'}`,
+              borderBottom: `1px solid ${active ? C.black : 'var(--bf-border)'}`,
               padding: size === 'sm' ? '3px 10px 5px' : '3px 14px 5px',
               cursor: 'pointer',
               fontWeight: active ? 600 : 400,
@@ -213,7 +213,7 @@ export function PerformanceChart() {
       <div style={{
         position: 'relative',
         background: C.white,
-        border: '1px solid rgba(42,44,43,0.07)',
+        border: '1px solid var(--bf-border)',
         borderRadius: 4,
         overflow: 'hidden',
         padding: '20px 20px 4px',
@@ -242,7 +242,7 @@ export function PerformanceChart() {
               key={v}
               x1={CX.x0} y1={toY(v)}
               x2={CX.x1} y2={toY(v)}
-              stroke="rgba(42,44,43,0.04)"
+              stroke="var(--bf-border)"
               strokeWidth={1}
             />
           ))}
@@ -255,7 +255,7 @@ export function PerformanceChart() {
               y={toY(v) + 3}
               fontFamily={mono}
               fontSize={8}
-              fill="rgba(109,120,134,0.35)"
+              style={{ fill: 'var(--bf-text-subtle)' }}
               textAnchor="end"
             >
               {Math.round(v * 100)}
@@ -265,7 +265,7 @@ export function PerformanceChart() {
           {/* Fill area — very low opacity, fades in after lines draw */}
           <polygon
             points={areaPts}
-            fill="rgba(42,44,43,0.04)"
+            fill="var(--bf-border)"
             style={{
               opacity: drawing ? chartOpacity : 0,
               transition: `opacity 500ms ${ease} 1000ms`,
@@ -327,7 +327,7 @@ export function PerformanceChart() {
               fontFamily={mono}
               fontSize={8}
               letterSpacing="0.04em"
-              fill="rgba(42,44,43,0.4)"
+              style={{ fill: 'var(--bf-text-subtle)' }}
               textAnchor="end"
             >
               {peakNote}
@@ -342,7 +342,7 @@ export function PerformanceChart() {
               y={200}
               fontFamily={mono}
               fontSize={9}
-              fill="rgba(109,120,134,0.4)"
+              style={{ fill: 'var(--bf-text-subtle)' }}
               textAnchor="middle"
               letterSpacing="0.03em"
             >

@@ -16,12 +16,12 @@ import {
 } from 'lucide-react'
 
 const C = {
-  black:     '#2a2c2b',
-  white:     '#ffffff',
-  steel:     '#6d7886',
+  black:     'var(--bf-text-primary)',
+  white:     'var(--bf-surface)',
+  steel:     'var(--bf-text-secondary)',
+  platinum:  'var(--bf-text-subtle)',
+  bg:        'var(--bf-bg-page)',
   aluminium: '#e2eaf2',
-  platinum:  '#a8c9e5',
-  bg:        '#f2f8ff',
 }
 const mono = '"JetBrains Mono", monospace'
 const sans = '"Inter", sans-serif'

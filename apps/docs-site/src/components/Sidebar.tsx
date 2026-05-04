@@ -3,16 +3,17 @@
 import { useState, useEffect } from 'react'
 import { BicofinoLogo } from './BicofinoLogo'
 import { LanguageSwitcher } from './LanguageSwitcher'
+import { ThemeToggle } from './ThemeToggle'
 import { useLang } from '@/content'
 
 const C = {
-  bg:      '#2a2c2b',
+  bg:      'var(--bf-sidebar-bg)',
   text:    '#f2f8ff',
-  muted:   '#6d7886',
+  muted:   'var(--bf-sidebar-muted)',
   subtle:  '#a8c9e5',
   active:  'var(--current-accent)',
   hover:   'rgba(242,248,255,0.06)',
-  divider: 'rgba(242,248,255,0.08)',
+  divider: 'var(--bf-sidebar-divider)',
 }
 
 const sans = '"Inter", sans-serif'
@@ -190,12 +191,16 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      {/* Bottom bar with tagline + language switcher */}
+      {/* Bottom bar with tagline + controls */}
       <div style={{ borderTop: `1px solid ${C.divider}`, padding: '14px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <p style={{ fontFamily: mono, fontSize: 9, color: C.muted, margin: 0, letterSpacing: '0.06em' }}>
           {t('sidebar.tagline')}
         </p>
-        <LanguageSwitcher />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <ThemeToggle />
+          <span style={{ fontFamily: mono, fontSize: 8, color: 'rgba(242,248,255,0.18)', userSelect: 'none' }}>•</span>
+          <LanguageSwitcher />
+        </div>
       </div>
     </aside>
   )

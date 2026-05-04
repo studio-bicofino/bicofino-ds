@@ -63,8 +63,8 @@ export function AthleteStatCard() {
 
   return (
     <div ref={ref} style={{
-      background: '#fafbfd',
-      border: '1px solid rgba(42,44,43,0.09)',
+      background: 'var(--bf-surface)',
+      border: '1px solid var(--bf-border)',
       borderRadius: 6,
       padding: '20px 16px 18px',
       width: '100%',
@@ -98,10 +98,10 @@ export function AthleteStatCard() {
         animation: 'of-stat-count 340ms 60ms cubic-bezier(0.2,0,0,1) forwards',
         opacity: 0,
       }}>
-        <span style={{ fontSize: 32, fontWeight: 700, letterSpacing: '-0.03em', color: '#2a2c2b', fontFamily: sans, lineHeight: 1 }}>
+        <span style={{ fontSize: 32, fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--bf-text-primary)', fontFamily: sans, lineHeight: 1 }}>
           {displayVal}
         </span>
-        <span style={{ fontFamily: mono, fontSize: 11, color: '#6d7886', letterSpacing: '0.04em' }}>
+        <span style={{ fontFamily: mono, fontSize: 11, color: 'var(--bf-text-secondary)', letterSpacing: '0.04em' }}>
           {state.unit}
         </span>
       </div>
@@ -111,7 +111,7 @@ export function AthleteStatCard() {
         animation: 'of-label-in 320ms 120ms cubic-bezier(0.2,0,0,1) forwards',
         opacity: 0,
       }}>
-        <p style={{ fontFamily: mono, fontSize: 9, letterSpacing: '0.12em', color: '#6d7886', margin: 0, textAlign: 'center', textTransform: 'uppercase' }}>
+        <p style={{ fontFamily: mono, fontSize: 9, letterSpacing: '0.12em', color: 'var(--bf-text-secondary)', margin: 0, textAlign: 'center', textTransform: 'uppercase' }}>
           {state.label}
         </p>
       </div>
@@ -122,7 +122,7 @@ export function AthleteStatCard() {
           <div key={i} style={{
             width: i === idx ? 12 : 4, height: 3,
             borderRadius: 2,
-            background: i === idx ? '#2a2c2b' : 'rgba(42,44,43,0.18)',
+            background: i === idx ? 'var(--bf-text-primary)' : 'var(--bf-border-strong)',
             transition: 'width 300ms cubic-bezier(0.2,0,0,1), background 300ms cubic-bezier(0.2,0,0,1)',
           }} />
         ))}

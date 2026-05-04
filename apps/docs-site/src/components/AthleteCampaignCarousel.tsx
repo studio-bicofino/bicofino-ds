@@ -35,8 +35,8 @@ export function AthleteCampaignCarousel() {
       <div style={{
         width: '100%', height: 156, borderRadius: 6,
         overflow: 'hidden', position: 'relative',
-        border: '1px solid rgba(42,44,43,0.09)',
-        background: '#e2eaf2',
+        border: '1px solid var(--bf-border)',
+        background: 'var(--bf-surface-subtle)',
       }}>
         <img
           key={img.src}

@@ -6,18 +6,18 @@ import { useLang } from '@/content'
 import { bsContent } from '@/content/brandSystemContent'
 
 const C = {
-  black:      '#2a2c2b',
+  black:      'var(--bf-text-primary)',
+  bg:         'var(--bf-bg-page)',
+  white:      'var(--bf-surface)',
+  steel:      'var(--bf-text-secondary)',
+  platinum:   'var(--bf-text-subtle)',
   powerBlack: '#061015',
-  bg:         '#f2f8ff',
-  white:      '#ffffff',
-  steel:      '#6d7886',
   aluminium:  '#e2eaf2',
-  platinum:   '#a8c9e5',
 }
 
 const mono = '"JetBrains Mono", monospace'
 const sans = '"Inter", sans-serif'
-const hairline = '1px solid rgba(42,44,43,0.08)'
+const hairline = '1px solid var(--bf-border)'
 const H_PAD = 72
 const MAX_W = 720
 

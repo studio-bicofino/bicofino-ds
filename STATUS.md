@@ -1,6 +1,6 @@
 # Bicofino DS — Status
 
-Atualizado em: 03 mai 2026
+Atualizado em: 03 mai 2026 (dark mode)
 
 ---
 
@@ -69,6 +69,15 @@ Atualizado em: 03 mai 2026
 ---
 
 ## Changelog
+
+### 03 mai 2026 — Dark Mode
+
+- **Dark Mode System** — Sistema de temas light/dark implementado no docs-site com paleta "atelier at night" (Bicofino Cores Especiais). Background: caffè `#33111a`, texto primário: crema `#f3ebd4`, texto secundário: champagne `#d8d7d3`, superfícies: cacao translúcido.
+- **ThemeProvider + useTheme** — Contexto React em `src/content/theme.tsx`. Persiste em `localStorage` (`bf-theme`). Script anti-FOUC inline em `layout.tsx` restaura o tema antes do paint — sem flash de conteúdo.
+- **ThemeToggle** — Botão Moon/Sun (Lucide, stroke 1.5) inserido na barra inferior do Sidebar, ao lado do `LanguageSwitcher`. Sem box, hover sutil, 150ms ease-out.
+- **CSS semantic tokens** — `globals.css` recebeu camada de tokens semânticos (`--bf-bg-page`, `--bf-surface`, `--bf-surface-subtle`, `--bf-text-primary`, `--bf-text-secondary`, `--bf-text-subtle`, `--bf-border`, `--bf-border-strong`, `--bf-pill-bg`, `--bf-sidebar-bg`, etc.). Override completo em `[data-theme="dark"]`. Transição 200ms ease-out ativada somente após `data-theme-loaded` (sem animação no carregamento inicial).
+- **Dual-use color pattern** — Objetos `C` em todos os componentes atualizados para referenciar CSS vars nos tokens semânticos. `PALETTE` separado em `page.tsx` para exibição de swatches de cor (valores fixos da paleta, independentes do tema).
+- **Componentes atualizados** — `globals.css`, `layout.tsx`, `ClientProviders.tsx`, `Sidebar.tsx`, `page.tsx`, `BrandSystem.tsx`, `OnFieldSection.tsx`, `OperationsSection.tsx`, `MetricCard.tsx`, `PerformanceChart.tsx`, `IconGrid.tsx`, `AthleteStatCard.tsx`, `AthleteCampaignCarousel.tsx`.
 
 ### 03 mai 2026
 - **Topbar Editorial Refinement** — A topbar do docs-site foi refinada para um padrão "quiet luxury". Remoção de altura fixa substituída por padding (24px verticais), alinhamento vertical e responsividade aprimorados via flex-wrap. O texto da topbar agora exibe "Bicofino · Brand System · V1.0" com ajustes finos de fontWeight e color para criar uma hierarquia sutil.

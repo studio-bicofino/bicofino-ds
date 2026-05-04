@@ -15,14 +15,16 @@ import { Clock, TrendingUp, ArrowDownRight, Zap, Cpu, Activity } from 'lucide-re
 import React from 'react'
 
 /* ─── Design tokens ─── */
+/* Semantic tokens — switch with theme via CSS custom properties */
 const C = {
-  black:      '#2a2c2b',
-  powerBlack: '#061015',
-  bg:         '#f2f8ff',
-  white:      '#ffffff',
-  steel:      '#6d7886',
+  black:      'var(--bf-text-primary)',
+  bg:         'var(--bf-bg-page)',
+  white:      'var(--bf-surface)',
+  steel:      'var(--bf-text-secondary)',
+  platinum:   'var(--bf-text-subtle)',
+  /* These palette colors are never theme-switched */
   aluminium:  '#e2eaf2',
-  platinum:   '#a8c9e5',
+  powerBlack: '#061015',
   crema:      '#f3ebd4',
   caffe:      '#33111a',
   cacao:      '#5e4c41',
@@ -41,9 +43,18 @@ const C = {
   champagne:  '#d8d7d3',
 }
 
+/* Palette raw values — for display inside color swatches and token tables */
+const PALETTE = {
+  bg:       '#f2f8ff',
+  black:    '#2a2c2b',
+  steel:    '#6d7886',
+  white:    '#ffffff',
+  platinum: '#a8c9e5',
+}
+
 const mono = '"JetBrains Mono", monospace'
 const sans = '"Inter", sans-serif'
-const hairline = '1px solid rgba(42,44,43,0.08)'
+const hairline = '1px solid var(--bf-border)'
 const H_PAD = 72
 
 /* ─── Shared atoms ─── */
@@ -110,7 +121,7 @@ function TopBarLangToggle() {
     <div style={{
       display: 'flex',
       alignItems: 'center',
-      background: 'rgba(42,44,43,0.06)',
+      background: 'var(--bf-pill-bg)',
       borderRadius: 4,
       padding: 2,
       gap: 1,
@@ -127,7 +138,7 @@ function TopBarLangToggle() {
               fontSize: 9,
               letterSpacing: '0.1em',
               textTransform: 'uppercase',
-              color: isActive ? C.white : C.steel,
+              color: isActive ? '#ffffff' : C.steel,
               background: isActive ? activeColor : 'transparent',
               border: 'none',
               cursor: 'pointer',
@@ -239,11 +250,11 @@ function Colors() {
   const { t } = useLang()
 
   const basics = [
-    { role: t('color.black.role'),      name: 'bf Black',        hex: C.black,     dark: true,  desc: t('color.black.desc') },
-    { role: t('color.steel.role'),      name: 'bf Steel',        hex: C.steel,     dark: true,  desc: t('color.steel.desc') },
-    { role: t('color.aluminium.role'),  name: 'bf Aluminium',    hex: C.aluminium, dark: false, desc: t('color.aluminium.desc') },
-    { role: t('color.platinum.role'),   name: 'bf Platinum',     hex: C.platinum,  dark: false, desc: t('color.platinum.desc') },
-    { role: t('color.bg.role'),         name: 'Blue Background', hex: C.bg,        dark: false, desc: t('color.bg.desc') },
+    { role: t('color.black.role'),      name: 'bf Black',        hex: PALETTE.black,    dark: true,  desc: t('color.black.desc') },
+    { role: t('color.steel.role'),      name: 'bf Steel',        hex: PALETTE.steel,    dark: true,  desc: t('color.steel.desc') },
+    { role: t('color.aluminium.role'),  name: 'bf Aluminium',    hex: C.aluminium,      dark: false, desc: t('color.aluminium.desc') },
+    { role: t('color.platinum.role'),   name: 'bf Platinum',     hex: PALETTE.platinum, dark: false, desc: t('color.platinum.desc') },
+    { role: t('color.bg.role'),         name: 'Blue Background', hex: PALETTE.bg,       dark: false, desc: t('color.bg.desc') },
   ]
 
   const specials = [
@@ -269,13 +280,13 @@ function Colors() {
   ]
 
   const tokens = [
-    { token: '--bf-black',       hex: C.black,      name: 'bf Black',        role: t('token.black.role') },
-    { token: '--bf-power-black', hex: C.powerBlack, name: 'bf Power Black',  role: t('token.powerblack.role') },
-    { token: '--bf-bg',          hex: C.bg,         name: 'Blue Background', role: t('token.bg.role') },
-    { token: '--bf-white',       hex: C.white,      name: 'white',           role: t('token.white.role') },
-    { token: '--bf-steel',       hex: C.steel,      name: 'bf Steel',        role: t('token.steel.role') },
-    { token: '--bf-aluminium',   hex: C.aluminium,  name: 'bf Aluminium',    role: t('token.aluminium.role') },
-    { token: '--bf-platinum',    hex: C.platinum,   name: 'bf Platinum',     role: t('token.platinum.role') },
+    { token: '--bf-black',       hex: PALETTE.black,    name: 'bf Black',        role: t('token.black.role') },
+    { token: '--bf-power-black', hex: C.powerBlack,     name: 'bf Power Black',  role: t('token.powerblack.role') },
+    { token: '--bf-bg',          hex: PALETTE.bg,       name: 'Blue Background', role: t('token.bg.role') },
+    { token: '--bf-white',       hex: PALETTE.white,    name: 'white',           role: t('token.white.role') },
+    { token: '--bf-steel',       hex: PALETTE.steel,    name: 'bf Steel',        role: t('token.steel.role') },
+    { token: '--bf-aluminium',   hex: C.aluminium,      name: 'bf Aluminium',    role: t('token.aluminium.role') },
+    { token: '--bf-platinum',    hex: PALETTE.platinum, name: 'bf Platinum',     role: t('token.platinum.role') },
     { token: '--bf-crema',       hex: C.crema,      name: 'crema',           role: t('token.crema.role') },
     { token: '--bf-caffe',       hex: C.caffe,      name: 'caffè',           role: t('token.caffe.role') },
     { token: '--bf-cacao',       hex: C.cacao,      name: 'cacao',           role: t('token.cacao.role') },
@@ -290,8 +301,8 @@ function Colors() {
         {r.role}
       </p>
       <div>
-        <p style={{ fontSize: 14, fontWeight: 700, color: r.dark ? C.bg : C.black, margin: '0 0 5px', letterSpacing: '-0.01em' }}>{r.name}</p>
-        <p style={{ fontFamily: mono, fontSize: 11, color: r.dark ? 'rgba(242,248,255,0.6)' : C.steel, margin: '0 0 6px' }}>{r.hex}</p>
+        <p style={{ fontSize: 14, fontWeight: 700, color: r.dark ? PALETTE.bg : PALETTE.black, margin: '0 0 5px', letterSpacing: '-0.01em' }}>{r.name}</p>
+        <p style={{ fontFamily: mono, fontSize: 11, color: r.dark ? 'rgba(242,248,255,0.6)' : PALETTE.steel, margin: '0 0 6px' }}>{r.hex}</p>
         {r.desc && <p style={{ fontSize: 11, color: r.dark ? 'rgba(242,248,255,0.4)' : 'rgba(42,44,43,0.4)', margin: 0, lineHeight: 1.5 }}>{r.desc}</p>}
       </div>
     </div>
@@ -312,7 +323,7 @@ function Colors() {
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', margin: `1px ${H_PAD}px 0`, gap: 1, background: 'rgba(42,44,43,0.1)' }}>
         {[
-          { role: t('color.white.role'),      name: 'white',          hex: C.white,      dark: false, desc: t('color.white.desc') },
+          { role: t('color.white.role'),      name: 'white',          hex: PALETTE.white, dark: false, desc: t('color.white.desc') },
           { role: t('color.powerblack.role'), name: 'bf Power Black', hex: C.powerBlack, dark: true,  desc: t('color.powerblack.desc') },
         ].map(swatchCard)}
       </div>
@@ -324,8 +335,8 @@ function Colors() {
           <div key={r.name} style={{ background: r.hex, padding: '24px 20px', minHeight: 140, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <p style={{ fontFamily: mono, fontSize: 9, letterSpacing: '0.08em', color: r.dark ? 'rgba(242,248,255,0.4)' : 'rgba(42,44,43,0.4)', margin: 0 }}>{r.role}</p>
             <div>
-              <p style={{ fontSize: 14, fontWeight: 700, color: r.dark ? C.bg : C.black, margin: '0 0 4px', letterSpacing: '-0.01em' }}>{r.name}</p>
-              <p style={{ fontFamily: mono, fontSize: 11, color: r.dark ? 'rgba(242,248,255,0.55)' : C.steel, margin: 0 }}>{r.hex}</p>
+              <p style={{ fontSize: 14, fontWeight: 700, color: r.dark ? PALETTE.bg : PALETTE.black, margin: '0 0 4px', letterSpacing: '-0.01em' }}>{r.name}</p>
+              <p style={{ fontFamily: mono, fontSize: 11, color: r.dark ? 'rgba(242,248,255,0.55)' : PALETTE.steel, margin: 0 }}>{r.hex}</p>
             </div>
           </div>
         ))}
@@ -336,7 +347,7 @@ function Colors() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', margin: `0 ${H_PAD}px`, gap: 1, background: 'rgba(42,44,43,0.1)' }}>
         {highlights.map(({ name, hex, dark }) => (
           <div key={name} style={{ background: hex, padding: '20px 16px', minHeight: 80, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-            <p style={{ fontSize: 11, fontWeight: 700, color: dark ? C.bg : C.black, margin: '0 0 3px', letterSpacing: '-0.01em' }}>{name}</p>
+            <p style={{ fontSize: 11, fontWeight: 700, color: dark ? PALETTE.bg : PALETTE.black, margin: '0 0 3px', letterSpacing: '-0.01em' }}>{name}</p>
             <p style={{ fontFamily: mono, fontSize: 9, color: dark ? 'rgba(242,248,255,0.55)' : 'rgba(42,44,43,0.5)', margin: 0 }}>{hex}</p>
           </div>
         ))}
@@ -345,7 +356,7 @@ function Colors() {
       {/* Token table */}
       <SubHeader label="// 01.1.4" title={t('colors.tokens.title')} />
       <div style={{ margin: `0 ${H_PAD}px 0` }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '200px 160px 200px 1fr', padding: '8px 0', borderBottom: '1px solid rgba(42,44,43,0.16)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '200px 160px 200px 1fr', padding: '8px 0', borderBottom: '1px solid var(--bf-border-strong)' }}>
           {[t('table.col.token'), t('table.col.value'), t('table.col.name'), t('table.col.role')].map(h => (
             <span key={h} style={{ fontFamily: mono, fontSize: 9, letterSpacing: '0.12em', color: C.steel, fontWeight: 600 }}>{h}</span>
           ))}
@@ -354,7 +365,7 @@ function Colors() {
           <div key={token} style={{ display: 'grid', gridTemplateColumns: '200px 160px 200px 1fr', padding: '13px 0', borderBottom: hairline, alignItems: 'center' }}>
             <code style={{ fontFamily: mono, fontSize: 11, color: C.black }}>{token}</code>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <div style={{ width: 16, height: 16, background: hex, borderRadius: 2, border: '1px solid rgba(42,44,43,0.14)', flexShrink: 0 }} />
+              <div style={{ width: 16, height: 16, background: hex, borderRadius: 2, border: '1px solid var(--bf-border-strong)', flexShrink: 0 }} />
               <span style={{ fontFamily: mono, fontSize: 10, color: C.steel }}>{hex}</span>
             </div>
             <span style={{ fontSize: 13, color: C.black }}>{name}</span>
@@ -564,7 +575,7 @@ function SpacingMotion() {
           return (
             <div key={token} style={{ display: 'grid', gridTemplateColumns: '120px 1fr 80px', alignItems: 'center', borderBottom: hairline, padding: '24px 0', gap: 32 }}>
               <span style={{ fontFamily: mono, fontSize: 11, color: C.steel }}>{token}</span>
-              <div style={{ height: 6, background: C.aluminium, borderRadius: 3, position: 'relative' as const, overflow: 'hidden' }}>
+              <div style={{ height: 6, background: 'var(--bf-surface)', borderRadius: 3, position: 'relative' as const, overflow: 'hidden' }}>
                 <div className={`bf-motion-bar bf-motion-bar--${speed}`} />
               </div>
               <span style={{ fontFamily: mono, fontSize: 11, color: C.steel, textAlign: 'right' as const }}>{ms}ms</span>
@@ -619,7 +630,7 @@ function Brand() {
           </div>
           <div style={{ background: C.powerBlack, padding: '56px 48px', display: 'flex', flexDirection: 'column', gap: 32 }}>
             <p style={{ fontFamily: mono, fontSize: 9, color: C.steel, margin: 0, letterSpacing: '0.1em' }}>{t('brand.logo.dark')}</p>
-            <BicofinoLogo color={C.bg} width={200} />
+            <BicofinoLogo color={PALETTE.bg} width={200} />
           </div>
           <div style={{ background: C.crema, padding: '56px 48px', display: 'flex', flexDirection: 'column', gap: 32 }}>
             <p style={{ fontFamily: mono, fontSize: 9, color: C.cacao, margin: 0, letterSpacing: '0.1em' }}>{t('brand.logo.crema')}</p>
@@ -683,7 +694,7 @@ function Brand() {
           </div>
           <div style={{ background: C.powerBlack, padding: '56px 48px', display: 'flex', flexDirection: 'column', gap: 32 }}>
             <p style={{ fontFamily: mono, fontSize: 9, color: C.steel, margin: 0, letterSpacing: '0.1em' }}>{t('brand.diamond.dark')}</p>
-            <BicofinoDiamond color={C.bg} size={72} />
+            <BicofinoDiamond color={PALETTE.bg} size={72} />
           </div>
           <div style={{ background: C.crema, padding: '56px 48px', display: 'flex', flexDirection: 'column', gap: 32 }}>
             <p style={{ fontFamily: mono, fontSize: 9, color: C.cacao, margin: 0, letterSpacing: '0.1em' }}>{t('brand.diamond.crema')}</p>
@@ -810,10 +821,10 @@ function Components() {
           <div style={{ background: C.powerBlack, padding: '32px 36px' }}>
             <p style={{ fontFamily: mono, fontSize: 9, color: C.steel, margin: '0 0 24px', letterSpacing: '0.08em' }}>{t('buttons.inverse.label')}</p>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' as const }}>
-              <button style={{ background: 'transparent', color: C.bg, border: `1px solid rgba(242,248,255,0.3)`, padding: '10px 20px', fontSize: 13, fontFamily: sans, fontWeight: 500, cursor: 'pointer', letterSpacing: '-0.01em', borderRadius: 2 }}>
+              <button style={{ background: 'transparent', color: PALETTE.bg, border: `1px solid rgba(242,248,255,0.3)`, padding: '10px 20px', fontSize: 13, fontFamily: sans, fontWeight: 500, cursor: 'pointer', letterSpacing: '-0.01em', borderRadius: 2 }}>
                 {t('btn.manifesto')}
               </button>
-              <button style={{ background: 'transparent', color: C.bg, border: `1px solid rgba(242,248,255,0.3)`, padding: '10px 20px', fontSize: 13, fontFamily: sans, fontWeight: 500, cursor: 'pointer', letterSpacing: '-0.01em', borderRadius: 2 }}>
+              <button style={{ background: 'transparent', color: PALETTE.bg, border: `1px solid rgba(242,248,255,0.3)`, padding: '10px 20px', fontSize: 13, fontFamily: sans, fontWeight: 500, cursor: 'pointer', letterSpacing: '-0.01em', borderRadius: 2 }}>
                 {t('btn.case')}
               </button>
             </div>
@@ -834,10 +845,10 @@ function Components() {
         <div style={{ margin: `40px ${H_PAD}px 64px`, display: 'flex', gap: 10, flexWrap: 'wrap' as const }}>
           {[
             { label: 'On Field',  bg: C.black,    color: C.bg },
-            { label: 'Off Field', bg: C.aluminium,color: C.black },
+            { label: 'Off Field', bg: C.aluminium,color: PALETTE.black },
             { label: 'ADS',       bg: C.spfc,     color: C.bg },
-            { label: 'LAB',       bg: C.cacao,    color: C.bg },
-            { label: 'Draft',     bg: C.aluminium,color: C.steel },
+            { label: 'LAB',       bg: C.cacao,    color: PALETTE.bg },
+            { label: 'Draft',     bg: C.aluminium,color: PALETTE.steel },
             { label: 'Live',      bg: C.sep,      color: C.powerBlack },
           ].map(({ label, bg, color }) => (
             <span key={label} style={{ background: bg, color, fontSize: 11, fontWeight: 600, padding: '4px 10px', borderRadius: 2, fontFamily: sans, letterSpacing: '0.04em' }}>
@@ -867,14 +878,14 @@ function Components() {
                     placeholder={t('form.message.placeholder')}
                     readOnly
                     rows={3}
-                    style={{ border: `1px solid rgba(42,44,43,0.2)`, borderRadius: 2, padding: '10px 12px', fontSize: 13, fontFamily: sans, color: C.black, background: C.white, resize: 'none', outline: 'none' }}
+                    style={{ border: `1px solid var(--bf-border-strong)`, borderRadius: 2, padding: '10px 12px', fontSize: 13, fontFamily: sans, color: C.black, background: C.white, resize: 'none', outline: 'none' }}
                   />
                 ) : (
                   <input
                     type="text"
                     readOnly
                     defaultValue={placeholder}
-                    style={{ border: `1px solid rgba(42,44,43,0.2)`, borderRadius: 2, padding: '10px 12px', fontSize: 13, fontFamily: sans, color: C.black, background: C.white, outline: 'none' }}
+                    style={{ border: `1px solid var(--bf-border-strong)`, borderRadius: 2, padding: '10px 12px', fontSize: 13, fontFamily: sans, color: C.black, background: C.white, outline: 'none' }}
                   />
                 )}
               </div>
@@ -889,7 +900,7 @@ function Components() {
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               <label style={{ fontSize: 12, fontWeight: 600, color: C.steel, fontFamily: sans }}>{t('form.access')}</label>
-              <input type="text" readOnly defaultValue="••••••••" disabled style={{ border: `1px solid rgba(42,44,43,0.1)`, borderRadius: 2, padding: '10px 12px', fontSize: 13, fontFamily: sans, color: C.steel, background: C.aluminium, outline: 'none', cursor: 'not-allowed' }} />
+              <input type="text" readOnly defaultValue="••••••••" disabled style={{ border: `1px solid var(--bf-border)`, borderRadius: 2, padding: '10px 12px', fontSize: 13, fontFamily: sans, color: C.steel, background: 'var(--bf-surface-subtle)', outline: 'none', cursor: 'not-allowed' }} />
               <p style={{ fontSize: 12, color: C.steel, margin: 0, fontFamily: sans }}>{t('form.access.helper')}</p>
             </div>
           </div>
@@ -953,7 +964,7 @@ function Governance() {
         </div>
 
         <div style={{ margin: `40px ${H_PAD}px 0` }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '180px 1fr 1fr', padding: '8px 0', borderBottom: '1px solid rgba(42,44,43,0.16)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '180px 1fr 1fr', padding: '8px 0', borderBottom: '1px solid var(--bf-border-strong)' }}>
             {[t('governance.col.layer'), t('governance.col.owner'), t('governance.col.scope')].map(h => (
               <span key={h} style={{ fontFamily: mono, fontSize: 9, letterSpacing: '0.12em', color: C.steel, fontWeight: 600 }}>{h}</span>
             ))}
@@ -972,7 +983,7 @@ function Governance() {
       <section id="resources">
         <SectionHeader eyebrow="// 07.2">{t('resources.title')}</SectionHeader>
         <div style={{ margin: `40px ${H_PAD}px 0` }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', padding: '8px 0', borderBottom: '1px solid rgba(42,44,43,0.16)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', padding: '8px 0', borderBottom: '1px solid var(--bf-border-strong)' }}>
             {[t('resources.col.file'), t('resources.col.purpose')].map(h => (
               <span key={h} style={{ fontFamily: mono, fontSize: 9, letterSpacing: '0.12em', color: C.steel, fontWeight: 600 }}>{h}</span>
             ))}
@@ -1094,7 +1105,7 @@ function Footer() {
   const { t } = useLang()
 
   return (
-    <footer style={{ borderTop: `3px solid rgba(42,44,43,0.15)`, background: C.bg }}>
+    <footer style={{ borderTop: `3px solid var(--bf-border-strong)`, background: C.bg }}>
       <div style={{ padding: `64px ${H_PAD}px 48px`, display: 'grid', gridTemplateColumns: '200px 1fr 240px', gap: 64 }}>
         <div>
           <BicofinoLogo color={C.black} width={130} />
