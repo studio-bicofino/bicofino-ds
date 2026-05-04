@@ -1162,6 +1162,11 @@ const TOP_ROW_LOGOS = [
   '/assets/on-field/sponsors/sponsor-emirates.svg',
   '/assets/on-field/sponsors/sponsor-btg.svg',
   '/assets/on-field/sponsors/sponsor-redbull.svg',
+  '/assets/on-field/sponsors/sponsor-montblanc.svg',
+  '/assets/on-field/sponsors/sponsor-nike.svg',
+  '/assets/on-field/sponsors/sponsor-procter-gamble.svg',
+  '/assets/on-field/sponsors/sponsor-ubs.svg',
+  '/assets/on-field/sponsors/sponsor-illy.svg',
 ]
 
 const BOTTOM_ROW_LOGOS = [
@@ -1170,36 +1175,40 @@ const BOTTOM_ROW_LOGOS = [
   '/assets/on-field/sponsors/sponsor-panini.svg',
   '/assets/on-field/sponsors/sponsor-playstation.svg',
   '/assets/on-field/sponsors/sponsor-zegna.svg',
+  '/assets/on-field/sponsors/sponsor-bombardier.svg',
+  '/assets/on-field/sponsors/sponsor-adidas-originals.svg',
+  '/assets/on-field/sponsors/sponsor-ralph-lauren.svg',
+  '/assets/on-field/sponsors/sponsor-perrier.svg',
+  '/assets/on-field/sponsors/sponsor-cape.svg',
 ]
+
+const LOGO_SIZE = 120
+const LOGO_GAP = 40
 
 function SponsorLogo({ src }: { src: string }) {
   const name = src.split('/').pop()?.replace('sponsor-', '').replace('.svg', '') ?? ''
   return (
     <div
       style={{
-        width: 145,
-        height: 145,
+        width: LOGO_SIZE,
+        height: LOGO_SIZE,
         flexShrink: 0,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'var(--bf-surface)',
-        border: '1px solid var(--bf-border)',
-        borderRadius: 4,
-        padding: 24,
+        marginRight: LOGO_GAP,
       }}
     >
       <img
         src={src}
         alt={name}
-        style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', display: 'block' }}
+        style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', display: 'block', opacity: 0.7 }}
       />
     </div>
   )
 }
 
 function SponsorsCarousel() {
-  const GAP = 16
   return (
     <div style={{ overflow: 'hidden', padding: `0 0 4px` }}>
       <style>{`
@@ -1211,15 +1220,15 @@ function SponsorsCarousel() {
           from { transform: translateX(-50%); }
           to   { transform: translateX(0); }
         }
-        .bf-sponsor-track { display: flex; will-change: transform; }
-        .bf-sponsor-track--left  { animation: bf-scroll-left  32s linear infinite; }
-        .bf-sponsor-track--right { animation: bf-scroll-right 36s linear infinite; }
+        .bf-sponsor-track { display: flex; will-change: transform; backface-visibility: hidden; }
+        .bf-sponsor-track--left  { animation: bf-scroll-left  52s linear infinite; }
+        .bf-sponsor-track--right { animation: bf-scroll-right 58s linear infinite; }
         .bf-sponsor-track:hover  { animation-play-state: paused; }
       `}</style>
 
       {/* Top row — scrolls right → left */}
-      <div style={{ overflow: 'hidden', marginBottom: GAP }}>
-        <div className="bf-sponsor-track bf-sponsor-track--left" style={{ gap: GAP }}>
+      <div style={{ overflow: 'hidden', marginBottom: 32 }}>
+        <div className="bf-sponsor-track bf-sponsor-track--left">
           {[...TOP_ROW_LOGOS, ...TOP_ROW_LOGOS].map((src, i) => (
             <SponsorLogo key={i} src={src} />
           ))}
@@ -1228,7 +1237,7 @@ function SponsorsCarousel() {
 
       {/* Bottom row — scrolls left → right */}
       <div style={{ overflow: 'hidden' }}>
-        <div className="bf-sponsor-track bf-sponsor-track--right" style={{ gap: GAP }}>
+        <div className="bf-sponsor-track bf-sponsor-track--right">
           {[...BOTTOM_ROW_LOGOS, ...BOTTOM_ROW_LOGOS].map((src, i) => (
             <SponsorLogo key={i} src={src} />
           ))}

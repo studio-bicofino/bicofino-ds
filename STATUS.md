@@ -1,6 +1,6 @@
 # Bicofino DS — Status
 
-Atualizado em: 04 mai 2026 (sponsors carousel — // 06 · Assets)
+Atualizado em: 04 mai 2026 (sponsors carousel v2 — smooth loop + 10 logos/row + transparência)
 
 ---
 
@@ -77,6 +77,14 @@ Atualizado em: 04 mai 2026 (sponsors carousel — // 06 · Assets)
 ---
 
 ## Changelog
+
+### 04 mai 2026 — Sponsors Carousel v2 — Smooth Loop + Expand
+
+- **Loop fix** — Substituído `flex gap` por `marginRight` em cada `SponsorLogo` (incluindo o último item de cada set). Com isso, `translateX(-50%)` corresponde exatamente ao width de um set → sem salto.
+- **10 logos por row** — Top row: + Montblanc, Nike, Procter & Gamble, UBS, illy. Bottom row: + Bombardier, Adidas Originals, Ralph Lauren, Perrier, Cape. Duplicação continua (20 nós por track) para loop contínuo.
+- **Transparência** — Removidos `background`, `border`, `borderRadius` e `padding` do card de logo. Logos exibidos com `opacity: 0.7` direto sobre o fundo da seção.
+- **Velocidade ajustada** — 52s (top) / 58s (bottom) para 10 logos por linha.
+- **Deploy** — Produção: https://bicofino.vercel.app · Build READY · Commit `beb9b74`
 
 ### 04 mai 2026 — Sponsors Carousel — // 06 · Assets
 
