@@ -25,6 +25,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       if (stored === 'dark' || stored === 'light') {
         setThemeState(stored)
         document.documentElement.setAttribute('data-theme', stored)
+      } else {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        const initial: Theme = prefersDark ? 'dark' : 'light'
+        setThemeState(initial)
+        document.documentElement.setAttribute('data-theme', initial)
       }
     } catch {}
     document.documentElement.setAttribute('data-theme-loaded', '')

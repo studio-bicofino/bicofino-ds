@@ -54,17 +54,18 @@
   --bf-sidebar-hover:       rgba(242,248,255,0.06);
 }
 
-/* ─── Dark mode — "atelier at night" ─── */
+/* ─── Dark mode — bf Power Black system ─── */
 [data-theme="dark"] {
-  --bf-bg-page:         #33111a;
-  --bf-surface:         rgba(94,76,65,0.32);
-  --bf-surface-subtle:  rgba(94,76,65,0.18);
-  --bf-text-primary:    #f3ebd4;
-  --bf-text-secondary:  #d8d7d3;
-  --bf-text-subtle:     rgba(243,235,212,0.45);
-  --bf-border:          rgba(243,235,212,0.08);
-  --bf-border-strong:   rgba(243,235,212,0.15);
-  --bf-pill-bg:         rgba(243,235,212,0.07);
+  --bf-bg-page:         #061015;
+  --bf-surface:         #2a2c2b;
+  --bf-surface-subtle:  rgba(226, 234, 242, 0.06);
+  --bf-text-primary:    #ffffff;
+  --bf-text-secondary:  #e2eaf2;
+  --bf-text-subtle:     #6d7886;
+  --bf-border:          rgba(226, 234, 242, 0.16);
+  --bf-border-strong:   rgba(226, 234, 242, 0.24);
+  --bf-pill-bg:         rgba(226, 234, 242, 0.08);
+  /* Sidebar tokens — intentionally unchanged */
   --bf-sidebar-bg:          #200c10;
   --bf-sidebar-muted:       rgba(216,215,211,0.5);
   --bf-sidebar-subtle:      rgba(168,201,229,0.55);
@@ -124,7 +125,7 @@ a {
   border-radius: 2px;
 }
 [data-theme="dark"] :focus-visible {
-  outline-color: rgba(243,235,212,0.6);
+  outline-color: rgba(226,234,242,0.6);
 }
 
 /* ─── Scrollbar — minimal ─── */
@@ -132,8 +133,8 @@ a {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(42, 44, 43, 0.15); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(42, 44, 43, 0.3); }
-[data-theme="dark"] ::-webkit-scrollbar-thumb { background: rgba(243,235,212,0.1); }
-[data-theme="dark"] ::-webkit-scrollbar-thumb:hover { background: rgba(243,235,212,0.22); }
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: rgba(226,234,242,0.1); }
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover { background: rgba(226,234,242,0.22); }
 
 /* ─── Sidebar scrollbar — on dark ─── */
 .bf-sidebar::-webkit-scrollbar-thumb { background: rgba(242, 248, 255, 0.1); }
@@ -596,6 +597,46 @@ section { scroll-margin-top: 88px; }
 }
 
 
+/* ─── Theme transition — topbar ─── */
+html[data-theme-loaded] .bf-topbar {
+  transition: background 200ms ease-out, border-color 200ms ease-out;
+}
+
+/* ─── Theme toggle — icon crossfade microinteraction ─── */
+.bf-theme-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  color: var(--bf-text-secondary);
+  opacity: 0.65;
+  transition: opacity 150ms cubic-bezier(0.2, 0, 0, 1);
+  line-height: 0;
+  flex-shrink: 0;
+}
+.bf-theme-btn:hover { opacity: 1; }
+
+.bf-theme-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  opacity: 1;
+  transition:
+    opacity 200ms cubic-bezier(0.2, 0, 0, 1),
+    transform 200ms cubic-bezier(0.2, 0, 0, 1);
+  line-height: 0;
+  pointer-events: none;
+}
+
+.bf-theme-icon--hidden {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(-12deg) scale(0.88);
+}
+
 /* ─── Reduced motion — honour user preference ─── */
 @media (prefers-reduced-motion: reduce) {
   .bf-progress { display: none; }
@@ -625,6 +666,12 @@ section { scroll-margin-top: 88px; }
   .bf-motion-bar--fast { animation: none !important; width: 100%; }
   .bf-motion-bar--base { animation: none !important; width: 100%; }
   .bf-motion-bar--slow { animation: none !important; width: 100%; }
+
+  .bf-theme-icon,
+  .bf-theme-icon--hidden {
+    transition: opacity 120ms cubic-bezier(0.2, 0, 0, 1) !important;
+    transform: translate(-50%, -50%) !important;
+  }
 
 }
 

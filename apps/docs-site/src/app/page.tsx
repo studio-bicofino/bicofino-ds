@@ -161,7 +161,7 @@ function TopBarLangToggle() {
 function TopBar() {
   const { t } = useLang()
   return (
-    <div style={{
+    <div className="bf-topbar" style={{
       position: 'sticky',
       top: 0,
       zIndex: 10,

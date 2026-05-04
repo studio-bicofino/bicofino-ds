@@ -120,6 +120,7 @@ export function OperationsSection() {
       </FocusReveal>
 
       {/* Brand Architecture */}
+      <div id="ops-arch" style={{ scrollMarginTop: 88 }}>
       <SubHeader label={t('ops.arch.label')} title={t('ops.arch.title')} />
       
       <div style={{ margin: '0 ' + H_PAD + 'px', display: 'grid', gridTemplateColumns: '1fr', gap: 40 }}>
@@ -187,7 +188,7 @@ export function OperationsSection() {
               </p>
             </div>
           </div>
-          <div style={{ padding: '20px', background: 'rgba(42,44,43,0.04)', borderRadius: 2 }}>
+          <div style={{ padding: '20px', background: 'var(--bf-surface-subtle)', borderRadius: 2 }}>
             <p style={{ fontSize: 12, fontWeight: 700, color: C.black, marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.04em' }}>{t('ops.offfield.diff.label')}</p>
             <p style={{ fontSize: 13, color: C.steel, lineHeight: 1.6, margin: 0 }}>
               {t('ops.offfield.diff.desc')}
@@ -227,7 +228,10 @@ export function OperationsSection() {
         </ul>
       </div>
 
+      </div>
+
       {/* Delivery Standards */}
+      <div id="ops-delivery" style={{ scrollMarginTop: 88 }}>
       <SubHeader label={t('ops.delivery.label')} title={t('ops.delivery.title')} />
       
       <div style={{ margin: '0 ' + H_PAD + 'px' }}>
@@ -251,12 +255,12 @@ export function OperationsSection() {
       {/* Operation tools */}
       <div style={{ margin: '0 ' + H_PAD + 'px' }}>
         <p style={{ fontFamily: mono, fontSize: 10, letterSpacing: '0.1em', color: C.steel, margin: '0 0 16px', textTransform: 'uppercase' }}>{t('ops.tools.label')}</p>
-        <div style={{ display: 'grid', gridTemplateColumns: '240px 1fr', padding: '8px 0', borderBottom: '1px solid rgba(42,44,43,0.16)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '240px 1fr', padding: '8px 0', borderBottom: '1px solid var(--bf-border-strong)' }}>
           <span style={{ fontFamily: mono, fontSize: 9, letterSpacing: '0.12em', color: C.steel, fontWeight: 600 }}>{t('ops.tools.col.role')}</span>
           <span style={{ fontFamily: mono, fontSize: 9, letterSpacing: '0.12em', color: C.steel, fontWeight: 600 }}>{t('ops.tools.col.tool')}</span>
         </div>
         {tools.map(({ role, name }) => (
-          <div key={role} style={{ display: 'grid', gridTemplateColumns: '240px 1fr', padding: '16px 0', borderBottom: hairline, alignItems: 'center' }}>
+          <div key={role} style={{ display: 'grid', gridTemplateColumns: '240px 1fr', padding: '16px 0', borderBottom: '1px solid var(--bf-border)', alignItems: 'center' }}>
             <span style={{ fontSize: 14, fontWeight: 600, color: C.black, fontFamily: sans }}>{role}</span>
             <span style={{ fontSize: 13, color: C.steel, lineHeight: 1.5 }}>{name}</span>
           </div>
@@ -299,6 +303,8 @@ export function OperationsSection() {
           <p style={{ fontFamily: mono, fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: '0 0 16px', fontStyle: 'italic' }}>{t('ops.brand.version')}</p>
           <p style={{ fontSize: 16, fontWeight: 600, color: C.white, margin: 0, letterSpacing: '-0.01em' }}>{t('ops.brand.tagline')}</p>
         </div>
+      </div>
+
       </div>
 
       <PageFooter line={t('page.footer.line')} />

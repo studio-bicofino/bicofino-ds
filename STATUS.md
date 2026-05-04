@@ -1,6 +1,6 @@
 # Bicofino DS — Status
 
-Atualizado em: 04 mai 2026 (theme controls refactor)
+Atualizado em: 04 mai 2026 (dark mode rebuild + premium toggle)
 
 ---
 
@@ -14,38 +14,45 @@ Atualizado em: 04 mai 2026 (theme controls refactor)
 
 ## Componentes existentes no docs-site
 
-### 01 · Foundations
-- [x] Color Palette (Core + Special)
-- [x] Typography
-- [x] Slash Heading (Lead / Slash / Echo)
+### 01 • Brand System
+- [x] Brand System (cover)
+- [x] Índice
+- [x] Fundamentos
+- [x] Posicionamento
+- [x] Núcleo da Marca
+- [x] Universo Verbal
+
+### 02 • Design System
+- [x] Universo Visual (visão geral do DS)
+- [x] Cores (Paleta Core + Especial + Tokens)
+- [x] Tipografia
+- [x] Heading (Slash Heading — Lead / Slash / Echo)
 - [x] Spacing & Motion
 
-### 02 · Brand
-- [x] Logotype
-- [x] Voice & Tone
-- [x] Verticals
+### 03 • Brand
+- [x] Logotipo
+- [x] Voz & Tom
+- [x] Verticais
 
-### 03 · Components
-- [x] Buttons
+### 04 • Componentes
+- [x] Botões
 - [x] Badges
 - [x] Forms
-- [x] Cards (editorial, result, campaign)
+- [x] Cards (editorial, resultado, campanha)
 
-### 04 · On Field
-- [x] Athlete Image System
+### 05 • Verticais
+- [x] On Field — Image System
 
-### 05 · Performance
+### 06 • Assets
 - [x] Motion Intelligence (métricas animadas)
 - [x] Icons
 
-### 06 · Operações
-- [x] Arquitetura de Marca
-- [x] Padrões de Entrega
-- [x] Ferramentas de Operação
-- [x] Fluxo de Entrega e Política Comercial
+### 07 • Operações
+- [x] Arquitetura de Marca (On Field / Off Field / Club)
+- [x] Padrões de Entrega (Princípios, Ferramentas, Fluxo, Política Comercial)
 
-### 07 · Governance
-- [x] Version & Owners
+### 08 • Governança
+- [x] Versão & Owners
 - [x] Resources
 
 ---
@@ -69,6 +76,24 @@ Atualizado em: 04 mai 2026 (theme controls refactor)
 ---
 
 ## Changelog
+
+### 04 mai 2026 — Dark Mode Rebuild + Premium Toggle
+
+- **Dark Theme → bf Power Black** — Paleta "atelier at night" (caffe/crema) substituída pela paleta core do Bicofino. Novo background: bf Power Black `#061015`, superfície elevada: bf Black `#2a2c2b`, texto primário: `#ffffff`, secundário: bf Aluminium `#e2eaf2`, sutil: bf Steel `#6d7886`. Sentimento: editorial técnico, luxury quieto.
+- **Semantic tokens atualizados** — `--bf-bg-page`, `--bf-surface`, `--bf-surface-subtle`, `--bf-text-primary`, `--bf-text-secondary`, `--bf-text-subtle`, `--bf-border`, `--bf-border-strong`, `--bf-pill-bg` re-mapeados em `[data-theme="dark"]` no `globals.css`. Tokens do Sidebar mantidos intactos.
+- **ThemeToggle — microinteração premium** — Crossfade Sun↔Moon com CSS classes (`bf-theme-icon`, `bf-theme-icon--hidden`). Incoming: `rotate(-12deg) scale(0.88)` → `rotate(0deg) scale(1)`. Outgoing: inverso. 200ms `cubic-bezier(0.2, 0, 0, 1)`. `prefers-reduced-motion`: apenas opacity, sem transform.
+- **Topbar transition** — `.bf-topbar` adicionado; background transita em 200ms ease-out junto com o resto da página.
+- **prefers-color-scheme fallback** — `ThemeProvider` e o script anti-FOUC em `layout.tsx` agora lêem `prefers-color-scheme` quando não há preferência salva em localStorage.
+- **OperationsSection cleanup** — 2 valores `rgba(42,44,43,...)` hardcoded substituídos por `var(--bf-surface-subtle)` e `var(--bf-border-strong)`.
+
+### 04 mai 2026 — Sidebar Accordion + Numbering Refactor
+
+- **Sidebar accordion** — Sidebar convertido em acordeão colapsável. Cada seção é um `<button>` com `aria-expanded`. Estado aberto derivado do scroll via `IntersectionObserver` — sem hardcode. Comportamento single-open: abrir uma seção fecha as outras automaticamente. Animação `max-height 180ms ease-out`.
+- **Novo esquema de numeração** — Seções renumeradas de `// NN · Name` para `// NN • NAME` (01–08). Separador alterado de `·` para `•`, labels em uppercase.
+- **Estrutura de 8 seções** — Adicionadas: `01 • Brand System` (antes sem número), `07 • Operações` (nova). Renomeadas: `Foundations → Design System`, `On Field → Verticais`, `Performance → Assets`, `Governance → Governança`. Items em PT-BR: Botões, Voz & Tom, Cores, Tipografia, Heading, Universo Visual.
+- **Sub-anchors em OperationsSection** — Adicionados `id="ops-arch"` e `id="ops-delivery"` para linking direto de Arquitetura de Marca e Padrões de Entrega.
+- **Estilo dos headers** — Cor do texto dos headers de seção elevada para `--bf-sidebar-text` (branco). Background sutil `rgba(242,248,255,0.06)`. Items em 12px / `--bf-sidebar-muted` (steel `#6d7886`).
+- **Metadata do Sidebar** — Atualizada para `// Brand System` / `// v1.0 • maio 2026` / `// São Paulo • BR`.
 
 ### 04 mai 2026 — Theme Controls Refactor
 
