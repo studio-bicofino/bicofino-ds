@@ -1,6 +1,6 @@
 # Bicofino DS — Status
 
-Atualizado em: 04 mai 2026 (sponsors carousel v3 — logos On Cloud + Nike Swoosh, +30% velocidade, logo home link)
+Atualizado em: 04 mai 2026 (behavioral fixes — sidebar scroll, dark sidebar bg, sponsors dark mode)
 
 ---
 
@@ -77,6 +77,13 @@ Atualizado em: 04 mai 2026 (sponsors carousel v3 — logos On Cloud + Nike Swoos
 ---
 
 ## Changelog
+
+### 04 mai 2026 — Behavioral Fixes: Scroll · Dark Sidebar · Sponsors Dark Mode
+
+- **Sidebar scroll fix** — Logo click agora scrolla `#main-content` (scroll root real) em vez de `window`. Body tem `overflow: hidden`; `window.scrollTo()` não funcionava. Corrigido para `document.getElementById('main-content')?.scrollTo({ top: 0, behavior: 'smooth' })`.
+- **Sidebar dark mode bg** — `--bf-sidebar-bg` em `[data-theme="dark"]` era `#200c10` (caffe/warm). Corrigido para `#2a2c2b` (bf-black — neutro, técnico, consistente com o sistema).
+- **Sponsor logos dark mode** — SVGs carregados como `<img>` desapareciam no dark mode (logos pretos sobre fundo escuro). Adicionada classe `.bf-sponsor-logo` no wrapper e regra CSS: `filter: brightness(0) invert(1); opacity: 0.55` em `[data-theme="dark"]`. Hover eleva para `opacity: 0.85`. Light mode inalterado.
+- **Deploy** — Produção: https://bicofino.vercel.app · Build READY · Commit `f3665d1`
 
 ### 04 mai 2026 — Sponsors Carousel v3 + Sidebar Home Link
 
