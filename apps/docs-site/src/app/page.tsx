@@ -1189,6 +1189,7 @@ function SponsorLogo({ src }: { src: string }) {
   const name = src.split('/').pop()?.replace('sponsor-', '').replace('.svg', '') ?? ''
   return (
     <div
+      className="bf-sponsor-logo"
       style={{
         width: LOGO_SIZE,
         height: LOGO_SIZE,

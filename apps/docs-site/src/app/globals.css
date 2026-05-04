@@ -65,8 +65,8 @@
   --bf-border:          rgba(226, 234, 242, 0.16);
   --bf-border-strong:   rgba(226, 234, 242, 0.24);
   --bf-pill-bg:         rgba(226, 234, 242, 0.08);
-  /* Sidebar tokens — intentionally unchanged */
-  --bf-sidebar-bg:          #200c10;
+  /* Sidebar tokens — dark mode: neutral black, not warm */
+  --bf-sidebar-bg:          #2a2c2b;
   --bf-sidebar-muted:       rgba(216,215,211,0.5);
   --bf-sidebar-subtle:      rgba(168,201,229,0.55);
   --bf-sidebar-divider:     rgba(243,235,212,0.08);
@@ -682,4 +682,13 @@ html[data-theme-loaded] .bf-topbar {
 }
 .editorial-prose p {
   text-wrap: pretty;
+}
+
+/* ─── Sponsors — dark mode logo visibility ─── */
+[data-theme="dark"] .bf-sponsor-logo img {
+  filter: brightness(0) invert(1);
+  opacity: 0.55 !important;
+}
+[data-theme="dark"] .bf-sponsor-logo:hover img {
+  opacity: 0.85 !important;
 }

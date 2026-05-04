@@ -167,8 +167,11 @@ export default function Sidebar() {
       <div style={{ padding: '36px 24px 28px' }}>
         <a
           href="#"
-          onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
-          style={{ display: 'block', lineHeight: 0 }}
+          onClick={e => {
+            e.preventDefault()
+            document.getElementById('main-content')?.scrollTo({ top: 0, behavior: 'smooth' })
+          }}
+          style={{ display: 'block', lineHeight: 0, cursor: 'pointer' }}
           aria-label="Voltar ao início"
         >
           <BicofinoLogo color={C.text} width={120} />
