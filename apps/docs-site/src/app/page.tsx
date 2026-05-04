@@ -182,9 +182,8 @@ function TopBar() {
         <span style={{ fontFamily: sans, fontSize: 12, color: C.steel, fontWeight: 400 }}>{t('topbar.version')}</span>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 20, whiteSpace: 'nowrap' }}>
-        <TopBarLangToggle />
-        <span style={{ fontFamily: mono, fontSize: 8, color: C.platinum, userSelect: 'none', lineHeight: 1 }}>•</span>
         <ThemeToggle />
+        <TopBarLangToggle />
         <p style={{ fontFamily: mono, fontSize: 10, color: C.steel, margin: 0, letterSpacing: '0.08em', display: 'flex', alignItems: 'center' }}>
           {t('topbar.date')}
         </p>

@@ -3,7 +3,7 @@ export const br = {
   'topbar.title': 'Bicofino',
   'topbar.subtitle': 'Brand System',
   'topbar.version': 'V1.0',
-  'topbar.date': '// abril · 2026',
+  'topbar.date': '// maio · 2026',
 
   // Overview
   'meta.eyebrow': '// Sistema de Marca · v2.0',
