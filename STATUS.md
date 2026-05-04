@@ -1,6 +1,6 @@
 # Bicofino DS — Status
 
-Atualizado em: 03 mai 2026 (dark mode)
+Atualizado em: 04 mai 2026 (theme controls refactor)
 
 ---
 
@@ -69,6 +69,16 @@ Atualizado em: 03 mai 2026 (dark mode)
 ---
 
 ## Changelog
+
+### 04 mai 2026 — Theme Controls Refactor
+
+- **ThemeToggle → Topbar** — Toggle de tema movido do rodapé do Sidebar para a Topbar, à esquerda do seletor de idioma. Ordem final: `[☀/🌙]` · `[EN / BR]` · `// maio · 2026`.
+- **Sidebar totalmente tokenizado** — Todos os valores hex hardcoded no `Sidebar.tsx` substituídos por tokens semânticos CSS (`--bf-sidebar-text`, `--bf-sidebar-text-hover`, `--bf-sidebar-hover`, `--bf-sidebar-subtle`). Tokens adicionados ao `globals.css` em `:root` e `[data-theme="dark"]`.
+- **Transição do Sidebar** — `.bf-sidebar` adicionado à regra de transição `html[data-theme-loaded]` — background e cor agora transitam em 200ms ease-out junto com o resto da página.
+- **ThemeToggle redesenhado** — Cor atualizada para `--bf-text-secondary` (contexto de header). Hover muda opacidade (0.6 → 1) em vez de cor — mais sutil, sem ruído visual. Ícone 16px.
+- **Rodapé do Sidebar limpo** — Removidos `LanguageSwitcher` e `ThemeToggle` do rodapé. Permanece somente a tagline editorial `// unlike any other.` em mono, baixo contraste.
+- **BicofinoLogo** — SVG `fill` migrado para `style={{ fill }}` para suportar CSS custom properties corretamente via inline style.
+- **Data atualizada** — `topbar.date` atualizado para `// maio · 2026` (EN: `// may · 2026`) em ambos os dicionários de conteúdo.
 
 ### 03 mai 2026 — Dark Mode
 
