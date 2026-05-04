@@ -87,7 +87,7 @@ Atualizado em: 04 mai 2026 (sponsors carousel — // 06 · Assets)
 - **SVGs** — 45 arquivos adicionados em `public/assets/on-field/sponsors/`. Usados as-is, sem recoloração.
 - **Numeração atualizada** — Icons renumerado de `// 05.3` para `// 05.4` em `en.ts` e `br.ts`.
 - **Sidebar atualizado** — Item "Sponsors" adicionado em `// 06 · ASSETS` entre Motion Intelligence e Icons.
-- **Deploy** — Produção: https://bicofino.vercel.app · Build READY · Commit `{sha}`
+- **Deploy** — Produção: https://bicofino.vercel.app · Build READY · Commit `ce4ccf0`
 
 ### 04 mai 2026 — Diamond Section — Texto Editorial Atualizado
 
