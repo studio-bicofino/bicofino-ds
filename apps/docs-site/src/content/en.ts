@@ -148,7 +148,8 @@ export const en = {
   'brand.logo.rule4': 'Never apply effects, gradients, or shadows.',
   'brand.diamond.label': '// Diamond',
   'brand.diamond.lead':
-    'The diamond symbol is the isolated brand mark — used as a standalone graphic element when the full logotype does not fit or is not needed.',
+    'The isolated brand mark. The four-pointed star ✦ — four axes of precision, balance, contained brilliance. The Diamond carries the same visual metaphor as the name: the fine nozzle that filters, allowing passage only to what deserves it. Four points converging on an exact centre — curation given form.',
+  'brand.diamond.lead2': 'Used as a standalone mark when the full logotype does not fit or is not needed.',
   'brand.diamond.light': '// on light background',
   'brand.diamond.dark': '// on dark background',
   'brand.diamond.crema': '// on crema · fc bicofino',
@@ -320,8 +321,13 @@ export const en = {
   'perf.card6.label': 'Response Time',
   'perf.card6.desc': 'Avg. system latency',
 
+  // Sponsors
+  'sponsors.eyebrow': '// 05.3 · Sponsors',
+  'sponsors.title': 'Sponsors',
+  'sponsors.lead': 'Global brands and reference companies with which Bicofino maintains close relationships — built through access, trust, and strategic context accumulated over time.',
+
   // Icons
-  'icons.eyebrow': '// 05.3 · Icons',
+  'icons.eyebrow': '// 05.4 · Icons',
   'icons.title': 'Icons',
   'icons.lead': 'Icon system built on Lucide. Consistent stroke, single weight, predictable scale. Click any icon to copy the React snippet.',
 

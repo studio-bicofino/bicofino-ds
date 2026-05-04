@@ -69,6 +69,7 @@ function buildNav(t: (k: string) => string) {
       group: '// 06 • ASSETS',
       items: [
         { label: 'Motion Intelligence', href: '#performance-intelligence' },
+        { label: 'Sponsors',            href: '#sponsors' },
         { label: 'Icons',               href: '#icons' },
       ],
     },

@@ -775,6 +775,7 @@ function Brand() {
         <div style={{ padding: `56px ${H_PAD}px 0` }}>
           <p style={{ fontFamily: mono, fontSize: 9, letterSpacing: '0.1em', color: C.steel, margin: '0 0 16px', textTransform: 'uppercase' }}>{t('brand.diamond.label')}</p>
           <Lead>{t('brand.diamond.lead')}</Lead>
+          <Lead>{t('brand.diamond.lead2')}</Lead>
         </div>
 
         <div style={{ margin: `32px ${H_PAD}px 0`, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: 'rgba(42,44,43,0.1)' }}>
@@ -1152,7 +1153,113 @@ function MotionPerformance() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   SECTION 10 — Icons
+   SECTION 10 — Sponsors
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+const TOP_ROW_LOGOS = [
+  '/assets/on-field/sponsors/sponsor-fifa.svg',
+  '/assets/on-field/sponsors/sponsor-audemar-piguet.svg',
+  '/assets/on-field/sponsors/sponsor-emirates.svg',
+  '/assets/on-field/sponsors/sponsor-btg.svg',
+  '/assets/on-field/sponsors/sponsor-redbull.svg',
+]
+
+const BOTTOM_ROW_LOGOS = [
+  '/assets/on-field/sponsors/sponsor-ea-sports.svg',
+  '/assets/on-field/sponsors/sponsor-gillette.svg',
+  '/assets/on-field/sponsors/sponsor-panini.svg',
+  '/assets/on-field/sponsors/sponsor-playstation.svg',
+  '/assets/on-field/sponsors/sponsor-zegna.svg',
+]
+
+function SponsorLogo({ src }: { src: string }) {
+  const name = src.split('/').pop()?.replace('sponsor-', '').replace('.svg', '') ?? ''
+  return (
+    <div
+      style={{
+        width: 145,
+        height: 145,
+        flexShrink: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'var(--bf-surface)',
+        border: '1px solid var(--bf-border)',
+        borderRadius: 4,
+        padding: 24,
+      }}
+    >
+      <img
+        src={src}
+        alt={name}
+        style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', display: 'block' }}
+      />
+    </div>
+  )
+}
+
+function SponsorsCarousel() {
+  const GAP = 16
+  return (
+    <div style={{ overflow: 'hidden', padding: `0 0 4px` }}>
+      <style>{`
+        @keyframes bf-scroll-left {
+          from { transform: translateX(0); }
+          to   { transform: translateX(-50%); }
+        }
+        @keyframes bf-scroll-right {
+          from { transform: translateX(-50%); }
+          to   { transform: translateX(0); }
+        }
+        .bf-sponsor-track { display: flex; will-change: transform; }
+        .bf-sponsor-track--left  { animation: bf-scroll-left  32s linear infinite; }
+        .bf-sponsor-track--right { animation: bf-scroll-right 36s linear infinite; }
+        .bf-sponsor-track:hover  { animation-play-state: paused; }
+      `}</style>
+
+      {/* Top row — scrolls right → left */}
+      <div style={{ overflow: 'hidden', marginBottom: GAP }}>
+        <div className="bf-sponsor-track bf-sponsor-track--left" style={{ gap: GAP }}>
+          {[...TOP_ROW_LOGOS, ...TOP_ROW_LOGOS].map((src, i) => (
+            <SponsorLogo key={i} src={src} />
+          ))}
+        </div>
+      </div>
+
+      {/* Bottom row — scrolls left → right */}
+      <div style={{ overflow: 'hidden' }}>
+        <div className="bf-sponsor-track bf-sponsor-track--right" style={{ gap: GAP }}>
+          {[...BOTTOM_ROW_LOGOS, ...BOTTOM_ROW_LOGOS].map((src, i) => (
+            <SponsorLogo key={i} src={src} />
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function SponsorsSection() {
+  const { t } = useLang()
+
+  return (
+    <section id="sponsors">
+      <SectionHeader eyebrow={t('sponsors.eyebrow')}>{t('sponsors.title')}</SectionHeader>
+
+      <FocusReveal style={{ padding: `40px ${H_PAD}px 0` }}>
+        <Lead>{t('sponsors.lead')}</Lead>
+      </FocusReveal>
+
+      <div style={{ padding: `48px ${H_PAD}px 64px` }}>
+        <SponsorsCarousel />
+      </div>
+
+      <PageFooter line={t('page.footer.line')} />
+    </section>
+  )
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SECTION 11 — Icons
    ═══════════════════════════════════════════════════════════════════════════ */
 function Icons() {
   const { t } = useLang()
@@ -1252,6 +1359,7 @@ export default function Page() {
       <Components />
       <OnFieldSection />
       <MotionPerformance />
+      <SponsorsSection />
       <Icons />
       <OperationsSection />
       <Governance />

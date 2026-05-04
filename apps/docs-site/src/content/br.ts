@@ -148,7 +148,8 @@ export const br = {
   'brand.logo.rule4': 'Nunca aplicar efeitos, gradientes ou sombras.',
   'brand.diamond.label': '// Diamante',
   'brand.diamond.lead':
-    'O símbolo diamante é a forma isolada da marca — usado como elemento gráfico autônomo quando o logotipo completo não cabe ou não é necessário.',
+    'O símbolo isolado da marca. A estrela de quatro pontas ✦ — quatro eixos de precisão, equilíbrio, brilho contido. O Diamond carrega visualmente a mesma metáfora do nome: o bico fino que filtra, que permite a passagem apenas do que merece. Quatro pontas convergindo num centro exato — curadoria com forma.',
+  'brand.diamond.lead2': 'Usado como marca standalone quando o logotipo completo não cabe ou não é necessário.',
   'brand.diamond.light': '// sobre fundo claro',
   'brand.diamond.dark': '// sobre fundo escuro',
   'brand.diamond.crema': '// sobre crema · fc bicofino',
@@ -320,8 +321,13 @@ export const br = {
   'perf.card6.label': 'Tempo de Resposta',
   'perf.card6.desc': 'Latência média do sistema',
 
+  // Sponsors
+  'sponsors.eyebrow': '// 05.3 · Sponsors',
+  'sponsors.title': 'Sponsors',
+  'sponsors.lead': 'Marcas globais e empresas de referência com as quais o Bicofino mantém relações próximas — construídas com acesso, confiança e contexto estratégico ao longo do tempo.',
+
   // Icons
-  'icons.eyebrow': '// 05.3 · Icons',
+  'icons.eyebrow': '// 05.4 · Icons',
   'icons.title': 'Icons',
   'icons.lead': 'Sistema de ícones baseado em Lucide. Traço consistente, peso único, escala previsível. Clique em qualquer ícone para copiar o snippet React.',
 

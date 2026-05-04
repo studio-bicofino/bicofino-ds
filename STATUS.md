@@ -1,6 +1,6 @@
 # Bicofino DS — Status
 
-Atualizado em: 04 mai 2026 (dark mode rebuild + premium toggle)
+Atualizado em: 04 mai 2026 (sponsors carousel — // 06 · Assets)
 
 ---
 
@@ -45,6 +45,7 @@ Atualizado em: 04 mai 2026 (dark mode rebuild + premium toggle)
 
 ### 06 • Assets
 - [x] Motion Intelligence (métricas animadas)
+- [x] Sponsors (carrossel duplo infinito)
 - [x] Icons
 
 ### 07 • Operações
@@ -76,6 +77,24 @@ Atualizado em: 04 mai 2026 (dark mode rebuild + premium toggle)
 ---
 
 ## Changelog
+
+### 04 mai 2026 — Sponsors Carousel — // 06 · Assets
+
+- **SponsorsSection** — Nova seção `// 05.3 · Sponsors` inserida em `// 06 · ASSETS` entre Motion Intelligence e Icons. Slug: `#sponsors`.
+- **Carousel duplo** — Dois tracks infinitos (CSS `@keyframes`): top row scroll right→left (32s), bottom row scroll left→right (36s). Logos duplicados para loop seamless. Hover pausa a animação.
+- **Logos (top row)** — FIFA, Audemars Piguet, Emirates, BTG, Red Bull.
+- **Logos (bottom row)** — EA Sports, Gillette, Panini, PlayStation, Zegna.
+- **SVGs** — 45 arquivos adicionados em `public/assets/on-field/sponsors/`. Usados as-is, sem recoloração.
+- **Numeração atualizada** — Icons renumerado de `// 05.3` para `// 05.4` em `en.ts` e `br.ts`.
+- **Sidebar atualizado** — Item "Sponsors" adicionado em `// 06 · ASSETS` entre Motion Intelligence e Icons.
+- **Deploy** — Produção: https://bicofino.vercel.app · Build READY · Commit `{sha}`
+
+### 04 mai 2026 — Diamond Section — Texto Editorial Atualizado
+
+- **brand.diamond.lead (BR)** — Texto editorial da seção Diamante reescrito. Novo texto: dois parágrafos — o primeiro contextualiza o símbolo (estrela ✦, quatro eixos, metáfora do bico fino, curadoria com forma); o segundo reitera o uso standalone. Key `brand.diamond.lead2` adicionada ao dicionário BR e EN.
+- **brand.diamond.lead (EN)** — Tradução correspondente adicionada ao dicionário EN.
+- **page.tsx** — Segunda `<Lead>` adicionada para renderizar o parágrafo `brand.diamond.lead2` na seção Diamond.
+- **Deploy** — Produção: https://bicofino.vercel.app · Build READY · Commit `7f114fd`
 
 ### 04 mai 2026 — Dark Mode Rebuild + Premium Toggle
 
