@@ -2,17 +2,15 @@
 
 import { useState, useEffect } from 'react'
 import { BicofinoLogo } from './BicofinoLogo'
-import { LanguageSwitcher } from './LanguageSwitcher'
-import { ThemeToggle } from './ThemeToggle'
 import { useLang } from '@/content'
 
 const C = {
   bg:      'var(--bf-sidebar-bg)',
-  text:    '#f2f8ff',
+  text:    'var(--bf-sidebar-text)',
   muted:   'var(--bf-sidebar-muted)',
-  subtle:  '#a8c9e5',
+  subtle:  'var(--bf-sidebar-subtle)',
   active:  'var(--current-accent)',
-  hover:   'rgba(242,248,255,0.06)',
+  hover:   'var(--bf-sidebar-hover)',
   divider: 'var(--bf-sidebar-divider)',
 }
 
@@ -174,7 +172,7 @@ export default function Sidebar() {
                     padding: '7px 24px 7px 22px',
                     fontSize: 13,
                     fontFamily: sans,
-                    color: isActive ? C.text : isHovered ? 'rgba(242,248,255,0.75)' : C.subtle,
+                    color: isActive ? C.text : isHovered ? 'var(--bf-sidebar-text-hover)' : C.subtle,
                     textDecoration: 'none',
                     borderLeft: isActive ? `2px solid ${C.active}` : '2px solid transparent',
                     background: isHovered && !isActive ? C.hover : 'transparent',
@@ -191,16 +189,11 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      {/* Bottom bar with tagline + controls */}
-      <div style={{ borderTop: `1px solid ${C.divider}`, padding: '14px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      {/* Sidebar footer — editorial only */}
+      <div style={{ borderTop: `1px solid ${C.divider}`, padding: '14px 24px' }}>
         <p style={{ fontFamily: mono, fontSize: 9, color: C.muted, margin: 0, letterSpacing: '0.06em' }}>
-          {t('sidebar.tagline')}
+          // unlike any other.
         </p>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <ThemeToggle />
-          <span style={{ fontFamily: mono, fontSize: 8, color: 'rgba(242,248,255,0.18)', userSelect: 'none' }}>•</span>
-          <LanguageSwitcher />
-        </div>
       </div>
     </aside>
   )

@@ -45,10 +45,13 @@
   --bf-border:          rgba(42,44,43,0.08);
   --bf-border-strong:   rgba(42,44,43,0.16);
   --bf-pill-bg:         rgba(42,44,43,0.06);
-  --bf-sidebar-bg:      #2a2c2b;
-  --bf-sidebar-muted:   #6d7886;
-  --bf-sidebar-subtle:  rgba(168,201,229,0.7);
-  --bf-sidebar-divider: rgba(242,248,255,0.08);
+  --bf-sidebar-bg:          #2a2c2b;
+  --bf-sidebar-muted:       #6d7886;
+  --bf-sidebar-subtle:      rgba(168,201,229,0.7);
+  --bf-sidebar-divider:     rgba(242,248,255,0.08);
+  --bf-sidebar-text:        #f2f8ff;
+  --bf-sidebar-text-hover:  rgba(242,248,255,0.75);
+  --bf-sidebar-hover:       rgba(242,248,255,0.06);
 }
 
 /* ─── Dark mode — "atelier at night" ─── */
@@ -62,16 +65,20 @@
   --bf-border:          rgba(243,235,212,0.08);
   --bf-border-strong:   rgba(243,235,212,0.15);
   --bf-pill-bg:         rgba(243,235,212,0.07);
-  --bf-sidebar-bg:      #200c10;
-  --bf-sidebar-muted:   rgba(216,215,211,0.5);
-  --bf-sidebar-subtle:  rgba(168,201,229,0.55);
-  --bf-sidebar-divider: rgba(243,235,212,0.08);
+  --bf-sidebar-bg:          #200c10;
+  --bf-sidebar-muted:       rgba(216,215,211,0.5);
+  --bf-sidebar-subtle:      rgba(168,201,229,0.55);
+  --bf-sidebar-divider:     rgba(243,235,212,0.08);
+  --bf-sidebar-text:        #f2f8ff;
+  --bf-sidebar-text-hover:  rgba(242,248,255,0.75);
+  --bf-sidebar-hover:       rgba(242,248,255,0.06);
 }
 
 /* ─── Theme transition — only after initial mount to avoid FOUC ─── */
 html[data-theme-loaded] body,
 html[data-theme-loaded] .of-central-panel,
-html[data-theme-loaded] .of-portrait-col {
+html[data-theme-loaded] .of-portrait-col,
+html[data-theme-loaded] .bf-sidebar {
   transition: background 200ms ease-out, color 200ms ease-out;
 }
 

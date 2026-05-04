@@ -17,16 +17,17 @@ export function ThemeToggle() {
         padding: 0,
         display: 'flex',
         alignItems: 'center',
-        color: 'var(--bf-sidebar-subtle)',
-        transition: 'color 150ms cubic-bezier(0.2,0,0,1)',
+        color: 'var(--bf-text-secondary)',
+        opacity: 0.6,
+        transition: 'opacity 150ms cubic-bezier(0.2,0,0,1)',
         lineHeight: 0,
       }}
-      onMouseEnter={e => (e.currentTarget.style.color = 'rgba(242,248,255,0.85)')}
-      onMouseLeave={e => (e.currentTarget.style.color = 'var(--bf-sidebar-subtle)')}
+      onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
+      onMouseLeave={e => (e.currentTarget.style.opacity = '0.6')}
     >
       {isDark
-        ? <Sun size={13} strokeWidth={1.5} />
-        : <Moon size={13} strokeWidth={1.5} />
+        ? <Sun size={16} strokeWidth={1.5} />
+        : <Moon size={16} strokeWidth={1.5} />
       }
     </button>
   )
