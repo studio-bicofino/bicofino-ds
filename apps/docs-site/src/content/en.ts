@@ -6,7 +6,7 @@ export const en = {
   'topbar.date': '// may · 2026',
 
   // Overview
-  'meta.eyebrow': '// Brand System · v2.0',
+  'meta.eyebrow': '// DESIGN SYSTEM · V1.0',
   'overview.lead':
     'The Bicofino Group design system codifies the Visual Identity Manual into tokens, components, and reusable patterns. Built to maintain fidelity across verticals — On Field and Off Field — without sacrificing operational velocity.',
   'overview.meta.version': 'VERSION',
@@ -14,10 +14,10 @@ export const en = {
   'overview.meta.owner': 'OWNER',
   'overview.meta.base': 'BASE',
   'overview.meta.verticals': 'VERTICALS',
-  'foundations.eyebrow': '// 01 · Foundations',
-  'foundations.title': 'Foundations',
+  'foundations.eyebrow': '// 01 · Universo Visual',
+  'foundations.title': 'Universo Visual',
   'foundations.lead':
-    'Low-level decisions that everything else inherits — palette, typography, spacing, and motion. The only layer where new tokens may be introduced.',
+    'The Bicofino visual universe operates on four qualities that are constant and ever-present — across every communication, every vertical, every format.',
 
   // Colors
   'colors.title': 'Color Palette',

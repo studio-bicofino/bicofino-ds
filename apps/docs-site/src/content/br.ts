@@ -6,18 +6,18 @@ export const br = {
   'topbar.date': '// maio · 2026',
 
   // Overview
-  'meta.eyebrow': '// Sistema de Marca · v2.0',
+  'meta.eyebrow': '// DESIGN SYSTEM · V1.0',
   'overview.lead':
-    'O sistema de design do Bicofino Group codifica o Manual de Identidade Visual em tokens, componentes e padrões reutilizáveis. Feito para manter fidelidade entre as verticais — On Field e Off Field — sem sacrificar velocidade operacional.',
+    'O sistema de design do Bicofino Group organiza os fundamentos visuais, verbais e operacionais que sustentam sua presença de marca. Feito para preservar coerência estética, clareza estratégica e reconhecimento em todas as vertentes — sem sacrificar velocidade operacional.',
   'overview.meta.version': 'VERSÃO',
   'overview.meta.published': 'PUBLICADO',
   'overview.meta.owner': 'OWNER',
   'overview.meta.base': 'BASE',
   'overview.meta.verticals': 'VERTICAIS',
-  'foundations.eyebrow': '// 01 · Foundations',
-  'foundations.title': 'Foundations',
+  'foundations.eyebrow': '// 01 · Universo Visual',
+  'foundations.title': 'Universo Visual',
   'foundations.lead':
-    'Decisões de baixo nível que todo o resto herda — paleta, tipografia, espaçamento e motion. São os únicos níveis em que tokens novos podem ser introduzidos.',
+    'O universo visual do Bicofino opera sobre quatro qualidades que são constante e pano de fundo — presentes em toda comunicação, de toda vertente, em qualquer formato.',
 
   // Colors
   'colors.title': 'Paleta de Cores',

@@ -111,6 +111,60 @@ function PageFooter({ line }: { line: string }) {
   )
 }
 
+function AccordionItem({ title, children }: { title: React.ReactNode; children: React.ReactNode }) {
+  const [open, setOpen] = React.useState(false)
+  const [hover, setHover] = React.useState(false)
+  return (
+    <div style={{ borderTop: hairline }}>
+      <button
+        onClick={() => setOpen(o => !o)}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        style={{
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          width: '100%', padding: `20px ${H_PAD}px`,
+          background: 'none', border: 'none', cursor: 'pointer',
+          textAlign: 'left' as const,
+        }}
+      >
+        <span style={{
+          display: 'inline-block',
+          fontSize: 20,
+          fontWeight: 700,
+          letterSpacing: '-0.015em',
+          color: hover ? C.steel : C.black,
+          lineHeight: 1.2,
+          fontFamily: sans,
+          transform: hover ? 'translateX(6px)' : 'translateX(0)',
+          transition: 'all 250ms ease-out',
+        }}>
+          {title}
+        </span>
+        <span style={{
+          fontFamily: mono, fontSize: 13,
+          color: hover ? C.black : C.steel,
+          flexShrink: 0, marginLeft: 24,
+          transform: hover ? 'scale(1.2)' : 'scale(1)',
+          transition: 'all 250ms ease-out',
+        }}>
+          {open ? '−' : '+'}
+        </span>
+      </button>
+      <div style={{
+        display: 'grid',
+        gridTemplateRows: open ? '1fr' : '0fr',
+        transition: 'grid-template-rows 300ms ease-out',
+      }}>
+        <div style={{ overflow: 'hidden' }}>
+          <div style={{ padding: `4px ${H_PAD}px 28px` }}>
+            {children}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 /* ─── Header bar ─── */
 function TopBarLangToggle() {
   const { lang, setLang } = useLang()
@@ -199,10 +253,10 @@ function Overview() {
   const { t } = useLang()
 
   const meta = [
-    { label: t('overview.meta.version'),   value: '2.0 · ongoing' },
-    { label: t('overview.meta.published'), value: 'abril · 2026' },
+    { label: t('overview.meta.version'),   value: '1.0 · ongoing' },
+    { label: t('overview.meta.published'), value: 'maio · 2026' },
     { label: t('overview.meta.owner'),     value: 'Woney Malian / Fabio Brancatelli' },
-    { label: t('overview.meta.base'),      value: 'MIV v2.0 · Playbook Visual abril/2026' },
+    { label: t('overview.meta.base'),      value: 'DS Bicofino 2026' },
     { label: t('overview.meta.verticals'), value: 'On Field · Off Field' },
   ]
 
@@ -213,7 +267,7 @@ function Overview() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 280px', gap: 72, alignItems: 'end', marginTop: 24 }}>
           <div>
             <div className="bf-load-stagger" style={{ fontSize: 'clamp(56px, 7vw, 104px)', lineHeight: 0.92, fontWeight: 700, fontFamily: sans, marginBottom: 40 }}>
-              {(['Connect.', 'Curate.', 'Create.', 'Consult.'] as const).map((word, i) => (
+              {(['Brand.', 'Identidade.', 'Imagem.'] as const).map((word, i) => (
                 <div key={word} className="bf-stagger-item" style={{ color: C.black, animationDelay: `${i * 70}ms` }}>
                   {word}
                 </div>
@@ -233,14 +287,48 @@ function Overview() {
         </div>
       </div>
 
-      {/* Foundations intro card */}
-      <FocusReveal style={{ padding: `64px ${H_PAD}px`, borderBottom: hairline }}>
-        <Eyebrow>{t('foundations.eyebrow')}</Eyebrow>
-        <h2 style={{ fontSize: 36, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: '0 0 16px', fontFamily: sans }}>
-          {t('foundations.title')}
-        </h2>
-        <Lead>{t('foundations.lead')}</Lead>
-      </FocusReveal>
+      {/* Universo Visual intro + accordions */}
+      <div style={{ borderBottom: hairline }}>
+        <FocusReveal style={{ padding: `64px ${H_PAD}px 40px` }}>
+          <Eyebrow>{t('foundations.eyebrow')}</Eyebrow>
+          <h2 style={{ fontSize: 36, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: '0 0 16px', fontFamily: sans }}>
+            {t('foundations.title')}
+          </h2>
+          <Lead>{t('foundations.lead')}</Lead>
+        </FocusReveal>
+        <AccordionItem title="Minimalismo sofisticado">
+          <p lang="pt-BR" className="editorial-prose" style={{ fontSize: 15, lineHeight: 1.75, color: C.black, margin: 0, fontFamily: sans }}>
+            Espaço em branco é um elemento ativo, não ausência de conteúdo. Quanto menos elementos competem pela atenção, maior o impacto de cada um.
+          </p>
+        </AccordionItem>
+        <AccordionItem title="Quiet Luxury como calibrador">
+          <p lang="pt-BR" className="editorial-prose" style={{ fontSize: 15, lineHeight: 1.75, color: C.black, margin: 0, fontFamily: sans }}>
+            A referência visual é Hermès, Loro Piana, Brunello Cucinelli, Audemars Piguet, The Row. Qualidade que se percebe antes de se ler o nome da marca.
+          </p>
+        </AccordionItem>
+        <AccordionItem title="Hierarquia clara">
+          <p lang="pt-BR" className="editorial-prose" style={{ fontSize: 15, lineHeight: 1.75, color: C.black, margin: 0, fontFamily: sans }}>
+            Todo layout Bicofino tem uma leitura principal e uma secundária. Nunca três elementos disputando o mesmo peso visual.
+          </p>
+        </AccordionItem>
+        <AccordionItem title="Permanência sobre tendência">
+          <p lang="pt-BR" className="editorial-prose" style={{ fontSize: 15, lineHeight: 1.75, color: C.black, margin: 0, fontFamily: sans }}>
+            O Bicofino não segue estética de momento. Cada peça visual deve ter capacidade de envelhecer bem — como o couro que fica melhor com o tempo.
+          </p>
+        </AccordionItem>
+        <AccordionItem title="O Toque Artesanal — o quinto elemento">
+          <p lang="pt-BR" className="editorial-prose" style={{ fontSize: 15, lineHeight: 1.75, color: C.black, margin: '0 0 20px', fontFamily: sans }}>
+            As quatro qualidades acima são o sistema. O toque artesanal é o que diferencia o Bicofino de qualquer sistema de marca bem executado.
+          </p>
+          <p lang="pt-BR" className="editorial-prose" style={{ fontSize: 15, lineHeight: 1.75, color: C.black, margin: '0 0 20px', fontFamily: sans }}>
+            Em momentos pontuais e estrategicamente escolhidos, o Bicofino age de forma inteiramente artesanal e humana: um tratamento fotográfico inesperado num post de atleta, um grid que rompe sua própria lógica de forma calculada, uma peça com acabamento manual que ninguém esperaria no digital. Cada execução é diferente da anterior — às vezes limpa, às vezes tecnológica, às vezes com tratamento artístico artesanal, às vezes impactante e densa. Mas todas reconhecivelmente Bicofino.
+          </p>
+          <p lang="pt-BR" className="editorial-prose" style={{ fontSize: 15, lineHeight: 1.75, color: C.black, margin: 0, fontFamily: sans }}>
+            Esses momentos não são frequentes — e não devem ser. São raros, surgem quando a ocasião exige, e é exatamente essa raridade que os torna poderosos. O toque artesanal é o fator humano que não se replica em escala. É o que transforma um sistema bem executado numa marca viva.
+          </p>
+        </AccordionItem>
+        <div style={{ height: 40 }} />
+      </div>
     </section>
   )
 }
