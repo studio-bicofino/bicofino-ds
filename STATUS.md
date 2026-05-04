@@ -1,6 +1,6 @@
 # Bicofino DS — Status
 
-Atualizado em: 04 mai 2026 (sponsors carousel v2 — smooth loop + 10 logos/row + transparência)
+Atualizado em: 04 mai 2026 (sponsors carousel v3 — logos On Cloud + Nike Swoosh, +30% velocidade, logo home link)
 
 ---
 
@@ -77,6 +77,13 @@ Atualizado em: 04 mai 2026 (sponsors carousel v2 — smooth loop + 10 logos/row 
 ---
 
 ## Changelog
+
+### 04 mai 2026 — Sponsors Carousel v3 + Sidebar Home Link
+
+- **Logo swap** — Top row: `sponsor-nike.svg` → `sponsor-nike-swoosh.svg`. Bottom row: `sponsor-adidas-originals.svg` → `sponsor-on-cloud.svg`.
+- **+30% velocidade** — Durations: 52s→40s (top), 58s→45s (bottom).
+- **Sidebar home link** — BicofinoLogo no topo da sidebar envolvido em `<a>` com `onClick` → `window.scrollTo({ top: 0, behavior: 'smooth' })`. Cursor pointer, sem sublinhado.
+- **Deploy** — Produção: https://bicofino.vercel.app · Build READY · Commit `df3f6e2`
 
 ### 04 mai 2026 — Sponsors Carousel v2 — Smooth Loop + Expand
 
