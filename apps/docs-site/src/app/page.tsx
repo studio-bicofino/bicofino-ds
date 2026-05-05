@@ -11,7 +11,7 @@ import { OnFieldSection } from '@/components/OnFieldSection'
 import { OperationsSection } from '@/components/OperationsSection'
 import BrandSystem from '@/components/BrandSystem'
 import { ThemeToggle } from '@/components/ThemeToggle'
-import { useLang } from '@/content'
+import { useLang, type Lang } from '@/content'
 import { Clock, TrendingUp, ArrowDownRight, Zap, Cpu, Activity } from 'lucide-react'
 import React from 'react'
 
@@ -168,9 +168,10 @@ function AccordionItem({ title, children }: { title: React.ReactNode; children: 
 /* ─── Header bar ─── */
 function TopBarLangToggle() {
   const { lang, setLang } = useLang()
-  const options: { code: 'en' | 'br'; label: string; activeColor: string }[] = [
+  const options: { code: Lang; label: string; activeColor: string }[] = [
     { code: 'en', label: 'EN', activeColor: C.como },
     { code: 'br', label: 'BR', activeColor: C.sep },
+    { code: 'it', label: 'IT', activeColor: C.benfica },
   ]
   return (
     <div style={{
@@ -400,14 +401,14 @@ function Colors() {
 
   return (
     <section id="colors">
-      <SectionHeader eyebrow="// 01.1">{t('colors.title')}</SectionHeader>
+      <SectionHeader eyebrow="// 02.2">{t('colors.title')}</SectionHeader>
 
       <FocusReveal style={{ padding: `56px ${H_PAD}px 0` }}>
         <Lead>{t('colors.lead')}</Lead>
       </FocusReveal>
 
       {/* Básicas */}
-      <SubHeader label="// 01.1.1" title={t('colors.basics.title')} />
+      <SubHeader label="// 02.2.1" title={t('colors.basics.title')} />
       <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 1fr 1fr', margin: `0 ${H_PAD}px`, gap: 1, background: 'rgba(42,44,43,0.1)' }}>
         {basics.map(swatchCard)}
       </div>
@@ -419,7 +420,7 @@ function Colors() {
       </div>
 
       {/* Especiais */}
-      <SubHeader label="// 01.1.2" title={t('colors.specials.title')} />
+      <SubHeader label="// 02.2.2" title={t('colors.specials.title')} />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', margin: `0 ${H_PAD}px`, gap: 1, background: 'rgba(42,44,43,0.1)' }}>
         {specials.map(r => (
           <div key={r.name} style={{ background: r.hex, padding: '24px 20px', minHeight: 140, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -444,7 +445,7 @@ function Colors() {
       </div>
 
       {/* Token table */}
-      <SubHeader label="// 01.1.4" title={t('colors.tokens.title')} />
+      <SubHeader label="// 02.2.4" title={t('colors.tokens.title')} />
       <div style={{ margin: `0 ${H_PAD}px 0` }}>
         <div style={{ display: 'grid', gridTemplateColumns: '200px 160px 200px 1fr', padding: '8px 0', borderBottom: '1px solid var(--bf-border-strong)' }}>
           {[t('table.col.token'), t('table.col.value'), t('table.col.name'), t('table.col.role')].map(h => (
@@ -504,12 +505,12 @@ function Typography() {
 
   return (
     <section id="typography">
-      <SectionHeader eyebrow="// 01.2">{t('typography.title')}</SectionHeader>
+      <SectionHeader eyebrow="// 02.3">{t('typography.title')}</SectionHeader>
       <div style={{ padding: `40px ${H_PAD}px 0` }}>
         <Lead>{t('typography.lead')}</Lead>
       </div>
 
-      <SubHeader label="// 01.2.1 · fonte principal" title="Inter" />
+      <SubHeader label="// 02.3.1 · fonte principal" title="Inter" />
       {fontCard(
         'Inter',
         t('font.inter.subtitle'),
@@ -523,7 +524,7 @@ function Typography() {
         ]
       )}
 
-      <SubHeader label="// 01.2.2 · monospaced" title="JetBrains Mono" />
+      <SubHeader label="// 02.3.2 · monospaced" title="JetBrains Mono" />
       {fontCard(
         'JetBrains Mono',
         t('font.mono.subtitle'),
@@ -537,7 +538,7 @@ function Typography() {
         ]
       )}
 
-      <SubHeader label="// 01.2.3" title="Type Scale" />
+      <SubHeader label="// 02.3.3" title="Type Scale" />
       <div style={{ margin: `0 ${H_PAD}px 0` }}>
         {scale.map(({ label, size, lh, ls, fw }) => (
           <div key={label} style={{ display: 'grid', gridTemplateColumns: '100px 1fr 220px', alignItems: 'center', borderBottom: hairline, padding: '12px 0', gap: 24 }}>
@@ -571,7 +572,7 @@ function SlashHeading() {
 
   return (
     <section id="slash-heading">
-      <SectionHeader eyebrow="// 01.3">{t('slash.title')}</SectionHeader>
+      <SectionHeader eyebrow="// 02.4">{t('slash.title')}</SectionHeader>
       <div style={{ padding: `40px ${H_PAD}px 0` }}>
         <Lead>{t('slash.lead')}</Lead>
       </div>
@@ -631,12 +632,12 @@ function SpacingMotion() {
 
   return (
     <section id="spacing-motion">
-      <SectionHeader eyebrow="// 01.4">{t('spacing.title')}</SectionHeader>
+      <SectionHeader eyebrow="// 02.5">{t('spacing.title')}</SectionHeader>
       <div style={{ padding: `40px ${H_PAD}px 0` }}>
         <Lead>{t('spacing.lead')}</Lead>
       </div>
 
-      <SubHeader label="// 01.4.1" title={t('spacing.section.title')} />
+      <SubHeader label="// 02.5.1" title={t('spacing.section.title')} />
       <div style={{ margin: `0 ${H_PAD}px` }}>
         <div style={{ display: 'grid', gridTemplateColumns: '120px 60px 80px 1fr 200px', padding: '8px 0', borderBottom: '1px solid rgba(42,44,43,0.16)' }}>
           {[t('spacing.col.token'), t('spacing.col.px'), t('spacing.col.rem'), t('spacing.col.usage'), t('spacing.col.visual')].map(h => (
@@ -654,7 +655,7 @@ function SpacingMotion() {
         ))}
       </div>
 
-      <SubHeader label="// 01.4.2" title={t('motion.section.title')} />
+      <SubHeader label="// 02.5.2" title={t('motion.section.title')} />
       <div style={{ margin: `0 ${H_PAD}px` }}>
         {[
           { token: 'dur-fast', ms: 120 },
@@ -679,7 +680,7 @@ function SpacingMotion() {
         </div>
       </div>
 
-      <SubHeader label="// 01.4.3" title={t('radius.section.title')} />
+      <SubHeader label="// 02.5.3" title={t('radius.section.title')} />
       <div style={{ padding: `0 ${H_PAD}px 64px`, display: 'flex', gap: 40, alignItems: 'flex-end' }}>
         {[
           { label: '--radius', value: '2px', r: 2 },
@@ -708,7 +709,7 @@ function Brand() {
   return (
     <>
       <section id="logotipo">
-        <SectionHeader eyebrow="// 02 · Brand">{t('brand.logo.title')}</SectionHeader>
+        <SectionHeader eyebrow="// 03 • BRAND">{t('brand.logo.title')}</SectionHeader>
         <FocusReveal style={{ padding: `40px ${H_PAD}px 0` }}>
           <Lead>{t('brand.logo.lead')}</Lead>
         </FocusReveal>
@@ -824,7 +825,7 @@ function Brand() {
       </section>
 
       <section id="voice-tone">
-        <SectionHeader eyebrow="// 02.2">{t('voice.title')}</SectionHeader>
+        <SectionHeader eyebrow="// 03.2">{t('voice.title')}</SectionHeader>
         <FocusReveal style={{ padding: `40px ${H_PAD}px 0` }}>
           <Lead>{t('voice.lead')}</Lead>
         </FocusReveal>
@@ -845,26 +846,36 @@ function Brand() {
         </StaggerGroup>
       </section>
 
-      <section id="verticais">
-        <SectionHeader eyebrow="// 02.3">{t('verticais.title')}</SectionHeader>
-        <FocusReveal style={{ padding: `40px ${H_PAD}px 0` }}>
-          <Lead>{t('verticais.lead')}</Lead>
-        </FocusReveal>
-
-        <div className="bf-stagger-parent" style={{ margin: `40px ${H_PAD}px 64px`, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: 'rgba(42,44,43,0.1)' }}>
-          <div className="bf-stagger-item" style={{ background: C.white, padding: '40px 36px', borderTop: `3px solid ${C.black}` }}>
-            <p style={{ fontFamily: mono, fontSize: 9, color: C.steel, margin: '0 0 20px', letterSpacing: '0.1em' }}>// 02.3.1</p>
-            <h3 style={{ fontSize: 24, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: '0 0 12px', fontFamily: sans }}>On Field</h3>
-            <p style={{ fontSize: 14, lineHeight: 1.65, color: C.steel }}>{t('verticais.onfield.desc')}</p>
-          </div>
-          <div className="bf-stagger-item" style={{ background: C.white, padding: '40px 36px', borderTop: `3px solid ${C.steel}` }}>
-            <p style={{ fontFamily: mono, fontSize: 9, color: C.steel, margin: '0 0 20px', letterSpacing: '0.1em' }}>// 02.3.2</p>
-            <h3 style={{ fontSize: 24, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: '0 0 12px', fontFamily: sans }}>Off Field</h3>
-            <p style={{ fontSize: 14, lineHeight: 1.65, color: C.steel }}>{t('verticais.offfield.desc')}</p>
-          </div>
-        </div>
-      </section>
     </>
+  )
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SECTION 6b — Verticais (05.1)
+   ═══════════════════════════════════════════════════════════════════════════ */
+function VerticaisSection() {
+  const { t } = useLang()
+
+  return (
+    <section id="verticais">
+      <SectionHeader eyebrow="// 05.1">{t('verticais.title')}</SectionHeader>
+      <FocusReveal style={{ padding: `40px ${H_PAD}px 0` }}>
+        <Lead>{t('verticais.lead')}</Lead>
+      </FocusReveal>
+
+      <div className="bf-stagger-parent" style={{ margin: `40px ${H_PAD}px 64px`, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: 'rgba(42,44,43,0.1)' }}>
+        <div className="bf-stagger-item" style={{ background: C.white, padding: '40px 36px', borderTop: `3px solid ${C.black}` }}>
+          <p style={{ fontFamily: mono, fontSize: 9, color: C.steel, margin: '0 0 20px', letterSpacing: '0.1em' }}>// 05.1.1</p>
+          <h3 style={{ fontSize: 24, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: '0 0 12px', fontFamily: sans }}>On Field</h3>
+          <p style={{ fontSize: 14, lineHeight: 1.65, color: C.steel }}>{t('verticais.onfield.desc')}</p>
+        </div>
+        <div className="bf-stagger-item" style={{ background: C.white, padding: '40px 36px', borderTop: `3px solid ${C.steel}` }}>
+          <p style={{ fontFamily: mono, fontSize: 9, color: C.steel, margin: '0 0 20px', letterSpacing: '0.1em' }}>// 05.1.2</p>
+          <h3 style={{ fontSize: 24, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: '0 0 12px', fontFamily: sans }}>Off Field</h3>
+          <p style={{ fontSize: 14, lineHeight: 1.65, color: C.steel }}>{t('verticais.offfield.desc')}</p>
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -877,7 +888,7 @@ function Components() {
   return (
     <>
       <section id="buttons">
-        <SectionHeader eyebrow="// 03 · Components">{t('buttons.title')}</SectionHeader>
+        <SectionHeader eyebrow="// 04 • COMPONENTES">{t('buttons.title')}</SectionHeader>
         <div style={{ padding: `40px ${H_PAD}px 0` }}>
           <Lead>{t('buttons.lead')}</Lead>
         </div>
@@ -928,7 +939,7 @@ function Components() {
       </section>
 
       <section id="badges">
-        <SectionHeader eyebrow="// 03.2">{t('badges.title')}</SectionHeader>
+        <SectionHeader eyebrow="// 04.2">{t('badges.title')}</SectionHeader>
         <div style={{ padding: `40px ${H_PAD}px 0` }}>
           <Lead>{t('badges.lead')}</Lead>
         </div>
@@ -950,7 +961,7 @@ function Components() {
       </section>
 
       <section id="forms">
-        <SectionHeader eyebrow="// 03.3">{t('forms.title')}</SectionHeader>
+        <SectionHeader eyebrow="// 04.3">{t('forms.title')}</SectionHeader>
         <div style={{ padding: `40px ${H_PAD}px 0` }}>
           <Lead>{t('forms.lead')}</Lead>
         </div>
@@ -999,7 +1010,7 @@ function Components() {
       </section>
 
       <section id="cards">
-        <SectionHeader eyebrow="// 03.4">{t('cards.title')}</SectionHeader>
+        <SectionHeader eyebrow="// 04.4">{t('cards.title')}</SectionHeader>
         <div style={{ padding: `40px ${H_PAD}px 0` }}>
           <Lead>{t('cards.lead')}</Lead>
         </div>
@@ -1049,7 +1060,7 @@ function Governance() {
   return (
     <>
       <section id="governance">
-        <SectionHeader eyebrow="// 07 · Governance">{t('governance.title')}</SectionHeader>
+        <SectionHeader eyebrow="// 08 • GOVERNANÇA">{t('governance.title')}</SectionHeader>
         <div style={{ padding: `40px ${H_PAD}px 0` }}>
           <Lead>{t('governance.lead')}</Lead>
         </div>
@@ -1072,7 +1083,7 @@ function Governance() {
       </section>
 
       <section id="resources">
-        <SectionHeader eyebrow="// 07.2">{t('resources.title')}</SectionHeader>
+        <SectionHeader eyebrow="// 08.2">{t('resources.title')}</SectionHeader>
         <div style={{ margin: `40px ${H_PAD}px 0` }}>
           <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', padding: '8px 0', borderBottom: '1px solid var(--bf-border-strong)' }}>
             {[t('resources.col.file'), t('resources.col.purpose')].map(h => (
@@ -1346,7 +1357,7 @@ function Footer() {
 
       <div style={{ borderTop: hairline, padding: `14px ${H_PAD}px`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <p style={{ fontFamily: mono, fontSize: 10, color: C.steel, margin: 0, letterSpacing: '0.06em' }}>{t('footer.tagline')}</p>
-        <p style={{ fontFamily: mono, fontSize: 10, color: C.platinum, margin: 0, letterSpacing: '0.1em' }}>// v2.0 · 04 · 2026</p>
+        <p style={{ fontFamily: mono, fontSize: 10, color: C.platinum, margin: 0, letterSpacing: '0.1em' }}>// v1.0 · 04 · 2026</p>
       </div>
     </footer>
   )
@@ -1367,6 +1378,7 @@ export default function Page() {
       <SpacingMotion />
       <Brand />
       <Components />
+      <VerticaisSection />
       <OnFieldSection />
       <MotionPerformance />
       <SponsorsSection />
