@@ -85,7 +85,7 @@ Atualizado em: 05 mai 2026 (Icons — custom SVGs on-field adicionados à galeri
 - **Union type `IconEntry`** — `IconGrid.tsx` usa tipo discriminado `LucideEntry | CustomEntry`. Lucide copia JSX (`<Name size={20} strokeWidth={1.5} />`); custom copia o path público (`/assets/on-field/icons/icon-name.svg`).
 - **Grid unificado** — 80 ícones no total (67 Lucide + 13 custom). Search, hover, copy e label funcionam identicamente para ambos os tipos.
 - **Counter atualizado** — Meta line exibe `67 lucide · 13 custom · size 20`.
-- **Deploy** — Produção: https://bicofino.vercel.app · Build READY · Commit em andamento
+- **Deploy** — Produção: https://bicofino.vercel.app · Build READY · Commit `371788a`
 
 ### 04 mai 2026 — Versão v1.0 + Remoção de Itálico no Brand Card
 
