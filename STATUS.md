@@ -78,6 +78,10 @@ Atualizado em: 05 mai 2026 (Numeração global corrigida — Sidebar é fonte de
 
 ## Changelog
 
+### 05 mai 2026 — Mobile Sidebar Drawer (fix: pointer-events)
+
+- **Bug corrigido** — overlay com `display: block; opacity: 0` bloqueava todos os cliques e scroll no mobile quando o drawer estava fechado. Corrigido com `pointer-events: none` no estado fechado e `pointer-events: auto` no estado aberto.
+
 ### 05 mai 2026 — Mobile Sidebar Drawer
 
 - **Comportamento responsivo** — Sidebar fixa no desktop (≥1024px); vira drawer lateral no mobile (<1024px).
