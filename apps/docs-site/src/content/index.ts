@@ -3,11 +3,12 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { br } from './br'
 import { en } from './en'
+import { it } from './it'
 
-export type Lang = 'br' | 'en'
+export type Lang = 'br' | 'en' | 'it'
 
 type Dict = Record<string, string>
-const dicts: Record<Lang, Dict> = { br: br as Dict, en: en as Dict }
+const dicts: Record<Lang, Dict> = { br: br as Dict, en: en as Dict, it: it as Dict }
 
 interface LangContext {
   lang: Lang
@@ -27,7 +28,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     try {
       const stored = localStorage.getItem('bf-lang') as Lang | null
-      if (stored === 'en' || stored === 'br') setLangState(stored)
+      if (stored === 'en' || stored === 'br' || stored === 'it') setLangState(stored)
     } catch {
       // localStorage unavailable
     }

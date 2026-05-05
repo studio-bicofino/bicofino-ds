@@ -1,6 +1,6 @@
 # Bicofino DS — Status
 
-Atualizado em: 05 mai 2026 (Numeração global corrigida — Sidebar é fonte de verdade)
+Atualizado em: 05 mai 2026 (Verticais movida de 03 • BRAND para 05 • VERTICAIS)
 
 ---
 
@@ -32,7 +32,6 @@ Atualizado em: 05 mai 2026 (Numeração global corrigida — Sidebar é fonte de
 ### 03 • Brand
 - [x] Logotipo
 - [x] Voz & Tom
-- [x] Verticais
 
 ### 04 • Componentes
 - [x] Botões
@@ -41,7 +40,8 @@ Atualizado em: 05 mai 2026 (Numeração global corrigida — Sidebar é fonte de
 - [x] Cards (editorial, resultado, campanha)
 
 ### 05 • Verticais
-- [x] On Field — Image System
+- [x] Verticais (// 05.1)
+- [x] On Field — Image System (// 05.2)
 
 ### 06 • Assets
 - [x] Motion Intelligence (métricas animadas)
@@ -77,6 +77,28 @@ Atualizado em: 05 mai 2026 (Numeração global corrigida — Sidebar é fonte de
 ---
 
 ## Changelog
+
+### 05 mai 2026 — Suporte ao Italiano (IT) — i18n trilíngue
+
+- **Novo idioma** — Italiano adicionado ao sistema de linguagem. Switcher exibe `EN  •  BR  •  IT`.
+- **Arquivo criado** — `apps/docs-site/src/content/it.ts` — dicionário completo com ~200 chaves traduzidas para o italiano. Cobertura total de todos os namespaces: topbar, colors, typography, spacing, brand, voice, verticals, components, sidebar, footer, on-field, operations, performance, governance, resources.
+- **`content/index.ts`** — `Lang` extendida para `'br' | 'en' | 'it'`; `it` adicionado ao map de dicionários; localStorage aceita e persiste `'it'`.
+- **`LanguageSwitcher.tsx`** — IT adicionado; cada idioma tem cor de active pill própria: EN → `--bf-como` (#0d8aff), BR → `--bf-sep` (#2fd298), IT → `#ed0007` (benfica — sem novo token CSS).
+- **`BrandSystem.tsx`** — `toBsLang()` adicionado para fazer IT → EN no conteúdo longo do BrandSystem (sem tradução completa do brandSystemContent.ts neste passo); atributo HTML `lang` atualizado para `'it'` quando italiano.
+- **Zero mudança visual** — Layout, dark mode, sidebar, mobile drawer 100% preservados. Única mudança visual intencional: cor do pill ativo do IT.
+- **TypeScript** — Tipagem limpa, sem erros.
+- **Build** — Compilado com sucesso (Next.js 16 / Turbopack).
+- **Deploy** — Produção: https://bicofino.vercel.app · Commit `{SHA}`
+
+### 05 mai 2026 — Verticais movida para 05 • VERTICAIS
+
+- **Refactor estrutural** — Seção "Verticais" removida de `// 03 • BRAND` e inserida como primeiro item de `// 05 • VERTICAIS`.
+- **Sidebar atualizado** — `// 03 • BRAND` agora tem apenas Logotipo e Voz & Tom. `// 05 • VERTICAIS` agora tem Verticais (primeiro) e On Field — Image System (segundo).
+- **Renumeração** — Eyebrow da seção Verticais: `// 03.3` → `// 05.1`. Cards internos: `// 03.3.1` → `// 05.1.1`, `// 03.3.2` → `// 05.1.2`. Eyebrow do On Field: `// 05.1` → `// 05.2`. Sub-item catalog: `// 05.1.2` → `// 05.2.2`.
+- **Anchors preservados** — `id="verticais"` e `id="on-field"` inalterados. Todos os links da sidebar, scroll targets e IntersectionObserver mappings continuam funcionando.
+- **Zero mudança visual** — Layout, estilos, tipografia, dark mode, mobile drawer e accordion 100% preservados.
+- **Build** — Compilado e tipagem limpa. READY.
+- **Deploy** — Produção: https://bicofino.vercel.app · Commit `5e81ed1`
 
 ### 05 mai 2026 — Mobile Sidebar Drawer (fix: pointer-events)
 

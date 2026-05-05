@@ -3,7 +3,10 @@
 import React from 'react'
 import { BicofinoLogo } from '@/components/BicofinoLogo'
 import { useLang } from '@/content'
-import { bsContent } from '@/content/brandSystemContent'
+import { bsContent, type BsLang } from '@/content/brandSystemContent'
+
+// IT falls back to EN for BrandSystem long-form content (full IT translation in a future pass)
+const toBsLang = (l: string): BsLang => l === 'br' ? 'br' : 'en'
 
 const C = {
   black:      'var(--bf-text-primary)',
@@ -63,7 +66,7 @@ function H3({ children }: { children: string }) {
 function P({ children, muted }: { children: React.ReactNode; muted?: boolean }) {
   const { lang } = useLang()
   return (
-    <p lang={lang === 'en' ? 'en' : 'pt-BR'} className="editorial-prose" style={{ fontSize: 15, lineHeight: 1.75, color: muted ? C.steel : C.black, margin: '0 0 20px', fontFamily: sans, maxWidth: MAX_W }}>
+    <p lang={lang === 'en' ? 'en' : lang === 'it' ? 'it' : 'pt-BR'} className="editorial-prose" style={{ fontSize: 15, lineHeight: 1.75, color: muted ? C.steel : C.black, margin: '0 0 20px', fontFamily: sans, maxWidth: MAX_W }}>
       {children}
     </p>
   )
@@ -155,7 +158,7 @@ function AccordionItem({ title, children, compact = false }: {
 
 function BsFooter() {
   const { lang } = useLang()
-  const c = bsContent[lang]
+  const c = bsContent[toBsLang(lang)]
   return (
     <div style={{ padding: `32px ${H_PAD}px 48px`, borderTop: hairline }}>
       <p style={{ fontFamily: mono, fontSize: 10, color: C.platinum, margin: 0, letterSpacing: '0.1em' }}>
@@ -191,11 +194,11 @@ function TableRow({ cells, cols }: { cells: string[]; cols: number }) {
    ═══════════════════════════════════════════════════════════════════════════ */
 function BrandSystemCover() {
   const { lang } = useLang()
-  const c = bsContent[lang].cover
+  const c = bsContent[toBsLang(lang)].cover
   return (
     <section id="brand-system">
       <div style={{ padding: `80px ${H_PAD}px 72px`, borderBottom: hairline }}>
-        <Eyebrow>// 00 · Brand System</Eyebrow>
+        <Eyebrow>// 01 • BRAND SYSTEM</Eyebrow>
         <h1 className="text-balance" style={{ fontSize: 'clamp(40px, 5vw, 72px)', fontWeight: 700, letterSpacing: '-0.03em', color: C.black, margin: '0 0 24px', lineHeight: 1.0, fontFamily: sans }}>
           Brand System
         </h1>
@@ -218,7 +221,7 @@ function BrandSystemCover() {
    ═══════════════════════════════════════════════════════════════════════════ */
 function BrandIndice() {
   const { lang } = useLang()
-  const c = bsContent[lang].indice
+  const c = bsContent[toBsLang(lang)].indice
 
   return (
     <section id="brand-indice">
@@ -255,7 +258,7 @@ function BrandIndice() {
    ═══════════════════════════════════════════════════════════════════════════ */
 function BrandFundamentos() {
   const { lang } = useLang()
-  const c = bsContent[lang].fundamentos
+  const c = bsContent[toBsLang(lang)].fundamentos
 
   return (
     <section id="brand-fundamentos">
@@ -357,7 +360,7 @@ function BrandFundamentos() {
    ═══════════════════════════════════════════════════════════════════════════ */
 function BrandPosicionamento() {
   const { lang } = useLang()
-  const c = bsContent[lang].posicionamento
+  const c = bsContent[toBsLang(lang)].posicionamento
 
   return (
     <section id="brand-posicionamento">
@@ -475,7 +478,7 @@ function BrandPosicionamento() {
    ═══════════════════════════════════════════════════════════════════════════ */
 function BrandNucleo() {
   const { lang } = useLang()
-  const c = bsContent[lang].nucleo
+  const c = bsContent[toBsLang(lang)].nucleo
 
   return (
     <section id="brand-nucleo">
@@ -607,7 +610,7 @@ function BrandNucleo() {
    ═══════════════════════════════════════════════════════════════════════════ */
 function BrandVerbal() {
   const { lang } = useLang()
-  const c = bsContent[lang].verbal
+  const c = bsContent[toBsLang(lang)].verbal
 
   return (
     <section id="brand-verbal">
