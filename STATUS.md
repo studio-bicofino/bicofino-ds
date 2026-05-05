@@ -1,6 +1,6 @@
 # Bicofino DS — Status
 
-Atualizado em: 05 mai 2026 (Icons — custom SVGs on-field adicionados à galeria)
+Atualizado em: 05 mai 2026 (Numeração global corrigida — Sidebar é fonte de verdade)
 
 ---
 
@@ -77,6 +77,36 @@ Atualizado em: 05 mai 2026 (Icons — custom SVGs on-field adicionados à galeri
 ---
 
 ## Changelog
+
+### 05 mai 2026 — Mobile Sidebar Drawer
+
+- **Comportamento responsivo** — Sidebar fixa no desktop (≥1024px); vira drawer lateral no mobile (<1024px).
+- **Hamburger na topbar** — Botão `Menu` (lucide-react, 20px, strokeWidth 1.5) no canto superior esquerdo, visível apenas no mobile.
+- **Drawer** — `position: fixed`, entra da esquerda com `transform: translateX` em 200ms ease-out; reutiliza exatamente a mesma Sidebar sem redesign.
+- **Overlay** — cobre o conteúdo com `rgba(6,16,21,0.6)`, fecha ao clicar.
+- **Botão X** — dentro do drawer, fecha ao clicar.
+- **Fechar também por**: ESC, overlay, clique em item do menu.
+- **Body scroll lock** — `overflowY: hidden` em `#main-content` enquanto aberto.
+- **Dark mode** — usa tokens `--bf-sidebar-bg`, `--bf-bg-page` existentes.
+- **Reduced motion** — usa opacity em vez de transform.
+- **Sem alteração visual** — sidebar design 100% preservado.
+
+---
+
+### 05 mai 2026 — Numeração Global — Sidebar como Fonte de Verdade
+
+- **Revisão global de numeração** — Todos os eyebrow labels, section numbers e marcadores visuais do corpo da página agora batem 100% com a arquitetura da Sidebar.
+- **Arquivos corrigidos** — `page.tsx`, `BrandSystem.tsx`, `brandSystemContent.ts`, `br.ts`, `en.ts`.
+- **Mapeamento aplicado**:
+  - `// 00 · Brand System` → `// 01 • BRAND SYSTEM` (capa + índice)
+  - `// 00.1–00.5` (brandSystemContent) → `// 01.1–01.5`
+  - `// 01.x` (Design System body) → `// 02.x` (colors=02.2, typo=02.3, heading=02.4, spacing=02.5)
+  - `// 02 · Brand` → `// 03 • BRAND`; subsections 02.2–02.3 → 03.2–03.3
+  - `// 03 · Components` → `// 04 • COMPONENTES`; subsections 03.2–03.4 → 04.2–04.4
+  - `// 04 · On Field` → `// 05.1 · On Field — Image System`
+  - `// 05.x` (perf/sponsors/icons) → `// 06.1–06.3`
+  - `// 06.x` (ops) → `// 07.x`; `// 07.x` (governance) → `// 08.x`
+- **Deploy** — Produção: https://bicofino.vercel.app · Build READY · Commit `ab1bfa1`
 
 ### 05 mai 2026 — Icons — Custom SVGs On-Field
 

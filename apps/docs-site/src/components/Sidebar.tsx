@@ -97,7 +97,11 @@ function groupForHref(nav: ReturnType<typeof buildNav>, href: string): string | 
   return null
 }
 
-export default function Sidebar() {
+interface SidebarProps {
+  onNavClick?: () => void
+}
+
+export default function Sidebar({ onNavClick }: SidebarProps = {}) {
   const { t } = useLang()
   const [active, setActive] = useState('#overview')
   const [hovered, setHovered] = useState<string | null>(null)
@@ -169,7 +173,10 @@ export default function Sidebar() {
           href="#"
           onClick={e => {
             e.preventDefault()
-            document.getElementById('main-content')?.scrollTo({ top: 0, behavior: 'smooth' })
+            onNavClick?.()
+            requestAnimationFrame(() => {
+              document.getElementById('main-content')?.scrollTo({ top: 0, behavior: 'smooth' })
+            })
           }}
           style={{ display: 'block', lineHeight: 0, cursor: 'pointer' }}
           aria-label="Voltar ao início"
@@ -247,9 +254,12 @@ export default function Sidebar() {
                       onMouseLeave={() => setHovered(null)}
                       onClick={(e) => {
                         e.preventDefault()
+                        onNavClick?.()
                         setActive(href)
-                        const el = document.getElementById(href.slice(1))
-                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                        requestAnimationFrame(() => {
+                          const el = document.getElementById(href.slice(1))
+                          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                        })
                       }}
                       style={{
                         display: 'block',
