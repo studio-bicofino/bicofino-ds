@@ -1,6 +1,6 @@
 # Bicofino DS — Status
 
-Atualizado em: 04 mai 2026 (behavioral fixes — sidebar scroll, dark sidebar bg, sponsors dark mode)
+Atualizado em: 05 mai 2026 (Icons — custom SVGs on-field adicionados à galeria)
 
 ---
 
@@ -77,6 +77,21 @@ Atualizado em: 04 mai 2026 (behavioral fixes — sidebar scroll, dark sidebar bg
 ---
 
 ## Changelog
+
+### 05 mai 2026 — Icons — Custom SVGs On-Field
+
+- **13 ícones customizados adicionados** — Body, Dumbbell, Fingerprint, Fist, Football, Medal, Medal1, Pitch, Sneaker, Speed, StarCircle, Trophy, Watch. Fonte: `public/assets/on-field/icons/`.
+- **`CustomSvgIcon` wrapper** — Componente interno que renderiza SVGs fill-based com `currentColor`. Todos os ícones respondem aos estados de hover e copied exatamente como os Lucide (mesma transição de cor 140ms ease-out).
+- **Union type `IconEntry`** — `IconGrid.tsx` usa tipo discriminado `LucideEntry | CustomEntry`. Lucide copia JSX (`<Name size={20} strokeWidth={1.5} />`); custom copia o path público (`/assets/on-field/icons/icon-name.svg`).
+- **Grid unificado** — 80 ícones no total (67 Lucide + 13 custom). Search, hover, copy e label funcionam identicamente para ambos os tipos.
+- **Counter atualizado** — Meta line exibe `67 lucide · 13 custom · size 20`.
+- **Deploy** — Produção: https://bicofino.vercel.app · Build READY · Commit em andamento
+
+### 04 mai 2026 — Versão v1.0 + Remoção de Itálico no Brand Card
+
+- **Versão padronizada** — Eliminadas todas as ocorrências de `v2.0` e `v3.0` em todo o site. Única versão canônica agora é `v1.0`. Arquivos atualizados: `br.ts`, `en.ts`, `brandSystemContent.ts`, `layout.tsx`, `page.tsx`, `OnFieldSection.tsx`, `OperationsSection.tsx`.
+- **Itálico removido** — `fontStyle: 'italic'` removido das 4 linhas do brand card em `OperationsSection.tsx` (brand.line1, line2, line3, version). Texto agora em JetBrains Mono sem itálico, consistente com o sistema tipográfico.
+- **Deploy** — Produção: https://bicofino.vercel.app · Build READY · Commit `b927ac0` (local changes)
 
 ### 04 mai 2026 — Behavioral Fixes: Scroll · Dark Sidebar · Sponsors Dark Mode
 
