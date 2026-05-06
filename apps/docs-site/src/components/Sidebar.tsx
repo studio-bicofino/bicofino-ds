@@ -24,67 +24,67 @@ function buildNav(t: (k: string) => string) {
     {
       group: '// 01 • BRAND SYSTEM',
       items: [
-        { label: 'Brand System',     href: '#brand-system' },
-        { label: 'Índice',           href: '#brand-indice' },
-        { label: 'Fundamentos',      href: '#brand-fundamentos' },
-        { label: 'Posicionamento',   href: '#brand-posicionamento' },
-        { label: 'Núcleo da Marca',  href: '#brand-nucleo' },
-        { label: 'Universo Verbal',  href: '#brand-verbal' },
+        { label: t('nav.bs.cover'),         href: '#brand-system' },
+        { label: t('nav.indice'),           href: '#brand-indice' },
+        { label: t('nav.fundamentos'),      href: '#brand-fundamentos' },
+        { label: t('nav.posicionamento'),   href: '#brand-posicionamento' },
+        { label: t('nav.nucleo'),           href: '#brand-nucleo' },
+        { label: t('nav.verbal'),           href: '#brand-verbal' },
       ],
     },
     {
       group: '// 02 • DESIGN SYSTEM',
       items: [
-        { label: 'Universo Visual',  href: '#overview' },
-        { label: 'Cores',            href: '#colors' },
-        { label: 'Tipografia',       href: '#typography' },
-        { label: 'Heading',          href: '#slash-heading' },
-        { label: 'Spacing & Motion', href: '#spacing-motion' },
+        { label: t('nav.universo'),   href: '#overview' },
+        { label: t('nav.colors'),     href: '#colors' },
+        { label: t('nav.typography'), href: '#typography' },
+        { label: t('nav.slash'),      href: '#slash-heading' },
+        { label: t('nav.spacing'),    href: '#spacing-motion' },
       ],
     },
     {
       group: '// 03 • BRAND',
       items: [
-        { label: 'Logotipo',  href: '#logotipo' },
-        { label: 'Voz & Tom', href: '#voice-tone' },
-        { label: 'Verticais', href: '#verticais' },
+        { label: t('nav.logo'),   href: '#logotipo' },
+        { label: t('nav.voice'),  href: '#voice-tone' },
       ],
     },
     {
       group: '// 04 • COMPONENTES',
       items: [
-        { label: 'Botões', href: '#buttons' },
-        { label: 'Badges', href: '#badges' },
-        { label: 'Forms',  href: '#forms' },
-        { label: 'Cards',  href: '#cards' },
+        { label: t('nav.buttons'), href: '#buttons' },
+        { label: t('nav.badges'),  href: '#badges' },
+        { label: t('nav.forms'),   href: '#forms' },
+        { label: t('nav.cards'),   href: '#cards' },
       ],
     },
     {
       group: '// 05 • VERTICAIS',
       items: [
-        { label: 'On Field — Image System', href: '#on-field' },
+        { label: t('nav.verticais'),    href: '#verticais' },
+        { label: t('nav.onfield.img'),  href: '#on-field' },
       ],
     },
     {
       group: '// 06 • ASSETS',
       items: [
-        { label: 'Motion Intelligence', href: '#performance-intelligence' },
-        { label: 'Sponsors',            href: '#sponsors' },
-        { label: 'Icons',               href: '#icons' },
+        { label: t('nav.performance'), href: '#performance-intelligence' },
+        { label: t('nav.sponsors'),    href: '#sponsors' },
+        { label: t('nav.icons'),       href: '#icons' },
       ],
     },
     {
       group: '// 07 • OPERAÇÕES',
       items: [
-        { label: 'Arquitetura de Marca', href: '#ops-arch' },
-        { label: 'Padrões de Entrega',   href: '#ops-delivery' },
+        { label: t('nav.operacoes'), href: '#ops-arch' },
+        { label: t('nav.delivery'),  href: '#ops-delivery' },
       ],
     },
     {
       group: '// 08 • GOVERNANÇA',
       items: [
-        { label: 'Versão & Owners', href: '#governance' },
-        { label: 'Resources',       href: '#resources' },
+        { label: t('nav.governance'), href: '#governance' },
+        { label: t('nav.resources'),  href: '#resources' },
       ],
     },
   ]
