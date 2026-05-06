@@ -88,7 +88,8 @@ Atualizado em: 05 mai 2026 (Verticais movida de 03 • BRAND para 05 • VERTICA
 - **Zero mudança visual** — Layout, dark mode, sidebar, mobile drawer 100% preservados. Única mudança visual intencional: cor do pill ativo do IT.
 - **TypeScript** — Tipagem limpa, sem erros.
 - **Build** — Compilado com sucesso (Next.js 16 / Turbopack).
-- **Deploy** — Produção: https://bicofino.vercel.app · Commit `fdebc09`
+- **Deploy** — Produção: https://bicofino.vercel.app · Commit `fd9594a`
+- **Correções pós-deploy** — `TopBarLangToggle` em `page.tsx` estava separado de `LanguageSwitcher.tsx`; IT adicionado direto nele. `toBsLang` corrigido para IT→BR (não EN). `buildNav` no `Sidebar.tsx` agora usa `t()` para todos os labels; chaves de nav adicionadas a br/en/it.
 
 ### 05 mai 2026 — Verticais movida para 05 • VERTICAIS
 
