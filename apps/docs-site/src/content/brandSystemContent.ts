@@ -1,19 +1,19 @@
-// Bilingual content for BrandSystem.tsx — BR + EN
-// Keep co-located here; do not scatter into br.ts / en.ts
+// Trilingual content for BrandSystem.tsx — BR + EN + IT
+// Keep co-located here; do not scatter into br.ts / en.ts / it.ts
 
-export type BsLang = 'br' | 'en'
+export type BsLang = 'br' | 'en' | 'it'
 
 export const bsContent = {
   br: {
-    footer: 'Brand System — Bicofino Group SA · v3.0 · São Paulo, BR · Maio 2026',
+    footer: 'Brand System — Bicofino Group SA · v1.0 · São Paulo, BR · Maio 2026',
 
     cover: {
       tagline: 'O sistema vivo que organiza, protege e expande o universo Bicofino.',
-      version: 'v3.0 · São Paulo, BR · Maio 2026',
+      version: 'v1.0 · São Paulo, BR · Maio 2026',
     },
 
     indice: {
-      eyebrow: '// 00.1',
+      eyebrow: '// 01.1',
       title: 'Índice',
       complement: 'Universo Visual, Visual System e Operações — ver documento complementar.',
       groups: [
@@ -25,7 +25,7 @@ export const bsContent = {
     },
 
     fundamentos: {
-      header: { eyebrow: '// 00.2 · Fundamentos', title: 'Fundamentos' },
+      header: { eyebrow: '// 01.2 · Fundamentos', title: 'Fundamentos' },
       overview: {
         sub: { label: '// Overview', title: 'Unlike Any Other.' },
         p1: 'Você está prestes a entrar num sistema que não foi feito para todos. Este documento é o código operacional do Bicofino — a referência interna que governa como essa marca pensa, decide, se expressa e existe no mundo. Ele reúne, num único lugar, tudo o que define o universo Bicofino: dos princípios filosóficos aos critérios visuais, do manifesto à forma de atender o telefone.',
@@ -147,7 +147,7 @@ export const bsContent = {
     },
 
     posicionamento: {
-      header: { eyebrow: '// 00.3 · Posicionamento', title: 'Posicionamento' },
+      header: { eyebrow: '// 01.3 · Posicionamento', title: 'Posicionamento' },
       publicoChave: {
         label: '// Público-chave',
         title: 'Público-chave',
@@ -241,7 +241,7 @@ export const bsContent = {
     },
 
     nucleo: {
-      header: { eyebrow: '// 00.4 · Núcleo da Marca', title: 'Núcleo da Marca' },
+      header: { eyebrow: '// 01.4 · Núcleo da Marca', title: 'Núcleo da Marca' },
       direcao: {
         label: '// Direção',
         title: 'Unlike Any Other.',
@@ -330,7 +330,7 @@ export const bsContent = {
     },
 
     verbal: {
-      header: { eyebrow: '// 00.5 · Universo Verbal', title: 'Universo Verbal' },
+      header: { eyebrow: '// 01.5 · Universo Verbal', title: 'Universo Verbal' },
       manifesto: {
         label: '// Manifesto',
         title: 'Quem decide o jogo raramente grita.',
@@ -444,15 +444,15 @@ export const bsContent = {
   },
 
   en: {
-    footer: 'Brand System — Bicofino Group SA · v3.0 · São Paulo, BR · May 2026',
+    footer: 'Brand System — Bicofino Group SA · v1.0 · São Paulo, BR · May 2026',
 
     cover: {
       tagline: 'The living system that organizes, protects and expands the Bicofino universe.',
-      version: 'v3.0 · São Paulo, BR · May 2026',
+      version: 'v1.0 · São Paulo, BR · May 2026',
     },
 
     indice: {
-      eyebrow: '// 00.1',
+      eyebrow: '// 01.1',
       title: 'Index',
       complement: 'Visual Universe, Visual System and Operations — see supplementary document.',
       groups: [
@@ -464,7 +464,7 @@ export const bsContent = {
     },
 
     fundamentos: {
-      header: { eyebrow: '// 00.2 · Foundations', title: 'Foundations' },
+      header: { eyebrow: '// 01.2 · Foundations', title: 'Foundations' },
       overview: {
         sub: { label: '// Overview', title: 'Unlike Any Other.' },
         p1: 'You are about to enter a system that was not made for everyone. This document is the operational code of Bicofino — the internal reference that governs how this brand thinks, decides, expresses itself and exists in the world. It brings together, in one place, everything that defines the Bicofino universe: from philosophical principles to visual criteria, from the manifesto to how to answer the phone.',
@@ -586,7 +586,7 @@ export const bsContent = {
     },
 
     posicionamento: {
-      header: { eyebrow: '// 00.3 · Positioning', title: 'Positioning' },
+      header: { eyebrow: '// 01.3 · Positioning', title: 'Positioning' },
       publicoChave: {
         label: '// Key Audience',
         title: 'Key Audience',
@@ -680,7 +680,7 @@ export const bsContent = {
     },
 
     nucleo: {
-      header: { eyebrow: '// 00.4 · Brand Core', title: 'Brand Core' },
+      header: { eyebrow: '// 01.4 · Brand Core', title: 'Brand Core' },
       direcao: {
         label: '// Direction',
         title: 'Unlike Any Other.',
@@ -769,7 +769,7 @@ export const bsContent = {
     },
 
     verbal: {
-      header: { eyebrow: '// 00.5 · Verbal Universe', title: 'Verbal Universe' },
+      header: { eyebrow: '// 01.5 · Verbal Universe', title: 'Verbal Universe' },
       manifesto: {
         label: '// Manifesto',
         title: 'Those who decide the game rarely shout.',
@@ -877,6 +877,445 @@ export const bsContent = {
           ['The Investor',            'Flaviano Galhardo. Pragmatic, ROI-focused.'],
           ['The Artist',              'Woney Malian. Consigliere and Creative Director. Strategic aesthetics of the Group.'],
           ['Unlike Any Other',        'The tagline. Not a slogan. A position.'],
+        ],
+      },
+    },
+  },
+
+  it: {
+    footer: 'Brand System — Bicofino Group SA · v1.0 · São Paulo, BR · Maggio 2026',
+
+    cover: {
+      tagline: "Il sistema vivo che organizza, protegge ed espande l'universo Bicofino.",
+      version: 'v1.0 · São Paulo, BR · Maggio 2026',
+    },
+
+    indice: {
+      eyebrow: '// 01.1',
+      title: 'Indice',
+      complement: 'Universo Visivo, Visual System e Operazioni — vedere documento complementare.',
+      groups: [
+        { title: 'Fondamenti',       items: ['Overview', "L'Origine del Nome", 'Perché Esistiamo', 'Principi', 'Rischi & Guardrail'] },
+        { title: 'Posizionamento',   items: ['Pubblico Chiave', 'Buyer Personas', 'Posizionamento di Marca', 'Internazionalità'] },
+        { title: 'Nucleo del Brand', items: ['Direzione', 'Visione e Scopo', 'I 4 C — Il Filtro di Ogni Decisione', 'Archetipi', 'Craft', 'Proxy e Personas'] },
+        { title: 'Universo Verbale', items: ['Manifesto', 'Voce & Tono', 'Vocabolario', 'Territorio Semantico', 'Glossario'] },
+      ],
+    },
+
+    fundamentos: {
+      header: { eyebrow: '// 01.2 · Fondamenti', title: 'Fondamenti' },
+      overview: {
+        sub: { label: '// Overview', title: 'Unlike Any Other.' },
+        p1: "Stai per entrare in un sistema che non è stato fatto per tutti. Questo documento è il codice operativo di Bicofino — il riferimento interno che governa come questo brand pensa, decide, si esprime ed esiste nel mondo. Raccoglie, in un unico luogo, tutto ciò che definisce l'universo Bicofino: dai principi filosofici ai criteri visivi, dal manifesto al modo di rispondere al telefono.",
+        p2: 'Questo sistema esiste per garantire tre cose fondamentali:',
+        clarity:     { label: 'Chiarezza',  text: '— tutti capiscono cosa rappresenta Bicofino.' },
+        consistency: { label: 'Coerenza',   text: "— l'identità rimane coerente in qualsiasi contesto." },
+        evolution:   { label: 'Evoluzione', text: "— il sistema può crescere senza perdere la propria essenza." },
+        forWhom: {
+          title: 'A chi è destinato questo sistema',
+          body: "Designer, produttori di contenuti, copywriter, partner di produzione, collaboratori di qualsiasi verticale e qualsiasi brand o persona che operi sotto l'ombrello Bicofino. Se crei qualcosa in nome di Bicofino, questo documento è il tuo punto di partenza obbligatorio.",
+        },
+        living: {
+          title: 'Un sistema vivo',
+          body: 'Questo Brand System non è statico. Bicofino cresce, e questo documento cresce con esso. Ogni aggiornamento rappresenta un raffinamento della comprensione di cosa significhi operare al massimo livello — con bellezza, intelligenza e ossessione per il dettaglio.',
+        },
+      },
+      origem: {
+        label: "// L'Origine del Nome",
+        title: 'Bico. Fino.',
+        p1: "Immagina un imbuto. Ora immagina che il beccuccio di quell'imbuto sia così stretto che solo ciò che merita davvero di passare ci riesce. Ogni partner, ogni cliente, ogni progetto entra dall'alto — e solo chi supera il criterio arriva dall'altra parte. Non esistono scorciatoie, non esistono eccezioni. Anche l'uscita è stretta: le relazioni qui sono costruite per durare.",
+        p2: 'Questo è il primo significato del nome. Massima curatela all\'ingresso. Massima profondità nella relazione.',
+        p3: "C'è un secondo significato, più sottile, che vive all'interno del mondo del calcio — e dice molto su come Bicofino concepisce l'eccellenza.",
+        p4: "Calciare di punta è, in genere, il gesto di chi sta ancora imparando. Goffo. Prevedibile. Poca forza, meno controllo. Ma osserva cosa succede quando lo stesso movimento viene dai piedi di un Ronaldo o di un Romário. Il tiro di punta diventa un'arma. Parte prima che il portiere possa elaborarlo. Sorprende perché il movimento non è quello atteso. Ciò che sembrava un limite si trasforma, nelle mani giuste, in eleganza e precisione chirurgica.",
+        p5: 'Il nome porta entrambi i lati con uguale peso:',
+        filter:    { label: 'Il filtro',     text: "— rigore e massimo discernimento in tutto ciò che entra nella sfera d'azione di Bicofino." },
+        execution: { label: "L'esecuzione", text: '— talento e precisione che trasformano il semplice nel singolare.' },
+      },
+      porQue: {
+        label: '// Perché Esistiamo',
+        title: 'La domanda che non fa concessioni',
+        p1: 'Il mercato è pieno di agenzie, management, studio e consulenze. La maggior parte promette risultati. Molte consegnano prodotto. Poche costruiscono qualcosa che dura.',
+        p2: 'Bicofino esiste perché crede che la combinazione di accesso genuino, discernimento estetico radicale e intelligenza strategica applicata sia scarsa. Scarsa non per mancanza di persone capaci — ma perché la maggior parte delle operazioni commerciali sceglie volume, velocità e standardizzazione al posto di profondità, curatela e singolarità.',
+        p3: 'La domanda che ha fondato Bicofino era semplice: cosa succede quando applichi gli standard di una maison di lusso a un ecosistema di connessioni, talenti e creatività?',
+        p4: 'La risposta è ciò che stai leggendo ora.',
+        different: {
+          title: 'Cosa fa Bicofino in modo diverso',
+          p1: "Bicofino cura il mercato — scegliendo i giusti player, i giusti progetti, i giusti momenti. La selettività è lo strumento. Il tempo di relazione è l'asset. La fiducia è il prodotto più prezioso consegnato.",
+          p2: 'Operiamo in un punto di intersezione raro: dove il mondo dello sport incontra il lusso, dove la strategia incontra l\'estetica, dove l\'accesso incontra il buon gusto. Questo crocevia è stato costruito con decenni di lavoro costante, negoziazioni pulite e relazioni genuine — ed è ciò che ci posiziona diversamente da qualsiasi altra cosa sul mercato.',
+        },
+        forWhom: {
+          title: 'A chi è destinato Bicofino',
+          p1: "Bicofino esiste per persone che capiscono che immagine, reputazione e presenza sono asset — e che eseguire quegli asset richiede partner che siano essi stessi un riferimento in ciò che fanno.",
+          p2: "Esistiamo per l'atleta che vuole che la sua carriera sia più grande dei giochi che gioca. Per il brand che vuole che le sue connessioni sportive generino cultura, non solo esposizione. Per il cliente che capisce che pagare meno e aspettarsi di più è un'equazione che non torna mai.",
+        },
+        notForWhom: {
+          title: 'A chi Bicofino non è destinato',
+          p1: "Bicofino non esiste per chi cerca un'opzione. Non esiste per chi negozia qualità per urgenza, o eleganza per convenienza. Non esiste per chi tratta il brand come un costo operativo.",
+          p2: "Chi ha bisogno di molto per poco, in fretta e senza discernimento, troverà altre porte aperte. La nostra ha una lista d'attesa — per scelta.",
+        },
+      },
+      principios: {
+        label: '// Principi',
+        title: 'Principi',
+        intro: 'I principi sono criteri di decisione e azione che funzionano come asse di coerenza nel tempo. In Bicofino, i principi non sono valori decorativi di una slide di presentazione — sono filtri reali che governano ogni consegna, ogni scelta di cliente e ogni parola prodotta.',
+        howToApply: 'Come applicare questo principio',
+        items: [
+          {
+            title: "Principio della Connessione — L'accesso che ha richiesto anni per essere costruito",
+            paras: [
+              "L'asset più raro di Bicofino non è la competenza tecnica, l'estetica o la metodologia. È l'accesso. Accesso reale, conquistato nel corso di anni di presenza costante, carattere e negoziazioni condotte con etica e rispetto reciproco. Decisori, atleti, personalità, brand globali e celebrità fuori dalla portata della maggior parte — queste connessioni sono l'oro della casa.",
+              'La Connessione è il primo principio perché tutto inizia qui. Senza di essa, curatela, creatività e consulenza perdono il terreno su cui si piantano.',
+            ],
+            items: [
+              'Ogni connessione realizzata da Bicofino deve generare valore per tutte le parti — non è mai una transazione unidirezionale.',
+              'La relazione è trattata come un asset a lungo termine. Mai come uno strumento di progetto.',
+              "La rete è stata costruita con carattere. Qualsiasi suo utilizzo che comprometta la fiducia di un partner è inaccettabile.",
+              'Quando si presenta una connessione, il contesto conta quanto il contatto. Presenta con intelligenza e scopo.',
+            ],
+          },
+          {
+            title: 'Principio della Curatela — Dire no è parte del lavoro',
+            paras: [
+              'La curatela è la capacità di filtrare prima di presentare. Bicofino non offre opzioni — presenta la scelta giusta, dopo un rigoroso discernimento estetico e strategico. Questo vale per i clienti accettati, i partner scelti, i progetti assunti, i riferimenti utilizzati e le consegne completate.',
+              "Dire no è l'esercizio più sofisticato del buon gusto. Un'agenda piena non è un segno di successo — è un segno di assenza di discernimento. La dimensione del portafoglio non è la nostra metrica; la qualità di ogni relazione, sì.",
+            ],
+            items: [
+              'Prima di accettare qualsiasi progetto, chiedi: questo rafforza o diluisce ciò che Bicofino rappresenta?',
+              'Presenta una soluzione, non un menu.',
+              'Riduci lo scope quando necessario. Non ridurre mai lo standard.',
+              'Tratta un rifiuto come un atto di servizio al cliente — lo proteggi da una consegna mediocre.',
+            ],
+          },
+          {
+            title: "Principio dell'Eleganza — Semplice, mai semplicistico",
+            paras: [
+              "La soluzione più intelligente è sempre la più economica — in parole, in elementi visivi, in sforzo visibile. Eleganza è precisione. È arrivare al punto con il minimo spreco possibile di attenzione, risorse e tempo.",
+            ],
+            items: [
+              'Elimina il superfluo prima di consegnare. Il cliente non ha bisogno di vedere lo sforzo — ha bisogno di sentire il risultato.',
+              'Preferisci una frase esatta a un paragrafo corretto.',
+              'Preferisci un elemento visivo preciso a una composizione ricca.',
+              'Sofisticazione e densità sono cose diverse.',
+            ],
+          },
+          {
+            title: 'Principio della Profondità — Pochi, bene',
+            paras: [
+              'Bicofino opera come un quartetto da camera, non come uno show da stadio. In un quartetto, ogni nota di ogni musicista conta. Ogni relazione costruita con un cliente è una relazione di conoscenza profonda, non di servizio transazionale.',
+            ],
+            items: [
+              "Conosci il cliente oltre il brief. Conosci il business, l'ambizione, ciò che non dice.",
+              'Non trattare i progetti come compiti isolati — trattali come capitoli di una relazione a lungo termine.',
+              "Consegna oltre ciò che è stato richiesto, con l'eleganza di chi conosce il limite dell'eccesso.",
+            ],
+          },
+        ],
+      },
+      riscos: {
+        label: '// Rischi & Guardrail',
+        title: 'Rischi & Guardrail',
+        items: [
+          { title: "Il rischio dell'autodichiarazione",            body: 'Il rischio maggiore di un brand premium è iniziare a proclamare ciò che dovrebbe dimostrare. La sofisticazione che deve essere dichiarata non è stata conquistata.',                                            guard: 'Prima di pubblicare qualsiasi comunicazione, chiedi: questo mostra o dice? Preferisci sempre mostrare.' },
+          { title: "Il rischio dell'imitazione",                   body: "Bicofino ha riferimenti — e c'è saggezza in questo. Il pericolo è quando il riferimento diventa pastiche.",                                                                                                         guard: "I riferimenti esistono per calibrare lo standard, non per essere replicati. Bicofino deve suonare come Bicofino, non come la versione brasiliana di qualcos'altro." },
+          { title: 'Il rischio di incoerenza tra verticali',       body: null,                                                                                                                                                                                                                guard: 'Ogni verticale deve suonare come figlia di Bicofino — stessa estetica di fondo, adattata al suo contesto. Una card atleta On Field e una proposta Off Field devono essere riconoscibilmente della stessa famiglia.' },
+          { title: 'Il rischio della crescita senza discernimento', body: null,                                                                                                                                                                                                               guard: "La crescita in Bicofino si misura in qualità di relazione, non in numero di clienti attivi. Una lista d'attesa è preferibile a un portafoglio diluito." },
+          { title: "Il rischio dell'IA come sostituto",            body: null,                                                                                                                                                                                                                guard: '"L\'IA illumina, gli umani decidono." Ogni consegna finale passa attraverso il filtro del giudizio creativo umano. L\'IA accelera il percorso; il discernimento umano convalida la destinazione.' },
+        ],
+      },
+    },
+
+    posicionamento: {
+      header: { eyebrow: '// 01.3 · Posizionamento', title: 'Posizionamento' },
+      publicoChave: {
+        label: '// Pubblico Chiave',
+        title: 'Pubblico Chiave',
+        p1: "Bicofino non definisce il suo pubblico per fascia d'età o reddito. Lo definisce per mentalità.",
+        p2: "Il pubblico chiave è formato da persone e brand che capiscono che l'immagine è strategia, che il tempo di relazione è un asset, che il buon gusto non è soggettivo — è educabile e valorizzabile. Sono agenti che operano negli strati superiori dei rispettivi mercati e che cercano partner allo stesso livello di esigenza.",
+        clusters: [
+          { label: "Cluster 1 — L'Atleta con Visione di Carriera", tag: '(On Field)', body: "Giovane talento sportivo che capisce che la sua traiettoria è più grande dei contratti che firma. Cerca costruzione di personal brand, accesso a mercati internazionali e gestione dell'immagine con lo stesso rigore con cui si allena. Vede Bicofino come partner strategico, non come agenzia.", ref: 'Guilherme Kerchner — 17 anni, Palmeiras, Nike, passaporto italiano. From Palmeiras to the World.' },
+          { label: 'Cluster 2 — Il Brand che Vuole Più che Esposizione', tag: '(Off Field)', body: "Azienda o brand che vuole che la sua connessione con l'universo sportivo generi cultura, narrativa e appartenenza — non solo un logo su una maglia. Capisce il ROI ma valorizza la percezione. Sa che la qualità dell'associazione conta quanto la portata.", ref: "Nike, Loro Piana, Piaggio/Vespa — brand con heritage, estetica e scopo che si complementano con l'universo Bicofino." },
+          { label: 'Cluster 3 — Il Cliente Premium Off Field', tag: null, body: 'Azienda o dirigente che ha bisogno di identità visiva, strategia di brand, consulenza creativa o accesso a specifici player di mercato al massimo livello. Sa che pagare per il meglio è più economico che correggere il mediocre.', ref: 'BoviChain — azienda tech nel premium agribusiness che capisce che il suo brand visivo deve riflettere lo standard della tecnologia che consegna.' },
+          { label: 'Cluster 4 — Il Membro del Club', tag: '(Territorio della Raposa)', body: 'Vedere la sezione Club in Operazioni.', ref: null },
+        ],
+        refLabel: 'Profilo di riferimento:',
+      },
+      personas: {
+        label: '// Buyer Personas',
+        title: 'Buyer Personas',
+        a: {
+          title: 'A — Il Talento in Ascesa',
+          rows: [
+            ['Profilo',                  "Atleta di 16–22 anni nella prima squadra o nell'accademia di un grande club brasiliano. Nike o un altro brand globale all'orizzonte. Famiglia presente e coinvolta nelle decisioni."],
+            ['Cosa vuole',               'Capire come trasformare la performance in una carriera internazionale. Accesso, non solo rappresentanza.'],
+            ['Cosa teme',                "Essere solo un nome nel portafoglio di una grande agenzia che non imparerà il suo nome."],
+            ['Come Bicofino gli parla',  "Diretto, senza linguaggio corporate. L'autenticità è tutto. Narrativa concreta, non promessa astratta."],
+          ],
+        },
+        b: {
+          title: 'B — Il Dirigente di Brand / Partner Strategico',
+          profileLabel: 'Profilo',
+          profileText: "CMO, direttore marketing o fondatore di un'azienda premium o in processo di premiumizzazione. Ha budget e approvazione interna, ma risponde di risultati e percezione.",
+          wantsLabel: 'Cosa vuole — e dove Bicofino è insostituibile',
+          wantsP1: "Il dirigente di brand non cerca solo esecuzione creativa o design di qualità. Cerca ciò che è fuori dalla portata della maggior parte: accesso diretto ad atleti, celebrità, personalità e brand globali che non rispondono alle cold call. Questa porta esiste in Bicofino perché è stata costruita nel corso di anni con carattere, negoziazione pulita e relazioni condotte con etica, rispetto genuino e intelligenza a lungo termine.",
+          wantsP2: "Quando Bicofino connette un brand a un atleta, a un influencer di peso o a una personalità di mercato, la connessione arriva già filtrata, contestualizzata e strutturata affinché tutte le parti guadagnino. Questo differenziale non si replica: l'accesso non è in vendita, è la conseguenza di una rete costruita con decenni di presenza costante e carattere incrollabile.",
+          rows: [
+            ['Cosa teme',               "Pagare per una consegna che sembra premium ma non sposta l'ago della percezione reale. Essere presentato a contatti di second'ordine mascherati da grandi partnership."],
+            ['Come Bicofino gli parla', 'Linguaggio di business prima, estetica dopo. ROI tradotto in percezione e metriche tangibili. Con la sicurezza di chi sa che le connessioni consegnate sono genuine.'],
+          ],
+        },
+        c: {
+          title: 'C — Il Patriarca del Network',
+          rows: [
+            ['Profilo',              "Imprenditore di 45–65 anni, di successo in un settore tradizionale (agricoltura, finanza, costruzioni, industria), che si muove tra il mondo corporate e quello dello sport e del lusso per affinità genuina."],
+            ['Cosa vuole',          "Appartenere a una rete di pari ad altissimo livello. Conversazioni che aggiungono valore. Esperienze che giustificano il tenore di vita che ha costruito."],
+            ['Cosa teme',           "Volgarità travestita da esclusività. Troppo ostentato. O troppo invisibile per giustificare l'investimento."],
+            ['Come Bicofino gli parla', "Con l'eleganza di chi appartiene allo stesso universo. Come Consigliere, mai come venditore."],
+          ],
+        },
+      },
+      posicMarca: {
+        label: '// Posizionamento di Marca',
+        title: 'Posizionamento di Marca',
+        declaration: {
+          title: 'La dichiarazione interna',
+          body: "Bicofino è l'unico ecosistema che combina accesso genuino al mondo dello sport e del lusso con curatela estetica di livello atelier e intelligenza strategica a lungo termine. Operiamo con pochi per consegnare in profondità — e questa selettività è il prodotto, non il limite.",
+        },
+        differentiates: {
+          title: 'Cosa ci differenzia nella pratica',
+          cols: ['Dimensione', 'Mercato comune', 'Bicofino'],
+          rows: [
+            ['Accesso',          'Contatti disponibili per qualsiasi agenzia',   'Rete costruita in decenni, non replicabile'],
+            ['Volume clienti',   'Portafoglio ampio per diluire il rischio',     'Agenda ridotta per scelta'],
+            ['Consegna',         'Esecuzione per brief',                         'Consulenza + esecuzione + anticipazione'],
+            ['Prezzo',           'Negoziabile, pacchetti scontati',              'Fisso, adeguamento solo per scope'],
+            ['Relazione',        'Transazionale',                                'Partnership a lungo termine'],
+            ['Linguaggio',       'Professionale generico',                       "Atelier premium — sofisticazione attraverso l'esecuzione"],
+            ['IA',               'Strumento di riduzione dei costi',             'Amplificatore creativo — qualità invariata'],
+            ['Copertura',        'Locale o regionale',                           'Multiculturale: Brasile · Europa · USA'],
+          ],
+        },
+      },
+      internacionalidade: {
+        label: '// Internazionalità',
+        title: 'Internazionalità',
+        intro: 'Bicofino opera in tre lingue principali — portoghese, inglese e italiano — e questa non è solo una decisione linguistica. È un posizionamento di visione del mondo.',
+        whyThree: {
+          title: 'Perché queste tre lingue',
+          p1: 'Il portoghese è la lingua di origine e delle radici. È dove Bicofino è nato, dove i suoi primi atleti si sono allenati, dove le sue prime connessioni sono state costruite. È la lingua dell\'autenticità.',
+          p2: "L'inglese è la lingua del gioco globale. I club europei, i brand globali, gli scout internazionali e gli investitori parlano inglese. È la lingua del mercato che Bicofino vuole raggiungere — e già raggiunge. Tutti i materiali di posizionamento degli atleti per il mercato europeo, le presentazioni istituzionali e le comunicazioni con i partner internazionali operano in inglese americano.",
+          p3: "L'italiano è la lingua dell'heritage e del raffinamento. La connessione con l'Italia è genuina: atleti con passaporto italiano, partner di brand con heritage italiano (Piaggio/Vespa, Loro Piana, Brunello Cucinelli), e una sensibilità estetica che condivide gli stessi codici — pelle, artigianato, permanenza, forma sulla velocità. L'italiano non è solo una lingua di comunicazione; è un riferimento culturale che plasma il gusto Bicofino.",
+        },
+        bond: {
+          title: "Il modello James Bond dell'internazionalità",
+          p1: "C'è una figura che cattura con precisione il modo Bicofino di muoversi nel mondo: James Bond.",
+          p2: "Bond non è di un solo posto. Entra in qualsiasi stanza, in qualsiasi paese, in qualsiasi lingua — e appartiene. Non è mai nel posto sbagliato, mai senza scopo. Viene chiamato quando il problema è troppo impossibile per la via convenzionale. Mantiene eleganza e ragionamento calibrato anche sotto estrema pressione. Adatta il suo stile al contesto senza perdere la sua identità.",
+          p3: "Questo è lo standard di internazionalità che Bicofino cerca: la capacità di essere a Milano, Londra o São Paulo con la stessa disinvoltura — assorbendo il meglio di ogni cultura per operare con vantaggio ovunque si trovi.",
+        },
+        practice: {
+          title: 'Cosa significa nella pratica',
+          body: 'Materiali, proposte e comunicazioni sono prodotti nella lingua più strategica per ogni contesto. Mai traduzione automatica. Sempre adattamento culturale con discernimento.',
+        },
+      },
+    },
+
+    nucleo: {
+      header: { eyebrow: '// 01.4 · Nucleo del Brand', title: 'Nucleo del Brand' },
+      direcao: {
+        label: '// Direzione',
+        title: 'Unlike Any Other.',
+        p1: 'Questo tagline non è uno slogan. È una posizione.',
+        unlike: { label: 'Unlike', text: "— siamo diversi, ma la differenza non è proclamata, è percepita. Differenza attraverso l'esecuzione, non attraverso la promessa." },
+        any:    { label: 'Any',    text: '— il quadro di confronto è ampio. Bicofino è fuori dalla categoria di qualsiasi cosa esista a questo incrocio.' },
+        other:  { label: 'Other',  text: '— tutto ciò che è generico, standardizzato, replicabile. Bicofino esiste al di fuori di quella categoria.' },
+        metaphor: {
+          title: 'La metafora centrale',
+          p1: 'Il quartetto da camera intimo. Non lo show da stadio.',
+          p2: 'In un quartetto da camera, ogni nota di ogni strumento conta. Il silenzio tra le note conta. L\'acustica della sala conta. Il pubblico scelto per essere lì conta. L\'obiettivo non è mai raggiungere più persone possibile — è raggiungere le persone giuste con la massima intensità.',
+        },
+      },
+      visaoPropósito: {
+        label: '// Visione e Scopo',
+        title: 'Visione e Scopo',
+        vision:  { title: 'Visione', body: 'Essere riconosciuto come l\'ecosistema di riferimento per connessione, curatela e creatività applicata al mondo dello sport e del lusso — in Brasile e sul circuito internazionale.' },
+        purpose: { title: 'Scopo',   body: 'Trasformare carriere, brand e momenti in patrimonio a lungo termine, attraverso connessioni genuine, curatela radicale ed esecuzione di livello atelier.' },
+      },
+      quatroCs: {
+        label: '// I 4 C',
+        title: 'I 4 C — Il Filtro di Ogni Decisione',
+        intro: "Ogni decisione, consegna e progetto Bicofino può essere letto attraverso queste quattro lenti. Sono una questione d'onore. L'ordine conta.",
+        footerMuted: 'Quando si riceve qualsiasi richiesta, valuta: Questa connessione coinvolge i giusti player? È all\'interno dello standard di curatela di Bicofino? L\'esecuzione proposta è la più semplice ed elegante possibile? Stiamo approfondendo la relazione con il cliente o stiamo solo consegnando un pezzo?',
+        items: [
+          { label: '1. CONNECT — Il primo e più fondamentale',         body: "La capacità più centrale e rara di Bicofino. Riunire e coinvolgere due o più player — persone, aziende, atleti, celebrità, brand — che sono fuori dalla portata della maggior parte. Accesso genuino a decisori, figure di influenza e brand premium, combinato con l'intelligenza per creare incontri che generano valore reale per tutte le parti.", body2: 'CONNECT è il principale differenziale competitivo di Bicofino. Ogni connessione è stata costruita con anni di carattere, presenza costante e negoziazione pulita. Nessuna di esse è superficiale, nessuna di esse è usa e getta.', rule: "Regola fondamentale: ogni connessione realizzata da Bicofino deve avvantaggiare tutte le parti dell'equazione. L'etica della connessione non è negoziabile." },
+          { label: '2. CURATE — Il filtro che definisce lo standard',  body: 'Buon gusto ed esclusività sopra tutto. Bicofino non presenta opzioni — presenta la scelta giusta, filtrata dal discernimento estetico e strategico. Questo vale per i clienti accettati, i partner scelti, i progetti assunti, i riferimenti utilizzati e le consegne completate. Dire no è parte della curatela, non un limite.', body2: null, rule: null },
+          { label: '3. CREATE — Conseguenza naturale dei primi due',   body: "Appare come risultato diretto di CONNECT e CURATE, e si manifesta nell'esecuzione dei progetti. Lo standard interno è cercare l'output più semplice ed elegante possibile, con il minimo dispendio di risorse — tempo, denaro, attenzione. La creatività qui è precisione chirurgica nella scelta del migliore output, non volume di idee.", body2: null, rule: null },
+          { label: '4. CONSULT — La profondità che cresce nel tempo',  body: 'Bicofino funge da guida per i propri clienti — non solo consegnando risultati, ma approfondendo la relazione nel tempo. La postura è quella di partner strategico a lungo termine: conoscere il business del cliente in profondità, anticipare le esigenze, orientare le decisioni oltre lo scope immediato. Il valore cresce con il tempo della relazione.', body2: null, rule: null },
+        ],
+      },
+      arquetipos: {
+        label: '// Archetipi',
+        title: 'Archetipi',
+        triadTitle: 'La Triade',
+        triadIntro: "L'identità di Bicofino si ancora su tre archetipi complementari — ognuno che opera in un registro distinto, insieme formano il carattere unico del brand.",
+        items: [
+          { title: 'Il Sovrano (Primario)',   ref: 'Hermès, Don Corleone, il capo di Stato che non ha bisogno di alzare la voce.', body: "Il Sovrano governa attraverso il discernimento. Ha lo standard più alto e non negozia. L'autorità non è proclamata — è riconosciuta. Conosce le regole meglio di chiunque altro, e per questo motivo sa esattamente quando e come piegarle con eleganza.", body2: "In Bicofino, il Sovrano appare nella postura di curatela assoluta: nella selettività dei clienti, nel rifiuto elegante, nell'agenda limitata. Appare nel silenzio calcolato di un brand che non ha bisogno di rumore per essere percepito.", never: 'Cosa non fa mai il Sovrano: Si spiega troppo. Si scusa per lo standard. Cede sotto la pressione del mercato.' },
+          { title: 'Il Saggio (Secondario)',  ref: 'Ray Dalio, Mozart, il Consigliere che parla meno e ci azzecca di più.', body: 'Il Saggio osserva prima di agire. Accumula prospettiva e la consegna nel momento esatto — non prima, non dopo. Non ha fretta di dimostrare ciò che sa; la profondità dell\'analisi lo fa per lui.', body2: "In Bicofino, il Saggio appare nella qualità della consulenza strategica, nella lettura del mercato a lungo termine, nell'integrazione dell'IA come strumento per amplificare il giudizio umano.", never: "Cosa non fa mai il Saggio: Consegna analisi senza sintesi. Parla per il gusto di parlare. Confonde il volume di informazioni con la saggezza." },
+          { title: 'Il Creatore (Terziario)', ref: 'Steve Jobs, la Volpe Bicofino, l\'artista che è anche un editor spietato.', body: "Il Creatore vede possibilità dove gli altri vedono vincoli. Produce con ossessione per il dettaglio. Ma il Creatore Bicofino è anche un editor. Sa che la differenza tra il mediocre e l'eccellente è ciò che decidi di rimuovere, non ciò che aggiungi.", body2: "In Bicofino, il Creatore appare nello Studio, in Bicofino Inspired, nelle firme animate, nei media kit, nelle identità visive. Appare in ogni consegna che è stata lavorata fino a quando non c'era più nulla da tagliare.", never: "Cosa non fa mai il Creatore: Consegna volume senza editing. Confonde l'occupazione con la produttività creativa. Valorizza il processo più del risultato." },
+        ],
+        foxBond: {
+          title: "La Volpe e James Bond — L'Archetipo della Mobilità",
+          p1: "La Volpe Bicofino e James Bond condividono lo stesso DNA comportamentale — e insieme formano il layer di mobilità e adattamento del brand.",
+          p2: "La Volpe è agile, intelligente ed elegante sotto pressione. Appare nei momenti giusti, scompare quando non c'è nulla da aggiungere. Non è mai nel posto sbagliato. Osserva prima di agire. Non abbaia mai.",
+          p3: "Bond estende questa lettura alla dimensione internazionale: si muove ovunque nel mondo senza perdere la sua identità. Entra in qualsiasi stanza — in qualsiasi lingua, in qualsiasi cultura — e appartiene. Viene chiamato quando il problema è troppo impossibile per la via convenzionale. Mantiene eleganza e ragionamento calibrato anche sotto estrema pressione. Adatta il metodo al contesto. Mai il carattere.",
+          p4: "Questi due archetipi, sovrapposti, definiscono come Bicofino si muove nel mondo: con presenza calcolata, scopo chiaro ed eleganza che non ha bisogno di annunciarsi.",
+        },
+        semanticPanel: {
+          title: 'Pannello Semantico degli Archetipi',
+          rows: [
+            ['Metafore Bicofino', "La volpe (agilità e intelligenza), il quartetto da camera (precisione e intimità), l'atelier (artigianato ed esclusività), il Consigliere (fiducia e accesso), la pelle patinata (tempo e qualità), il diamond ✦ (filtro e precisione), il campo di gioco di notte (tensione e bellezza simultanee), la piazza italiana (incontro, eleganza e tempo di qualità), Bond che attraversa la frontiera (mobilità con scopo)."],
+            ['Riferimenti culturali', "Hermès (heritage e rifiuto dell'ovvio), LVMH (architettura di brand), Brunello Cucinelli (umanesimo e lusso con etica), Audemars Piguet (artigianato che trascende le generazioni), Loro Piana (silenzio come sofisticazione), The Row (minimalismo come posizione), James Bond (eleganza sotto pressione, mobilità internazionale), Don Corleone (potere discreto e relazione di fiducia), Mozart (genio con disciplina formale), Steve Jobs (estetica come strategia), Johnnie Walker Striding Man (mascotte come asset di brand a lungo termine), il calcio italiano degli anni '80 e '90 (quando la scarsità di posti per stranieri metteva i migliori del mondo in squadre meno note — Zico all'Udinese — e l'eleganza tattica definiva il gioco prima della velocità)."],
+            ['Evitare', 'Il direttore d\'orchestra che chiede applausi. Il guru che vende metodi. L\'agenzia che promette trasformazione in 30 giorni.'],
+          ],
+        },
+      },
+      craft: {
+        label: '// Craft',
+        title: 'Craft',
+        intro: "Il Craft di Bicofino non è valori da parete di ufficio. Sono comportamenti osservabili in ogni consegna, ogni riunione, ogni interazione con clienti o partner.",
+        items: [
+          ['Ossessione per il Dettaglio',             "Ciò che sembra perfetto all'occhio distratto ha qualcosa da raffinare. Sempre. Bicofino trova quel qualcosa e lo corregge prima di consegnare."],
+          ['Bellezza con Intelligenza',               "L'estetica senza strategia è decorazione. La strategia senza estetica è un foglio di calcolo. Bicofino opera all'intersezione."],
+          ['Consegnare oltre le aspettative',         'Il brief è il pavimento, non il soffitto. Il cliente chiede ciò che sa chiedere; Bicofino consegna ciò che il cliente non sapeva ancora di aver bisogno.'],
+          ['Semplicità radicale',                     'La versione più elegante di qualsiasi cosa è sempre la più semplice che funziona ancora. Tagliare è la competenza più difficile e più preziosa.'],
+          ['Forza con eleganza',                      'Dire qualcosa di difficile con precisione e senza crudeltà. Avere una posizione e mantenerla. Bicofino non esita.'],
+          ['Tecnologia al servizio della creatività', "IA, dati e strumenti digitali amplificano il giudizio umano — non lo sostituiscono mai."],
+          ['Il Tocco Artigianale',                    "Lo sfondo della comunicazione Bicofino segue sempre le quattro qualità visive centrali: minimalismo sofisticato, quiet luxury, gerarchia chiara, permanenza sulla tendenza. Ma ciò che differenzia Bicofino da qualsiasi sistema di brand ben eseguito è ciò che accade puntualmente e con intenzione: un post atleta che rompe la griglia in modo calcolato, un trattamento artistico inaspettato in una campagna, un pezzo che sorprende perché nessuno si aspettava quel livello di cura umana in un contesto digitale. Questi momenti non sono frequenti — e non devono esserlo. Appaiono strategicamente, quando l'occasione lo giustifica, ed è esattamente questa rarità che li rende potenti. Il tocco artigianale è il differenziale estetico di Bicofino. Il fattore umano che non scala."],
+        ],
+      },
+      proxies: {
+        label: '// Proxy e Personas',
+        title: 'Proxy e Personas',
+        intro: 'I proxy sono figure reali o fittizie che aiutano a calibrare lo standard decisionale interno. Quando sei in dubbio su tono, postura o scelta, chiedi: cosa farebbero questi riferimenti?',
+        items: [
+          { name: 'Hermès',             use: "Per decisioni di curatela e standard di prodotto. Hermès rifiuta le tendenze. Lancia quando è pronto. La sua lista d'attesa è strategia, non coincidenza.",                                                                                                                arrow: 'Bicofino rifiuta anche ciò che è di moda se non è vero per il brand.' },
+          { name: 'Brunello Cucinelli', use: "Per decisioni sull'umanesimo e l'etica del lusso. Cucinelli ha costruito un impero sulla convinzione che profitto e dignità umana coesistano — che la massima qualità e il rispetto per il processo siano la stessa cosa.",                                             arrow: "Bicofino capisce che eccellenza ed etica delle relazioni non sono trade-off." },
+          { name: 'Audemars Piguet',    use: "Per decisioni di heritage e artigianato a lungo termine. AP non spiega perché i suoi orologi costano quello che costano — la complessità interna, visibile solo a chi sa guardare, fa quel lavoro.",                                                                     arrow: 'Bicofino non ha bisogno di spiegare il suo valore. La profondità della consegna lo fa.' },
+          { name: 'Don Corleone',       use: "Per decisioni di relazione e potere di rete. Il Padrino non negozia pubblicamente. Le sue relazioni sono di lunga data e di reciproca convenienza. Quando fa un favore, non lo incassa immediatamente.",                                                                 arrow: 'Bicofino costruisce relazioni dove il valore cresce nel tempo, non si esaurisce alla prima transazione.' },
+          { name: 'Steve Jobs',         use: 'Per decisioni di prodotto ed esecuzione. Jobs eliminava le feature fino a quando il prodotto era solo l\'essenziale più ben eseguito possibile.',                                                                                                                         arrow: 'Bicofino elimina il superfluo fino a quando rimane solo il necessario — eseguito impeccabilmente.' },
+          { name: 'James Bond',         use: 'Per decisioni di mobilità, presenza e adattamento. Bond entra in qualsiasi stanza del mondo e appartiene. Risolve l\'impossibile con eleganza. Mantiene il carattere anche quando il metodo cambia.',                                                                    arrow: 'Bicofino si muove in qualsiasi mercato, in qualsiasi lingua, senza perdere la sua identità.' },
+          { name: 'La Volpe Bicofino',  use: "La mascotte del brand. Agile, intelligente, elegante sotto pressione. Appare quando ha qualcosa da aggiungere; scompare quando non l'ha.",                                                                                                                               arrow: 'Cosa farebbe la Volpe? Cosa indosserebbe? Dove sarebbe?' },
+        ],
+      },
+    },
+
+    verbal: {
+      header: { eyebrow: '// 01.5 · Universo Verbale', title: 'Universo Verbale' },
+      manifesto: {
+        label: '// Manifesto',
+        title: 'Chi decide il gioco raramente urla.',
+        paras: [
+          "C'è un'intera generazione cresciuta a credere che la visibilità sia valore. Che la presenza sia potere. Che se non sei visto, non sta succedendo.",
+          'Bicofino non è d\'accordo.',
+          'Gli affari che contano di più avvengono in stanze piccole. Le connessioni che muovono le carriere sono fatte da persone che si conoscono davvero — non dagli algoritmi dei social media. I brand che durano decenni non inseguono le tendenze; le ignorano con eleganza calcolata.',
+          "Viviamo in un'epoca in cui chiunque può sembrare sofisticato. Filtri, template, contenuti generati dall'IA su scala industriale — la superficie non è mai stata così accessibile. Paradossalmente, la profondità non è mai stata così rara. O così preziosa.",
+          "Bicofino è stato costruito su questa convinzione: che ciò che dura ha sostanza. Che l'accesso reale non si compra, si costruisce — con tempo, con discernimento, con la disponibilità a dire no a ciò che non merita un sì. Che bellezza e intelligenza non sono opposti — sono la stessa cosa quando l'esecuzione è al giusto livello.",
+          "Non serviamo tutti. Ogni relazione che costruiamo richiede profondità. Ogni progetto che assumiamo richiede il meglio di noi. Un'agenda illimitata è un'agenda diluita.",
+          "Siamo stati plasmati dalla tensione tra tre culture. La grinta e l'autenticità del Brasile. La scala e la precisione del mondo anglosassone. L'heritage e il raffinamento dell'Italia. Questo mix non è un incidente — è un vantaggio.",
+          "Lo sport è il nostro territorio d'origine non perché è grande, ma perché rivela il carattere. In una partita, non c'è dove nascondersi. Il talento emerge sotto pressione. La preparazione decide prima del fischio d'inizio. Bicofino porta questo stesso rigore in tutto ciò che fa: ogni consegna è una performance che lascia un segno.",
+          'Connessione. Curatela. Creazione. Consulenza.',
+          "Quattro parole. Un metodo. Un'ossessione.",
+        ],
+        tagline: 'Unlike Any Other.',
+      },
+      tomDeVoz: {
+        label: '// Voce & Tono',
+        title: 'Voce & Tono',
+        intro: "La voce e il tono di Bicofino sono determinati da quattro assi che devono coesistere in qualsiasi comunicazione del brand.",
+        weakLabel: 'DEBOLE',
+        bicofinoLabel: 'BICOFINO',
+        axes: [
+          { axis: 'Autorità senza arroganza',                                         body: 'Bicofino ha un punto di vista e lo sostiene. Non chiede il permesso di avere una posizione. Ma non la impone mai con il volume — la impone con la precisione.', weak: '"Siamo leader nel branding sportivo premium."', right: '"Scegliamo i progetti in cui possiamo consegnare il meglio che sappiamo fare."' },
+          { axis: "Sofisticazione attraverso l'esecuzione, non l'autodichiarazione",  body: "La qualità di una consegna Bicofino non ha bisogno di presentazione. Il testo ben scritto, il visual ben editato, la proposta ben strutturata — questi elementi comunicano sofisticazione prima che venga detta qualsiasi parola sulla sofisticazione.", weak: '"Un approccio premium ed esclusivo per il tuo brand."', right: 'Scrivi il brief così bene che il cliente non abbia bisogno di aggettivi per sapere cosa sta ricevendo.' },
+          { axis: 'Diretto, mai scortese',                                            body: "Bicofino va al punto. Non usa riempitivi, non usa gergo da agenzia per sembrare più tecnico. Ma andare al punto con eleganza è diverso dall'essere bruschi.", weak: null, right: null },
+          { axis: 'Specifico, mai generico',                                          body: 'I superlativi vuoti sono l\'opposto dello standard Bicofino. Preferire sempre il concreto, il specifico, il verificabile.', weak: '"Esperienze uniche ed esclusive per clienti ad altissimo standard."', right: '"Un concerto privato di Lang Lang. Una venue intima. Poche persone. Curato da Bicofino."' },
+        ],
+        restrictions: {
+          title: 'Restrizioni di scrittura — filtri obbligatori',
+          p1: 'La costruzione "Non è X. È Y." è vietata in Bicofino.',
+          p2: "Questa è la restrizione verbale più importante del Brand System. La struttura — \"Premium, non costoso.\", \"Strategia, non esecuzione.\", \"Non è un'agenzia. È un atelier.\" — è stata usata in eccesso da brand che vogliono sembrare sofisticati ma devono dichiarare quella sofisticazione perché non la dimostrano. L'effetto oggi è esattamente l'opposto di quello previsto: invece di forza, segnala automazione; invece di posizione, segnala insicurezza.",
+          p3: 'Lo standard Bicofino richiede frasi che affermino senza dover negare, che dimostrino senza dover spiegare, che si fidino del lettore per completare il ragionamento. L\'intelligenza del testo sta nel non dover mai dire cosa non è — solo mostrare cosa è, con sufficiente precisione che il contrasto appaia da solo.',
+          p4: 'Questa restrizione si applica a tutti i tipi di output: copy del brand, post Instagram, proposte, manifesti, playbook e analisi strategiche.',
+          othersLabel: 'Altre restrizioni',
+          items: [
+            'Superlativi senza riferimento concreto ("il più", "il migliore", "l\'unico")',
+            'Urgenza artificiale ("posti limitati", "offerta a tempo limitato")',
+            'Linguaggio corporate ("ecosistema robusto", "soluzioni integrate", "consegna di valore")',
+            'Complimentare il cliente per la domanda prima di rispondere',
+            'Usare "genuino", "onestamente" o "sinceramente" come intensificatori',
+          ],
+        },
+      },
+      vocabulario: {
+        label: '// Vocabolario',
+        title: 'Vocabolario',
+        bicofinoWords: {
+          title: "Parole dell'universo Bicofino",
+          items: [
+            ['Curatela',    'Scelta deliberata e discernente. Più che selezione; è editing con standard.'],
+            ['Atelier',     'Il modo di operare. Artigianale su scala ridotta, irripetibile in profondità.'],
+            ['Consigliere', 'Il consulente di fiducia. Accesso al circolo decisionale, con assoluta discrezione.'],
+            ['Portafoglio', 'Relazioni a lungo termine con standard curato. Mai solo clienti.'],
+            ['Eredità',     'Ciò che rimane dopo la consegna. Ogni azione Bicofino deve lasciare qualcosa che cresce nel tempo.'],
+            ['Accesso',     "L'asset più raro. Costruito in anni, consegnato con precisione."],
+            ['Quartetto',   "La metafora per la dimensione ideale di operazione. Pochi. Precisi. Essenziali."],
+            ['Dossier',     'Il formato di proposta Bicofino. Un documento che racconta una storia strategica, non un elenco di servizi.'],
+            ['Volpe',       "La mascotte. Il punto di vista interno. Agile, intelligente, invisibile quando non c'è nulla da aggiungere."],
+            ['Diamond',     'Il simbolo ✦. Il marchio isolato. Il filtro con forma: quattro punti di precisione.'],
+            ['On Field',    "Tutto relativo all'atleta in campo e alla sua performance complessiva."],
+            ['Off Field',   'Tutto ciò che esiste fuori dal campo: brand, business, immagine, eredità, connessioni.'],
+          ],
+        },
+        avoidWords: {
+          title: 'Parole da evitare',
+          cols: ['Evitare', 'Perché', 'Alternativa'],
+          rows: [
+            ['Premium (da solo)',      'Abusato, ha perso significato',       'Descrivi lo standard invece di nominarlo'],
+            ['Esclusivo',              'Idem',                                "Di' cosa rende l'esperienza singolare"],
+            ['Innovativo',             'Gergo vuoto',                         'Specifica cosa è diverso'],
+            ['Soluzioni',              'Linguaggio corporate',                 'Progetti, consegne, lavoro'],
+            ['Partnership strategica', 'Cliché B2B',                          'Relazione a lungo termine, alleanza'],
+            ['Trasformativo',          'Promessa senza fondamento',            'Specifica cosa cambia e come'],
+            ['Genuino',                'Intensificatore consumato',            'Dimostralo nel testo, non dichiararlo'],
+          ],
+        },
+      },
+      territorio: {
+        label: '// Territorio Semantico',
+        title: 'Territorio Semantico',
+        intro: "Il territorio verbale di Bicofino si muove in tre strati semantici. Attenzione al terzo — quando evocato nel contesto sbagliato, diventa cliché. Usa con discernimento e parsimonia.",
+        layers: [
+          { layer: 'Strato 1 — Lusso con Sostanza',                                     body: "Heritage, craft, patina, tempo, argilla, lino, pelle, legno nobile, silenzio, forma, peso, permanenza. La piazza al tramonto. La pelle che migliora con l'uso. L'atelier che rifiuta la fretta." },
+          { layer: 'Strato 2 — Intelligenza Strategica',                                 body: 'Angolo, prospettiva, filtro, discernimento, mappa, percorso, finestra, accesso, cerchio, stanza piccola, conversazione che cambia direzione, rete costruita in decenni.' },
+          { layer: 'Strato 3 — Lo Sport come Metafora (usare con estrema parsimonia)', body: "Campo, fischio, allenamento, pressione, preparazione, timing, formazione. Le evocazioni sportive hanno forza quando appaiono inaspettatamente in un contesto che non le richiede — e perdono tutta la forza quando diventano il registro predefinito. Le metafore calcistiche fuori dal contesto giusto suonano banali. Riservale per i momenti in cui il contrasto crea impatto." },
+        ],
+      },
+      glossario: {
+        label: '// Glossario',
+        title: 'Glossario',
+        items: [
+          ['Bicofino OS',             "Il sistema operativo interno per la gestione degli atleti e delle operazioni. Architettura cognitiva costruita su Claude Code con agenti IA, Supabase come database, Google Drive come memoria a lungo termine. In continuo sviluppo e implementazione."],
+          ['Bicofino Inspired',       "Concetto editoriale audiovisivo. Ogni produzione è un cortometraggio aspirazionale con protagonista la Volpe Bicofino. Lanciato quando l'esperienza lo giustifica — nessun calendario, nessun obbligo di sequenza."],
+          ['I 4 C',                   'CONNECT (primo), CURATE (secondo), CREATE e CONSULT (conseguenze naturali). Il filtro di ogni decisione Bicofino.'],
+          ['Brand System Bicofino',   'Questo documento. Il playbook vivo del brand.'],
+          ['Dossier',                 'Formato di proposta commerciale Bicofino. Struttura: Visione → Sfida di brand → Percorso Bicofino → Investimento → Tempistiche.'],
+          ['Diagnosi di Brand',       'Servizio di discovery approfondito che mappa lo stato reale di un brand prima di qualsiasi proposta. Nome definitivo in definizione.'],
+          ['Gesto del Gentiluomo',    'Codice interno per la pratica di cancellare il cognome nella firma email e nel biglietto da visita, lasciando visibile solo il nome. Il gesto dice, senza parole: "puoi chiamarmi per nome." Un atto di intimità e fiducia — la creazione di un legame personale dove prima esisteva la formalità.'],
+          ['Image as Presence. Data as Proof.', "Il principio editoriale del sistema di immagini On Field. L'atleta è il principale asset visivo. L'immagine crea gerarchia e tensione. Il dato sostiene la narrativa con precisione."],
+          ['On Field / Off Field',    'Le due grandi verticali operative di Bicofino.'],
+          ['Club',                    'Progetto confidenziale. Territorio della Volpe.'],
+          ['Il Connector',            'Fábio Brancatelli. CEO e fondatore. La rete è il prodotto.'],
+          ["L'Investor",              'Flaviano Galhardo. Pragmatico, focus sul ROI.'],
+          ["L'Artista",               'Woney Malian. Consigliere e Direttore Creativo. Estetica strategica del Gruppo.'],
+          ['Unlike Any Other',        'Il tagline. Non uno slogan. Una posizione.'],
         ],
       },
     },

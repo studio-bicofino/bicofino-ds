@@ -5,8 +5,7 @@ import { BicofinoLogo } from '@/components/BicofinoLogo'
 import { useLang } from '@/content'
 import { bsContent, type BsLang } from '@/content/brandSystemContent'
 
-// IT falls back to BR for BrandSystem long-form content (full IT translation in a future pass)
-const toBsLang = (l: string): BsLang => l === 'en' ? 'en' : 'br'
+const toBsLang = (l: string): BsLang => l === 'en' ? 'en' : l === 'it' ? 'it' : 'br'
 
 const C = {
   black:      'var(--bf-text-primary)',

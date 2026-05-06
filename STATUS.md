@@ -1,6 +1,6 @@
 # Bicofino DS — Status
 
-Atualizado em: 05 mai 2026 (Verticais movida de 03 • BRAND para 05 • VERTICAIS)
+Atualizado em: 05 mai 2026 (IT i18n completo — BrandSystem long-form em italiano)
 
 ---
 
