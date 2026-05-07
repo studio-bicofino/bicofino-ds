@@ -559,54 +559,147 @@ function Typography() {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   SECTION 4 — Slash Heading
+   SECTION 4 — Heading
    ═══════════════════════════════════════════════════════════════════════════ */
 function SlashHeading() {
   const { t } = useLang()
 
-  const anatomy = [
-    { parte: '.slash-heading__lead',  papel: t('slash.lead.role'),  tipo: 'Inter 700',        cor: '--bf-black' },
-    { parte: '.slash-heading__slash', papel: t('slash.slash.role'), tipo: 'Inter 700 · ls 0', cor: '--bf-torino' },
-    { parte: '.slash-heading__echo',  papel: t('slash.echo.role'),  tipo: 'Inter 500',        cor: '--bf-steel' },
+  const typoRows = [
+    { element: t('slash.typo.row1'), type: 'Inter 700', color: '--bf-black' },
+    { element: t('slash.typo.row2'), type: 'Inter 700', color: '--bf-white' },
+  ]
+
+  const examples = [
+    { heading: 'Connect. Curate. Create. Consult.', context: t('slash.ex1.context') },
+    { heading: 'Unlike Any Other.',                 context: t('slash.ex2.context') },
+    { heading: 'On Field. Off Field.',              context: t('slash.ex3.context') },
+    { heading: 'Brand. Identity. Image.',           context: t('slash.ex4.context') },
+    { heading: 'Access. Built with time.',          context: t('slash.ex5.context') },
+    { heading: 'Guilherme Kerchner. The Playmaker.', context: t('slash.ex6.context') },
+  ]
+
+  const rejected = [
+    { proposal: t('slash.rej1.proposal'), problem: t('slash.rej1.problem') },
+    { proposal: t('slash.rej2.proposal'), problem: t('slash.rej2.problem') },
+    { proposal: t('slash.rej3.proposal'), problem: t('slash.rej3.problem') },
+    { proposal: t('slash.rej4.proposal'), problem: t('slash.rej4.problem') },
+    { proposal: t('slash.rej5.proposal'), problem: t('slash.rej5.problem') },
+  ]
+
+  const whereItems = [
+    t('slash.where.item1'),
+    t('slash.where.item2'),
+    t('slash.where.item3'),
+    t('slash.where.item4'),
+  ]
+
+  const principles = [
+    { bold: t('slash.principle.short'),       desc: t('slash.principle.short.desc') },
+    { bold: t('slash.principle.direct'),      desc: t('slash.principle.direct.desc') },
+    { bold: t('slash.principle.categorical'), desc: t('slash.principle.categorical.desc') },
+    { bold: t('slash.principle.singular'),    desc: t('slash.principle.singular.desc') },
   ]
 
   return (
     <section id="slash-heading">
       <SectionHeader eyebrow="// 02.4">{t('slash.title')}</SectionHeader>
+
+      {/* O que é */}
+      <div style={{ padding: `48px ${H_PAD}px 0` }}>
+        <p style={{ fontSize: 13, fontWeight: 700, fontFamily: sans, color: C.black, margin: '0 0 16px' }}>{t('slash.what.title')}</p>
+        <p style={{ fontSize: 15, lineHeight: 1.7, color: C.black, margin: '0 0 14px', fontFamily: sans, maxWidth: 640 }}>{t('slash.what.p1')}</p>
+        <p style={{ fontSize: 15, lineHeight: 1.7, color: C.black, margin: 0, fontFamily: sans, maxWidth: 640 }}>{t('slash.what.p2')}</p>
+      </div>
+
+      <div style={{ margin: `48px ${H_PAD}px 0`, borderTop: hairline }} />
+
+      {/* Princípios */}
       <div style={{ padding: `40px ${H_PAD}px 0` }}>
-        <Lead>{t('slash.lead')}</Lead>
+        <p style={{ fontSize: 13, fontWeight: 700, fontFamily: sans, color: C.black, margin: '0 0 20px' }}>{t('slash.principles.title')}</p>
+        {principles.map(({ bold, desc }) => (
+          <p key={bold} style={{ fontSize: 15, lineHeight: 1.7, color: C.black, margin: '0 0 12px', fontFamily: sans, maxWidth: 640 }}>
+            <strong style={{ fontWeight: 700 }}>{bold}</strong>{' '}{desc}
+          </p>
+        ))}
+      </div>
+
+      <div style={{ margin: `40px ${H_PAD}px 0`, borderTop: hairline }} />
+
+      {/* Especificação tipográfica */}
+      <div style={{ padding: `40px ${H_PAD}px 0` }}>
+        <p style={{ fontSize: 13, fontWeight: 700, fontFamily: sans, color: C.black, margin: '0 0 20px' }}>{t('slash.typo.title')}</p>
+        <div style={{ border: hairline }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 160px 200px', padding: '8px 16px', borderBottom: hairline }}>
+            {[t('slash.typo.col.element'), t('slash.typo.col.type'), t('slash.typo.col.color')].map(h => (
+              <span key={h} style={{ fontFamily: mono, fontSize: 9, letterSpacing: '0.12em', color: C.steel, fontWeight: 600, textTransform: 'uppercase' }}>{h}</span>
+            ))}
+          </div>
+          {typoRows.map(({ element, type, color }) => (
+            <div key={element} style={{ display: 'grid', gridTemplateColumns: '1fr 160px 200px', padding: '14px 16px', borderBottom: hairline, alignItems: 'center' }}>
+              <span style={{ fontSize: 13, color: C.black, fontFamily: sans }}>{element}</span>
+              <span style={{ fontSize: 13, color: C.black, fontFamily: sans }}>{type}</span>
+              <code style={{ fontFamily: mono, fontSize: 11, color: C.torino, background: 'rgba(130,19,36,0.06)', padding: '2px 6px', borderRadius: 3 }}>{color}</code>
+            </div>
+          ))}
+        </div>
+        <p style={{ fontSize: 13, lineHeight: 1.65, color: C.steel, margin: '16px 0 0', fontFamily: sans, maxWidth: 640 }}>{t('slash.typo.note')}</p>
       </div>
 
       {/* Visual */}
       <div style={{ margin: `40px ${H_PAD}px 0`, border: hairline, background: C.white, padding: '56px 48px' }}>
         <div style={{ fontSize: 'clamp(40px, 5.5vw, 72px)', lineHeight: 0.95, fontWeight: 700, fontFamily: sans }}>
-          <span style={{ color: C.black }}>Connect.</span>
-          <br />
-          <span style={{ color: C.black }}>Curate.</span>
-          <br />
-          <span style={{ color: C.black }}>Create.</span>
-          <br />
+          <span style={{ color: C.black }}>Connect.</span><br />
+          <span style={{ color: C.black }}>Curate.</span><br />
+          <span style={{ color: C.black }}>Create.</span><br />
           <span style={{ color: C.black }}>Consult.</span>
         </div>
       </div>
 
-      {/* Anatomy */}
-      <div style={{ margin: `0 ${H_PAD}px`, marginTop: 48 }}>
-        <p style={{ fontFamily: mono, fontSize: 9, letterSpacing: '0.1em', color: C.steel, marginBottom: 8, textTransform: 'uppercase' }}>{t('slash.anatomy.label')}</p>
-        <div style={{ display: 'grid', gridTemplateColumns: '220px 1fr 220px 160px', padding: '8px 0', borderBottom: '1px solid rgba(42,44,43,0.15)' }}>
-          {[t('slash.col.part'), t('slash.col.role'), t('slash.col.type'), t('slash.col.color')].map(h => (
-            <span key={h} style={{ fontFamily: mono, fontSize: 9, letterSpacing: '0.12em', color: C.steel, fontWeight: 600 }}>{h}</span>
+      {/* Exemplos */}
+      <div style={{ margin: `40px ${H_PAD}px 0` }}>
+        <p style={{ fontSize: 13, fontWeight: 700, fontFamily: sans, color: C.black, margin: '0 0 16px' }}>{t('slash.examples.title')}</p>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', padding: '8px 0', borderBottom: '1px solid rgba(42,44,43,0.15)' }}>
+          {[t('slash.examples.col.heading'), t('slash.examples.col.context')].map(h => (
+            <span key={h} style={{ fontFamily: mono, fontSize: 9, letterSpacing: '0.12em', color: C.steel, fontWeight: 600, textTransform: 'uppercase' }}>{h}</span>
           ))}
         </div>
-        {anatomy.map(({ parte, papel, tipo, cor }) => (
-          <div key={parte} style={{ display: 'grid', gridTemplateColumns: '220px 1fr 220px 160px', padding: '14px 0', borderBottom: hairline, alignItems: 'center' }}>
-            <code style={{ fontFamily: mono, fontSize: 11, color: C.black }}>{parte}</code>
-            <span style={{ fontSize: 13, color: C.steel }}>{papel}</span>
-            <span style={{ fontSize: 13, color: C.black }}>{tipo}</span>
-            <code style={{ fontFamily: mono, fontSize: 11, color: C.steel }}>{cor}</code>
+        {examples.map(({ heading, context }) => (
+          <div key={heading} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', padding: '14px 0', borderBottom: hairline, alignItems: 'center' }}>
+            <span style={{ fontSize: 13, color: C.black, fontFamily: sans }}>{heading}</span>
+            <span style={{ fontSize: 13, color: C.steel, fontFamily: sans }}>{context}</span>
           </div>
         ))}
       </div>
+
+      {/* Exemplos recusados */}
+      <div style={{ margin: `32px ${H_PAD}px 0` }}>
+        <p style={{ fontSize: 13, fontWeight: 700, fontFamily: sans, color: C.black, margin: '0 0 16px' }}>{t('slash.rejected.title')}</p>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', padding: '8px 0', borderBottom: '1px solid rgba(42,44,43,0.15)' }}>
+          {[t('slash.rejected.col.proposal'), t('slash.rejected.col.problem')].map(h => (
+            <span key={h} style={{ fontFamily: mono, fontSize: 9, letterSpacing: '0.12em', color: C.steel, fontWeight: 600, textTransform: 'uppercase' }}>{h}</span>
+          ))}
+        </div>
+        {rejected.map(({ proposal, problem }) => (
+          <div key={proposal} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', padding: '14px 0', borderBottom: hairline, alignItems: 'start' }}>
+            <span style={{ fontSize: 13, color: C.black, fontFamily: sans }}>{proposal}</span>
+            <span style={{ fontSize: 13, color: C.steel, fontFamily: sans }}>{problem}</span>
+          </div>
+        ))}
+      </div>
+
+      <div style={{ margin: `48px ${H_PAD}px 0`, borderTop: hairline }} />
+
+      {/* Onde aparece */}
+      <div style={{ padding: `40px ${H_PAD}px 0` }}>
+        <p style={{ fontSize: 13, fontWeight: 700, fontFamily: sans, color: C.black, margin: '0 0 16px' }}>{t('slash.where.title')}</p>
+        <ul style={{ paddingLeft: 20, margin: '0 0 16px' }}>
+          {whereItems.map(item => (
+            <li key={item} style={{ fontSize: 15, lineHeight: 1.8, color: C.black, fontFamily: sans }}>{item}</li>
+          ))}
+        </ul>
+        <p style={{ fontSize: 15, lineHeight: 1.7, color: C.black, margin: 0, fontFamily: sans, maxWidth: 640 }}>{t('slash.where.note')}</p>
+      </div>
+
       <PageFooter line={t('page.footer.line')} />
     </section>
   )

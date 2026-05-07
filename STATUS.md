@@ -1,6 +1,6 @@
 # Bicofino DS — Status
 
-Atualizado em: 05 mai 2026 (IT i18n completo — BrandSystem long-form em italiano)
+Atualizado em: 06 mai 2026 (Heading — seção renomeada e reescrita do zero)
 
 ---
 
@@ -26,7 +26,7 @@ Atualizado em: 05 mai 2026 (IT i18n completo — BrandSystem long-form em italia
 - [x] Universo Visual (visão geral do DS)
 - [x] Cores (Paleta Core + Especial + Tokens)
 - [x] Tipografia
-- [x] Heading (Slash Heading — Lead / Slash / Echo)
+- [x] Heading (título hero — curto, categórico, sem frase completa)
 - [x] Spacing & Motion
 
 ### 03 • Brand
@@ -77,6 +77,15 @@ Atualizado em: 05 mai 2026 (IT i18n completo — BrandSystem long-form em italia
 ---
 
 ## Changelog
+
+### 06 mai 2026 — Heading — Renomeação e reescrita completa da seção
+
+- **Renomeação global** — "Slash Heading" renomeado para "Heading" em todo o material: título da seção, sidebar (`nav.slash`), comentários internos e STATUS.md. Nenhuma referência a "Slash Heading" permanece.
+- **Conteúdo reescrito do zero** — Sem resquício de Lead / Slash / Echo ou barra como elemento de design. Nova lógica: o Heading é um padrão de **título hero** — curto, categórico, sem frase completa.
+- **Nova estrutura da seção** — O "Connect. Curate. Create. Consult." funciona como modelo de referência ao longo de toda a seção. Seções adicionadas: O que é (2 parágrafos), Princípios (4 itens bold+desc), Especificação tipográfica (tabela 3 colunas), Visual preview, Exemplos (tabela 2 colunas — Heading · Contexto), Exemplos recusados (tabela 2 colunas — Proposta · Problema), Onde aparece (lista + parágrafo).
+- **i18n trilíngue completo** — Todas as novas chaves adicionadas a `br.ts`, `en.ts` e `it.ts`. Chaves obsoletas do formato anterior removidas.
+- **Build** — Compilado com sucesso (Next.js 16 / Turbopack). TypeScript limpo.
+- **Deploy** — Produção: https://bicofino.vercel.app
 
 ### 05 mai 2026 — Suporte ao Italiano (IT) — i18n trilíngue
 
