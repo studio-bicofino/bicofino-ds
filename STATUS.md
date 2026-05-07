@@ -85,7 +85,7 @@ Atualizado em: 06 mai 2026 (Heading — seção renomeada e reescrita do zero)
 - **Nova estrutura da seção** — O "Connect. Curate. Create. Consult." funciona como modelo de referência ao longo de toda a seção. Seções adicionadas: O que é (2 parágrafos), Princípios (4 itens bold+desc), Especificação tipográfica (tabela 3 colunas), Visual preview, Exemplos (tabela 2 colunas — Heading · Contexto), Exemplos recusados (tabela 2 colunas — Proposta · Problema), Onde aparece (lista + parágrafo).
 - **i18n trilíngue completo** — Todas as novas chaves adicionadas a `br.ts`, `en.ts` e `it.ts`. Chaves obsoletas do formato anterior removidas.
 - **Build** — Compilado com sucesso (Next.js 16 / Turbopack). TypeScript limpo.
-- **Deploy** — Produção: https://bicofino.vercel.app
+- **Deploy** — Produção: https://bicofino.vercel.app · Commit `29e7beb`
 
 ### 05 mai 2026 — Suporte ao Italiano (IT) — i18n trilíngue
 
