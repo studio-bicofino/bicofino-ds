@@ -79,8 +79,10 @@ export function HeroBlock() {
                 key={key}
                 style={{
                   fontFamily: '"Inter", ui-sans-serif, system-ui, sans-serif',
-                  fontSize: 16,
-                  lineHeight: 1.75,
+                  fontSize: 12,
+                  lineHeight: 1.45,
+                  letterSpacing: 0,
+                  fontWeight: 400,
                   color: 'var(--bf-text-secondary)',
                   maxWidth: 360,
                   marginBottom: 'var(--bf-space-md)',

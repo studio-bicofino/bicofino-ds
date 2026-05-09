@@ -4,6 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import { Menu } from 'lucide-react'
 import { useLang } from '@/content/index'
+import { LogoBicofino } from '@/components/primitives/BrandIcons'
 
 interface HeaderProps {
   onMenuOpen: () => void
@@ -45,12 +46,7 @@ export function Header({ onMenuOpen }: HeaderProps) {
           style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}
           aria-label="Bicofino — página inicial"
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/brand/logo-bicofino.svg"
-            alt="Bicofino"
-            style={{ height: 24, width: 'auto' }}
-          />
+          <LogoBicofino height={24} />
         </Link>
 
         {/* Desktop nav */}

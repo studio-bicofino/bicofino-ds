@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { MapPin, Instagram } from 'lucide-react'
 import { useLang } from '@/content/index'
 import type { Lang } from '@/content/index'
+import { IconDiamond, IconClub } from '@/components/primitives/BrandIcons'
 
 export function Footer() {
   const { t, lang, setLang } = useLang()
@@ -71,14 +72,8 @@ export function Footer() {
           }}
         >
           <span style={{ letterSpacing: '0.08em' }}>{t('footer.club')}</span>
-          {/* icon-club.svg — inline fallback until file is uploaded */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/brand/icon-club.svg"
-            alt=""
-            aria-hidden="true"
-            width={14}
-            height={14}
+          <IconClub
+            size={14}
             style={{
               transform: clubHover ? 'rotate(8deg)' : 'rotate(0deg)',
               transition: 'transform 200ms ease-out',
@@ -103,15 +98,7 @@ export function Footer() {
       >
         {/* Left: diamond + email + instagram */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--bf-space-md)' }}>
-          {/* Diamond icon */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/brand/icon-diamond-bicofino.svg"
-            alt="Bicofino diamond"
-            width={14}
-            height={14}
-            aria-hidden="true"
-          />
+          <IconDiamond size={14} />
 
           <a
             href={`mailto:${t('footer.email')}`}
