@@ -91,13 +91,24 @@ Atualizado em: 08 mai 2026 (apps/web — primeira versão do site público)
   stagger 40ms.
 - **i18n** — BR/EN/IT replicando padrão docs-site.
 - **Brand assets** — logo, diamond, club key SVG e herovideo 
-  em apps/web/public/brand/ e public/media/.
+  em apps/web/public/brand/ e public/media/ (uploads manuais, 
+  não commitados).
+- **Placeholders criados** — `public/favicon.ico` (32×32 #2a2c2b) 
+  e `public/og-image.png` (1200×630 branco + tagline).
+- **HeroBlock** — gif fallback wired: `poster="/media/herovideo.gif"` 
+  + `<img>` fallback dentro do `<video>`.
 - **.claude/agents/** — design-reviewer, copy-editor, 
   motion-curator, deploy-conductor.
 - **.claude/skills/** — bicofino-tokens, bicofino-i18n-pattern, 
   bicofino-component-template.
-- **Deploy Vercel** — projeto novo bicofino-web, separado de 
-  bicofino.vercel.app (docs-site). Production URL: [a preencher].
+- **Commit** — `5108e06` · feat(web): initial site, agents, skills 
+  and vercel deploy · pushed to main.
+- **Deploy Vercel** — projeto novo `bicofino-web` (separado de 
+  `bicofino.vercel.app`/docs-site). Build SUCCESS. TypeScript limpo.
+  Preview: `https://bicofino-gbkgcmnlq-woney-malians-projects.vercel.app`
+  Alias: `https://bicofino-web.vercel.app`
+  **Pendente:** desativar Deployment Protection no dashboard Vercel 
+  (Settings → Deployment Protection → Vercel Authentication → Disabled).
 
 ### 06 mai 2026 — Heading — Renomeação e reescrita completa da seção
 
