@@ -33,3 +33,19 @@ Before writing any component, page, or style:
 - Do not use gradients.
 - Prefer subtraction over addition.
 - Every visual decision must serve a purpose.
+
+## Monorepo Apps
+
+| App             | Port | Purpose                                   |
+|-----------------|------|-------------------------------------------|
+| `apps/docs-site`| 3001 | Brand & Design System documentation site |
+| `apps/storybook`| 6006 | Component explorer                        |
+| `apps/web`      | 3002 | Public website — bicofino.com             |
+
+### apps/web specifics
+- Token inversion: `--bf-bg-page` = `#ffffff` (white header), `--bf-surface` = `#f2f8ff` (hero/footer)
+- `--bf-accent` = `#bfa37a` (defined in web globals.css — derived from DESIGN.md)
+- Animation library: `motion` v12 (Framer Motion)
+- i18n: BR/EN/IT via `content/index.ts` — same pattern as docs-site
+- Run: `npm run web` (root) or `cd apps/web && npm run dev`
+- Never commit assets in `public/brand/` or `public/media/` — these are manual uploads

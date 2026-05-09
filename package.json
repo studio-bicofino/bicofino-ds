@@ -8,6 +8,7 @@
     "web": "cd apps/web && npm run dev",
     "install:docs": "cd apps/docs-site && npm install",
     "install:storybook": "cd apps/storybook && npm install",
-    "install:all": "npm run install:docs && npm run install:storybook"
+    "install:web": "cd apps/web && npm install",
+    "install:all": "npm run install:docs && npm run install:storybook && npm run install:web"
   }
 }

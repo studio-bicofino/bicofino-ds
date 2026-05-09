@@ -1,6 +1,6 @@
 # Bicofino DS — Status
 
-Atualizado em: 06 mai 2026 (Heading — seção renomeada e reescrita do zero)
+Atualizado em: 08 mai 2026 (apps/web — primeira versão do site público)
 
 ---
 
@@ -8,6 +8,7 @@ Atualizado em: 06 mai 2026 (Heading — seção renomeada e reescrita do zero)
 
 - apps/docs-site → Next.js, roda em localhost:3001
 - apps/storybook → Storybook, roda em localhost:6006
+- apps/web → Next.js 16, roda em localhost:3002 (site público bicofino.com)
 - packages/design-system → tokens.css, tokens.ts, Tokens.stories.tsx
 
 ---
@@ -77,6 +78,26 @@ Atualizado em: 06 mai 2026 (Heading — seção renomeada e reescrita do zero)
 ---
 
 ## Changelog
+
+### 08 mai 2026 — apps/web + Bicofino agents and skills + Vercel deploy
+
+- **apps/web criado** — Next.js 16 (App Router, Turbopack), 
+  TypeScript estrito, CSS Modules + tokens do design-system. 
+  Roda em localhost:3002.
+- **Homepage** — header com nav (foundation/off-field/on-field), 
+  HeroBlock (vídeo 400×400 + 4Cs heading + Mensch), Footer 
+  trilíngue com switcher EN/IT/BR.
+- **Mobile** — overlay hambúrguer full-screen, focus trap, 
+  stagger 40ms.
+- **i18n** — BR/EN/IT replicando padrão docs-site.
+- **Brand assets** — logo, diamond, club key SVG e herovideo 
+  em apps/web/public/brand/ e public/media/.
+- **.claude/agents/** — design-reviewer, copy-editor, 
+  motion-curator, deploy-conductor.
+- **.claude/skills/** — bicofino-tokens, bicofino-i18n-pattern, 
+  bicofino-component-template.
+- **Deploy Vercel** — projeto novo bicofino-web, separado de 
+  bicofino.vercel.app (docs-site). Production URL: [a preencher].
 
 ### 06 mai 2026 — Heading — Renomeação e reescrita completa da seção
 
@@ -264,4 +285,27 @@ Atualizado em: 06 mai 2026 (Heading — seção renomeada e reescrita do zero)
 ```
 npm run docs       → docs-site (localhost:3001)
 npm run storybook  → storybook (localhost:6006)
+npm run web        → apps/web  (localhost:3002)
 ```
+
+---
+
+### 08 mai 2026 — apps/web — Primeira versão do site público
+
+- **Novo app criado** — `apps/web` inicializado como site público `bicofino.com`. Stack: Next.js 16.2.4 (App Router, Turbopack), React 19, TypeScript strict, CSS Modules + custom properties, `motion` v12, `lucide-react`.
+- **Porta 3002** — `npm run web` no root inicia o dev server. `npm run web` → `cd apps/web && npm run dev`.
+- **Token mapping web** — `--bf-bg-page` = `#ffffff` (branco, header), `--bf-surface` = `#f2f8ff` (hero/footer). Invertido em relação ao docs-site para refletir a intenção visual do site público. `--bf-accent` = `#bfa37a` definido.
+- **i18n BR/EN/IT** — `content/br.ts`, `content/en.ts`, `content/it.ts`, `content/index.ts`. Namespaces: `nav`, `home`, `footer`. Padrão idêntico ao docs-site. Persiste em localStorage (`bf-lang`). `lang` do `<html>` atualiza dinamicamente.
+- **Componentes criados**:
+  - `components/primitives/Container.tsx` — max-width 1280, padding `--bf-space-lg`
+  - `components/layout/Header.tsx` — logo + nav desktop + hamburger mobile
+  - `components/layout/Footer.tsx` — 2 linhas: endereço/Club e email/Instagram/copyright/lang switcher
+  - `components/layout/MobileMenu.tsx` — overlay desce de cima (240ms), focus trap, ESC fecha, links com stagger 40ms
+  - `components/home/FourCsHeading.tsx` — 4Cs em Inter 700 com fade-up stagger via `motion`, IntersectionObserver
+  - `components/home/HeroBlock.tsx` — grid 3 colunas desktop, 2 colunas tablet, 1 coluna mobile; vídeo + 4Cs + Mensch
+- **Páginas placeholder** — `/foundation`, `/off-field`, `/on-field` (route group `(sections)`) com "Em breve." e link de retorno.
+- **Acessibilidade** — `role="dialog"`, `aria-modal`, focus trap no MobileMenu. `aria-hidden="true"` no vídeo. `aria-label` em todos os ícones standalone. `:focus-visible` com `--bf-accent`.
+- **SEO** — `metadata` com `metadataBase: https://bicofino.com`, OG title/description/image, favicon.
+- **Build** — Compilado com sucesso (Next.js 16 / Turbopack). TypeScript limpo, zero erros. 5 rotas estáticas geradas.
+- **Assets manuais pendentes** — `public/brand/logo-bicofino.svg`, `icon-diamond-bicofino.svg`, `icon-club.svg`; `public/media/herovideo.webm/.mp4`; `public/og-image.png`, `favicon.ico`.
+- **Root package.json** — `install:web` adicionado; `install:all` atualizado para incluir web.

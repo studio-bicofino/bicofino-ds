@@ -297,10 +297,10 @@ export function OperationsSection() {
 
       <div style={{ margin: '64px ' + H_PAD + 'px 0' }}>
         <div style={{ padding: '32px 40px', background: C.black, color: C.white, borderRadius: 2 }}>
-          <p style={{ fontFamily: mono, fontSize: 12, color: 'rgba(255,255,255,0.8)', margin: '0 0 4px', fontStyle: 'italic' }}>{t('ops.brand.line1')}</p>
-          <p style={{ fontFamily: mono, fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: '0 0 4px', fontStyle: 'italic' }}>{t('ops.brand.line2')}</p>
-          <p style={{ fontFamily: mono, fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: '0 0 4px', fontStyle: 'italic' }}>{t('ops.brand.line3')}</p>
-          <p style={{ fontFamily: mono, fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: '0 0 16px', fontStyle: 'italic' }}>{t('ops.brand.version')}</p>
+          <p style={{ fontFamily: mono, fontSize: 12, color: 'rgba(255,255,255,0.8)', margin: '0 0 4px' }}>{t('ops.brand.line1')}</p>
+          <p style={{ fontFamily: mono, fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: '0 0 4px' }}>{t('ops.brand.line2')}</p>
+          <p style={{ fontFamily: mono, fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: '0 0 4px' }}>{t('ops.brand.line3')}</p>
+          <p style={{ fontFamily: mono, fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: '0 0 16px' }}>{t('ops.brand.version')}</p>
           <p style={{ fontSize: 16, fontWeight: 600, color: C.white, margin: 0, letterSpacing: '-0.01em' }}>{t('ops.brand.tagline')}</p>
         </div>
       </div>
