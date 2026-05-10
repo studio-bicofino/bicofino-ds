@@ -1,15 +1,17 @@
 # Bicofino DS — Status
 
-Atualizado em: 09 mai 2026 (apps/web — Fase 2B build fixado e deployado)
+Atualizado em: 10 mai 2026 (apps/web fase 3 — preview https://bicofino-nrp6jk02d-woney-malians-projects.vercel.app)
 
 ---
 
 ## Monorepo
 
-- apps/docs-site → Next.js, roda em localhost:3001
-- apps/storybook → Storybook, roda em localhost:6006
-- apps/web → Next.js 16, roda em localhost:3002 (site público bicofino.com)
-- packages/design-system → tokens.css, tokens.ts, Tokens.stories.tsx
+| App               | Porta | URL produção                      | Estado       |
+|-------------------|-------|-----------------------------------|--------------|
+| apps/docs-site    | 3001  | https://bicofino.vercel.app       | ✅ estável   |
+| apps/storybook    | 6006  | —                                 | ✅ estável   |
+| apps/web          | 3002  | https://bicofino-web.vercel.app   | ✅ em prod   |
+| packages/design-system | — | —                                | ✅ estável   |
 
 ---
 
@@ -78,6 +80,25 @@ Atualizado em: 09 mai 2026 (apps/web — Fase 2B build fixado e deployado)
 ---
 
 ## Changelog
+
+### 10 mai 2026 — Fase 3 — Accordion, fundo azul, ícones platinum, fix vídeo
+
+- **Header** — `borderBottom` removido. Separação visual entre header (branco puro) e conteúdo (azul `--bf-surface`) feita puramente por contraste de cor, sem linha divisória.
+- **Footer** — Ícones unificados: MapPin, IconDiamond e ícone do Instagram agora usam `var(--bf-platinum)` (`#a8c9e5`). IconDiamond recebeu prop `style` para suportar a substituição.
+- **Accordion** — Novo componente primitivo `components/primitives/Accordion.tsx`. Motion v12 (`AnimatePresence` + `motion.div`) com `height: auto`, opacidade, 260ms `[0.16,1,0.3,1]`. Hover altera cor do heading para `var(--bf-text-primary)`. Indicador `+` rotaciona 45° ao abrir.
+- **Foundation, Off Field, On Field** — Fundo alterado de `var(--bf-bg-page)` para `var(--bf-surface)`. Blocos de serviço/4Cs convertidos de lista/grid estático para Accordion colapsável. CTA/closing estilizado como EYEBROW (JetBrains Mono 11px, uppercase, letterSpacing 0.14em, `var(--bf-text-subtle)`) com prefixo `//`.
+- **Vídeo homepage** — `public/media` removido do `.vercelignore` para que `herovideo.mp4` e `herovideo.gif` sejam incluídos no deploy Vercel CLI.
+- **next.config.ts** — `outputFileTracingRoot` removido (pitfall de deploy — já documentado).
+- **Build** — TypeScript limpo, 6 rotas estáticas. Commit `7b381a9`.
+- **Preview** — https://bicofino-nrp6jk02d-woney-malians-projects.vercel.app · 5/5 rotas → HTTP 200.
+
+### 09 mai 2026 — fix(web): deploy Vercel destravado — outputFileTracingRoot
+
+- **Causa raiz** — `next.config.ts` tinha `outputFileTracingRoot: path.join(process.cwd(), '../../')`. Na Vercel com `--cwd apps/web` e Root Directory vazio, `process.cwd()` = `/vercel/path0`, então `outputFileTracingRoot` resolvia para `/` (raiz do filesystem). O hook `onBuildComplete` da Vercel computava o `distDir` como relativo a `/`, obtendo `vercel/path0/.next`, e ao juntar com `cwd` (`/vercel/path0`) produzia o path duplicado `/vercel/path0/vercel/path0/.next/routes-manifest-deterministic.json`.
+- **Fix** — `outputFileTracingRoot` removido de `next.config.ts` junto com o `import path`. `apps/web` não tem dependências locais de `packages/`, portanto `outputFileTracingRoot` era desnecessário.
+- **Root Directory Vercel** — Campo esvaziado no dashboard (`Build and Deployment → Root Directory`). Deploy usa `vercel --cwd apps/web` do root do monorepo.
+- **Preview validada** — `https://bicofino-nxcs9s0zx-woney-malians-projects.vercel.app` · 5/5 rotas → HTTP 200 (`/`, `/foundation`, `/on-field`, `/off-field`, `/club`).
+- **Nota** — O "hang" da sessão anterior era ambiente (sandbox/OS), não código. O código já estava correto desde o commit `1408196`.
 
 ### 08 mai 2026 — apps/web + Bicofino agents and skills + Vercel deploy
 
@@ -299,8 +320,8 @@ Atualizado em: 09 mai 2026 (apps/web — Fase 2B build fixado e deployado)
 - **club criado** — tela de acesso fullscreen sobre `--bf-power-black`. Logo branco (CSS filter), 2 inputs controlados (acesso + senha), botão "Entrar" sem auth, link "← voltar" para /, rodapé "// members only". SEM Header/Footer globais.
 - **Footer** — ícone CLUB linkado para `/club` (href="#" → href="/club").
 - **i18n** — 50+ chaves novas em BR, EN e IT cobrindo todos os textos das 4 páginas + club access.
-- **Build** — código correto (tsc limpo, zero erros TypeScript). Build não executado nesta sessão (restrição de sandbox — ver HANDOFF.md). **Executar no terminal nativo antes do deploy.**
-- **Commit pendente** — nenhum commit nesta sessão. Fazer após build bem-sucedido.
+- **Build** — tsc limpo, zero erros TypeScript. 6 rotas estáticas geradas.
+- **Commit** — `1408196` · feat(web): fase 2B — foundation, on-field, off-field, club + fix build.
 
 ### 09 mai 2026 — fix(web): build destravado — Fase 2B
 
@@ -309,7 +330,7 @@ Atualizado em: 09 mai 2026 (apps/web — Fase 2B build fixado e deployado)
 - **next.config.ts** — adicionado `outputFileTracingRoot` + `optimizePackageImports`. Elimina warning de workspace root múltiplo.
 - **Versões** — Next.js 16.2.4 · React 19.2.4 · motion ^12.12.1 · lucide-react ^0.511.0
 - **Build local** — Exit 0. 6 rotas estáticas: `/`, `/_not-found`, `/club`, `/foundation`, `/off-field`, `/on-field`. Smoke test 5/5 → HTTP 200.
-- **Preview Vercel** — _pendente deploy_
+- **Produção Vercel** — https://bicofino-web.vercel.app · 5/5 rotas → HTTP 200
 
 ---
 
