@@ -50,7 +50,7 @@ export function Footer() {
           <MapPin
             size={14}
             strokeWidth={1.5}
-            style={{ color: 'var(--bf-text-subtle)', flexShrink: 0 }}
+            style={{ color: 'var(--bf-platinum)', flexShrink: 0 }}
             aria-hidden="true"
           />
           <span style={monoStyle}>{t('footer.address')}</span>
@@ -98,7 +98,7 @@ export function Footer() {
       >
         {/* Left: diamond + email + instagram */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--bf-space-md)' }}>
-          <IconDiamond size={14} />
+          <IconDiamond size={14} style={{ color: 'var(--bf-platinum)' }} />
 
           <a
             href={`mailto:${t('footer.email')}`}
@@ -127,7 +127,7 @@ export function Footer() {
             onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--bf-text-primary)' }}
             onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--bf-text-secondary)' }}
           >
-            <Instagram size={12} strokeWidth={1.5} aria-hidden="true" />
+            <Instagram size={12} strokeWidth={1.5} aria-hidden="true" style={{ color: 'var(--bf-platinum)', flexShrink: 0 }} />
             {t('footer.instagram')}
           </a>
         </div>

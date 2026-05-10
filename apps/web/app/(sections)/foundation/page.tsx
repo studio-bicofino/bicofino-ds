@@ -4,17 +4,25 @@ import React, { useState } from 'react'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { MobileMenu } from '@/components/layout/MobileMenu'
+import { Accordion } from '@/components/primitives/Accordion'
 import { useLang } from '@/content/index'
 
 export default function FoundationPage() {
   const [menuOpen, setMenuOpen] = useState(false)
   const { t } = useLang()
 
+  const items = [
+    { heading: t('foundation.connect.heading'), body: t('foundation.connect.body') },
+    { heading: t('foundation.curate.heading'),  body: t('foundation.curate.body')  },
+    { heading: t('foundation.create.heading'),  body: t('foundation.create.body')  },
+    { heading: t('foundation.consult.heading'), body: t('foundation.consult.body') },
+  ]
+
   return (
     <>
       <Header onMenuOpen={() => setMenuOpen(true)} />
       <MobileMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
-      <main style={{ flex: 1, background: 'var(--bf-bg-page)', display: 'flex', flexDirection: 'column' }}>
+      <main style={{ flex: 1, background: 'var(--bf-surface)', display: 'flex', flexDirection: 'column' }}>
         <section
           style={{
             maxWidth: 720,
@@ -61,57 +69,20 @@ export default function FoundationPage() {
             {t('foundation.intro')}
           </p>
 
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: 'var(--bf-space-lg)',
-              marginBottom: 'calc(var(--bf-space-lg) * 2)',
-            }}
-          >
-            {[
-              { hkey: 'foundation.connect.heading', bkey: 'foundation.connect.body' },
-              { hkey: 'foundation.curate.heading',  bkey: 'foundation.curate.body'  },
-              { hkey: 'foundation.create.heading',  bkey: 'foundation.create.body'  },
-              { hkey: 'foundation.consult.heading', bkey: 'foundation.consult.body' },
-            ].map(({ hkey, bkey }) => (
-              <div key={hkey} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--bf-space-sm)' }}>
-                <h3
-                  style={{
-                    fontFamily: '"Inter", ui-sans-serif, sans-serif',
-                    fontSize: 20,
-                    fontWeight: 600,
-                    lineHeight: 1.2,
-                    color: 'var(--bf-text-primary)',
-                  }}
-                >
-                  {t(hkey)}
-                </h3>
-                <p
-                  style={{
-                    fontFamily: '"Inter", ui-sans-serif, sans-serif',
-                    fontSize: 15,
-                    lineHeight: 1.7,
-                    color: 'var(--bf-text-secondary)',
-                  }}
-                >
-                  {t(bkey)}
-                </p>
-              </div>
-            ))}
+          <div style={{ marginBottom: 'calc(var(--bf-space-lg) * 2)' }}>
+            <Accordion items={items} />
           </div>
 
           <p
             style={{
-              fontFamily: '"Inter", ui-sans-serif, sans-serif',
-              fontSize: 13,
-              lineHeight: 1.5,
-              color: 'var(--bf-text-secondary)',
-              paddingTop: 'var(--bf-space-lg)',
-              borderTop: '1px solid var(--bf-border)',
+              fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+              fontSize: 11,
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              color: 'var(--bf-text-subtle)',
             }}
           >
-            {t('foundation.closing')}
+            // {t('foundation.closing')}
           </p>
         </section>
       </main>

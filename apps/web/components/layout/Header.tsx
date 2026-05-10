@@ -23,7 +23,6 @@ export function Header({ onMenuOpen }: HeaderProps) {
     <header
       style={{
         background: 'var(--bf-bg-page)',
-        borderBottom: '1px solid var(--bf-border)',
         position: 'sticky',
         top: 0,
         zIndex: 50,

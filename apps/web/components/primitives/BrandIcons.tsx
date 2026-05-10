@@ -24,12 +24,12 @@ export function LogoBicofino({ height = 24 }: { height?: number }) {
   )
 }
 
-export function IconDiamond({ size = 14 }: { size?: number }) {
+export function IconDiamond({ size = 14, style }: { size?: number; style?: React.CSSProperties }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
-      style={{ width: size, height: size, display: 'block', flexShrink: 0 }}
+      style={{ width: size, height: size, display: 'block', flexShrink: 0, ...style }}
       aria-hidden="true"
       focusable="false"
     >
