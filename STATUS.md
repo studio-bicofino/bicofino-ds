@@ -1,6 +1,6 @@
 # Bicofino DS — Status
 
-Atualizado em: 08 mai 2026 (apps/web — primeira versão do site público)
+Atualizado em: 09 mai 2026 (apps/web — Fase 2B build fixado e deployado)
 
 ---
 
@@ -288,6 +288,28 @@ Atualizado em: 08 mai 2026 (apps/web — primeira versão do site público)
 - **Índice (Docs-Site)** — Refatoração do grid para exibir 1 coluna com fontes JetBrains Mono em caixa alta e baixa nos subitens.
 - **Motion (Docs-Site)** — Adição de transição suave de abertura/fechamento (`ease-out`) no componente `AccordionItem` através de manipulação de `grid-template-rows`.
 - **Operações (Docs-Site)** — Criado o novo componente `OperationsSection.tsx` implementando a Arquitetura de Marca (On Field, Off Field, Club), Princípios, Ferramentas e Política Comercial. A seção foi inserida no `page.tsx`, assumindo a posição 06 e renumerando Governance para 07. Resolvidos bugs de parse (SWC) no componente.
+
+---
+
+### 09 mai 2026 — Fase 2B — Páginas de conteúdo apps/web
+
+- **foundation implementado** — eyebrow `// fundamentos`, heading "Connect. Curate. Create. Consult.", intro, grid 2×2 (Connect / Curate / Create / Consult), closing "Unlike Any Other." Inclui Header + MobileMenu + Footer.
+- **on-field implementado** — eyebrow `// on field`, heading "The Athlete Is the Asset.", intro, 4 serviços em lista vertical separada por borders (Agenciamento, Performance, Internacional, Marca Pessoal), closing "Do Brasil para o mundo."
+- **off-field implementado** — eyebrow `// off field`, heading "Image. Connection. Legacy.", intro, 5 serviços (Branding, Advertising, Conexão de Marcas, Wealth, PR), closing "Unlike Any Other."
+- **club criado** — tela de acesso fullscreen sobre `--bf-power-black`. Logo branco (CSS filter), 2 inputs controlados (acesso + senha), botão "Entrar" sem auth, link "← voltar" para /, rodapé "// members only". SEM Header/Footer globais.
+- **Footer** — ícone CLUB linkado para `/club` (href="#" → href="/club").
+- **i18n** — 50+ chaves novas em BR, EN e IT cobrindo todos os textos das 4 páginas + club access.
+- **Build** — código correto (tsc limpo, zero erros TypeScript). Build não executado nesta sessão (restrição de sandbox — ver HANDOFF.md). **Executar no terminal nativo antes do deploy.**
+- **Commit pendente** — nenhum commit nesta sessão. Fazer após build bem-sucedido.
+
+### 09 mai 2026 — fix(web): build destravado — Fase 2B
+
+- **Causa raiz** — imports diretos de ESM (`lucide-react/dist/esm/icons/...`) em `Footer.tsx`, `Header.tsx` e `MobileMenu.tsx` não têm declarações TypeScript (`.d.ts`). A type check do webpack falhava silenciosamente, travando o build. O Turbopack dava `os error 60 (ETIMEDOUT)` por interferência do Spotlight/XProtect do macOS escaneando `node_modules` recém-instalado — issue de I/O de OS, não de código.
+- **Fix aplicado** — revertido para `import { MapPin, Instagram } from 'lucide-react'` (named imports) em todos os 3 componentes. `optimizePackageImports: ['lucide-react']` em `next.config.ts` garante tree-shaking. Script `build` alterado para `next build --webpack` (webpack: node.js file reader, sem ETIMEDOUT macOS).
+- **next.config.ts** — adicionado `outputFileTracingRoot` + `optimizePackageImports`. Elimina warning de workspace root múltiplo.
+- **Versões** — Next.js 16.2.4 · React 19.2.4 · motion ^12.12.1 · lucide-react ^0.511.0
+- **Build local** — Exit 0. 6 rotas estáticas: `/`, `/_not-found`, `/club`, `/foundation`, `/off-field`, `/on-field`. Smoke test 5/5 → HTTP 200.
+- **Preview Vercel** — _pendente deploy_
 
 ---
 

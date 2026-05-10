@@ -101,7 +101,7 @@ export function HeroBlock() {
           display: grid;
           grid-template-columns: 400px 1fr minmax(280px, 360px);
           gap: var(--bf-space-lg);
-          align-items: center;
+          align-items: end;
         }
         .bf-hero-video-col {
           display: flex;

@@ -50,6 +50,7 @@ html[data-theme-loaded] body {
 
 html {
   scroll-behavior: smooth;
+  background: var(--bf-surface); /* shows through body's rounded corners */
 }
 
 body {
@@ -61,6 +62,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100svh;
+  clip-path: inset(0 round var(--bf-radius-lg));
 }
 
 h1, h2, h3, h4, h5, h6 {

@@ -58,7 +58,7 @@ export function Footer() {
 
         {/* Club */}
         <a
-          href="#"
+          href="/club"
           aria-label={t('footer.club.label')}
           onMouseEnter={() => setClubHover(true)}
           onMouseLeave={() => setClubHover(false)}
