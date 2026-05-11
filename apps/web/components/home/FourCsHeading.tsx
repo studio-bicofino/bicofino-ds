@@ -31,7 +31,7 @@ export function FourCsHeading() {
     <div
       ref={ref}
       aria-label={KEYS.map((k) => t(k)).join(' ')}
-      style={{ display: 'flex', flexDirection: 'column' }}
+      style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.0 }}
     >
       {KEYS.map((key, i) => (
         <motion.span
@@ -49,9 +49,9 @@ export function FourCsHeading() {
             fontFamily: '"Inter", ui-sans-serif, system-ui, sans-serif',
             fontWeight: 700,
             color: 'var(--bf-text-primary)',
-            fontSize: 44,
-            lineHeight: 1.1,
-            letterSpacing: '-0.02em',
+            /* clamp: 40px mobile → 88px desktop */
+            fontSize: 'clamp(40px, 7vw, 88px)',
+            lineHeight: 1.0,
           }}
         >
           {t(key)}
