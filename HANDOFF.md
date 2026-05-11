@@ -5,7 +5,7 @@ Leia do início ao fim antes de qualquer ação.
 
 ---
 
-## Estado atual (10 mai 2026)
+## Estado atual (11 mai 2026)
 
 | App        | Porta  | URL produção                       | Estado       |
 |------------|--------|------------------------------------|--------------|
@@ -13,8 +13,15 @@ Leia do início ao fim antes de qualquer ação.
 | storybook  | 6006   | —                                  | ✅ estável   |
 | apps/web   | 3002   | https://bicofino-web.vercel.app    | ✅ em prod   |
 
-**Último commit estável:** `dd30544` — fix(web): ajuste espaço nav→conteúdo de 180px para 120px
+**Último commit estável:** `4bb60bf` — fix(web): nav order on-field→off-field→foundation, Inter Bold nav, H1 44px, footer icon gap
 **Branch ativa:** main
+
+### Fase 5 — alterações (11 mai 2026)
+
+- **Header.tsx / MobileMenu.tsx** — ordem do nav invertida: on-field primeiro, off-field segundo, foundation terceiro.
+- **Header.tsx** — fonte dos links do nav alterada de JetBrains Mono para Inter Bold 12px / line-height 1.45.
+- **FourCsHeading.tsx** — tamanho do H1 fixado em 44px / 1.1 / -0.02em (era `clamp(40px, 7vw, 88px)`).
+- **Footer.tsx** — espaçamento ícone↔texto padronizado para 6px: diamond icon movido para dentro do `<a>` do email; instagram gap 4px → 6px.
 
 ### Fase 4 — alterações (10 mai 2026)
 
