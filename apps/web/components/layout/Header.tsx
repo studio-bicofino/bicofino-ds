@@ -14,9 +14,9 @@ export function Header({ onMenuOpen }: HeaderProps) {
   const { t } = useLang()
 
   const navLinks = [
-    { key: 'nav.foundation', href: '/foundation' },
-    { key: 'nav.off-field',  href: '/off-field'  },
     { key: 'nav.on-field',   href: '/on-field'   },
+    { key: 'nav.off-field',  href: '/off-field'  },
+    { key: 'nav.foundation', href: '/foundation' },
   ]
 
   return (
@@ -63,8 +63,10 @@ export function Header({ onMenuOpen }: HeaderProps) {
               key={key}
               href={href}
               style={{
-                fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+                fontFamily: '"Inter", ui-sans-serif, system-ui, sans-serif',
                 fontSize: 12,
+                fontWeight: 700,
+                lineHeight: 1.45,
                 letterSpacing: '0.04em',
                 color: 'var(--bf-text-secondary)',
                 transition: 'color 180ms ease-out',

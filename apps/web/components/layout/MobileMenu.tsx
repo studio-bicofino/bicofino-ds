@@ -12,9 +12,9 @@ interface MobileMenuProps {
 }
 
 const navLinks = [
-  { key: 'nav.foundation', href: '/foundation' },
-  { key: 'nav.off-field',  href: '/off-field'  },
   { key: 'nav.on-field',   href: '/on-field'   },
+  { key: 'nav.off-field',  href: '/off-field'  },
+  { key: 'nav.foundation', href: '/foundation' },
 ]
 
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {

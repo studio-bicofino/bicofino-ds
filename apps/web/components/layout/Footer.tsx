@@ -98,17 +98,19 @@ export function Footer() {
       >
         {/* Left: diamond + email + instagram */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--bf-space-md)' }}>
-          <IconDiamond size={14} style={{ color: 'var(--bf-platinum)' }} />
-
           <a
             href={`mailto:${t('footer.email')}`}
             style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
               ...monoStyle,
               transition: 'color 180ms ease-out',
             }}
             onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--bf-text-primary)' }}
             onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--bf-text-secondary)' }}
           >
+            <IconDiamond size={14} style={{ color: 'var(--bf-platinum)', flexShrink: 0 }} aria-hidden="true" />
             {t('footer.email')}
           </a>
 
@@ -120,7 +122,7 @@ export function Footer() {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 4,
+              gap: 6,
               ...monoStyle,
               transition: 'color 180ms ease-out',
             }}
