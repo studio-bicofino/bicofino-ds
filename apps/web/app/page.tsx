@@ -14,7 +14,8 @@ export default function HomePage() {
       <Header onMenuOpen={() => setMenuOpen(true)} />
       <MobileMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
 
-      <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'var(--bf-surface)' }}>
+        <div style={{ height: 180 }} />
         <HeroBlock />
         <div style={{ flex: 1, background: 'var(--bf-surface)' }}>
           <Footer />
