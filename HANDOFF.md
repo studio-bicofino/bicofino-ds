@@ -13,8 +13,13 @@ Leia do início ao fim antes de qualquer ação.
 | storybook  | 6006   | —                                  | ✅ estável   |
 | apps/web   | 3002   | https://bicofino-web.vercel.app    | ✅ em prod   |
 
-**Último commit estável:** `7b381a9` — feat(web): fase 3 — accordion, fundo azul, ícones platinum, fix vídeo deploy
+**Último commit estável:** `e982982` — feat(web): add 180px blue spacer below nav + convert hero to WebM
 **Branch ativa:** main
+
+### Fase 4 — alterações (10 mai 2026)
+
+- **herovideo.webm** — vídeo hero convertido de MP4 para WebM VP9 (767KB vs 6,1MB; redução de 87%). Proporção 500×500 preservada. Upload manual em `public/media/`.
+- **page.tsx** — espaço de 180px em `var(--bf-surface)` (#f2f8ff) entre a barra de navegação e o HeroBlock. Implementado via `<div style={{ height: 180 }} />` dentro do `<main>` com `background: 'var(--bf-surface)'`.
 
 ---
 
