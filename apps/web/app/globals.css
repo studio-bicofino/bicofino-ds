@@ -50,6 +50,7 @@ html[data-theme-loaded] body {
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
   background: var(--bf-surface); /* shows through body's rounded corners */
 }
 

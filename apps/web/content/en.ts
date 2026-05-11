@@ -15,11 +15,11 @@ export const en = {
   // Hero — Mensch
   'home.mensch.eyebrow': 'UNLIKE ANY OTHER.',
   'home.mensch.p1':
-    'Bicofino Group brings together what rarely coexists: genuine talent, precise curation, and access that takes years to build.',
+    'Sport speaks the language of emotion. Brand speaks the language of consumption. Between the two lies one of marketing\'s greatest untapped potentials — and that is where Bicofino operates.',
   'home.mensch.p2':
-    'We operate across two fronts — On Field and Off Field — with the same standard of excellence, the same visual language, and the same commitment to detail.',
+    'We connect athletes, personalities and premium brands in activations that respect both rhythms. On Field and Off Field, with the same standard of excellence, the same visual language, the same commitment to detail.',
   'home.mensch.p3':
-    'Every connection is structured so all parties win. Every deliverable passes the filter of what is truly good.',
+    'Genuine talent. Access that takes years to build. Curation in every connection. Every deliverable passes the filter of what is truly good.',
 
   // Footer
   'footer.address': 'av. pedroso de morais 1619 | 05019 001 | pinheiros | são paulo | sp | brasil',

@@ -15,11 +15,11 @@ export const br = {
   // Hero — Mensch
   'home.mensch.eyebrow': 'UNLIKE ANY OTHER.',
   'home.mensch.p1':
-    'O Bicofino Group reúne o que raramente se encontra junto: talento real, curadoria precisa e acesso que leva anos para construir.',
+    'Esporte fala a língua da emoção. Marca fala a língua do consumo. Entre uma e outra mora um dos maiores potenciais inexplorados do marketing — e é nele que o Bicofino opera.',
   'home.mensch.p2':
-    'Operamos em duas frentes — On Field e Off Field — com o mesmo padrão de exigência, o mesmo vocabulário visual e o mesmo compromisso com o detalhe.',
+    'Conectamos atletas, personalidades e marcas premium em ativações que respeitam os dois ritmos. On Field e Off Field, com o mesmo padrão de exigência, o mesmo vocabulário visual, o mesmo compromisso com o detalhe.',
   'home.mensch.p3':
-    'Cada conexão é estruturada para que todos os lados ganhem. Cada entrega passa pelo filtro do que é verdadeiramente bom.',
+    'Talento real. Acesso que leva anos para construir. Curadoria em cada conexão. Cada entrega passa pelo filtro do que é verdadeiramente bom.',
 
   // Footer
   'footer.address': 'av. pedroso de morais 1619 | 05019 001 | pinheiros | são paulo | sp | brasil',

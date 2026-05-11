@@ -136,7 +136,7 @@ export function Footer() {
 
         {/* Right: copyright + lang switcher */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--bf-space-lg)' }}>
-          <span style={monoStyle}>{t('footer.copyright')}</span>
+          <span style={{ ...monoStyle, fontSize: 10 }}>{t('footer.copyright')}</span>
 
           {/* Language switcher */}
           <div

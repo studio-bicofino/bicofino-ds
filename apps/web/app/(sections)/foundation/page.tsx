@@ -25,6 +25,7 @@ export default function FoundationPage() {
       <main style={{ flex: 1, background: 'var(--bf-surface)', display: 'flex', flexDirection: 'column' }}>
         <section
           style={{
+            width: '100%',
             maxWidth: 720,
             marginInline: 'auto',
             paddingInline: 'var(--bf-space-lg)',
@@ -79,7 +80,7 @@ export default function FoundationPage() {
               fontSize: 11,
               letterSpacing: '0.14em',
               textTransform: 'uppercase',
-              color: 'var(--bf-text-subtle)',
+              color: 'var(--bf-power-black)',
             }}
           >
             // {t('foundation.closing')}

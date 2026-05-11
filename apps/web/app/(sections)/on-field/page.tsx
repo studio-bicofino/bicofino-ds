@@ -25,6 +25,7 @@ export default function OnFieldPage() {
       <main style={{ flex: 1, background: 'var(--bf-surface)', display: 'flex', flexDirection: 'column' }}>
         <section
           style={{
+            width: '100%',
             maxWidth: 720,
             marginInline: 'auto',
             paddingInline: 'var(--bf-space-lg)',
@@ -60,14 +61,39 @@ export default function OnFieldPage() {
           <p
             style={{
               fontFamily: '"Inter", ui-sans-serif, sans-serif',
-              fontSize: 18,
-              lineHeight: 1.65,
+              fontSize: 12,
+              lineHeight: 1.45,
+              fontWeight: 400,
+              letterSpacing: 0,
               color: 'var(--bf-text-secondary)',
-              marginBottom: 'calc(var(--bf-space-lg) * 2)',
+              marginBottom: 'var(--bf-space-lg)',
             }}
           >
             {t('on-field.intro')}
           </p>
+
+          <div
+            style={{
+              width: 500,
+              height: 500,
+              maxWidth: '100%',
+              overflow: 'hidden',
+              marginBottom: 'calc(var(--bf-space-lg) * 2)',
+            }}
+            aria-hidden="true"
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              aria-hidden="true"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            >
+              <source src="/media/video-onfield.webm" type="video/webm" />
+              <source src="/media/video-onfield.mp4" type="video/mp4" />
+            </video>
+          </div>
 
           <div style={{ marginBottom: 'calc(var(--bf-space-lg) * 2)' }}>
             <Accordion items={items} />
@@ -79,7 +105,7 @@ export default function OnFieldPage() {
               fontSize: 11,
               letterSpacing: '0.14em',
               textTransform: 'uppercase',
-              color: 'var(--bf-text-subtle)',
+              color: 'var(--bf-power-black)',
             }}
           >
             // {t('on-field.closing')}

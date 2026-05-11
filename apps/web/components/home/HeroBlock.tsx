@@ -45,7 +45,7 @@ export function HeroBlock() {
                 aria-hidden="true"
                 style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
               >
-                <source src="/media/herovideo.webm" type="video/webm" />
+                <source src="/media/herovideo2.webm" type="video/webm" />
                 <source src="/media/herovideo.mp4" type="video/mp4" />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/media/herovideo.gif" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />

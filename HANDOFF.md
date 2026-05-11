@@ -13,8 +13,25 @@ Leia do início ao fim antes de qualquer ação.
 | storybook  | 6006   | —                                  | ✅ estável   |
 | apps/web   | 3002   | https://bicofino-web.vercel.app    | ✅ em prod   |
 
-**Último commit estável:** `4bb60bf` — fix(web): nav order on-field→off-field→foundation, Inter Bold nav, H1 44px, footer icon gap
+**Último deploy estável:** `dpl_9FwfxtUmXPctkt2iekm9wnzQ2Vy3` — fase 7 em produção (11 mai 2026)
 **Branch ativa:** main
+
+### Fase 7 — fix responsivo mobile (11 mai 2026) ✅ em produção
+
+- **on-field/page.tsx, off-field/page.tsx, foundation/page.tsx** — adicionado `width: '100%'` ao `<section>`. Causa: dentro de flex-column, `marginInline: 'auto'` cancela o `align-self: stretch`, fazendo o section se dimensionar pelo conteúdo (~500-550px) em vez do viewport. Corrigido com `width: '100%'; maxWidth: 720`.
+- **globals.css** — adicionado `overflow-x: clip` ao `html` como proteção extra contra overflow horizontal em qualquer página.
+
+### Fase 6 — alterações (11 mai 2026) ✅ em produção
+
+- **HeroBlock.tsx** — fonte do vídeo hero trocada: `herovideo.webm` → `herovideo2.webm`.
+- **Footer.tsx** — copyright reduzido de 12px → 10px (`fontSize: 10` no span do copyright).
+- **on-field/page.tsx** — vídeo `video-onfield.webm` (500×500px) inserido entre intro e accordion; intro caption 12/1.45/400; CTA closing `--bf-power-black`.
+- **off-field/page.tsx** — vídeo `video-offfield.webm` (500×500px) inserido entre intro e accordion; intro caption 12/1.45/400; CTA closing `--bf-power-black`.
+- **foundation/page.tsx** — CTA closing `--bf-power-black`.
+- **content/br.ts, en.ts, it.ts** — 3 parágrafos hero (home.mensch.p1/p2/p3) reescritos com novo texto.
+
+**Assets manuais necessários em `public/media/`** (uploads já realizados pelo usuário):
+- `herovideo2.webm`, `video-onfield.webm`, `video-onfield.mp4`, `video-offfield.webm`, `video-offfield.mp4`
 
 ### Fase 5 — alterações (11 mai 2026)
 
@@ -73,7 +90,7 @@ apps/web/
 
 **Assets manuais (não commitados, só upload manual):**
 - `public/brand/` — logo-bicofino.svg, icon-diamond-bicofino.svg, icon-club.svg
-- `public/media/` — herovideo.webm, herovideo.mp4, herovideo.gif
+- `public/media/` — herovideo.webm, herovideo.mp4, herovideo.gif, herovideo2.webm, video-onfield.webm, video-onfield.mp4, video-offfield.webm, video-offfield.mp4
 
 ---
 
@@ -121,7 +138,7 @@ const { t } = useLang()
   <Header ... />
   <MobileMenu ... />
   <main style={{ flex: 1, background: 'var(--bf-surface)' }}>  {/* azul — NÃO branco */}
-    <section style={{ maxWidth: 720, marginInline: 'auto', paddingBlock: 'calc(32px * 3)' }}>
+    <section style={{ width: '100%', maxWidth: 720, marginInline: 'auto', paddingBlock: 'calc(32px * 3)' }}>
 
       {/* Eyebrow da página */}
       <p style={{ fontFamily: 'JetBrains Mono', fontSize: 11, textTransform: 'uppercase',
