@@ -54,7 +54,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
   return (
     <>
-      <style>{`.bf-close-btn:focus-visible{outline:2px solid var(--bf-accent);outline-offset:4px;border-radius:var(--bf-radius-sm)}`}</style>
+      <style>{`.bf-close-btn:focus-visible{outline:2px solid var(--bf-accent);outline-offset:4px;border-radius:var(--bf-radius-sm)}.bf-mobile-nav-link:active{opacity:0.65;transition:none}`}</style>
       <AnimatePresence>
       {isOpen && (
         <>
@@ -150,6 +150,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   <Link
                     href={href}
                     onClick={onClose}
+                    className="bf-mobile-nav-link"
                     style={{
                       fontFamily: '"Inter", ui-sans-serif, system-ui, sans-serif',
                       fontSize: 32,

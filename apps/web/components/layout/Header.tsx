@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Menu } from 'lucide-react'
 import { useLang } from '@/content/index'
 import { LogoBicofino } from '@/components/primitives/BrandIcons'
@@ -12,6 +13,7 @@ interface HeaderProps {
 
 export function Header({ onMenuOpen }: HeaderProps) {
   const { t } = useLang()
+  const pathname = usePathname()
 
   const navLinks = [
     { key: 'nav.on-field',   href: '/on-field'   },
@@ -58,31 +60,35 @@ export function Header({ onMenuOpen }: HeaderProps) {
           }}
           className="bf-web-nav-desktop"
         >
-          {navLinks.map(({ key, href }) => (
-            <Link
-              key={key}
-              href={href}
-              className="bf-nav-link"
-              style={{
-                fontFamily: '"Inter", ui-sans-serif, system-ui, sans-serif',
-                fontSize: 12,
-                fontWeight: 700,
-                lineHeight: 1.45,
-                letterSpacing: '0.04em',
-                color: 'var(--bf-text-secondary)',
-                transition: 'color 180ms ease-out',
-                textTransform: 'lowercase',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = 'var(--bf-text-primary)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = 'var(--bf-text-secondary)'
-              }}
-            >
-              {t(key)}
-            </Link>
-          ))}
+          {navLinks.map(({ key, href }) => {
+            const isActive = pathname === href
+            return (
+              <Link
+                key={key}
+                href={href}
+                className="bf-nav-link"
+                aria-current={isActive ? 'page' : undefined}
+                style={{
+                  fontFamily: '"Inter", ui-sans-serif, system-ui, sans-serif',
+                  fontSize: 12,
+                  fontWeight: 700,
+                  lineHeight: 1.45,
+                  letterSpacing: '0.04em',
+                  color: isActive ? 'var(--bf-text-primary)' : 'var(--bf-text-secondary)',
+                  transition: 'color 180ms ease-out',
+                  textTransform: 'lowercase',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = 'var(--bf-text-primary)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = isActive ? 'var(--bf-text-primary)' : 'var(--bf-text-secondary)'
+                }}
+              >
+                {t(key)}
+              </Link>
+            )
+          })}
         </nav>
 
         {/* Mobile hamburger */}
