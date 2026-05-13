@@ -62,6 +62,7 @@ export function Header({ onMenuOpen }: HeaderProps) {
             <Link
               key={key}
               href={href}
+              className="bf-nav-link"
               style={{
                 fontFamily: '"Inter", ui-sans-serif, system-ui, sans-serif',
                 fontSize: 12,
@@ -86,7 +87,7 @@ export function Header({ onMenuOpen }: HeaderProps) {
 
         {/* Mobile hamburger */}
         <button
-          className="bf-web-nav-mobile"
+          className="bf-web-nav-mobile bf-hamburger-btn"
           onClick={onMenuOpen}
           aria-label={t('nav.menu.label')}
           style={{
@@ -116,6 +117,12 @@ export function Header({ onMenuOpen }: HeaderProps) {
         @media (max-width: 767px) {
           .bf-web-nav-desktop { display: none !important; }
           .bf-web-nav-mobile  { display: flex !important; }
+        }
+        .bf-nav-link:focus-visible,
+        .bf-hamburger-btn:focus-visible {
+          outline: 2px solid var(--bf-accent);
+          outline-offset: 4px;
+          border-radius: var(--bf-radius-sm);
         }
       `}</style>
     </header>

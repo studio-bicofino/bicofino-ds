@@ -23,6 +23,7 @@ function AccordionRow({
       }}
     >
       <button
+        className="bf-accordion-btn"
         onClick={() => setOpen(!open)}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
@@ -104,6 +105,7 @@ export function Accordion({
 }) {
   return (
     <div>
+      <style>{`.bf-accordion-btn:focus-visible{outline:2px solid var(--bf-accent);outline-offset:2px;border-radius:var(--bf-radius-sm)}`}</style>
       {items.map(({ heading, body }, i) => (
         <AccordionRow
           key={heading}
