@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { X } from 'lucide-react'
-import { motion, AnimatePresence } from 'motion/react'
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
 import { useLang } from '@/content/index'
 
 interface MobileMenuProps {
@@ -19,6 +19,7 @@ const navLinks = [
 
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const { t } = useLang()
+  const shouldReduce = useReducedMotion()
   const closeRef = useRef<HTMLButtonElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
 
@@ -63,7 +64,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.18, ease: 'easeOut' }}
+            transition={{ duration: shouldReduce ? 0 : 0.18, ease: 'easeOut' }}
             onClick={onClose}
             style={{
               position: 'fixed',
@@ -82,10 +83,10 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             role="dialog"
             aria-modal="true"
             aria-label="Menu de navegação"
-            initial={{ y: '-100%' }}
+            initial={{ y: shouldReduce ? 0 : '-100%' }}
             animate={{ y: 0 }}
-            exit={{ y: '-100%' }}
-            transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+            exit={{ y: shouldReduce ? 0 : '-100%' }}
+            transition={{ duration: shouldReduce ? 0 : 0.24, ease: [0.16, 1, 0.3, 1] }}
             style={{
               position: 'fixed',
               top: 0,
@@ -141,8 +142,8 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    delay: i * 0.04,
-                    duration: 0.24,
+                    delay: shouldReduce ? 0 : i * 0.04,
+                    duration: shouldReduce ? 0 : 0.24,
                     ease: [0.16, 1, 0.3, 1],
                   }}
                 >
