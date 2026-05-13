@@ -98,7 +98,7 @@ export function Header({ onMenuOpen }: HeaderProps) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: 4,
+            padding: 12,
             opacity: 0.7,
             transition: 'opacity 150ms ease-out',
           }}

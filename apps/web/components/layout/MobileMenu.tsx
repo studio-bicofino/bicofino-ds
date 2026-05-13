@@ -116,7 +116,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 color: 'var(--bf-text-secondary)',
                 display: 'flex',
                 alignItems: 'center',
-                padding: 4,
+                padding: 12,
                 opacity: 0.7,
                 transition: 'opacity 150ms ease-out',
               }}
