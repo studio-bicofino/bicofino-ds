@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://bicofino.com'),
   title: 'Bicofino — Unlike Any Other',
   description:
-    'Bicofino Group — curadoria, conexão e criatividade ao mais alto nível. On Field. Off Field. São Paulo.',
+    'Bicofino Group — curadoria, conexão e criatividade ao mais alto nível. On Pitch. Off Pitch. São Paulo.',
   openGraph: {
     title: 'Bicofino — Unlike Any Other',
     description:

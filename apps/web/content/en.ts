@@ -1,8 +1,8 @@
 export const en = {
   // Nav
   'nav.foundation': 'foundation',
-  'nav.off-field': 'off field',
-  'nav.on-field': 'on field',
+  'nav.off-field': 'off pitch',
+  'nav.on-field': 'on pitch',
   'nav.menu.label': 'Menu',
   'nav.close.label': 'Close menu',
 
@@ -17,7 +17,7 @@ export const en = {
   'home.mensch.p1':
     'Sport speaks the language of emotion. Brand speaks the language of consumption. Between the two lies one of marketing\'s greatest untapped potentials — and that is where Bicofino operates.',
   'home.mensch.p2':
-    'We connect athletes, personalities and premium brands in activations that respect both rhythms. On Field and Off Field, with the same standard of excellence, the same visual language, the same commitment to detail.',
+    'We connect athletes, personalities and premium brands in activations that respect both rhythms. On Pitch and Off Pitch, with the same standard of excellence, the same visual language, the same commitment to detail.',
   'home.mensch.p3':
     'Genuine talent. Access that takes years to build. Curation in every connection. Every deliverable passes the filter of what is truly good.',
 
@@ -38,14 +38,14 @@ export const en = {
 
   // SEO
   'meta.description':
-    'Bicofino Group — curation, connection, and creativity at the highest level. On Field. Off Field. São Paulo.',
+    'Bicofino Group — curation, connection, and creativity at the highest level. On Pitch. Off Pitch. São Paulo.',
 
   // Placeholders
   'section.soon': 'Coming soon.',
   'section.soon.desc': 'This section is under construction.',
   'foundation.title': 'Foundation',
-  'off-field.title': 'Off Field',
-  'on-field.title': 'On Field',
+  'off-field.title': 'Off Pitch',
+  'on-field.title': 'On Pitch',
 
   // Foundation — page content
   'foundation.eyebrow': '// foundation',
@@ -62,7 +62,7 @@ export const en = {
   'foundation.closing': 'A limited agenda, by choice. Unlike Any Other.',
 
   // On Field — page content
-  'on-field.eyebrow': '// on field',
+  'on-field.eyebrow': '// on pitch',
   'on-field.heading': 'The Athlete Is the Asset.',
   'on-field.intro': 'On the pitch, the athlete already proves themselves. Bicofino takes care of what exists before, during and after — everything that transforms a talent into a career, and a career into a legacy.',
   'on-field.s1.heading': 'Agency and Representation',
@@ -76,9 +76,9 @@ export const en = {
   'on-field.closing': 'From Brazil to the world. One athlete at a time. With criterion.',
 
   // Off Field — page content
-  'off-field.eyebrow': '// off field',
+  'off-field.eyebrow': '// off pitch',
   'off-field.heading': 'Image. Connection. Legacy.',
-  'off-field.intro': 'The pitch has a limited duration. What the athlete or brand builds off it can last decades. Off Field is where Bicofino serves brands, companies and athletes in everything that exists beyond sporting performance. The same curation standard. The same obsession for results.',
+  'off-field.intro': 'The pitch has a limited duration. What the athlete or brand builds off it can last decades. Off Pitch is where Bicofino serves brands, companies and athletes in everything that exists beyond sporting performance. The same curation standard. The same obsession for results.',
   'off-field.s1.heading': 'Branding and Visual Identity',
   'off-field.s1.body': 'For athletes, companies and brands that understand that aesthetics is strategy. Design built to last — not for the quarterly trend.',
   'off-field.s2.heading': 'Advertising and Content Production',
