@@ -23,7 +23,7 @@ export default function OffFieldPage() {
     <>
       <Header onMenuOpen={() => setMenuOpen(true)} />
       <MobileMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
-      <main style={{ flex: 1, background: 'var(--bf-surface)', display: 'flex', flexDirection: 'column' }}>
+      <main id="main-content" style={{ flex: 1, background: 'var(--bf-surface)', display: 'flex', flexDirection: 'column' }}>
         <section
           style={{
             width: '100%',
@@ -62,7 +62,7 @@ export default function OffFieldPage() {
           <p
             style={{
               fontFamily: '"Inter", ui-sans-serif, sans-serif',
-              fontSize: 12,
+              fontSize: 14,
               lineHeight: 1.45,
               fontWeight: 400,
               letterSpacing: 0,
@@ -75,8 +75,8 @@ export default function OffFieldPage() {
 
           <div
             style={{
-              width: 500,
-              height: 500,
+              width: 400,
+              height: 400,
               maxWidth: '100%',
               overflow: 'hidden',
               marginBottom: 'calc(var(--bf-space-lg) * 2)',

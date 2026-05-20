@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { X } from 'lucide-react'
-import { motion, AnimatePresence } from 'motion/react'
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
 import { useLang } from '@/content/index'
 
 interface MobileMenuProps {
@@ -19,13 +19,31 @@ const navLinks = [
 
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const { t } = useLang()
+  const shouldReduce = useReducedMotion()
   const closeRef = useRef<HTMLButtonElement>(null)
+  const panelRef = useRef<HTMLDivElement>(null)
 
   // Focus trap & ESC
   useEffect(() => {
     if (!isOpen) return
     closeRef.current?.focus()
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { onClose(); return }
+      if (e.key === 'Tab') {
+        const panel = panelRef.current
+        if (!panel) return
+        const focusable = Array.from(
+          panel.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')
+        )
+        const first = focusable[0]
+        const last = focusable[focusable.length - 1]
+        if (e.shiftKey) {
+          if (document.activeElement === first) { e.preventDefault(); last?.focus() }
+        } else {
+          if (document.activeElement === last) { e.preventDefault(); first?.focus() }
+        }
+      }
+    }
     document.addEventListener('keydown', onKey)
     document.body.style.overflow = 'hidden'
     return () => {
@@ -35,7 +53,9 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   }, [isOpen, onClose])
 
   return (
-    <AnimatePresence>
+    <>
+      <style>{`.bf-close-btn:focus-visible{outline:2px solid var(--bf-accent);outline-offset:4px;border-radius:var(--bf-radius-sm)}.bf-mobile-nav-link:active{opacity:0.65;transition:none}`}</style>
+      <AnimatePresence>
       {isOpen && (
         <>
           {/* Backdrop */}
@@ -44,7 +64,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.18, ease: 'easeOut' }}
+            transition={{ duration: shouldReduce ? 0 : 0.18, ease: 'easeOut' }}
             onClick={onClose}
             style={{
               position: 'fixed',
@@ -58,14 +78,15 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
           {/* Overlay panel */}
           <motion.div
+            ref={panelRef}
             key="panel"
             role="dialog"
             aria-modal="true"
             aria-label="Menu de navegação"
-            initial={{ y: '-100%' }}
+            initial={{ y: shouldReduce ? 0 : '-100%' }}
             animate={{ y: 0 }}
-            exit={{ y: '-100%' }}
-            transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+            exit={{ y: shouldReduce ? 0 : '-100%' }}
+            transition={{ duration: shouldReduce ? 0 : 0.24, ease: [0.16, 1, 0.3, 1] }}
             style={{
               position: 'fixed',
               top: 0,
@@ -86,6 +107,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               ref={closeRef}
               onClick={onClose}
               aria-label={t('nav.close.label')}
+              className="bf-close-btn"
               style={{
                 alignSelf: 'flex-end',
                 background: 'none',
@@ -94,7 +116,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 color: 'var(--bf-text-secondary)',
                 display: 'flex',
                 alignItems: 'center',
-                padding: 4,
+                padding: 12,
                 opacity: 0.7,
                 transition: 'opacity 150ms ease-out',
               }}
@@ -120,14 +142,15 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    delay: i * 0.04,
-                    duration: 0.24,
+                    delay: shouldReduce ? 0 : i * 0.04,
+                    duration: shouldReduce ? 0 : 0.24,
                     ease: [0.16, 1, 0.3, 1],
                   }}
                 >
                   <Link
                     href={href}
                     onClick={onClose}
+                    className="bf-mobile-nav-link"
                     style={{
                       fontFamily: '"Inter", ui-sans-serif, system-ui, sans-serif',
                       fontSize: 32,
@@ -147,6 +170,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+      </AnimatePresence>
+    </>
   )
 }

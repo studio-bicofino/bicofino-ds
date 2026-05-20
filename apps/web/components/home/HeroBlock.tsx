@@ -37,6 +37,8 @@ export function HeroBlock() {
               aria-hidden="true"
             >
               <video
+                width={400}
+                height={400}
                 autoPlay
                 muted
                 loop

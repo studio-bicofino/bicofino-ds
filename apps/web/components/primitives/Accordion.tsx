@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
 
 function AccordionRow({
   heading,
@@ -14,6 +14,7 @@ function AccordionRow({
 }) {
   const [open, setOpen] = useState(false)
   const [hover, setHover] = useState(false)
+  const shouldReduce = useReducedMotion()
 
   return (
     <div
@@ -23,6 +24,7 @@ function AccordionRow({
       }}
     >
       <button
+        className="bf-accordion-btn"
         onClick={() => setOpen(!open)}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
@@ -58,7 +60,7 @@ function AccordionRow({
             fontSize: 18,
             color: 'var(--bf-text-subtle)',
             display: 'inline-block',
-            transition: 'transform 220ms ease-out',
+            transition: shouldReduce ? 'none' : 'transform 220ms ease-out',
             transform: open ? 'rotate(45deg)' : 'rotate(0deg)',
             lineHeight: 1,
             flexShrink: 0,
@@ -73,11 +75,10 @@ function AccordionRow({
         {open && (
           <motion.div
             key="body"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
-            style={{ overflow: 'hidden' }}
+            initial={{ opacity: 0, y: shouldReduce ? 0 : -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: shouldReduce ? 0 : -6 }}
+            transition={{ duration: shouldReduce ? 0 : 0.22, ease: [0.16, 1, 0.3, 1] }}
           >
             <p
               style={{
@@ -104,6 +105,7 @@ export function Accordion({
 }) {
   return (
     <div>
+      <style>{`.bf-accordion-btn:focus-visible{outline:2px solid var(--bf-accent);outline-offset:2px;border-radius:var(--bf-radius-sm)}`}</style>
       {items.map(({ heading, body }, i) => (
         <AccordionRow
           key={heading}
