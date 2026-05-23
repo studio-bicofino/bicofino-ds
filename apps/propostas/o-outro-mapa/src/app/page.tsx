@@ -83,9 +83,9 @@ export default function Page() {
 
       {/* SEÇÃO 3 — O MAPA */}
       <section id="mapa" style={{ padding: `80px ${H_PAD}px`, borderBottom: hairline }}>
-        <div style={{ display: 'flex', gap: 64, alignItems: 'flex-start' }}>
+        <div className="bf-mapa-grid" style={{ display: 'flex', gap: 64, alignItems: 'flex-start' }}>
           {/* Coluna texto */}
-          <div style={{ minWidth: 300, maxWidth: 360 }}>
+          <div className="bf-mapa-text" style={{ minWidth: 300, maxWidth: 360 }}>
             <p style={{
               fontFamily:    mono,
               fontSize:      11,
@@ -155,7 +155,7 @@ export default function Page() {
             </p>
           </div>
           {/* Mapa SVG */}
-          <div style={{ flex: 1, minWidth: 0 }}>
+          <div className="bf-mapa-svg" style={{ flex: 1, minWidth: 0 }}>
             <MapaBrasil />
           </div>
         </div>
@@ -359,7 +359,7 @@ export default function Page() {
             Esta proposta foi desenhada para ser apresentada em conversa estruturada. Para agendar, escreva para
           </p>
           <a
-            href="mailto:propostas@bicofino.com"
+            href="mailto:hello@bicofino.com"
             style={{
               fontFamily: sans,
               fontSize:   18,
@@ -369,7 +369,7 @@ export default function Page() {
               margin:     '8px 0 40px',
             }}
           >
-            propostas@bicofino.com
+            hello@bicofino.com
           </a>
           <p style={{ fontFamily: sans, fontSize: 14, color: C.subtle }}>
             Studio Bicofino — São Paulo
