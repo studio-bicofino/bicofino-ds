@@ -16,7 +16,7 @@ const C = {
 const mono = '"JetBrains Mono", monospace'
 const sans = '"Inter", sans-serif'
 const hairline = '1px solid var(--bf-border)'
-const H_PAD = 72
+const H_PAD = 'clamp(16px, 5vw, 72px)'
 
 function Eyebrow({ children }: { children: string }) {
   return (
@@ -44,7 +44,7 @@ function Lead({ children }: { children: React.ReactNode }) {
 
 function SectionHeader({ children, eyebrow }: { children: string; eyebrow: string }) {
   return (
-    <div className="bf-text-reveal" style={{ padding: '80px ' + H_PAD + 'px 56px', borderBottom: hairline }}>
+    <div className="bf-text-reveal" style={{ padding: '80px ' + H_PAD + ' 56px', borderBottom: hairline }}>
       <Eyebrow>{eyebrow}</Eyebrow>
       <PageTitle>{children}</PageTitle>
     </div>
@@ -53,7 +53,7 @@ function SectionHeader({ children, eyebrow }: { children: string; eyebrow: strin
 
 function SubHeader({ label, title }: { label: string; title: string }) {
   return (
-    <div className="bf-text-reveal" style={{ padding: '56px ' + H_PAD + 'px 28px' }}>
+    <div className="bf-text-reveal" style={{ padding: '56px ' + H_PAD + ' 28px' }}>
       <p style={{ fontFamily: mono, fontSize: 10, letterSpacing: '0.1em', color: C.steel, margin: '0 0 10px' }}>{label}</p>
       <h2 className="text-balance" style={{ fontSize: 28, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: 0, lineHeight: 1.1, fontFamily: sans }}>{title}</h2>
     </div>
@@ -62,7 +62,7 @@ function SubHeader({ label, title }: { label: string; title: string }) {
 
 function PageFooter({ line }: { line: string }) {
   return (
-    <div style={{ padding: '32px ' + H_PAD + 'px 48px', borderTop: hairline }}>
+    <div style={{ padding: '32px ' + H_PAD + ' 48px', borderTop: hairline }}>
       <p style={{ fontFamily: mono, fontSize: 10, color: C.platinum, margin: 0, letterSpacing: '0.1em' }}>
         {line}
       </p>
@@ -115,7 +115,7 @@ export function OperationsSection() {
     <section id="operacoes">
       <SectionHeader eyebrow={t('ops.eyebrow')}>{t('ops.title')}</SectionHeader>
 
-      <FocusReveal style={{ padding: '40px ' + H_PAD + 'px 0' }}>
+      <FocusReveal style={{ padding: '40px ' + H_PAD + ' 0' }}>
         <Lead>{t('ops.lead')}</Lead>
       </FocusReveal>
 
@@ -123,9 +123,9 @@ export function OperationsSection() {
       <div id="ops-arch" style={{ scrollMarginTop: 88 }}>
       <SubHeader label={t('ops.arch.label')} title={t('ops.arch.title')} />
       
-      <div style={{ margin: '0 ' + H_PAD + 'px', display: 'grid', gridTemplateColumns: '1fr', gap: 40 }}>
+      <div style={{ margin: '0 ' + H_PAD, display: 'grid', gridTemplateColumns: '1fr', gap: 40 }}>
         
-        {/* On Field */}
+        {/* On Pitch */}
         <div style={{ background: C.white, padding: '40px', borderTop: '3px solid ' + C.black }}>
           <div style={{ marginBottom: 24 }}>
             <h3 style={{ fontSize: 24, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: '0 0 8px', fontFamily: sans }}>{t('ops.onfield.title')}</h3>
@@ -157,7 +157,7 @@ export function OperationsSection() {
           </div>
         </div>
 
-        {/* Off Field */}
+        {/* Off Pitch */}
         <div style={{ background: C.white, padding: '40px', borderTop: '3px solid ' + C.steel }}>
           <div style={{ marginBottom: 24 }}>
             <h3 style={{ fontSize: 24, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: '0 0 8px', fontFamily: sans }}>{t('ops.offfield.title')}</h3>
@@ -211,18 +211,18 @@ export function OperationsSection() {
         </div>
       </div>
 
-      <div style={{ margin: '48px ' + H_PAD + 'px 0' }}>
+      <div style={{ margin: '48px ' + H_PAD + ' 0' }}>
         <p style={{ fontFamily: mono, fontSize: 10, letterSpacing: '0.1em', color: C.steel, margin: '0 0 16px', textTransform: 'uppercase' }}>{t('ops.visual.label')}</p>
         <p style={{ fontSize: 14, lineHeight: 1.65, color: C.steel, marginBottom: 20, maxWidth: 640 }}>
           {t('ops.visual.desc')}
         </p>
         <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 12 }}>
           <li style={{ fontSize: 14, color: C.steel, display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-            <span style={{ color: C.black, fontWeight: 600 }}>On Field:</span>
+            <span style={{ color: C.black, fontWeight: 600 }}>On Pitch:</span>
             <span>{t('ops.visual.onfield')}</span>
           </li>
           <li style={{ fontSize: 14, color: C.steel, display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-            <span style={{ color: C.black, fontWeight: 600 }}>Off Field:</span>
+            <span style={{ color: C.black, fontWeight: 600 }}>Off Pitch:</span>
             <span>{t('ops.visual.offfield')}</span>
           </li>
         </ul>
@@ -234,7 +234,7 @@ export function OperationsSection() {
       <div id="ops-delivery" style={{ scrollMarginTop: 88 }}>
       <SubHeader label={t('ops.delivery.label')} title={t('ops.delivery.title')} />
       
-      <div style={{ margin: '0 ' + H_PAD + 'px' }}>
+      <div style={{ margin: '0 ' + H_PAD }}>
         <p style={{ fontSize: 14, lineHeight: 1.65, color: C.steel, marginBottom: 32, maxWidth: 640 }}>
           {t('ops.delivery.desc')}
         </p>
@@ -253,7 +253,7 @@ export function OperationsSection() {
       </div>
 
       {/* Operation tools */}
-      <div style={{ margin: '0 ' + H_PAD + 'px' }}>
+      <div style={{ margin: '0 ' + H_PAD }}>
         <p style={{ fontFamily: mono, fontSize: 10, letterSpacing: '0.1em', color: C.steel, margin: '0 0 16px', textTransform: 'uppercase' }}>{t('ops.tools.label')}</p>
         <div style={{ display: 'grid', gridTemplateColumns: '240px 1fr', padding: '8px 0', borderBottom: '1px solid var(--bf-border-strong)' }}>
           <span style={{ fontFamily: mono, fontSize: 9, letterSpacing: '0.12em', color: C.steel, fontWeight: 600 }}>{t('ops.tools.col.role')}</span>
@@ -268,7 +268,7 @@ export function OperationsSection() {
       </div>
 
       {/* Delivery flow & Commercial policy */}
-      <div style={{ margin: '64px ' + H_PAD + 'px 0', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48 }}>
+      <div style={{ margin: '64px ' + H_PAD + ' 0', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48 }}>
         <div>
           <p style={{ fontFamily: mono, fontSize: 10, letterSpacing: '0.1em', color: C.steel, margin: '0 0 24px', textTransform: 'uppercase' }}>{t('ops.flow.label')}</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -295,7 +295,7 @@ export function OperationsSection() {
         </div>
       </div>
 
-      <div style={{ margin: '64px ' + H_PAD + 'px 0' }}>
+      <div style={{ margin: '64px ' + H_PAD + ' 0' }}>
         <div style={{ padding: '32px 40px', background: C.black, color: C.white, borderRadius: 2 }}>
           <p style={{ fontFamily: mono, fontSize: 12, color: 'rgba(255,255,255,0.8)', margin: '0 0 4px' }}>{t('ops.brand.line1')}</p>
           <p style={{ fontFamily: mono, fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: '0 0 4px' }}>{t('ops.brand.line2')}</p>
