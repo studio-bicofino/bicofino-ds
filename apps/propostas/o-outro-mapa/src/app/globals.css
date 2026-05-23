@@ -87,6 +87,49 @@ a { color: inherit; text-decoration: none; }
 
 section { scroll-margin-top: 80px; }
 
+/* ──────────────────────────────────────────────────────────────
+   Editorial measure utilities
+   Constraints for line-length and reading rhythm. Used to keep
+   the page from stretching its long-form content on ultrawide
+   viewports. Headings already inherit `text-wrap: balance` from
+   the global rule above; paragraphs inherit `text-wrap: pretty`.
+   ────────────────────────────────────────────────────────────── */
+
+/* Body copy — generous editorial measure (60–72ch sweet spot) */
+.bf-measure-body { max-width: 65ch; }
+
+/* Lead paragraphs / subtitles — slightly tighter */
+.bf-measure-lead { max-width: 50ch; }
+
+/* Headings — short, punchy titles (3–5 words) */
+.bf-measure-heading--narrow { max-width: 14ch; }
+
+/* Headings — medium length section titles */
+.bf-measure-heading { max-width: 18ch; }
+
+/* Wide content blocks (tables, two-column layouts) — stop growing
+   on ultrawide. Aligns with the editorial measure of the body. */
+.bf-measure-wide { max-width: 1040px; }
+
+/* Two-column wide blocks (Investimento + Cronograma side-by-side) */
+.bf-measure-duo { max-width: 1200px; }
+
+/* Footnotes / small captions */
+.bf-measure-note { max-width: 70ch; }
+
+/* Mobile — measure utilities should not over-constrain narrow viewports.
+   On phones the viewport itself is the constraint; max-width caps would
+   leave odd whitespace if the user has font-size overrides. */
+@media (max-width: 640px) {
+  .bf-measure-body,
+  .bf-measure-lead,
+  .bf-measure-note,
+  .bf-measure-wide,
+  .bf-measure-duo {
+    max-width: 100%;
+  }
+}
+
 /* reveal animation */
 @keyframes bf-reveal-up {
   from { opacity: 0; transform: translateY(10px); }

@@ -28,6 +28,7 @@ export function ProposalHero({ eyebrow, title, subtitle, lead }: ProposalHeroPro
       </p>
 
       <h1
+        className="bf-measure-heading--narrow"
         style={{
           fontFamily: '"Inter", sans-serif',
           fontSize: 80,
@@ -43,13 +44,13 @@ export function ProposalHero({ eyebrow, title, subtitle, lead }: ProposalHeroPro
       </h1>
 
       <p
+        className="bf-measure-lead text-balance"
         style={{
           fontFamily: '"Inter", sans-serif',
           fontSize: 22,
           fontWeight: 400,
           color: 'var(--bf-text-secondary)',
           lineHeight: 1.4,
-          maxWidth: 680,
           margin: '0 0 40px',
         }}
       >
@@ -57,14 +58,13 @@ export function ProposalHero({ eyebrow, title, subtitle, lead }: ProposalHeroPro
       </p>
 
       <p
+        className="bf-measure-body text-pretty"
         style={{
           fontFamily: '"Inter", sans-serif',
           fontSize: 16,
           lineHeight: 1.75,
           color: 'var(--bf-text-secondary)',
-          maxWidth: 680,
-          textWrap: 'pretty',
-        } as React.CSSProperties}
+        }}
       >
         {lead}
       </p>

@@ -37,7 +37,7 @@ function SectionHeader({ eyebrow, title }: { eyebrow: string; title: string }) {
         {eyebrow}
       </p>
       <h2
-        className="text-balance"
+        className="text-balance bf-measure-heading"
         style={{
           fontFamily:    sans,
           fontSize:      40,
@@ -98,7 +98,7 @@ export default function Page() {
               ✦ O MAPA
             </p>
             <h2
-              className="text-balance"
+              className="text-balance bf-measure-heading--narrow"
               style={{
                 fontFamily: sans,
                 fontSize:   28,
@@ -144,7 +144,7 @@ export default function Page() {
               ))}
             </div>
             {/* Nota de rodapé */}
-            <p style={{
+            <p className="text-pretty" style={{
               fontFamily: sans,
               fontSize:   11,
               color:      C.subtle,
@@ -164,7 +164,7 @@ export default function Page() {
       {/* SEÇÃO 4 — CONTEXTO */}
       <section id="contexto" style={{ padding: `80px ${H_PAD}px`, borderBottom: hairline }}>
         <SectionHeader eyebrow="CONTEXTO DE MERCADO" title="Os dados que sustentam a tese" />
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
+        <div className="bf-measure-duo" style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
           <DataCard
             number="47%"
             text="dos brasileiros assistem a pelo menos um jogo de futebol por semana"
@@ -192,13 +192,12 @@ export default function Page() {
       <section id="tiers" style={{ padding: `80px ${H_PAD}px`, borderBottom: hairline }}>
         <SectionHeader eyebrow="O CAMINHO BICOFINO" title="Três tiers, três lógicas de valor" />
         <p
-          className="text-pretty"
+          className="text-pretty bf-measure-body"
           style={{
             fontFamily: sans,
             fontSize:   17,
             lineHeight: 1.75,
             color:      C.muted,
-            maxWidth:   680,
             margin:     '0 0 48px',
           }}
         >
@@ -236,12 +235,15 @@ export default function Page() {
       {/* SEÇÃO 6 — PACOTE */}
       <section id="pacote" style={{ padding: `80px ${H_PAD}px`, borderBottom: hairline }}>
         <SectionHeader eyebrow="INVESTIMENTO" title="A estrutura financeira" />
-        <InvestimentoTable />
+        <div className="bf-measure-wide">
+          <InvestimentoTable />
+        </div>
       </section>
 
       {/* SEÇÃO 7 — ENTREGÁVEIS */}
       <section id="entregaveis" style={{ padding: `80px ${H_PAD}px`, borderBottom: hairline }}>
         <SectionHeader eyebrow="PROPRIEDADES" title="O que está incluído em cada campeonato" />
+        <div className="bf-measure-duo">
         <EntregavelGrid blocks={[
           {
             eyebrow: 'Identidade e presença',
@@ -286,6 +288,7 @@ export default function Page() {
             ],
           },
         ]} />
+        </div>
       </section>
 
       {/* SEÇÃO 8 — GARANTIAS */}
@@ -298,13 +301,12 @@ export default function Page() {
         ].map((text, i) => (
           <p
             key={i}
-            className="text-pretty"
+            className="text-pretty bf-measure-body"
             style={{
               fontFamily:   sans,
               fontSize:     17,
               lineHeight:   1.75,
               color:        C.muted,
-              maxWidth:     720,
               marginBottom: 24,
             }}
           >
@@ -316,7 +318,7 @@ export default function Page() {
       {/* SEÇÃO 9 — INVESTIMENTO & CRONOGRAMA */}
       <section id="investimento" style={{ padding: `80px ${H_PAD}px`, borderBottom: hairline }}>
         <SectionHeader eyebrow="PRAZOS" title="Os marcos da operação" />
-        <div style={{ display: 'flex', gap: 64, alignItems: 'flex-start' }}>
+        <div className="bf-measure-duo" style={{ display: 'flex', gap: 64, alignItems: 'flex-start' }}>
           <div style={{ flex: 1, minWidth: 0 }}>
             <p style={{
               fontFamily:    mono,
@@ -349,7 +351,7 @@ export default function Page() {
       {/* SEÇÃO 10 — PRÓXIMO PASSO */}
       <section id="proximo-passo" style={{ padding: `80px ${H_PAD}px`, borderBottom: hairline }}>
         <div style={{ maxWidth: 560, margin: '0 auto', textAlign: 'center' }}>
-          <p style={{
+          <p className="text-balance" style={{
             fontFamily: sans,
             fontSize:   18,
             lineHeight: 1.7,

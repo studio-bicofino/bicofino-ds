@@ -91,6 +91,7 @@ export function TierCard({
               Por que estão aqui
             </p>
             <p
+              className="text-pretty bf-measure-body"
               style={{
                 fontFamily: '"Inter", sans-serif',
                 fontSize: 13,
@@ -118,6 +119,7 @@ export function TierCard({
               O que entrega
             </p>
             <p
+              className="text-pretty bf-measure-body"
               style={{
                 fontFamily: '"Inter", sans-serif',
                 fontSize: 13,

@@ -55,6 +55,7 @@ export function EntregavelGrid({ blocks }: EntregavelGridProps) {
             {block.items.map((item, j) => (
               <li
                 key={j}
+                className="text-pretty"
                 style={{
                   fontFamily: '"Inter", sans-serif',
                   fontSize: 13,

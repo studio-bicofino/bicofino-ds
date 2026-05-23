@@ -11,6 +11,9 @@ export function DataCard({ number, text, source }: DataCardProps) {
         padding: '32px 24px',
         border: '1px solid var(--bf-border)',
         borderRadius: 4,
+        flex: '1 1 240px',
+        minWidth: 220,
+        maxWidth: 360,
       }}
     >
       <p
@@ -28,6 +31,7 @@ export function DataCard({ number, text, source }: DataCardProps) {
       </p>
 
       <p
+        className="text-pretty"
         style={{
           fontFamily: '"Inter", sans-serif',
           fontSize: 14,
