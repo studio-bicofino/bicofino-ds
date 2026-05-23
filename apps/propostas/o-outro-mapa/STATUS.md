@@ -106,6 +106,8 @@ Interação: hover por `useState` — transição `opacity 180ms ease-out`, tool
 - [x] **TierCard responsivo** — colapsa para 1 coluna abaixo de 960px (resolve textos com 1-2 palavras por linha em tablet)
 - [x] **Seção O Mapa responsiva** — texto + SVG empilham abaixo de 1024px; mapa não desaparece mais em mobile/tablet (max-width 560px, centralizado)
 - [x] **CTA final** — email atualizado para `hello@bicofino.com`
+- [x] **Deploy v1.2 (preview)** — 23/05/2026 — `https://o-outro-mapa-6cdojgvbr-woney-malians-projects.vercel.app`
+- [x] **Composição tipográfica editorial** — utilities `.bf-measure-*` (body 65ch, lead 50ch, headings 14–18ch, tabelas 1040px, duo 1200px) com `text-wrap: balance/pretty`. Resolve linhas longas, widows e títulos esticados em ultrawide. Mobile guard ≤640px desliga as constraints.
 
 ---
 
