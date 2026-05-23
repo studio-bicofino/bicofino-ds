@@ -1,6 +1,6 @@
 # STATUS — O Outro Mapa
 
-**Data:** 22 de maio de 2026 (atualizado: mapa real SVG)  
+**Data:** 23 de maio de 2026 (atualizado: responsividade tablet/mobile + CTA email)  
 **Branch:** experiment/video-hero  
 **App:** `apps/propostas/o-outro-mapa/`  
 **Porta de dev:** `3003` (definida no package.json) — se ocupada, usar `npx next dev -p 3010`
@@ -102,6 +102,10 @@ Interação: hover por `useState` — transição `opacity 180ms ease-out`, tool
 - [x] **Menu hamburger mobile** com mesmo comportamento do docs-site (drawer + overlay, `position: fixed`)
 - [x] **Mapa SVG real** — `MapaBrasil.tsx` usa `public/maps/brazil-states.svg` (geometria oficial SimpleMaps), 27 estados renderizados por ID `BRXX`, paleta editorial champagne/platinum/graphite, hover + tooltip React
 - [x] **Apresentado ao cliente** — v1 entregue em 22/05/2026
+- [x] **Deploy v1.1 (preview)** — 23/05/2026 — `https://o-outro-mapa-r9oxshmvy-woney-malians-projects.vercel.app`
+- [x] **TierCard responsivo** — colapsa para 1 coluna abaixo de 960px (resolve textos com 1-2 palavras por linha em tablet)
+- [x] **Seção O Mapa responsiva** — texto + SVG empilham abaixo de 1024px; mapa não desaparece mais em mobile/tablet (max-width 560px, centralizado)
+- [x] **CTA final** — email atualizado para `hello@bicofino.com`
 
 ---
 
@@ -117,7 +121,7 @@ Interação: hover por `useState` — transição `opacity 180ms ease-out`, tool
 - [ ] DataCards — flex-wrap atual vs grid 2×2 fixo vs linha de 4
 
 ### Funcional
-- [ ] Testar responsividade em mobile (375px) e tablet (768px) — ainda não verificado
+- [x] ~~Testar responsividade em mobile (375px) e tablet (768px)~~ — verificado e ajustado em 23/05/2026 (TierCard + seção O Mapa)
 - [ ] Verificar print stylesheet em Safari/Chrome
 - [ ] Lighthouse audit (target 95+ desktop)
 - [ ] Adicionar entrada no `package.json` raiz para rodar com `npm run proposta` ou similar
