@@ -17,7 +17,7 @@ const C = {
 const mono = '"JetBrains Mono", monospace'
 const sans = '"Inter", sans-serif'
 const hairline = '1px solid rgba(42,44,43,0.08)'
-const H_PAD = 72
+const H_PAD = 'clamp(16px, 5vw, 72px)'
 
 /* ─── Atoms ─── */
 function Eyebrow({ children }: { children: string }) {
@@ -41,7 +41,7 @@ function Lead({ children }: { children: React.ReactNode }) {
    ═══════════════════════════════════════════════════════ */
 function Hero() {
   return (
-    <section id="sh-hero" style={{ padding: `80px ${H_PAD}px 72px`, borderBottom: hairline }}>
+    <section id="sh-hero" style={{ padding: `80px ${H_PAD} 72px`, borderBottom: hairline }}>
       <Eyebrow>// system onboarding</Eyebrow>
       <div
         className="bf-load-stagger"
@@ -77,7 +77,7 @@ function Hero() {
 function WhatThisIs() {
   return (
     <section id="sh-what">
-      <FocusReveal style={{ padding: `64px ${H_PAD}px`, borderBottom: hairline }}>
+      <FocusReveal style={{ padding: `64px ${H_PAD}`, borderBottom: hairline }}>
         <Eyebrow>// 01 · what this is</Eyebrow>
         <h2 style={{ fontSize: 28, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: '0 0 20px', fontFamily: sans, lineHeight: 1.1 }}>
           AI-OS-BASE
@@ -130,13 +130,13 @@ function HowToUse() {
 
   return (
     <section id="sh-how">
-      <TextReveal style={{ padding: `56px ${H_PAD}px 28px`, borderBottom: hairline }}>
+      <TextReveal style={{ padding: `56px ${H_PAD} 28px`, borderBottom: hairline }}>
         <Eyebrow>// 02 · how to use</Eyebrow>
         <h2 style={{ fontSize: 28, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: 0, fontFamily: sans, lineHeight: 1.1 }}>
           Session protocol
         </h2>
       </TextReveal>
-      <StaggerGroup style={{ margin: `0 ${H_PAD}px 72px` }}>
+      <StaggerGroup style={{ margin: `0 ${H_PAD} 72px` }}>
         {steps.map(({ n, title, desc }) => (
           <div
             key={n}
@@ -202,7 +202,7 @@ function CoreLayers() {
 
   return (
     <section id="sh-layers">
-      <FocusReveal style={{ padding: `56px ${H_PAD}px 32px`, borderBottom: hairline }}>
+      <FocusReveal style={{ padding: `56px ${H_PAD} 32px`, borderBottom: hairline }}>
         <Eyebrow>// 03 · core layers</Eyebrow>
         <h2 style={{ fontSize: 28, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: '0 0 16px', fontFamily: sans, lineHeight: 1.1 }}>
           System architecture
@@ -210,7 +210,7 @@ function CoreLayers() {
         <Lead>Five layers. Each with a distinct function. Do not mix responsibilities between them.</Lead>
       </FocusReveal>
 
-      <div style={{ margin: `0 ${H_PAD}px 72px` }}>
+      <div style={{ margin: `0 ${H_PAD} 72px` }}>
         <div style={{ display: 'grid', gridTemplateColumns: '32px 180px 1fr', padding: '8px 0', borderBottom: '1px solid rgba(42,44,43,0.16)', gap: 24 }}>
           {['', 'layer', 'purpose'].map((h, i) => (
             <span key={i} style={{ fontFamily: mono, fontSize: 9, letterSpacing: '0.12em', color: C.steel, fontWeight: 600 }}>{h}</span>
@@ -256,14 +256,14 @@ function PersonalVsBicofino() {
 
   return (
     <section id="sh-separation">
-      <TextReveal style={{ padding: `56px ${H_PAD}px 28px`, borderBottom: hairline }}>
+      <TextReveal style={{ padding: `56px ${H_PAD} 28px`, borderBottom: hairline }}>
         <Eyebrow>// 04 · boundaries</Eyebrow>
         <h2 style={{ fontSize: 28, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: 0, fontFamily: sans, lineHeight: 1.1 }}>
           Personal vs Bicofino
         </h2>
       </TextReveal>
 
-      <FocusReveal style={{ padding: `32px ${H_PAD}px 32px` }}>
+      <FocusReveal style={{ padding: `32px ${H_PAD} 32px` }}>
         <Lead>
           AI-OS-BASE serves both personal and professional work. The agents and prompts are neutral —
           but the outputs must stay separated. One session, one context. Never mix client data with
@@ -271,7 +271,7 @@ function PersonalVsBicofino() {
         </Lead>
       </FocusReveal>
 
-      <div style={{ margin: `0 ${H_PAD}px 72px` }}>
+      <div style={{ margin: `0 ${H_PAD} 72px` }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', padding: '8px 0', borderBottom: '1px solid rgba(42,44,43,0.16)' }}>
           {['what', 'where it lives'].map(h => (
             <span key={h} style={{ fontFamily: mono, fontSize: 9, letterSpacing: '0.12em', color: C.steel, fontWeight: 600 }}>{h}</span>
@@ -304,7 +304,7 @@ function PersonalVsBicofino() {
 function FirstAction() {
   return (
     <section id="sh-action">
-      <FocusReveal style={{ padding: `64px ${H_PAD}px 80px`, borderBottom: hairline }}>
+      <FocusReveal style={{ padding: `64px ${H_PAD} 80px`, borderBottom: hairline }}>
         <Eyebrow>// first action</Eyebrow>
         <h2 style={{ fontSize: 32, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: '0 0 20px', fontFamily: sans, lineHeight: 1.15, maxWidth: 520 }}>
           Open master-prompt.md and start your first task.
@@ -334,7 +334,7 @@ function FirstAction() {
 /* ─── Footer ─── */
 function PageFooter() {
   return (
-    <div style={{ padding: `24px ${H_PAD}px 40px` }}>
+    <div style={{ padding: `24px ${H_PAD} 40px` }}>
       <p style={{ fontFamily: mono, fontSize: 10, color: C.platinum, margin: 0, letterSpacing: '0.1em' }}>
         // AI-OS-BASE · system onboarding · Bicofino · 2026
       </p>

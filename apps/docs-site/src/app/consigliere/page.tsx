@@ -11,13 +11,13 @@ const C = {
 
 const mono = '"JetBrains Mono", monospace'
 const sans = '"Inter", sans-serif'
-const H_PAD = 72
+const H_PAD = 'clamp(16px, 5vw, 72px)'
 
 export default function Page() {
   const { t } = useLang()
 
   return (
-    <div style={{ padding: `80px ${H_PAD}px 80px`, borderBottom: `1px solid ${C.border}` }}>
+    <div style={{ padding: `80px ${H_PAD} 80px`, borderBottom: `1px solid ${C.border}` }}>
       <p style={{
         fontFamily:    mono,
         fontSize:      11,

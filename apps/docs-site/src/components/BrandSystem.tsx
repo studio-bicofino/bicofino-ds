@@ -20,7 +20,7 @@ const C = {
 const mono = '"JetBrains Mono", monospace'
 const sans = '"Inter", sans-serif'
 const hairline = '1px solid var(--bf-border)'
-const H_PAD = 72
+const H_PAD = 'clamp(16px, 5vw, 72px)'
 const MAX_W = 720
 
 /* ─── Atoms ─── */
@@ -35,7 +35,7 @@ function Eyebrow({ children }: { children: string }) {
 
 function BsHeader({ eyebrow, title, sub }: { eyebrow: string; title: string; sub?: string }) {
   return (
-    <div style={{ padding: `80px ${H_PAD}px 56px`, borderBottom: hairline }}>
+    <div style={{ padding: `80px ${H_PAD} 56px`, borderBottom: hairline }}>
       <Eyebrow>{eyebrow}</Eyebrow>
       <h2 className="text-balance" style={{ fontSize: 52, fontWeight: 700, letterSpacing: '-0.03em', color: C.black, margin: '0 0 20px', lineHeight: 1.0, fontFamily: sans }}>
         {title}
@@ -47,7 +47,7 @@ function BsHeader({ eyebrow, title, sub }: { eyebrow: string; title: string; sub
 
 function BsSub({ label, title }: { label: string; title: string }) {
   return (
-    <div style={{ padding: `56px ${H_PAD}px 28px` }}>
+    <div style={{ padding: `56px ${H_PAD} 28px` }}>
       <p style={{ fontFamily: mono, fontSize: 10, letterSpacing: '0.1em', color: C.steel, margin: '0 0 10px' }}>{label}</p>
       <h2 className="text-balance" style={{ fontSize: 28, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: 0, lineHeight: 1.1, fontFamily: sans }}>{title}</h2>
     </div>
@@ -112,7 +112,7 @@ function AccordionItem({ title, children, compact = false }: {
         onMouseLeave={() => setHover(false)}
         style={{
           display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          width: '100%', padding: compact ? `14px ${H_PAD}px` : `20px ${H_PAD}px`,
+          width: '100%', padding: compact ? `14px ${H_PAD}` : `20px ${H_PAD}`,
           background: 'none', border: 'none', cursor: 'pointer',
           textAlign: 'left' as const,
         }}
@@ -146,7 +146,7 @@ function AccordionItem({ title, children, compact = false }: {
         transition: 'grid-template-rows 300ms ease-out',
       }}>
         <div style={{ overflow: 'hidden' }}>
-          <div style={{ padding: `4px ${H_PAD}px 28px` }}>
+          <div style={{ padding: `4px ${H_PAD} 28px` }}>
             {children}
           </div>
         </div>
@@ -159,7 +159,7 @@ function BsFooter() {
   const { lang } = useLang()
   const c = bsContent[toBsLang(lang)]
   return (
-    <div style={{ padding: `32px ${H_PAD}px 48px`, borderTop: hairline }}>
+    <div style={{ padding: `32px ${H_PAD} 48px`, borderTop: hairline }}>
       <p style={{ fontFamily: mono, fontSize: 10, color: C.platinum, margin: 0, letterSpacing: '0.1em' }}>
         {c.footer}
       </p>
@@ -196,7 +196,7 @@ function BrandSystemCover() {
   const c = bsContent[toBsLang(lang)].cover
   return (
     <section id="brand-system">
-      <div style={{ padding: `80px ${H_PAD}px 72px`, borderBottom: hairline }}>
+      <div style={{ padding: `80px ${H_PAD} 72px`, borderBottom: hairline }}>
         <Eyebrow>// 01 • BRAND SYSTEM</Eyebrow>
         <h1 className="text-balance" style={{ fontSize: 'clamp(40px, 5vw, 72px)', fontWeight: 700, letterSpacing: '-0.03em', color: C.black, margin: '0 0 24px', lineHeight: 1.0, fontFamily: sans }}>
           Brand System
@@ -225,7 +225,7 @@ function BrandIndice() {
   return (
     <section id="brand-indice">
       <BsHeader eyebrow={c.eyebrow} title={c.title} />
-      <div style={{ padding: `0 ${H_PAD}px 64px` }}>
+      <div style={{ padding: `0 ${H_PAD} 64px` }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '48px 80px' }}>
           {c.groups.map(({ title, items }) => (
             <div key={title}>
@@ -265,7 +265,7 @@ function BrandFundamentos() {
 
       {/* Overview */}
       <BsSub label={c.overview.sub.label} title={c.overview.sub.title} />
-      <div style={{ padding: `0 ${H_PAD}px 24px` }}>
+      <div style={{ padding: `0 ${H_PAD} 24px` }}>
         <P>{c.overview.p1}</P>
         <P>{c.overview.p2}</P>
         <div style={{ margin: '0 0 0', display: 'flex', flexDirection: 'column' as const, gap: 12 }}>
@@ -284,7 +284,7 @@ function BrandFundamentos() {
       {/* A Origem do Nome */}
       <div style={{ borderTop: hairline }}>
         <BsSub label={c.origem.label} title={c.origem.title} />
-        <div style={{ padding: `0 ${H_PAD}px 56px` }}>
+        <div style={{ padding: `0 ${H_PAD} 56px` }}>
           <P>{c.origem.p1}</P>
           <P>{c.origem.p2}</P>
           <P>{c.origem.p3}</P>
@@ -300,7 +300,7 @@ function BrandFundamentos() {
       {/* Por que existimos */}
       <div style={{ borderTop: hairline }}>
         <BsSub label={c.porQue.label} title={c.porQue.title} />
-        <div style={{ padding: `0 ${H_PAD}px 24px` }}>
+        <div style={{ padding: `0 ${H_PAD} 24px` }}>
           <P>{c.porQue.p1}</P>
           <P>{c.porQue.p2}</P>
           <P>{c.porQue.p3}</P>
@@ -323,7 +323,7 @@ function BrandFundamentos() {
       {/* Princípios */}
       <div style={{ borderTop: hairline }}>
         <BsSub label={c.principios.label} title={c.principios.title} />
-        <div style={{ padding: `0 ${H_PAD}px 24px` }}>
+        <div style={{ padding: `0 ${H_PAD} 24px` }}>
           <P>{c.principios.intro}</P>
         </div>
 
@@ -367,7 +367,7 @@ function BrandPosicionamento() {
 
       {/* Público-chave */}
       <BsSub label={c.publicoChave.label} title={c.publicoChave.title} />
-      <div style={{ padding: `0 ${H_PAD}px 56px` }}>
+      <div style={{ padding: `0 ${H_PAD} 56px` }}>
         <P>{c.publicoChave.p1}</P>
         <P>{c.publicoChave.p2}</P>
 
@@ -448,7 +448,7 @@ function BrandPosicionamento() {
       {/* Internacionalidade */}
       <div style={{ borderTop: hairline }}>
         <BsSub label={c.internacionalidade.label} title={c.internacionalidade.title} />
-        <div style={{ padding: `0 ${H_PAD}px 24px` }}>
+        <div style={{ padding: `0 ${H_PAD} 24px` }}>
           <P>{c.internacionalidade.intro}</P>
         </div>
         <AccordionItem title={c.internacionalidade.whyThree.title}>
@@ -485,7 +485,7 @@ function BrandNucleo() {
 
       {/* Direção */}
       <BsSub label={c.direcao.label} title={c.direcao.title} />
-      <div style={{ padding: `0 ${H_PAD}px 24px` }}>
+      <div style={{ padding: `0 ${H_PAD} 24px` }}>
         <P>{c.direcao.p1}</P>
         <div style={{ margin: '0 0 0', display: 'flex', flexDirection: 'column' as const, gap: 14 }}>
           <p style={{ fontSize: 15, lineHeight: 1.75, color: C.black, margin: 0, fontFamily: sans, maxWidth: MAX_W }}><strong>{c.direcao.unlike.label}</strong> {c.direcao.unlike.text}</p>
@@ -513,7 +513,7 @@ function BrandNucleo() {
       {/* Os 4 Cs */}
       <div style={{ borderTop: hairline }}>
         <BsSub label={c.quatroCs.label} title={c.quatroCs.title} />
-        <div style={{ padding: `0 ${H_PAD}px 24px` }}>
+        <div style={{ padding: `0 ${H_PAD} 24px` }}>
           <P>{c.quatroCs.intro}</P>
         </div>
 
@@ -529,7 +529,7 @@ function BrandNucleo() {
           </AccordionItem>
         ))}
 
-        <div style={{ borderTop: hairline, padding: `32px ${H_PAD}px 56px` }}>
+        <div style={{ borderTop: hairline, padding: `32px ${H_PAD} 56px` }}>
           <P muted>{c.quatroCs.footerMuted}</P>
         </div>
       </div>
@@ -537,7 +537,7 @@ function BrandNucleo() {
       {/* Arquétipos */}
       <div style={{ borderTop: hairline }}>
         <BsSub label={c.arquetipos.label} title={c.arquetipos.title} />
-        <div style={{ padding: `0 ${H_PAD}px 24px` }}>
+        <div style={{ padding: `0 ${H_PAD} 24px` }}>
           <H3>{c.arquetipos.triadTitle}</H3>
           <P>{c.arquetipos.triadIntro}</P>
         </div>
@@ -572,7 +572,7 @@ function BrandNucleo() {
       {/* Craft */}
       <div style={{ borderTop: hairline }}>
         <BsSub label={c.craft.label} title={c.craft.title} />
-        <div style={{ padding: `0 ${H_PAD}px 56px` }}>
+        <div style={{ padding: `0 ${H_PAD} 56px` }}>
           <P>{c.craft.intro}</P>
           {c.craft.items.map(([label, text]) => (
             <div key={label} style={{ display: 'grid', gridTemplateColumns: '240px 1fr', padding: '18px 0', borderBottom: hairline, gap: 32, alignItems: 'start' }}>
@@ -586,7 +586,7 @@ function BrandNucleo() {
       {/* Proxies e Personas */}
       <div style={{ borderTop: hairline }}>
         <BsSub label={c.proxies.label} title={c.proxies.title} />
-        <div style={{ padding: `0 ${H_PAD}px 24px` }}>
+        <div style={{ padding: `0 ${H_PAD} 24px` }}>
           <P>{c.proxies.intro}</P>
         </div>
 
@@ -617,7 +617,7 @@ function BrandVerbal() {
 
       {/* Manifesto */}
       <BsSub label={c.manifesto.label} title={c.manifesto.title} />
-      <div style={{ padding: `0 ${H_PAD}px 56px` }}>
+      <div style={{ padding: `0 ${H_PAD} 56px` }}>
         {c.manifesto.paras.map((p, i) => <P key={i}>{p}</P>)}
         <p style={{ fontSize: 20, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: 0, fontFamily: sans }}>{c.manifesto.tagline}</p>
       </div>
@@ -625,7 +625,7 @@ function BrandVerbal() {
       {/* Tom de Voz */}
       <div style={{ borderTop: hairline }}>
         <BsSub label={c.tomDeVoz.label} title={c.tomDeVoz.title} />
-        <div style={{ padding: `0 ${H_PAD}px 24px` }}>
+        <div style={{ padding: `0 ${H_PAD} 24px` }}>
           <P>{c.tomDeVoz.intro}</P>
         </div>
 
@@ -683,7 +683,7 @@ function BrandVerbal() {
       {/* Território de Palavras */}
       <div style={{ borderTop: hairline }}>
         <BsSub label={c.territorio.label} title={c.territorio.title} />
-        <div style={{ padding: `0 ${H_PAD}px 24px` }}>
+        <div style={{ padding: `0 ${H_PAD} 24px` }}>
           <P>{c.territorio.intro}</P>
         </div>
         {c.territorio.layers.map(({ layer, body }) => (

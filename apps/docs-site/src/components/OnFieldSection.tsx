@@ -3,6 +3,7 @@
 import { AthleteStatCard } from './AthleteStatCard'
 import { AthleteCampaignCarousel } from './AthleteCampaignCarousel'
 import { useLang } from '@/content'
+import { useTheme } from '@/content/theme'
 
 const C = {
   black:     'var(--bf-text-primary)',
@@ -80,6 +81,10 @@ function StatRow({ icon, value, label }: {
 
 export function OnFieldSection() {
   const { t } = useLang()
+  const { isDark } = useTheme()
+  // Black/monochrome logos need to flip to white in dark mode.
+  // Excludes: FC Bicofino badge (vinho), Italy passport (colored), athlete portrait, campaign card.
+  const invertInDark: React.CSSProperties = isDark ? { filter: 'invert(1)' } : {}
   const players = ['GUI KERCHNER', 'JULIO CEZAR', 'CAIO HENRIQUE', 'LUKINHAS', 'JEAN JESUS']
 
   // Asset catalog with translated labels
@@ -126,7 +131,7 @@ export function OnFieldSection() {
 
         {/* Tabs */}
         <div style={{ display: 'flex', gap: 0, marginBottom: 20, borderBottom: hairline, overflowX: 'auto' }}>
-          {['on field', 'off field'].map((tab, i) => (
+          {['on pitch', 'off pitch'].map((tab, i) => (
             <div key={tab} style={{
               padding: '8px 20px',
               fontFamily: mono,
@@ -225,7 +230,7 @@ export function OnFieldSection() {
                     src={A.wordmark}
                     alt="Guilherme Kerchner wordmark"
                     height={90}
-                    style={{ display: 'block', maxWidth: '100%', objectFit: 'contain', objectPosition: 'left center' }}
+                    style={{ display: 'block', maxWidth: '100%', objectFit: 'contain', objectPosition: 'left center', ...invertInDark }}
                   />
                 </div>
 
@@ -235,9 +240,20 @@ export function OnFieldSection() {
                     // BICOFINO BADGES
                   </p>
                   <div style={{ display: 'flex', gap: 14, alignItems: 'center', flexWrap: 'wrap' }}>
-                    {[A.badgePro, A.badgeFc, A.badgeDay].map((b, i) => (
-                      <SafeImg key={i} src={b} alt={`Badge ${i+1}`} width={81} height={81} style={{ display: 'block' }} />
-                    ))}
+                    {[A.badgePro, A.badgeFc, A.badgeDay].map((b, i) => {
+                      // badgeFc (i === 1) has its own color (vinho + cream) — never invert it.
+                      const isMonochrome = b !== A.badgeFc
+                      return (
+                        <SafeImg
+                          key={i}
+                          src={b}
+                          alt={`Badge ${i+1}`}
+                          width={81}
+                          height={81}
+                          style={{ display: 'block', ...(isMonochrome ? invertInDark : {}) }}
+                        />
+                      )
+                    })}
                   </div>
                 </div>
               </div>
@@ -266,7 +282,7 @@ export function OnFieldSection() {
                   <p style={{ fontFamily: mono, fontSize: 9, color: C.steel, margin: '0 0 10px', letterSpacing: '0.08em' }}>
                     // PALMEIRAS // BRASIL
                   </p>
-                  <SafeImg src={A.palmeiras} alt="Palmeiras" width={48} height={48} style={{ display: 'block' }} />
+                  <SafeImg src={A.palmeiras} alt="Palmeiras" width={48} height={48} style={{ display: 'block', ...invertInDark }} />
                 </div>
 
                 {/* Sponsor */}
@@ -274,7 +290,7 @@ export function OnFieldSection() {
                   <p style={{ fontFamily: mono, fontSize: 9, color: C.steel, margin: '0 0 10px', letterSpacing: '0.08em' }}>
                     // SPONSORS
                   </p>
-                  <SafeImg src={A.nike} alt="Nike" height={20} style={{ display: 'block', opacity: 0.8 }} />
+                  <SafeImg src={A.nike} alt="Nike" height={20} style={{ display: 'block', opacity: 0.8, ...invertInDark }} />
                 </div>
 
                 {/* Passport */}
@@ -312,7 +328,7 @@ export function OnFieldSection() {
             // PLAYER PROFILE // @BICOFINO
           </p>
           <p style={{ fontFamily: mono, fontSize: 9, color: C.platinum, margin: 0, letterSpacing: '0.1em' }}>
-            ON FIELD v1.0
+            ON PITCH v1.0
           </p>
         </div>
       </div>
@@ -359,7 +375,7 @@ export function OnFieldSection() {
         {/* Page footer */}
         <div style={{ paddingTop: 32, borderTop: hairline, marginTop: 32 }}>
           <p style={{ fontFamily: mono, fontSize: 10, color: C.platinum, margin: 0, letterSpacing: '0.1em' }}>
-            // BICOFINO DESIGN SYSTEM · ON FIELD IMAGE SYSTEM · v1.0 · 04/2026
+            // BICOFINO DESIGN SYSTEM · ON PITCH IMAGE SYSTEM · v1.0 · 04/2026
           </p>
         </div>
       </div>
