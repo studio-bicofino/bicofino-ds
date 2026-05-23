@@ -10,12 +10,12 @@ export function TeseBlock({ paragraphs, quote, quoteSource }: TeseBlockProps) {
       {paragraphs.map((text, i) => (
         <p
           key={i}
+          className="text-pretty bf-measure-body"
           style={{
             fontFamily: '"Inter", sans-serif',
             fontSize: 17,
             lineHeight: 1.75,
             color: 'var(--bf-text-primary)',
-            maxWidth: 720,
             marginBottom: i < paragraphs.length - 1 ? 24 : 0,
           }}
         >
@@ -24,6 +24,7 @@ export function TeseBlock({ paragraphs, quote, quoteSource }: TeseBlockProps) {
       ))}
 
       <blockquote
+        className="bf-measure-body"
         style={{
           marginTop: 48,
           paddingLeft: 24,
@@ -31,6 +32,7 @@ export function TeseBlock({ paragraphs, quote, quoteSource }: TeseBlockProps) {
         }}
       >
         <p
+          className="text-balance"
           style={{
             fontFamily: '"Inter", sans-serif',
             fontStyle: 'italic',

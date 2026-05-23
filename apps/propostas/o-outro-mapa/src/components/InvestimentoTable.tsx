@@ -87,6 +87,7 @@ export function InvestimentoTable() {
       </table>
 
       <p
+        className="text-pretty bf-measure-note"
         style={{
           fontFamily: '"Inter", sans-serif',
           fontSize: 12,
