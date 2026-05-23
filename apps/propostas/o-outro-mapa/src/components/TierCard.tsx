@@ -19,12 +19,14 @@ export function TierCard({
 }: TierCardProps) {
   return (
     <div
+      className="bf-tier-card"
       style={{
         padding: '40px 0',
         borderBottom: '1px solid var(--bf-border)',
       }}
     >
       <div
+        className="bf-tier-card__row"
         style={{
           display: 'flex',
           gap: 48,
@@ -32,7 +34,7 @@ export function TierCard({
         }}
       >
         {/* Header — left column */}
-        <div style={{ minWidth: 200, maxWidth: 220 }}>
+        <div className="bf-tier-card__head" style={{ minWidth: 200, maxWidth: 220 }}>
           <p
             style={{
               fontFamily: '"JetBrains Mono", monospace',
@@ -73,7 +75,7 @@ export function TierCard({
         </div>
 
         {/* Details — right column */}
-        <div style={{ flex: 1 }}>
+        <div className="bf-tier-card__body" style={{ flex: 1, minWidth: 0 }}>
           {/* Por que estão aqui */}
           <div style={{ marginBottom: 16 }}>
             <p

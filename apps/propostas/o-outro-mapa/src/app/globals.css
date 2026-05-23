@@ -167,6 +167,44 @@ html[data-theme-loaded] .bf-mobile-topbar { transition: background 200ms ease-ou
   .estado-a, .estado-b { transition: none !important; }
 }
 
+/* Seção O MAPA — stack vertical em viewports estreitos
+   (texto + legenda + footnote ficam em cima, mapa SVG fica embaixo).
+   !important é necessário porque o layout-base usa inline styles. */
+@media (max-width: 1023px) {
+  .bf-mapa-grid {
+    flex-direction: column !important;
+    gap: 48px !important;
+  }
+  .bf-mapa-text {
+    max-width: none !important;
+    min-width: 0 !important;
+    width: 100%;
+  }
+  .bf-mapa-svg {
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+}
+
+/* TierCard — colapsa para coluna única quando o lado direito ficaria
+   estreito demais para texto editorial (≤ 960px de viewport).
+   !important é necessário porque o componente usa inline styles. */
+@media (max-width: 960px) {
+  .bf-tier-card__row {
+    flex-direction: column !important;
+    gap: 24px !important;
+  }
+  .bf-tier-card__head {
+    max-width: none !important;
+    min-width: 0 !important;
+    width: 100%;
+  }
+  .bf-tier-card__body {
+    width: 100%;
+  }
+}
+
 /* Print */
 @media print {
   .bf-sidebar-desktop-wrap, .bf-mobile-topbar, .bf-drawer, .bf-drawer-overlay { display: none !important; }
