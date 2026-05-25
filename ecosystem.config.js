@@ -1,0 +1,52 @@
+module.exports = {
+  apps: [
+    {
+      name: 'docs',
+      cwd: './apps/docs-site',
+      script: 'node_modules/.bin/next',
+      args: 'dev',
+      watch: false,
+      env: { NODE_ENV: 'development', PORT: '3001' },
+    },
+    {
+      name: 'web',
+      cwd: './apps/web',
+      script: 'node_modules/.bin/next',
+      args: 'dev',
+      watch: false,
+      env: { NODE_ENV: 'development', PORT: '3002' },
+    },
+    {
+      name: 'ds-studio',
+      cwd: './apps/ds-studio',
+      script: 'node_modules/.bin/next',
+      args: 'dev',
+      watch: false,
+      env: { NODE_ENV: 'development', PORT: '3003' },
+    },
+    {
+      name: 'vanguarda-mercados',
+      cwd: './apps/vanguarda/mercados-globais',
+      script: 'node_modules/.bin/next',
+      args: 'dev',
+      watch: false,
+      env: { NODE_ENV: 'development', PORT: '3020' },
+    },
+    {
+      name: 'vanguarda-ideias',
+      cwd: './apps/vanguarda/100-ideias',
+      script: 'node_modules/.bin/next',
+      args: 'dev',
+      watch: false,
+      env: { NODE_ENV: 'development', PORT: '3021' },
+    },
+    {
+      name: 'vanguarda-italia',
+      cwd: './apps/vanguarda/italia-2027',
+      script: 'node_modules/.bin/next',
+      args: 'dev',
+      watch: false,
+      env: { NODE_ENV: 'development', PORT: '3022' },
+    },
+  ],
+}
