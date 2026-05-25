@@ -1,6 +1,6 @@
 # STATUS — BoviClass (Masterclass Agro / BoviChain)
 
-**Data:** 24 de maio de 2026 (v1.1 — paleta crema/caffè/nocciola/napoli em produção)
+**Data:** 24 de maio de 2026 (v2.1 — pacote único + metric cards com accent napoli e texto explicativo)
 **Branch:** experiment/video-hero
 **App:** `apps/propostas/masterclass-bovichain/`
 **Porta de dev:** `3011` (definida no package.json)
@@ -11,13 +11,11 @@
 
 ## Contexto
 
-Orçamento profissional do Studio Bicofino para a campanha **BoviClass** (renomeada a partir de "Masterclass Agro" a pedido do cliente). O documento apresenta três cenários de produção com o mesmo escopo de captação/edição, variando apenas o estúdio de gravação:
+Orçamento profissional do Studio Bicofino para a campanha **BoviClass** (renomeada a partir de "Masterclass Agro" a pedido do cliente).
 
-- **Oitorama** — R$ 195.000,00 (estúdio parceiro)
-- **Epro** — R$ 235.000,00 (locação externa)
-- **Studio Bicofino** — R$ 278.250,73 (recomendada, estúdio próprio)
+**v2.x** — Modelo comercial é **pacote fechado único** de R$ 300.900 com todos os opcionais embutidos. A apresentação foca em ENTREGAS via 4 metric cards de destaque (102 vídeos · 5 diárias · 6 cursos · R$ 2.950/vídeo), com o preço como informação complementar e discreta.
 
-O orçamento foi reconstruído a partir do template original "Suba" (que vazou no email do cliente). Removidas todas as menções à Suba e a "decupagem", e adaptado para identidade Studio Bicofino.
+O escopo foi reescrito a partir de conversa real com o cliente (BoviChain) — formato entrevista, 6 cursos × 16 aulas + 1 teaser, cortes verticais para redes, teleprompter, sem trilha, gravação concentrada em junho/2026.
 
 ---
 
@@ -33,169 +31,188 @@ Abrir `http://localhost:3011`.
 
 ---
 
-## O que foi construído
+## O que foi construído (v2.1)
 
-App Next.js 16 + App Router independente, sem Tailwind, sem shadcn. Mesma estética do `o-outro-mapa` (tokens CSS `--bf-*`, Inter + JetBrains Mono), porém **sem sidebar** — logo Bicofino fica num header global no topo.
+App Next.js 16 + App Router independente, sem Tailwind, sem shadcn. Tokens CSS `--bf-*`, Inter + JetBrains Mono, header global no topo + logo Bicofino (sem sidebar).
 
 ### Estrutura de arquivos
 
 ```
 apps/propostas/masterclass-bovichain/
-├── package.json                  Next.js 16.2.6, React 19, lucide-react, motion v12
-├── next.config.ts                turbopack.root apontando para raiz do monorepo
+├── package.json                   Next.js 16.2.6, React 19, lucide-react, motion v12
+├── next.config.ts                 turbopack.root apontando para raiz do monorepo
 ├── tsconfig.json
-├── STATUS.md                     Este arquivo
+├── STATUS.md                      Este arquivo
 └── src/
     ├── app/
-    │   ├── globals.css           Tokens --bf-*, --bf-sep, dark mode, tabela orçamento, cards de preço
-    │   ├── layout.tsx            Header global com logo (fundo branco) + main (sem sidebar)
-    │   └── page.tsx              Página completa — 5 seções
+    │   ├── globals.css            Tokens --bf-*, dark mode, cards
+    │   ├── layout.tsx             Header global com logo + main
+    │   └── page.tsx               Página completa — 6 seções
     └── components/
-        ├── BicofinoLogo.tsx      SVG logo Bicofino (mesmo do o-outro-mapa)
-        └── PricingCards.tsx      'use client' — cards das 3 opções com motion scroll-tied + count-up
+        ├── BicofinoLogo.tsx       SVG logo Bicofino
+        ├── MetricsGrid.tsx        4 metric cards (números accent + texto explicativo + count-up)
+        └── InvestmentCard.tsx     Card único R$ 300.900 (estático, compacto)
 ```
 
-### Seções da página
+### Seções da página (v2.1 — nova ordem)
 
-| ID | Seção | Conteúdo |
+| # | ID | Conteúdo |
 |---|---|---|
-| `#hero` | Hero | Eyebrow + título "BoviClass" + subtitle + lead + metadados (Cliente / Proponente / Campanha / Janela) |
-| `#opcoes` | Três cenários | 3 cards comparativos (Oitorama → Epro → Studio Bicofino) com count-up + scroll-tied entrance |
-| `#escopo` | Escopo | 4 blocos: Captação, Incluso, Prazos, Não incluso |
-| `#proximo-passo` | Próximo passo | CTA email `hello@bicofino.com` |
+| 1 | `#hero` | Eyebrow + título "BoviClass" + lead enxuto + metadados |
+| 2 | `#producao` | **Introdução** — Captação ("Como gravamos") + Incluso ("O que entra no pacote") lado a lado |
+| 3 | `#volume` | Volume de entrega — `<MetricsGrid />` + parágrafo explicativo |
+| 4 | `#investimento` | Investimento — `<InvestmentCard />` compacto |
+| 5 | `#fora-do-escopo` | Apenas o bloco "Fora do escopo" |
+| 6 | `#proximo-passo` | CTA email `hello@bicofino.com` |
 
-> v1.1 removeu a seção `#opcao-1` (Composição detalhada do orçamento) a pedido do cliente.
-> O cálculo do total do Studio Bicofino (R$ 278.250,73) virou constante hardcoded em `page.tsx`.
+> Bloco "Prazos" removido — info implícita no metadado do Hero "Janela: Junho de 2026".
 
-### Cálculo do orçamento — Opção 1 (Studio Bicofino)
+### Os 4 metric cards (componente MetricsGrid v2.1)
 
-| Item | Valor Total | Honorários (15%) | Impostos (14,25%) | Valor Final |
-|---|---:|---:|---:|---:|
-| CAPTAÇÃO E EDIÇÃO (5 diárias) | R$ 150.000,00 | R$ 22.500,00 | R$ 28.666,18 | R$ 201.166,18 |
-| EQUIPE (Criação e Atendimento) | R$ 25.000,00 | R$ 0,00 | R$ 4.154,52 | R$ 29.154,52 |
-| ALIMENTAÇÃO EQUIPE | R$ 14.000,00 | R$ 2.100,00 | R$ 2.675,51 | R$ 18.775,51 |
-| ESTÚDIO (5×R$5.000) | R$ 25.000,00 | R$ 0,00 | R$ 4.154,52 | R$ 29.154,52 |
-| **Valor da produção** | | | | **R$ 278.250,73** |
+| # | Número (accent napoli) | Label | Sub-label | Texto explicativo |
+|---|---:|---|---|---|
+| 1 | **102** | vídeos | 96 + 6 | "96 vídeos horizontais para os cursos e 6 cortes verticais para redes." |
+| 2 | **5** | diárias | — | "Gravação concentrada em uma semana, em sequência em estúdio próprio." |
+| 3 | **6** | cursos | 16 aulas + 1 teaser | "Cada curso reúne 16 aulas em formato entrevista mais 1 teaser para divulgação." |
+| 4 | **2.950** | reais/vídeo | — | "Custo por peça finalizada — captação, edição e pós-produção completa." |
 
-**Fórmula:** Honorários aplicados apenas em CAPTAÇÃO e ALIMENTAÇÃO. Imposto via gross-up:
-`Valor Final = (Valor Total + Honorários) / (1 − 0,1425)`.
+- **Números grandes em accent napoli** (`#77deff`) — JetBrains Mono `clamp(72-128px)`
+- Texto explicativo Inter 14px / line-height 1.5 / cor secondary, separado por border-top sutil
+- Cards de altura natural (não force 1:1), stretch no grid
+- Grid 4col ≥1100px / 2×2 700-1100 / stack <700
+- Sem underlines decorativas (removidas em v2.1)
+- Count-up scroll-tied mantido nos números
+- Sem hover decorativo (só border-color change)
 
-A alíquota é **14,25%** (não 14,2% como o header da tabela original Suba indicava). O valor total bate exatamente em R$ 278.250,73 com essa alíquota.
+### O pacote (componente InvestmentCard v2.1 — compacto + estático)
 
-Opções 2 e 3 mostram apenas o headline total — sem decupar item-a-item, conforme combinado com Fabio.
+- **Total:** R$ 300.900 — exibido **estático** (sem count-up animado)
+- **Cálculo:** R$ 300.900 ÷ 102 vídeos = R$ 2.950 exato por vídeo
+- **Tamanhos reduzidos vs v2.0:**
+  - Preço grande: `clamp(20px, 2.75vw, 32px)` (50% menor)
+  - Prefixo "R$ ": `clamp(10px, 1.375vw, 16px)`
+  - maxWidth: 520px (era 640)
+  - Padding: 32px (era 40)
+  - Título: 18px (era 22)
+- **Features inclusas** (lista com checks em bullet napoli):
+  - Captação em 5 diárias em estúdio próprio
+  - Edição completa de 102 vídeos
+  - Cortes verticais para redes incluídos
+  - Motion, color grading, legendas e cartelas
+  - Vinheta de abertura por curso (6 vinhetas)
+  - Equipe de criação, atendimento e teleprompter
+  - Alimentação da equipe
+- **Footer:** "Valor já com honorários (15%) e impostos (14,25%)"
+- Entrance scroll-tied + features stagger mantidos
+
+### Escopo da produção (Q&A com cliente — fechado)
+
+**Captação** (em `#producao`)
+- Formato entrevista, conforme referência aprovada
+- 1 entrevistado por episódio
+- 5 diárias em estúdio próprio, em sequência
+- Mesma cenografia e mesmo cenário para todos os episódios
+- Teleprompter incluído
+- Convidados chegam prontos para gravar
+- Sem troca de figurino
+
+**Incluso** (em `#producao`)
+- Edição dos 102 vídeos finais
+- Legendas
+- Cartelas
+- Seis vinhetas de abertura, uma por curso
+- Motion graphics
+- Color grading
+- Edição de áudio da fala
+- Equipe de criação, atendimento e produção
+- Alimentação da equipe
+
+**Fora do escopo** (em `#fora-do-escopo`)
+- Roteiros
+- Imagens de pesquisa (banco de imagens)
+- Trilha sonora
+- Hair & make dos entrevistados
+- Locação externa
+
+### Linguagem — "estúdio próprio" (não "Studio Bicofino")
+
+Quando o texto descreve o **local de filmagem**, usar apenas "estúdio próprio" (não citar Bicofino). "Studio Bicofino" fica preservado apenas como **identificador institucional** (proponente, título do card de investimento, footer com endereço, SEO metadata).
 
 ### Motion (Framer Motion v12)
 
-- **Cards** entram com `useScroll` + `useTransform` por card (opacity 0→1, y 40→0) entre offset `start 0.9` e `start 0.45`. Animação **scrub-tied ao scroll** — não dispara e termina sozinha.
-- **Preço** faz count-up de 0 até o valor final em 1.4s (easing cubic-bezier 0.2,0,0,1) quando o card cruza 85% da viewport.
-- **Features** entram em cascata por card (stagger 80ms) com slide horizontal -10→0.
-- Respeita `prefers-reduced-motion` — neutraliza todas as transforms.
+- **MetricsGrid**: entrance scroll-tied (opacity + y 24→0), count-up 1.4s nos números, easing `cubic-bezier(0.2, 0, 0, 1)`
+- **InvestmentCard**: entrance scroll-tied (opacity + y 24→0), stagger 80ms nas features, easing `[0.2, 0, 0, 1]`. **Preço estático** — sem count-up.
+- `prefers-reduced-motion` respeitado em ambos
 
-### Identidade visual (v1.1 — paleta nova)
+### Identidade visual (paleta crema/caffè/nocciola/napoli)
 
-- **Header global** com fundo **branco puro** (`#ffffff`) — logo Bicofino + tag "Documento confidencial · BoviChain"
-- **Fundo do site** = `--bf-crema` `#f3ebd4` (cream amarelado quente)
-- **Textos/escuros** = `--bf-caffe` `#33111a` (marrom muito escuro, quase preto)
-- **Destaques (surface-subtle)** = `--bf-nocciola` `#d8d7d3` (cinza-bege claro)
-- **Accent** = `--bf-napoli` `#77deff` (azul claro) — **restrito** ao card recomendado (outline + features box)
-- **Eyebrows** = `--bf-nocciola-deep` `#8e8378` (nocciola escurecido pra legibilidade sobre crema)
-- Card recomendado (Studio Bicofino):
-  - Superfície branca
-  - Outline napoli 1.5px
-  - Eyebrow nocciola-deep (igual aos outros) — "Opção 3 · Recomendada"
-  - Features box napoli sólido com texto caffè e checks caffè com tick branco
-- Cards não-recomendados (Oitorama, Epro):
-  - Features box nocciola sólido (`#d8d7d3`)
-  - Eyebrow nocciola-deep — "Opção 1" / "Opção 2"
-- Preço grande em **JetBrains Mono** (todos os 3 cards)
+- **Header global** com fundo branco puro — logo Bicofino + tag "Documento confidencial · BoviChain"
+- **Fundo do site** = `--bf-crema` `#f3ebd4`
+- **Textos** = `--bf-caffe` `#33111a`
+- **Surface-subtle** = `--bf-nocciola` `#d8d7d3`
+- **Accent** = `--bf-napoli` `#77deff` — usado em: números dos metric cards, outline do investment card, features box do investment card
+- **Eyebrows** = `--bf-nocciola-deep` `#8e8378`
 
 ---
 
-## Estado atual — o que está pronto
+## Estado atual — o que está pronto (v2.1)
 
-- [x] App scaffolded e rodando em `localhost:3011`
-- [x] Header global com logo Bicofino (fundo branco), sem sidebar
-- [x] Hero com título "BoviClass" e metadados do projeto
-- [x] 3 cards comparativos na ordem Oitorama → Epro → Studio Bicofino
-- [x] Card recomendado com identidade verde bf SEP (outline + features box)
-- [x] Tabela detalhada do orçamento com cálculo 14,25% batendo exato em R$ 278.250,73
-- [x] Blocos de escopo (Captação, Incluso, Prazos, Não incluso) — sem "Suba", sem "decupagem"
-- [x] CTA final com email `hello@bicofino.com`
-- [x] Motion scroll-tied nos cards (Framer Motion v12)
-- [x] Count-up nos preços
-- [x] Stagger nas features
-- [x] Responsivo (cards stackam abaixo de 900px, tabela com scroll horizontal)
-- [x] Dark mode (herdado do globals.css)
-- [x] Print stylesheet
-- [x] `<meta robots noindex,nofollow>`
-- [x] **Deploy v1.0** — 24/05/2026 — `dpl_CNxgGJWbLYXLa2EDGqvFg66WrUGB`
-  - Alias estável: `https://masterclass-bovichain.vercel.app`
-  - URL único do deploy: `https://masterclass-bovichain-1sxhnze6c-woney-malians-projects.vercel.app`
-  - Time: `woney-malians-projects` (deployment protection ativa — acesso pelo navegador logado)
-- [x] **Deploy v1.1** — 24/05/2026 — `dpl_DadK5yYiumn5g3danNhtpvWGS33J`
-  - Alias estável: `https://masterclass-bovichain.vercel.app` (re-aliased)
-  - URL único do deploy: `https://masterclass-bovichain-mxgpgkemg-woney-malians-projects.vercel.app`
-  - Mudanças: paleta crema/caffè/nocciola/napoli, eyebrows renomeados ("Opção 1/2/3 · Recomendada"), seção `#opcao-1` (tabela) removida
+- [x] Refactor estrutural: 3 cards comparativos → 4 metric cards + 1 card de investimento único
+- [x] MetricsGrid redesign: números em accent napoli, texto explicativo real (não underlines)
+- [x] InvestmentCard compacto e estático (sem count-up, 50% menor)
+- [x] Nova ordem de seções com #producao (intro) e #fora-do-escopo (fim)
+- [x] Linguagem "estúdio próprio" (Bicofino removido do contexto de filmagem)
+- [x] Copy edit completa (16 sugestões do brand voice review aplicadas)
+- [x] Motion scroll-tied + count-up nos cards (Framer Motion v12)
+- [x] Responsivo
+- [x] Dark mode (herdado)
+- [x] `prefers-reduced-motion` respeitado
+- [x] tsc limpo (sem erros)
+- [x] Hot-reload validado no dev server (3011)
 
 ---
 
 ## O que falta — próximas iterações
 
-### Diretrizes de design (aguarda Woney)
-- [ ] Cliente pediu para enviar diretrizes de design em mensagem separada — ainda não chegaram. Quando chegarem, refinar tipografia/espaçamentos/cores.
-
-### Visual
+### Polimento (opcional)
 - [ ] Lighthouse audit
 - [ ] Verificar print stylesheet em Safari/Chrome
-- [ ] Confirmar com Fabio se "descrições por estúdio" (texto curto sob cada nome) estão alinhadas
+- [ ] Limpar `transform: none !important` órfão no `@media (prefers-reduced-motion)` do MetricsGrid (no-op atual)
 
-### Conteúdo
-- [ ] Confirmar com cliente se os entregáveis listados em "Incluso" estão completos
-- [ ] Validar lista de "Não incluso" — atualmente: roteiros, imagens de pesquisa, trilha sonora
-- [ ] Validar versão (v1.0 — maio de 2026) no footer
+### Diretrizes de design (aguarda cliente)
+- [ ] Cliente pediu para enviar diretrizes em mensagem separada — ainda não chegaram
 
 ---
 
-## Decisões fechadas
+## Decisões fechadas (v2.x)
 
 | Decisão | O que ficou |
 |---|---|
-| Nome da campanha | **BoviClass** (não mais "Masterclass Agro") |
-| Sidebar | **Sem sidebar** — só header global com logo no topo |
-| Alíquota de imposto | **14,25%** via gross-up (estava como 14,2% no header original Suba mas batia 14,25%) |
-| Honorários | **15%** aplicado só em CAPTAÇÃO e ALIMENTAÇÃO |
-| Decupagem por opção | **Só Opção 1 detalhada** — Epro/Oitorama mostram só total |
-| Ordem dos cards | **Oitorama → Epro → Bicofino** — termina na recomendada |
-| Accent | **bf SEP `#2fd298`** (verde) em todo o documento |
-| Card recomendado | Superfície branca + outline verde + features box verde com letras brancas |
-| Preço grande | **JetBrains Mono** |
-| Motion | Scroll-tied (`useScroll` por card) + count-up + stagger |
+| Modelo comercial | Pacote fechado único — sem comparação entre opções |
+| Valor total | R$ 300.900 (= R$ 2.950 × 102 vídeos exato) |
+| Apresentação | 4 metric cards de destaque + card de investimento **compacto** depois |
+| Foco visual | Entregas (metric cards com accent napoli), não o preço |
+| Escopo | 102 vídeos (96 horizontais + 6 cortes verticais) em 6 cursos |
+| Formato | Entrevista, 1 entrevistado por episódio, mesma cenografia |
+| Janela | Junho de 2026 |
+| Trilha | Sem trilha — apenas edição da fala |
+| Cortes verticais | Inclusos (1 teaser por curso = 6 cortes) |
+| Teleprompter | Incluído |
+| Hair & make / locação externa | NÃO incluídos |
+| Accent napoli | Números do MetricsGrid + outline/features do InvestmentCard |
+| Preço grande | JetBrains Mono, **estático** (sem count-up), 50% do tamanho anterior |
+| Local de filmagem | "Estúdio próprio" (sem nominar Bicofino) |
+| Estrutura | Hero → Produção (intro) → Volume (cards) → Investimento → Fora do escopo → CTA |
 
 ---
 
-## Tokens CSS disponíveis (globals.css — v1.1)
+## Histórico de deploys
 
-```css
-/* Paleta nomeada */
---bf-crema:         #f3ebd4    /* fundo do site */
---bf-caffe:         #33111a    /* textos e escuros */
---bf-nocciola:      #d8d7d3    /* destaques / surface-subtle */
---bf-nocciola-deep: #8e8378    /* eyebrows legíveis sobre crema */
---bf-napoli:        #77deff    /* accent — só no card recomendado */
---bf-white:         #ffffff
-
-/* Tokens semânticos */
---bf-sep:            #77deff
---current-accent:    #77deff
---bf-bg-page:        #f3ebd4
---bf-surface:        #ffffff
---bf-surface-subtle: #d8d7d3
---bf-text-primary:   #33111a
---bf-text-secondary: rgba(51,17,26,0.62)
---bf-text-subtle:    rgba(51,17,26,0.42)
---bf-border:         rgba(51,17,26,0.10)
---bf-border-strong:  rgba(51,17,26,0.20)
-```
+| Versão | Data | Deploy ID | Notas |
+|---|---|---|---|
+| v1.0 | 24/05/2026 | `dpl_CNxgGJWbLYXLa2EDGqvFg66WrUGB` | 3 opções (Oitorama/Epro/Bicofino) |
+| v1.1 | 24/05/2026 | `dpl_DadK5yYiumn5g3danNhtpvWGS33J` | Paleta crema/caffè/nocciola/napoli, seção `#opcao-1` removida |
+| v2.1 | 24/05/2026 | (preenchido após deploy) | Pacote único + metric cards accent + estrutura reorganizada |
 
 ---
 
@@ -206,6 +223,5 @@ Opções 2 e 3 mostram apenas o headline total — sem decupar item-a-item, conf
 3. Rodar o servidor: `cd apps/propostas/masterclass-bovichain && npm run dev`
 4. Abrir `http://localhost:3011`
 
-**Último commit:** `5a0c8b6` — feat(propostas/masterclass-bovichain): adiciona proposta BoviClass v1.1
-**Branch:** `experiment/video-hero` (commit ainda não pushed para o remote)
-**Produção atual:** https://masterclass-bovichain.vercel.app (deploy `dpl_DadK5yYiumn5g3danNhtpvWGS33J`)
+**Branch:** `experiment/video-hero`
+**Produção:** https://masterclass-bovichain.vercel.app
