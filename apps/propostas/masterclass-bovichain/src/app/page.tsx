@@ -1,4 +1,5 @@
-import { PricingCards } from '@/components/PricingCards'
+import MetricsGrid from '@/components/MetricsGrid'
+import InvestmentCard from '@/components/InvestmentCard'
 
 const C = {
   border: 'var(--bf-border)',
@@ -15,58 +16,6 @@ const mono = '"JetBrains Mono", monospace'
 const sans = '"Inter", sans-serif'
 const H_PAD = 72
 const hairline = '1px solid var(--bf-border)'
-
-/* Imposto = 14,25% via gross-up. Honorários (15%) só em CAPTAÇÃO e ALIMENTAÇÃO.
-   Cálculo:
-     CAPTAÇÃO (150000 + 22500) / 0,8575 = 201166,18
-     EQUIPE   (25000)          / 0,8575 =  29154,52
-     ALIMENT. (14000 +  2100)  / 0,8575 =  18775,51
-     ESTÚDIO  (25000)          / 0,8575 =  29154,52
-   Total: 278250,73 */
-const TOTAL_BICOFINO = 278250.73
-
-/* ────────── totais comparativos das 3 opções ────────── */
-const OPCOES = [
-  {
-    nome: 'Oitorama',
-    descritor: 'Estúdio parceiro',
-    total: 195000,
-    destaque: false,
-    features: [
-      'Estúdio parceiro Oitorama',
-      'Cenografia ajustada ao espaço',
-      'Estúdio de produção consolidado',
-      'Custo otimizado',
-    ],
-    descricao: 'Operação no estúdio parceiro, com infraestrutura já consolidada e o melhor custo do pacote.',
-  },
-  {
-    nome: 'Epro',
-    descritor: 'Estúdio · locação externa',
-    total: 235000,
-    destaque: false,
-    features: [
-      'Locação externa no Epro',
-      'Cenografia adaptada ao espaço',
-      'Estúdio profissional consolidado',
-      'Logística simplificada',
-    ],
-    descricao: 'Locação em estúdio profissional externo, mantendo o mesmo pacote de captação e edição.',
-  },
-  {
-    nome: 'Studio Bicofino',
-    descritor: 'Estúdio próprio · cenografia sob medida',
-    total: TOTAL_BICOFINO, // R$ 278.250,73
-    destaque: true,
-    features: [
-      'Estúdio próprio Studio Bicofino',
-      'Cenografia sob medida (sala/biblioteca)',
-      'Setup dedicado nas cores da marca',
-      'Controle total do espaço',
-    ],
-    descricao: 'Operação 100% interna, com cenografia e direção de arte desenhadas especificamente para a campanha.',
-  },
-]
 
 function SectionHeader({ eyebrow, title }: { eyebrow: string; title: string }) {
   return (
@@ -121,7 +70,7 @@ export default function Page() {
           fontWeight:    600,
           margin:        '0 0 20px',
         }}>
-          Orçamento ✦ Confidencial
+          Orçamento confidencial
         </p>
 
         <h1
@@ -150,20 +99,7 @@ export default function Page() {
             margin:     '0 0 40px',
           }}
         >
-          Seis cursos · 96 vídeos horizontais e 6 cortes verticais · captação e edição completas em junho.
-        </p>
-
-        <p
-          className="bf-measure-body text-pretty"
-          style={{
-            fontFamily: sans,
-            fontSize:   16,
-            lineHeight: 1.75,
-            color:      C.muted,
-            marginBottom: 32,
-          }}
-        >
-          Esta proposta apresenta três cenários de produção para a campanha BoviClass da BoviChain, todos com o mesmo escopo de captação, edição e entrega. A variação entre as opções está exclusivamente no estúdio de gravação, o que reorganiza a estrutura de custos sem alterar o resultado audiovisual.
+          Seis cursos em formato entrevista, 102 vídeos finalizados, cinco diárias em estúdio próprio.
         </p>
 
         {/* Metadados do projeto */}
@@ -181,7 +117,7 @@ export default function Page() {
           {[
             { label: 'Cliente',     value: 'BoviChain' },
             { label: 'Proponente',  value: 'Studio Bicofino' },
-            { label: 'Campanha',    value: 'BoviClass' },
+            { label: 'Campanha',    value: 'Série BoviClass' },
             { label: 'Janela',      value: 'Junho de 2026' },
           ].map((m) => (
             <div key={m.label}>
@@ -203,32 +139,13 @@ export default function Page() {
         </div>
       </section>
 
-      {/* COMPARATIVO DAS 3 OPÇÕES */}
-      <section id="opcoes" style={{ padding: `80px ${H_PAD}px`, borderBottom: hairline }}>
-        <SectionHeader eyebrow="Três cenários" title="Três opções de produção, mesmo escopo de entrega" />
-        <p
-          className="text-pretty bf-measure-body"
-          style={{
-            fontFamily:   sans,
-            fontSize:     17,
-            lineHeight:   1.75,
-            color:        C.muted,
-            margin:       '0 0 48px',
-          }}
-        >
-          O escopo de captação (cinco diárias, dois operadores de câmera, equipe completa), a alimentação da equipe e o pacote de edição permanecem idênticos nas três opções. O que muda é o local de gravação — e, por consequência, o custo de estúdio incorporado ao pacote.
-        </p>
-
-        <PricingCards opcoes={OPCOES} />
-      </section>
-
-      {/* ESCOPO / OBSERVAÇÕES */}
-      <section id="escopo" style={{ padding: `80px ${H_PAD}px`, borderBottom: hairline }}>
-        <SectionHeader eyebrow="Escopo" title="O que está incluído na produção" />
+      {/* PRODUÇÃO */}
+      <section id="producao" style={{ padding: `80px ${H_PAD}px`, borderBottom: hairline }}>
+        <SectionHeader eyebrow="Produção" title="Como vamos produzir" />
 
         <div className="bf-measure-duo" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 48 }}>
 
-          {/* Bloco 1 — Captação e Edição */}
+          {/* Bloco 1 — Captação */}
           <div>
             <p style={{
               fontFamily:    mono,
@@ -239,7 +156,7 @@ export default function Page() {
               fontWeight:    600,
               margin:        '0 0 12px',
             }}>
-              01 · Captação e edição
+              01 · Captação
             </p>
             <h3 style={{
               fontFamily: sans,
@@ -249,14 +166,17 @@ export default function Page() {
               margin:     '0 0 16px',
               lineHeight: 1.3,
             }}>
-              Volume de entrega
+              Como gravamos
             </h3>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
               {[
-                'Até 5 diárias de gravação',
-                '6 cursos no total · 16 aulas + 1 teaser por curso',
-                'Total: 96 vídeos horizontais + 6 cortes verticais para redes = 102 vídeos finais',
-                'Duração média de cada episódio: entre 8 e 25 minutos',
+                'Formato entrevista, conforme referência aprovada',
+                '1 entrevistado por episódio',
+                '5 diárias em estúdio próprio, em sequência',
+                'Mesma cenografia e mesmo cenário para todos os episódios',
+                'Teleprompter incluído',
+                'Convidados chegam prontos para gravar',
+                'Sem troca de figurino',
               ].map((it) => (
                 <li key={it} style={{ fontFamily: sans, fontSize: 14, color: C.muted, lineHeight: 1.6, paddingLeft: 16, position: 'relative' }}>
                   <span style={{ position: 'absolute', left: 0, top: 10, width: 6, height: 1, background: C.subtle }} />
@@ -291,15 +211,15 @@ export default function Page() {
             </h3>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
               {[
-                'Local: Studio Bicofino (Opção 1) · Epro (Opção 2) · Oitorama (Opção 3)',
-                'Cenografia: sala/biblioteca conforme referência, nas cores da identidade visual',
-                'Captação completa com 2 câmeras e equipe profissional para até 5 diárias',
-                'Edição completa: cartelas, vinheta de abertura, motion e color grading',
-                'Legenda no corte vertical · YouTube usa legenda automática da plataforma',
-                'TP e profissional operador de TP',
-                'Iluminação de fotografia',
-                'Áudio (captação de conteúdo e fala)',
-                'Cartelas de abertura e encerramento',
+                'Edição dos 102 vídeos finais',
+                'Legendas',
+                'Cartelas',
+                'Seis vinhetas de abertura, uma por curso',
+                'Motion graphics',
+                'Color grading',
+                'Edição de áudio da fala',
+                'Equipe de criação, atendimento e produção',
+                'Alimentação da equipe',
               ].map((it) => (
                 <li key={it} style={{ fontFamily: sans, fontSize: 14, color: C.muted, lineHeight: 1.6, paddingLeft: 16, position: 'relative' }}>
                   <span style={{ position: 'absolute', left: 0, top: 10, width: 6, height: 1, background: C.subtle }} />
@@ -309,79 +229,55 @@ export default function Page() {
             </ul>
           </div>
 
-          {/* Bloco 3 — Prazos */}
-          <div>
-            <p style={{
-              fontFamily:    mono,
-              fontSize:      10,
-              letterSpacing: '0.12em',
-              color:         C.eyebrow,
-              textTransform: 'uppercase',
-              fontWeight:    600,
-              margin:        '0 0 12px',
-            }}>
-              03 · Prazos
-            </p>
-            <h3 style={{
-              fontFamily: sans,
-              fontSize:   20,
-              fontWeight: 600,
-              color:      C.text,
-              margin:     '0 0 16px',
-              lineHeight: 1.3,
-            }}>
-              Gravação e entregas
-            </h3>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {[
-                'Início das gravações: começo de junho de 2026',
-                'Finalização e entrega de todos os vídeos: até o final de junho de 2026',
-              ].map((it) => (
-                <li key={it} style={{ fontFamily: sans, fontSize: 14, color: C.muted, lineHeight: 1.6, paddingLeft: 16, position: 'relative' }}>
-                  <span style={{ position: 'absolute', left: 0, top: 10, width: 6, height: 1, background: C.subtle }} />
-                  {it}
-                </li>
-              ))}
-            </ul>
-          </div>
+        </div>
+      </section>
 
-          {/* Bloco 4 — Não incluso */}
-          <div>
-            <p style={{
-              fontFamily:    mono,
-              fontSize:      10,
-              letterSpacing: '0.12em',
-              color:         C.subtle,
-              textTransform: 'uppercase',
-              fontWeight:    600,
-              margin:        '0 0 12px',
-            }}>
-              04 · Não incluso
-            </p>
-            <h3 style={{
-              fontFamily: sans,
-              fontSize:   20,
-              fontWeight: 600,
-              color:      C.text,
-              margin:     '0 0 16px',
-              lineHeight: 1.3,
-            }}>
-              Fora do escopo
-            </h3>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {[
-                'Roteiros e trabalhos de redação',
-                'Imagens de pesquisa ou referência para compor as edições além das captadas em estúdio',
-                'Trilha sonora original',
-              ].map((it) => (
-                <li key={it} style={{ fontFamily: sans, fontSize: 14, color: C.muted, lineHeight: 1.6, paddingLeft: 16, position: 'relative' }}>
-                  <span style={{ position: 'absolute', left: 0, top: 10, width: 6, height: 1, background: C.subtle }} />
-                  {it}
-                </li>
-              ))}
-            </ul>
-          </div>
+      {/* VOLUME DE ENTREGA */}
+      <section id="volume" style={{ padding: `80px ${H_PAD}px`, borderBottom: hairline }}>
+        <SectionHeader eyebrow="Volume de entrega" title="Entregas de junho" />
 
+        <MetricsGrid />
+
+        <p
+          className="text-pretty bf-measure-body"
+          style={{
+            fontFamily: sans,
+            fontSize:   15,
+            lineHeight: 1.75,
+            color:      C.muted,
+            margin:     '40px 0 0',
+          }}
+        >
+          Cada curso: 16 aulas e 1 teaser. No total, 96 vídeos horizontais e 6 cortes verticais para redes. Episódios entre 8 e 25 minutos.
+        </p>
+      </section>
+
+      {/* INVESTIMENTO */}
+      <section id="investimento" style={{ padding: `80px ${H_PAD}px`, borderBottom: hairline }}>
+        <SectionHeader eyebrow="Investimento" title="Pacote fechado" />
+
+        <InvestmentCard />
+      </section>
+
+      {/* FORA DO ESCOPO */}
+      <section id="fora-do-escopo" style={{ padding: `80px ${H_PAD}px`, borderBottom: hairline }}>
+        <SectionHeader eyebrow="Fora do escopo" title="Fora do escopo" />
+
+        <div>
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {[
+              'Roteiros',
+              'Imagens de pesquisa (banco de imagens)',
+              'Trilha sonora',
+              'Hair & make dos entrevistados',
+              'Locação externa',
+            ].map((it) => (
+              <li key={it} style={{ fontFamily: sans, fontSize: 14, color: C.muted, lineHeight: 1.6, paddingLeft: 16, position: 'relative' }}>
+                <span style={{ position: 'absolute', left: 0, top: 10, width: 6, height: 1, background: C.subtle }} />
+                {it}
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
@@ -395,7 +291,7 @@ export default function Page() {
             color:      C.muted,
             margin:     '0 0 8px',
           }}>
-            Para fechar a opção escolhida ou alinhar ajustes de escopo, escreva para
+            Para fechar a proposta ou alinhar ajustes de escopo, escreva para
           </p>
           <a
             href="mailto:hello@bicofino.com"
@@ -425,7 +321,7 @@ export default function Page() {
       >
         {[
           '©bicofino  |  bicofino.com',
-          'BoviClass · BoviChain — v1.0 — maio de 2026',
+          'BoviClass · BoviChain · v2.0 · junho de 2026',
           'Documento confidencial. Distribuição restrita.',
         ].map((line, i) => (
           <p key={i} style={{
