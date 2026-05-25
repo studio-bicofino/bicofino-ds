@@ -205,3 +205,7 @@ Opções 2 e 3 mostram apenas o headline total — sem decupar item-a-item, conf
 2. Dizer: *"Retomando o projeto BoviChain BoviClass — leia `apps/propostas/masterclass-bovichain/STATUS.md`"*
 3. Rodar o servidor: `cd apps/propostas/masterclass-bovichain && npm run dev`
 4. Abrir `http://localhost:3011`
+
+**Último commit:** `5a0c8b6` — feat(propostas/masterclass-bovichain): adiciona proposta BoviClass v1.1
+**Branch:** `experiment/video-hero` (commit ainda não pushed para o remote)
+**Produção atual:** https://masterclass-bovichain.vercel.app (deploy `dpl_DadK5yYiumn5g3danNhtpvWGS33J`)
