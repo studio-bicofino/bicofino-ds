@@ -212,7 +212,7 @@ Quando o texto descreve o **local de filmagem**, usar apenas "estúdio próprio"
 |---|---|---|---|
 | v1.0 | 24/05/2026 | `dpl_CNxgGJWbLYXLa2EDGqvFg66WrUGB` | 3 opções (Oitorama/Epro/Bicofino) |
 | v1.1 | 24/05/2026 | `dpl_DadK5yYiumn5g3danNhtpvWGS33J` | Paleta crema/caffè/nocciola/napoli, seção `#opcao-1` removida |
-| v2.1 | 24/05/2026 | (preenchido após deploy) | Pacote único + metric cards accent + estrutura reorganizada |
+| v2.1 | 24/05/2026 | `dpl_9igW1grDYMpFsyN14v797Sdz1YoS` | Pacote único + metric cards accent + estrutura reorganizada. Alias https://masterclass-bovichain.vercel.app re-aliased. |
 
 ---
 
