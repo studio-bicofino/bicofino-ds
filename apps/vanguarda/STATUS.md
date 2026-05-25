@@ -85,7 +85,17 @@ Cada app tem seus próprios componentes (sem package compartilhado por simplicid
 
 ## Deploy
 
-A definir. Audiência fechada permite Vercel preview privado (gated) ou Vercel production com `noindex,nofollow` + autenticação simples no edge.
+Os três projetos linkados na Vercel (scope `woney-malians-projects`). `noindex,nofollow` já está no `metadata` do layout de cada um — URLs são públicas mas não indexáveis em motores de busca.
+
+| App | URL | Tipo | Dashboard |
+|---|---|---|---|
+| Mercados Globais | https://mercados-globais-mg6semr12-woney-malians-projects.vercel.app | preview | https://vercel.com/woney-malians-projects/mercados-globais |
+| 100 Ideias | https://100-ideias-8gmhxl6j9-woney-malians-projects.vercel.app | production | https://vercel.com/woney-malians-projects/100-ideias |
+| Itália 2027 | https://italia-2027-i3tarsnu8-woney-malians-projects.vercel.app | production | https://vercel.com/woney-malians-projects/italia-2027 |
+
+**Nota:** Mercados Globais ficou como preview porque o primeiro `vercel --yes` falhou com ECONNRESET no upload e o retry usou `vercel deploy` (preview default). Os outros dois foram direto. Para promover Mercados Globais a produção: `cd apps/vanguarda/mercados-globais && vercel deploy --prod`.
+
+**Para deploys futuros:** `vercel` ou `vercel deploy` dentro da pasta do app cria preview. `vercel deploy --prod` promove a produção. Cada app tem `.vercel/` local (gitignored) com o link do projeto — não apagar.
 
 ---
 
