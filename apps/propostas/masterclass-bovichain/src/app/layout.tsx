@@ -23,13 +23,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
-            <BicofinoLogo color="var(--bf-text-primary)" width={120} />
+            <BicofinoLogo color="var(--bf-caffe)" width={120} />
             <p
               style={{
                 fontFamily: '"JetBrains Mono", monospace',
                 fontSize: 10,
                 letterSpacing: '0.12em',
-                color: 'var(--bf-text-subtle)',
+                color: 'rgba(51,17,26,0.42)',
                 textTransform: 'uppercase',
                 margin: 0,
               }}
