@@ -1,13 +1,13 @@
 # HANDOFF — Casa Nostra (Bicofino)
 
-*Última atualização: 2026-05-26 (sessão noite). v0.4 — photo upload Supabase Storage + bypass de login (modo construção) + paste de foto (⌘V). Próximo chat retoma daqui.*
+*Última atualização: 2026-05-26 (sessão noite). v0.5 — StatPill torino/platinum + /configuracoes + seed Ruffino Fox. Próximo chat retoma daqui.*
 
 **Pra retomar em chat novo:**
 > `Lê @.planning/casa-nostra/HANDOFF.md (e @.planning/casa-nostra/BRIEFING.md pro contexto original) e vamos continuar de onde parou.`
 
 ---
 
-## Status — v0.4 deployada
+## Status — v0.5 deployada
 
 **URL prod:** https://casa-nostra-two.vercel.app
 **Repo:** `feature/casa-nostra` (a partir de `feature/vanguarda`)
@@ -65,6 +65,13 @@
 - Mapping de cor por `signal_type`: interesse/ask=napoli · lifeevent=caffè · capital_move=sep · recusa=ops-danger · outro=text-secondary
 - Hero idêntico ao padrão: eyebrow `// Sinais` caffè + h1 clamp 40-64 + parágrafo curto + contador mono
 - **v0.3 (2026-05-26 noite):** agrupamento por mês via `useMemo(groupByMonth)` preservando ordem cronológica do server; `MonthHeader` sticky em `top: 0` (fundo crema + border-bottom nocciola, label "Maio de 2026" + contador mono); delete inline 2-step por card espelhando `GroupRow` (Trash2 ghost → "Confirmar?" pill com auto-cancel 4s, `useTransition`); `motion.article layout` + `AnimatePresence mode="popLayout"` → exit suave (`scale: 0.96`) sem reflow brusco
+
+### Frente 11 — /configuracoes + StatPill redesign + seed Ruffino ✅ — 2026-05-26 noite (v0.5)
+- **Cores ops Casa Nostra** novos tokens em `globals.css`: `--bf-cn-torino #821324` (score máximo) e `--bf-cn-platinum #a8c9e5` (score parcial)
+- **StatPill** (hero do PersonForm) preenche com torino quando 5/5, platinum quando 1-4, fonte branca Inter Bold; spring scale 0.6→1 no número via AnimatePresence quando aparece ou muda
+- **Cluster A**: hint "núcleo duro" → "insider"
+- **`/configuracoes`** server component com 4 seções: Estado (versão · modo construção · sessão · stack), Volume (counts pessoas/grupos/sinais como cards-link), Allowlist read-only, Em breve (roadmap). Alerta amarelo loud quando bypass on.
+- **Seed Ruffino Fox**: `scripts/seed-ruffino.mjs` recupera o cadastro perdido por um deploy antigo (foto upload, intro_by Woney, grupo Amigos Particulares, sinal Vespa). Idempotente — `infisical run --env=dev -- node scripts/seed-ruffino.mjs`
 
 ### Frente 9 — Photo upload Supabase Storage ✅ — 2026-05-26 noite (v0.4)
 - Migration `db/migrations/0002_storage_people_photos.sql` cria bucket público `people-photos` + 3 policies (insert/update/delete pra `authenticated`)
@@ -315,4 +322,4 @@ Deploy: `vercel deploy --prod --yes` (primeiro deploy = production por padrão).
 
 ---
 
-*v0.4 está em prod com photo upload (drop/click/⌘V), bypass de login pro modo construção e Sinais fechado. Próximas frentes prováveis: **D** status cadência textual na tabela · **C** /configuracoes placeholder · **F** template editorial do email Supabase (só relevante depois de religar o bypass).*
+*v0.5 em prod com StatPill cromado (torino 5/5 · platinum 1-4) + /configuracoes navegável + Ruffino Fox seed restaurado. Próximas frentes prováveis: **D** status cadência textual na tabela · **F** template editorial do email Supabase (só relevante depois de religar bypass) · vinculação com vanguarda apps.*
