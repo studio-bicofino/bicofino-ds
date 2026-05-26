@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { Trash2, Plus } from 'lucide-react'
 import type { PersonFormInput } from '@/lib/db/schemas'
 import { SectionShell, FullRow } from './SectionShell'
-import { TextField, SelectField, FieldShell, fieldInputBaseStyle } from '../Field'
+import { TextField, SelectField, FieldShell } from '../Field'
 
 type Props = {
   control: Control<PersonFormInput>
@@ -128,25 +128,23 @@ export function ContactsSection({ control, errors }: Props) {
             />
 
             <FieldShell label=" ">
-              <button
-                type="button"
-                onClick={() => remove(index)}
-                aria-label="Remover contato"
+              <div
                 style={{
-                  ...fieldInputBaseStyle,
                   height: 44,
-                  width: 44,
-                  padding: 0,
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  cursor: 'pointer',
-                  color: 'var(--bf-ops-danger)',
-                  background: 'var(--bf-surface)',
                 }}
               >
-                <Trash2 size={18} strokeWidth={1.5} />
-              </button>
+                <button
+                  type="button"
+                  onClick={() => remove(index)}
+                  aria-label="Remover contato"
+                  className="cn-icon-btn-danger"
+                >
+                  <Trash2 size={18} strokeWidth={2} />
+                </button>
+              </div>
             </FieldShell>
           </motion.div>
         </FullRow>

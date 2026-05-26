@@ -17,6 +17,7 @@
   --bf-cn-nocciola: #d8d7d3;  /* nocciola — apoio / borders sutis */
   --bf-cn-napoli:   #77deff;  /* napoli — accent info */
   --bf-cn-sep:      #2fd298;  /* bf SEP — accent success/positivo */
+  --bf-cn-spfc:     #f0535e;  /* bf SPFC — accent destrutivo (apagar) */
 
   --bf-bg-page:         var(--bf-cn-crema);
   --bf-surface:         #ffffff;
@@ -34,7 +35,9 @@
   --bf-ops-edit:           var(--bf-cn-napoli); /* napoli pra editar/info */
   --bf-ops-edit-hover:     #5BC8F5;
   --bf-ops-edit-fg:        var(--bf-cn-caffe);
-  --bf-ops-danger:         #A03A3A;
+  --bf-ops-danger:         var(--bf-cn-spfc);   /* bf SPFC */
+  --bf-ops-danger-hover:   #d8443d;
+  --bf-ops-danger-fg:      #ffffff;
 }
 
 [data-theme="dark"] {
@@ -52,7 +55,9 @@
   --bf-ops-success-fg:     #FFFFFF;
   --bf-ops-edit:           #5188C2;
   --bf-ops-edit-hover:     #6FA0D6;
-  --bf-ops-danger:         #C25555;
+  --bf-ops-danger:         #f0535e;
+  --bf-ops-danger-hover:   #d8443d;
+  --bf-ops-danger-fg:      #ffffff;
 }
 
 html[data-theme-loaded] body { transition: background 200ms ease-out, color 200ms ease-out; }
@@ -375,6 +380,34 @@ select.cn-filter-input {
   }
 }
 
+/* Botão circular de ação destrutiva (trash) */
+.cn-icon-btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--bf-cn-spfc);
+  color: var(--bf-ops-danger-fg);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 160ms ease-out, transform 160ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 160ms ease-out;
+}
+.cn-icon-btn-danger:hover {
+  background: var(--bf-ops-danger-hover);
+  transform: scale(1.06);
+  box-shadow: 0 0 0 4px rgba(240, 83, 94, 0.18);
+}
+.cn-icon-btn-danger:active { transform: scale(0.94); }
+.cn-icon-btn-danger:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(240, 83, 94, 0.32);
+}
+
 /* PersonForm sticky footer — responsivo */
 .cn-form-footer {
   position: sticky;
@@ -385,7 +418,7 @@ select.cn-filter-input {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--bf-border);
-  border-radius: 9999px;
+  border-radius: 20px;
   box-shadow: 0 8px 24px rgba(51, 17, 26, 0.08);
   display: flex;
   flex-direction: column;

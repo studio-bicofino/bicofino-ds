@@ -547,17 +547,10 @@ function FooterBar({
             <button
               type="button"
               onClick={onDelete}
-              style={{
-                ...ghostButtonStyle,
-                color: 'var(--bf-ops-danger)',
-                borderColor: 'var(--bf-ops-danger)',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 8,
-              }}
+              className="cn-icon-btn-danger"
+              aria-label="Apagar pessoa"
             >
-              <Trash2 size={16} strokeWidth={1.5} />
-              Apagar
+              <Trash2 size={18} strokeWidth={2} />
             </button>
           )
         ) : null}

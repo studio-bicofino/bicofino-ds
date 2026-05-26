@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { Trash2, Plus } from 'lucide-react'
 import type { PersonFormInput } from '@/lib/db/schemas'
 import { SectionShell, FullRow } from './SectionShell'
-import { TextField, TextAreaField, SelectField, FieldShell, fieldInputBaseStyle } from '../Field'
+import { TextField, TextAreaField, SelectField, FieldShell } from '../Field'
 
 type Props = {
   control: Control<PersonFormInput>
@@ -107,24 +107,23 @@ export function SignalsSection({ control, errors }: Props) {
             />
 
             <FieldShell label=" ">
-              <button
-                type="button"
-                onClick={() => remove(i)}
-                aria-label="Remover sinal"
+              <div
                 style={{
-                  ...fieldInputBaseStyle,
                   height: 44,
-                  width: 44,
-                  padding: 0,
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  cursor: 'pointer',
-                  color: 'var(--bf-ops-danger)',
                 }}
               >
-                <Trash2 size={18} strokeWidth={1.5} />
-              </button>
+                <button
+                  type="button"
+                  onClick={() => remove(i)}
+                  aria-label="Remover sinal"
+                  className="cn-icon-btn-danger"
+                >
+                  <Trash2 size={18} strokeWidth={2} />
+                </button>
+              </div>
             </FieldShell>
           </div>
 

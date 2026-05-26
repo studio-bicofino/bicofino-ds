@@ -5,7 +5,7 @@ import { useFieldArray, Controller } from 'react-hook-form'
 import { Trash2, Plus } from 'lucide-react'
 import type { PersonFormInput } from '@/lib/db/schemas'
 import { SectionShell, FullRow } from './SectionShell'
-import { TextField, SelectField, FieldShell, fieldInputBaseStyle } from '../Field'
+import { TextField, SelectField, FieldShell } from '../Field'
 import { ChipInput } from './ChipInput'
 
 type Props = {
@@ -172,24 +172,23 @@ export function GeographySection({ control, errors }: Props) {
               )}
             />
             <FieldShell label=" ">
-              <button
-                type="button"
-                onClick={() => geoArr.remove(i)}
-                aria-label="Remover região"
+              <div
                 style={{
-                  ...fieldInputBaseStyle,
                   height: 44,
-                  width: 44,
-                  padding: 0,
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  cursor: 'pointer',
-                  color: 'var(--bf-ops-danger)',
                 }}
               >
-                <Trash2 size={18} strokeWidth={1.5} />
-              </button>
+                <button
+                  type="button"
+                  onClick={() => geoArr.remove(i)}
+                  aria-label="Remover região"
+                  className="cn-icon-btn-danger"
+                >
+                  <Trash2 size={18} strokeWidth={2} />
+                </button>
+              </div>
             </FieldShell>
           </div>
         </FullRow>
