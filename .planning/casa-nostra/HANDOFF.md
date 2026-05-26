@@ -1,13 +1,13 @@
 # HANDOFF — Casa Nostra (Bicofino)
 
-*Última atualização: 2026-05-26 (sessão noite). v0.7 — Movement TS refactor + autocomplete com canonicalização de grafias + crema 40% wrapper. Próximo chat retoma daqui.*
+*Última atualização: 2026-05-26 (sessão noite, 2). v0.8 — Organizations + Logos (frente 16), wrapper bege #f9f4e8, hero card branco. Próximo chat retoma daqui.*
 
 **Pra retomar em chat novo:**
 > `Lê @.planning/casa-nostra/HANDOFF.md (e @.planning/casa-nostra/BRIEFING.md pro contexto original) e vamos continuar de onde parou.`
 
 ---
 
-## Status — v0.7 deployada
+## Status — v0.8 em dev (precisa rodar migration + deploy)
 
 **URL prod:** https://casa-nostra-two.vercel.app
 **Repo:** `feature/casa-nostra` (a partir de `feature/vanguarda`)
@@ -19,13 +19,14 @@
 | App | Next 16.2.6 + React 19 + TS strict + Turbopack |
 | Porta dev | `3040` |
 | Secrets | Infisical (5 vars em `dev`), Vercel (4 vars em preview/prod/dev + SITE_URL + BYPASS) |
-| DB | Supabase `bicofino-casa-nostra` — 10 tabelas + RLS + 22 grupos seed |
+| DB | Supabase `bicofino-casa-nostra` — 12 tabelas + RLS + 22 grupos seed |
 | Auth | Magic link via `verifyOtp({token_hash, type})` — **bypass on** durante construção |
 | Allowlist | env var `CASA_NOSTRA_ALLOWLIST` |
 | Palette | Editorial Casa Nostra (crema/caffè/napoli/SEP/nocciola) — exceção DESIGN.md |
 | Vocabulário | "Movimentos" user-visible · "Movement" no código TS · `signals/signal_type` DB |
 | Responsivo | Sidebar drawer <1024px · cn-page padding adaptativo · sections empilham <720px |
 | Rotas | `/`, `/grupos`, `/p/[id]`, `/p/novo`, `/sinais`, `/configuracoes`, `/login`, `/auth/callback` |
+| Storage | `people-photos` + `org-logos` (público, audiência interna) |
 
 ---
 
@@ -104,8 +105,53 @@
 ### Frente 15 — Estético: crema 40% no wrapper do PersonForm ✅ — v0.7
 - Section que envolve o form em `/p/novo` e `/p/[id]`: `background: var(--bf-surface)` → `rgba(244, 234, 212, 0.4)` (Bicofino Crema #f4ead4 a 40%)
 - Hero interno perde border + gradient próprios → vira transparente, mostra crema atrás
-- **Hierarquia visual final:** page crema sólido → wrapper crema 40% → SectionShell cards brancos
+- **Hierarquia visual final v0.7:** page crema sólido → wrapper crema 40% → SectionShell cards brancos
 - Stat pills (torino/platinum) e cards de seção continuam como estavam
+- **Sobrescrita em v0.8** (frente 17 abaixo)
+
+### Frente 16 — Organizations + Logos ✅ — v0.8
+
+**Caminho híbrido com backfill suave.** Cria camada nova de vínculos com logo SEM tocar legacy (`current_company`, `work_history.company`, `futebol_links`). Backfill via script idempotente. Desbloqueia busca "quem tem ligação com X" + futuro matchmaking.
+
+**Schema (migration 0003):**
+- `organizations(id, name, name_key, kind, logo_url, created_by, created_at)` — `name_key` UNIQUE garante convergência de grafias (`normalizeKey`)
+- `person_organizations(id, person_id, org_id, role, start_year, end_year, is_current, notes, sort_order, created_at)` — PK em `id` permite múltiplos vínculos com a mesma org em períodos diferentes
+- `kind` enum: `empresa | clube | midia | escola | entidade`
+- Bucket público `org-logos` + 3 policies (mesmo padrão de `people-photos`)
+- RLS amplo a `authenticated` (audiência interna)
+
+**Files novos:**
+- `db/migrations/0003_organizations.sql`
+- `scripts/backfill-organizations.mjs` (idempotente, suporta `--dry`)
+- `src/lib/storage/upload-logo-action.ts` + `src/lib/storage/org-logos.ts` (2 MB cap, aceita SVG)
+- `src/app/(app)/p/_actions/organizations.ts` — `findOrCreateOrganizationInternal` (idempotente via name_key) · `createOrganization` · `updateOrganization` · `listOrganizations`
+- `src/app/(app)/p/_components/sections/Affiliations.tsx` — section 10, AddPicker com tabs Selecionar/Criar nova + upload de logo inline + cards de vínculo com role/start/end/is_current/notes
+- `src/app/(app)/p/_components/OrgLogoStrip.tsx` — strip horizontal no Hero com scroll, gradient-fade nas bordas, chevron-right animado quando overflow
+
+**Files tocados:**
+- `db/types.ts` — `Organization`, `PersonOrganization`, `PersonOrganizationWithOrg`, `OrganizationKind`; `PersonWithRelations.person_organizations[]`
+- `db/schemas.ts` — `organizationKindEnum`, `organizationSchema/InsertSchema/UpdateSchema`, `personOrganizationSchema/...`, `affiliationFormSchema` (com refine: org_id XOR new_org), `personFormSchema.organizations`
+- `_actions/persons.ts` — replace-all bloco para `person_organizations`, resolve `new_org` via `findOrCreateOrganizationInternal` antes de inserir vínculo
+- `PersonForm.tsx` — prop `organizations: Organization[]`, Hero ganha OrgLogoStrip à direita do bloco texto (borderLeft separator, maxWidth 360), AffiliationsSection adicionada como section 10
+- `p/novo/page.tsx` + `p/[id]/page.tsx` — fetch `organizations(*)` + (no [id]) `person_organizations(*, org:organizations(*))`
+- `globals.css` — `.cn-orglogo-strip::-webkit-scrollbar { display: none }`
+
+**Comportamento UI:**
+- Hero: bloco texto à esquerda (current_title · current_company · cluster — sem mudança) + strip de logos à direita com `border-left` editorial. Logos atuais aparecem primeiro, depois alfabético.
+- Scroll horizontal silencioso + fade nas bordas + "mais ›" clicável quando overflow.
+- AddPicker oferece duas abas: buscar org existente (filtrada por substring) OU criar nova (nome + kind + upload de logo inline, 2 MB, SVG aceito).
+- Vínculo recém-criado com `new_org` mostra um sub-form leve permitindo editar name/kind antes de salvar (logo já está uploadado).
+- Tooltip nativo (title attr) com nome + role + status atual em cada chip de logo.
+
+**Decisões de boundary:**
+- DB column `current_company` permanece como texto livre (independente). Pessoa pode ter current_company="Bicofino" (texto) E vínculo Bicofino (org) ao mesmo tempo — não há sync automático. Fabio decide depois se quer dropar current_company.
+- `work_history.company` e `futebol_links` também intocados. Backfill cria orgs derivadas mas mantém as tabelas legacy.
+
+### Frente 17 — Wrapper bege #f9f4e8 + Hero branco ✅ — v0.8
+**Sobrescreve frente 15.** Crema 40% (rgba(244,234,212,0.4)) vazava como crema puro, dando impressão de fundo sólido sem "degrau". Mudança:
+- `p/novo/page.tsx` + `p/[id]/page.tsx` wrapper: `background: #f9f4e8` (sólido, mais claro que o crema base)
+- Hero do PersonForm (`PersonForm.tsx`): de transparente → `var(--bf-surface)` (branco) + border nocciola + radius 16 + padding 32, igual cards das outras seções
+- **Hierarquia visual v0.8:** page crema sólido #f3ebd4 → wrapper bege #f9f4e8 → cards brancos (Hero + 10 sections)
 
 ---
 
@@ -162,7 +208,11 @@ Exceção ao DESIGN.md (escopo: só casa-nostra):
 20. **Vocabulário "Movement"** no código (interface, type, schemas, components) MAS `signals/signal_type` DB. URL `/sinais` permanece. Mantém boundary clara entre user-facing (Movement) e DB (signals).
 21. **Canonicalização on-save** — toda mutação em `persons.ts` passa por `canonicalizeInput()` que substitui valores free-text por canônicos existentes. `normalizeKey` ignora acentos + caixa + ornamentos/emojis. `pickCanonical` prefere variantes acentuadas + sem emoji + capitalizadas.
 22. **Property keys do form mapeiam DB** — `PersonFormInput.signals` (não "movements"), `PersonWithRelations.signals`. Chaves de shape ficam atreladas à coluna DB; só os types/aliases foram renomeados.
-23. **Crema 40% no wrapper do PersonForm** — `rgba(244, 234, 212, 0.4)` substitui white solid em `/p/novo` e `/p/[id]`. Hero interno transparente, sections brancas.
+23. ~~Crema 40% no wrapper do PersonForm~~ → sobrescrita em v0.8 por decisão 24.
+24. **Wrapper #f9f4e8 + Hero branco** — `/p/novo` e `/p/[id]` usam `background: #f9f4e8` (bege editorial sólido, distinto do crema da página). Hero do PersonForm volta a ser card branco com border nocciola, igual aos cards das seções. Hierarquia: page crema → wrapper bege → cards brancos.
+25. **Camada Organizations híbrida (não destrutiva)** — `organizations` + `person_organizations` são fonte única pra vínculos com logo + busca relacional futura. `current_company`, `work_history.company`, `futebol_links` continuam intactos. Pessoa pode ter current_company="Bicofino" (texto) E vínculo Bicofino (org) sem sync automático — Fabio decide quando dropar legacy.
+26. **`name_key` UNIQUE em organizations** — derivado de `normalizeKey(name)`. Idempotência absoluta: "Bicofino" + "Bicofino ❇️" colapsam no mesmo registro tanto no `findOrCreate` (server action) quanto no backfill script.
+27. **Org logos: bucket público, 2 MB, SVG OK** — `org-logos` segue o mesmo padrão de `people-photos` (audiência interna gateada por magic link, paths UUID). SVG aceito além de raster porque logos vetorizados são padrão.
 
 ---
 
@@ -173,10 +223,12 @@ apps/casa-nostra/
 ├── db/
 │   ├── migrations/0001_initial_schema.sql        ← 10 tabelas + RLS
 │   ├── migrations/0002_storage_people_photos.sql ← bucket people-photos + policies
+│   ├── migrations/0003_organizations.sql         ← organizations + person_organizations + bucket org-logos
 │   └── seeds/0001_groups.sql                     ← 22 grupos master
 ├── scripts/
 │   ├── seed-ruffino.mjs                          ← recovery do registro perdido
-│   └── canonicalize-existing.mjs                 ← one-shot grafia → canônica (idempotente)
+│   ├── canonicalize-existing.mjs                 ← one-shot grafia → canônica (idempotente)
+│   └── backfill-organizations.mjs                ← current_company + work_history + futebol_links → orgs (idempotente, --dry)
 ├── src/
 │   ├── app/
 │   │   ├── (app)/                                ← área autenticada (bypass on)
@@ -189,10 +241,13 @@ apps/casa-nostra/
 │   │   │   ├── p/
 │   │   │   │   ├── novo/page.tsx                 ← server: fetch groups + people + suggestions
 │   │   │   │   ├── [id]/page.tsx                 ← server: fetch person + relations + suggestions
-│   │   │   │   ├── _actions/persons.ts           ← create/update/delete + canonicalizeInput
+│   │   │   │   ├── _actions/
+│   │   │   │   │   ├── persons.ts                ← create/update/delete + canonicalizeInput + replace-all person_organizations
+│   │   │   │   │   └── organizations.ts          ← findOrCreate (idempotente via name_key) + create/update/list
 │   │   │   │   └── _components/
-│   │   │   │       ├── PersonForm.tsx            ← Hero transparente · prop `suggestions: SuggestionsBundle`
-│   │   │   │       ├── AutocompleteField.tsx     ← NOVO: TextField + dropdown sugestões
+│   │   │   │       ├── PersonForm.tsx            ← Hero branco · prop `organizations: Organization[]` + OrgLogoStrip
+│   │   │   │       ├── AutocompleteField.tsx     ← TextField + dropdown sugestões
+│   │   │   │       ├── OrgLogoStrip.tsx          ← NOVO: scroll horizontal de logos no Hero
 │   │   │   │       ├── PersonRowClient.tsx
 │   │   │   │       ├── Field.tsx
 │   │   │   │       └── sections/
@@ -205,6 +260,7 @@ apps/casa-nostra/
 │   │   │   │           ├── Evaluation.tsx
 │   │   │   │           ├── Notes.tsx
 │   │   │   │           ├── Movements.tsx         ← (renomeado de Signals.tsx)
+│   │   │   │           ├── Affiliations.tsx      ← NOVO: vínculos com orgs + upload de logo inline
 │   │   │   │           ├── SectionShell.tsx
 │   │   │   │           ├── ChipInput.tsx         ← agora aceita prop `suggestions`
 │   │   │   │           └── PhotoUploader.tsx
@@ -229,7 +285,7 @@ apps/casa-nostra/
 │   │   │   ├── types.ts                          ← Movement (renomeado), signals key permanece em PersonWithRelations
 │   │   │   ├── schemas.ts                        ← movementSchema, movementTypeEnum, etc.
 │   │   │   └── suggestions.ts                    ← NOVO: getAllSuggestions, getCitySuggestions
-│   │   ├── storage/{photos,upload-action}.ts
+│   │   ├── storage/{photos,upload-action,org-logos,upload-logo-action}.ts
 │   │   ├── supabase/{client,server,admin}.ts
 │   │   └── utils/strings.ts                      ← NOVO: normalizeKey, pickCanonical, buildSuggestions
 │   └── middleware.ts
@@ -241,40 +297,26 @@ apps/casa-nostra/
 
 ---
 
-## Schema DB — referência (sem mudanças desde 0002)
+## Schema DB — referência
 
-10 tabelas + RLS em todas. Veja `db/migrations/0001_initial_schema.sql` (fonte da verdade) e `src/lib/db/types.ts` (interfaces TS).
+12 tabelas + RLS em todas. Veja `db/migrations/0001_initial_schema.sql` (10 iniciais) + `db/migrations/0003_organizations.sql` (organizations + person_organizations) e `src/lib/db/types.ts` (interfaces TS).
 
 22 grupos seed em `db/seeds/0001_groups.sql`.
 
-Bucket `people-photos` público + 3 policies (insert/update/delete autenticado) via migration 0002.
+Buckets `people-photos` (migration 0002) e `org-logos` (migration 0003) — públicos, 3 policies cada.
 
 ---
 
 ## Pendências grandes pra próximo chat (em ordem de valor)
 
-### 1. Affiliations / Organizations (decisão pendente) — feature alta
+### 1. Rodar migration 0003 + backfill em prod (passo 1 do v0.8 ship)
 
-Pessoa pode ter múltiplos vínculos com organizações com logos. Caso ilustrativo: Caio Ribeiro = São Paulo (ex-jogador) + Napoli (ex-jogador) + Flamengo (ex-jogador) + Inter Milão (ex-jogador) + Globo (repórter). Renderizar logos na área ao lado da foto no hero do PersonForm. Buscar "quem tem ligação com Napoli". Indexar pro futuro matchmaking (vanguarda).
-
-Hoje "empresa" está espalhado em 3 fontes paralelas: `current_company` (texto), `work_history.company` (texto), `futebol_links` (clube/atleta/estádio). Não tem logo em lugar nenhum.
-
-**3 caminhos discutidos, decisão pendente:**
-
-1. **(Recomendado) Nova tabela `organizations` unificada**
-   - `organizations(id, name, name_key, kind enum, logo_url, created_at)`
-   - `person_organizations(person_id, org_id, role, start_year, end_year, is_current, notes)`
-   - `kind` enum: empresa | clube | midia | escola | entidade
-   - Bucket `org-logos`
-   - UI: nova section no PersonForm ("Vínculos & Afiliações") · render logos no hero
-   - Migration backfill: current_company + work_history.company + futebol_links → organizations
-   - Desbloqueia busca "quem tem ligação com X" + futuro matchmaking
-
-2. **Caminho lite** — só `logo_url` em `groups` existente. Mais rápido mas continua com 3 fontes paralelas (current_company, work_history, futebol_links).
-
-3. **Híbrido** — organizations + person_organizations novos SEM migrar legacy. Pessoa nova usa novo schema, antiga mantém current_company texto. Reduz risco agora, migration depois.
-
-User indicou que **caminho cheio (1) é o ideal** mas não confirmou final. Quando confirmar, abrir frente nova.
+Build local passou. Falta:
+1. Rodar `db/migrations/0003_organizations.sql` no editor SQL do Supabase (`pbcopy < db/migrations/0003_organizations.sql`)
+2. `infisical run --env=dev -- node scripts/backfill-organizations.mjs --dry` pra ver o que viria
+3. Se ok, rodar sem `--dry`
+4. `vercel deploy --prod --yes` de dentro de `apps/casa-nostra/`
+5. Smoke test em prod: criar pessoa nova com 2 vínculos (1 org existente do backfill + 1 nova com upload de logo), verificar Hero strip aparecendo, scroll funcionando com overflow
 
 ### 2. Religar login (pendência crítica original)
 
@@ -354,6 +396,7 @@ PATCH (atualizar): `PATCH /v10/projects/{PID}/env/{envId}?teamId={TID}` com body
 - **HARD RULE briefing**: ler BRIEFING + HANDOFF integralmente antes de propor scope/schema. Não inventar extensões fora do contrato.
 - **HARD RULE agentes**: em features grandes (≥3 arquivos), despachar sub-agentes em paralelo (single message, multiple Agent calls).
 - **HARD RULE canonicalização**: ao adicionar campo free-text novo, lembrar de wirar autocomplete + canonicalizeInput em `persons.ts`.
+- **HARD RULE organizations**: `organizations.name_key` é UNIQUE e derivado de `normalizeKey(name)`. Toda mutação que cria org NOVA deve passar pelo `findOrCreateOrganizationInternal` — nunca insert direto na tabela. O backfill script segue a mesma regra.
 
 ---
 
@@ -362,16 +405,21 @@ PATCH (atualizar): `PATCH /v10/projects/{PID}/env/{envId}?teamId={TID}` com body
 1. `.planning/casa-nostra/HANDOFF.md` (este — status + estado atual)
 2. `.planning/casa-nostra/BRIEFING.md` (contexto original locked)
 3. `apps/casa-nostra/src/app/(app)/page.tsx` (lista — referência)
-4. `apps/casa-nostra/src/app/(app)/p/_components/PersonForm.tsx` (form orquestrador — referência de motion/glass)
-5. `apps/casa-nostra/src/app/(app)/p/_components/AutocompleteField.tsx` (referência de autocomplete + dropdown)
-6. `apps/casa-nostra/src/lib/utils/strings.ts` (normalizeKey + pickCanonical — regras de canonicalização)
-7. `apps/casa-nostra/src/lib/db/suggestions.ts` (server fetch + agrupamento)
-8. `apps/casa-nostra/src/app/globals.css` (palette + CSS classes)
-9. `apps/casa-nostra/src/lib/db/types.ts` (shape do dado — Movement, etc.)
-10. `apps/casa-nostra/src/lib/db/schemas.ts` (zod + form input)
-11. `DESIGN.md` (tokens + §Exceptions — palette Casa Nostra)
-12. `CLAUDE.md` (regras do projeto)
+4. `apps/casa-nostra/src/app/(app)/p/_components/PersonForm.tsx` (form orquestrador — Hero com OrgLogoStrip)
+5. `apps/casa-nostra/src/app/(app)/p/_components/sections/Affiliations.tsx` (section 10 — AddPicker + cards de vínculo)
+6. `apps/casa-nostra/src/app/(app)/p/_components/OrgLogoStrip.tsx` (scroll horizontal + fade + chevron)
+7. `apps/casa-nostra/src/app/(app)/p/_actions/organizations.ts` (findOrCreate idempotente)
+8. `apps/casa-nostra/src/app/(app)/p/_actions/persons.ts` (replace-all com resolve de new_org)
+9. `apps/casa-nostra/src/lib/utils/strings.ts` (normalizeKey + pickCanonical)
+10. `apps/casa-nostra/src/lib/db/suggestions.ts` (server fetch + agrupamento)
+11. `apps/casa-nostra/src/app/globals.css` (palette + CSS classes + cn-orglogo-strip)
+12. `apps/casa-nostra/src/lib/db/types.ts` (Organization, PersonOrganization, etc.)
+13. `apps/casa-nostra/src/lib/db/schemas.ts` (zod + affiliationFormSchema)
+14. `apps/casa-nostra/db/migrations/0003_organizations.sql` (schema novo)
+15. `apps/casa-nostra/scripts/backfill-organizations.mjs` (idempotente)
+16. `DESIGN.md` (tokens + §Exceptions — palette Casa Nostra)
+17. `CLAUDE.md` (regras do projeto)
 
 ---
 
-*v0.7 em prod com vocabulário Movement no código + autocomplete com canonicalização de grafias (incluindo strip de ornamentos/emojis) + wrapper crema 40% no PersonForm. Próximas frentes: **organizations + logos** (caminho cheio recomendado) · religar login · offline-first PWA.*
+*v0.8 com camada Organizations + Logos (caminho híbrido não destrutivo). Build local OK. Pendências imediatas: rodar migration 0003 + backfill script + deploy. Próximas frentes: religar login · offline-first PWA · drop de current_company/work_history.company/futebol_links se Fabio confirmar que organizations virou suficiente.*

@@ -49,6 +49,13 @@ export type MovementType =
   | 'recusa'
   | 'outro'
 
+export type OrganizationKind =
+  | 'empresa'
+  | 'clube'
+  | 'midia'
+  | 'escola'
+  | 'entidade'
+
 export type CategoryValue =
   | 'cliente'
   | 'ex-cliente'
@@ -178,6 +185,34 @@ export interface Movement {
   created_by: string | null
 }
 
+export interface Organization {
+  id: string
+  name: string
+  name_key: string
+  kind: OrganizationKind
+  logo_url: string | null
+  created_by: string | null
+  created_at: string
+}
+
+export interface PersonOrganization {
+  id: string
+  person_id: string
+  org_id: string
+  role: string | null
+  start_year: number | null
+  end_year: number | null
+  is_current: boolean
+  notes: string | null
+  sort_order: number
+  created_at: string
+}
+
+// Helper consumido pela UI: vínculo + organização populada via select join.
+export interface PersonOrganizationWithOrg extends PersonOrganization {
+  org: Organization
+}
+
 // ============================================================
 // Aggregate (view-model usado nas telas)
 // ============================================================
@@ -191,6 +226,7 @@ export interface PersonWithRelations extends Person {
   groups: Group[]
   geography_action: GeographyAction[]
   signals: Movement[]
+  person_organizations: PersonOrganizationWithOrg[]
 }
 
 // ============================================================
@@ -210,6 +246,8 @@ export type Database = {
       person_groups: TableShape<PersonGroup>
       geography_action: TableShape<GeographyAction>
       signals: TableShape<Movement>
+      organizations: TableShape<Organization>
+      person_organizations: TableShape<PersonOrganization>
     }
   }
 }

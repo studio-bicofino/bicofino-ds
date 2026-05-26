@@ -28,6 +28,8 @@ import {
   type PersonFormInput,
 } from '@/lib/db/schemas'
 
+import { findOrCreateOrganizationInternal } from './organizations'
+
 type ActionResult =
   | { ok: true; id: string }
   | { ok: false; error: string }
@@ -280,6 +282,67 @@ async function replaceChildren(
         })),
       )
       if (insErr) return `signals.insert: ${insErr.message}`
+    }
+  }
+
+  // person_organizations (resolve `new_org` via findOrCreate antes de inserir)
+  {
+    const { error } = await supabase
+      .from('person_organizations')
+      .delete()
+      .eq('person_id', personId)
+    if (error) return `person_organizations.delete: ${error.message}`
+
+    if (input.organizations.length) {
+      const resolved: Array<{
+        person_id: string
+        org_id: string
+        role: string | null
+        start_year: number | null
+        end_year: number | null
+        is_current: boolean
+        notes: string | null
+        sort_order: number
+      }> = []
+
+      for (let i = 0; i < input.organizations.length; i++) {
+        const a = input.organizations[i]
+        let orgId = a.org_id ?? null
+
+        if (!orgId && a.new_org) {
+          const r = await findOrCreateOrganizationInternal(
+            supabase,
+            {
+              name: a.new_org.name,
+              kind: a.new_org.kind,
+              logo_url: a.new_org.logo_url ?? null,
+            },
+            createdBy,
+          )
+          if ('error' in r) return `person_organizations.findOrCreate: ${r.error}`
+          orgId = r.id
+        }
+
+        if (!orgId) {
+          return `person_organizations: vínculo #${i + 1} sem org_id nem new_org`
+        }
+
+        resolved.push({
+          person_id: personId,
+          org_id: orgId,
+          role: a.role ?? null,
+          start_year: a.start_year ?? null,
+          end_year: a.end_year ?? null,
+          is_current: a.is_current ?? false,
+          notes: a.notes ?? null,
+          sort_order: a.sort_order ?? i,
+        })
+      }
+
+      const { error: insErr } = await supabase
+        .from('person_organizations')
+        .insert(resolved)
+      if (insErr) return `person_organizations.insert: ${insErr.message}`
     }
   }
 

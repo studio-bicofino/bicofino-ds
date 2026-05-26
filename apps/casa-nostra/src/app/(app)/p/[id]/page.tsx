@@ -11,8 +11,11 @@ import type {
   FutebolLink,
   GeographyAction,
   Group,
+  Organization,
   Person,
   PersonCategory,
+  PersonOrganization,
+  PersonOrganizationWithOrg,
   PersonWithRelations,
   Movement,
   WorkHistoryEntry,
@@ -30,6 +33,10 @@ type PersonGroupJoinRow = {
   group: Group | null
 }
 
+type PersonOrgJoinRow = PersonOrganization & {
+  org: Organization | null
+}
+
 type PersonRawRow = Person & {
   contact_methods: ContactMethod[] | null
   person_categories: PersonCategory[] | null
@@ -39,6 +46,7 @@ type PersonRawRow = Person & {
   person_groups: PersonGroupJoinRow[] | null
   geography_action: GeographyAction[] | null
   signals: Movement[] | null
+  person_organizations: PersonOrgJoinRow[] | null
 }
 
 export default async function PersonDetailPage({
@@ -52,7 +60,7 @@ export default async function PersonDetailPage({
   const { data, error } = await supabase
     .from('people')
     .select(
-      '*, contact_methods(*), person_categories(*), work_history(*), futebol_links(*), bicofino_history(*), person_groups(*, group:groups(*)), geography_action(*), signals(*)',
+      '*, contact_methods(*), person_categories(*), work_history(*), futebol_links(*), bicofino_history(*), person_groups(*, group:groups(*)), geography_action(*), signals(*), person_organizations(*, org:organizations(*))',
     )
     .eq('id', id)
     .single<PersonRawRow>()
@@ -73,9 +81,12 @@ export default async function PersonDetailPage({
       .filter((g): g is Group => g !== null),
     geography_action: data.geography_action ?? [],
     signals: data.signals ?? [],
+    person_organizations: (data.person_organizations ?? [])
+      .filter((po): po is PersonOrgJoinRow & { org: Organization } => po.org !== null)
+      .map<PersonOrganizationWithOrg>((po) => ({ ...po, org: po.org })),
   }
 
-  const [groupsRes, peopleRes, suggestions] = await Promise.all([
+  const [groupsRes, peopleRes, orgsRes, suggestions] = await Promise.all([
     supabase
       .from('groups')
       .select('id, name, group_type')
@@ -85,11 +96,13 @@ export default async function PersonDetailPage({
       .select('id, full_name')
       .neq('id', id)
       .order('full_name', { ascending: true }),
+    supabase.from('organizations').select('*').order('name', { ascending: true }),
     getAllSuggestions(),
   ])
 
   const groups = (groupsRes.data ?? []) as Array<Pick<Group, 'id' | 'name' | 'group_type'>>
   const introCandidates = (peopleRes.data ?? []) as IntroCandidate[]
+  const organizations = (orgsRes.data ?? []) as Organization[]
 
   async function handleUpdate(input: PersonFormInput) {
     'use server'
@@ -158,7 +171,7 @@ export default async function PersonDetailPage({
 
       <section
         style={{
-          background: 'rgba(244, 234, 212, 0.4)',
+          background: '#f9f4e8',
           border: '1px solid var(--bf-border)',
           borderRadius: 16,
           padding: 32,
@@ -167,6 +180,7 @@ export default async function PersonDetailPage({
         <PersonForm
           initial={person}
           groups={groups}
+          organizations={organizations}
           introCandidates={introCandidates}
           suggestions={suggestions}
           onSubmit={handleUpdate}

@@ -98,6 +98,9 @@ a { color: inherit; text-decoration: none; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(42,44,43,0.3); }
 [data-theme="dark"] ::-webkit-scrollbar-thumb { background: rgba(226,234,242,0.1); }
 
+/* Hero do PersonForm — strip de logos com scroll horizontal silencioso */
+.cn-orglogo-strip::-webkit-scrollbar { display: none; }
+
 .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
 
 /* Focus ring suave napoli — borda + halo nos controles do PersonForm */

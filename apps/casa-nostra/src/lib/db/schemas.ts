@@ -83,6 +83,14 @@ export const movementTypeEnum = z.enum([
   'outro',
 ])
 
+export const organizationKindEnum = z.enum([
+  'empresa',
+  'clube',
+  'midia',
+  'escola',
+  'entidade',
+])
+
 // Score 1–5 nullable (intimacy / contact_ease / bicofino_disposition / network_reach)
 const scoreSchema = z.number().int().min(1).max(5).nullable()
 
@@ -327,6 +335,61 @@ export const movementUpdateSchema = movementSchema
   .extend({ id: z.string().uuid() })
 
 // ============================================================
+// 11. ORGANIZATIONS
+// ============================================================
+
+export const organizationSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string().min(1),
+  name_key: z.string().min(1),
+  kind: organizationKindEnum,
+  logo_url: z.string().nullable(),
+  created_by: z.string().uuid().nullable(),
+  created_at: z.string(),
+})
+
+export const organizationInsertSchema = organizationSchema
+  .omit({ id: true, created_at: true })
+  .partial({ created_by: true, logo_url: true })
+
+export const organizationUpdateSchema = organizationSchema
+  .partial()
+  .extend({ id: z.string().uuid() })
+
+// ============================================================
+// 12. PERSON_ORGANIZATIONS
+// ============================================================
+
+export const personOrganizationSchema = z.object({
+  id: z.string().uuid(),
+  person_id: z.string().uuid(),
+  org_id: z.string().uuid(),
+  role: z.string().nullable(),
+  start_year: z.number().int().nullable(),
+  end_year: z.number().int().nullable(),
+  is_current: z.boolean(),
+  notes: z.string().nullable(),
+  sort_order: z.number().int(),
+  created_at: z.string(),
+})
+
+export const personOrganizationInsertSchema = personOrganizationSchema
+  .omit({ id: true, created_at: true })
+  .partial({
+    person_id: true,
+    role: true,
+    start_year: true,
+    end_year: true,
+    is_current: true,
+    notes: true,
+    sort_order: true,
+  })
+
+export const personOrganizationUpdateSchema = personOrganizationSchema
+  .partial()
+  .extend({ id: z.string().uuid() })
+
+// ============================================================
 // Form schema agregado (consumido pelas páginas /p/[id] e /p/novo)
 // ============================================================
 //
@@ -408,6 +471,33 @@ const movementFormSchema = z.object({
   source: z.string().nullable().optional(),
 })
 
+// Vínculo pessoa↔org no form. Pode referenciar org existente (org_id) OU
+// criar uma org nova inline (new_org). O server action resolve qual caminho.
+//
+// Regra: exatamente um dos dois deve estar preenchido. Validamos no refine.
+const affiliationFormSchema = z
+  .object({
+    org_id: z.string().uuid().nullable().optional(),
+    new_org: z
+      .object({
+        name: z.string().min(1),
+        kind: organizationKindEnum,
+        logo_url: z.string().nullable().optional(),
+      })
+      .nullable()
+      .optional(),
+    role: z.string().nullable().optional(),
+    start_year: z.number().int().nullable().optional(),
+    end_year: z.number().int().nullable().optional(),
+    is_current: z.boolean().optional().default(false),
+    notes: z.string().nullable().optional(),
+    sort_order: z.number().int().optional().default(0),
+  })
+  .refine(
+    (v) => Boolean(v.org_id) !== Boolean(v.new_org),
+    'Cada vínculo precisa apontar pra uma org existente OU criar uma nova — não os dois.',
+  )
+
 export const personFormSchema = personFormFieldsSchema.extend({
   contact_methods: z.array(contactMethodFormSchema).optional().default([]),
   categories: z.array(z.string()).optional().default([]),
@@ -417,6 +507,7 @@ export const personFormSchema = personFormFieldsSchema.extend({
   groups: z.array(personGroupFormSchema).optional().default([]),
   geography_action: z.array(geographyActionFormSchema).optional().default([]),
   signals: z.array(movementFormSchema).optional().default([]),
+  organizations: z.array(affiliationFormSchema).optional().default([]),
 })
 
 export type PersonFormInput = z.infer<typeof personFormSchema>

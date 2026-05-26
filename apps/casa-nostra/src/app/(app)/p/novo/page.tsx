@@ -5,7 +5,7 @@ import { PersonForm } from '@/app/(app)/p/_components/PersonForm'
 import { createPerson } from '@/app/(app)/p/_actions/persons'
 import { getAllSuggestions } from '@/lib/db/suggestions'
 import type { PersonFormInput } from '@/lib/db/schemas'
-import type { Group } from '@/lib/db/types'
+import type { Group, Organization } from '@/lib/db/types'
 
 export const dynamic = 'force-dynamic'
 
@@ -14,17 +14,19 @@ type IntroCandidate = { id: string; full_name: string }
 export default async function NovaPessoaPage() {
   const supabase = await createClient()
 
-  const [groupsRes, peopleRes, suggestions] = await Promise.all([
+  const [groupsRes, peopleRes, orgsRes, suggestions] = await Promise.all([
     supabase
       .from('groups')
       .select('id, name, group_type')
       .order('name', { ascending: true }),
     supabase.from('people').select('id, full_name').order('full_name', { ascending: true }),
+    supabase.from('organizations').select('*').order('name', { ascending: true }),
     getAllSuggestions(),
   ])
 
   const groups = (groupsRes.data ?? []) as Array<Pick<Group, 'id' | 'name' | 'group_type'>>
   const introCandidates = (peopleRes.data ?? []) as IntroCandidate[]
+  const organizations = (orgsRes.data ?? []) as Organization[]
 
   async function handleCreate(input: PersonFormInput) {
     'use server'
@@ -86,7 +88,7 @@ export default async function NovaPessoaPage() {
 
       <section
         style={{
-          background: 'rgba(244, 234, 212, 0.4)',
+          background: '#f9f4e8',
           border: '1px solid var(--bf-border)',
           borderRadius: 16,
           padding: 32,
@@ -95,6 +97,7 @@ export default async function NovaPessoaPage() {
         <PersonForm
           initial={null}
           groups={groups}
+          organizations={organizations}
           introCandidates={introCandidates}
           suggestions={suggestions}
           onSubmit={handleCreate}

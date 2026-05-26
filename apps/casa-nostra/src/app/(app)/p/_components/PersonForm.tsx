@@ -8,8 +8,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Check, Trash2, User } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { personFormSchema, type PersonFormInput } from '@/lib/db/schemas'
-import type { PersonWithRelations, Group } from '@/lib/db/types'
+import type { PersonWithRelations, Group, Organization } from '@/lib/db/types'
 import type { SuggestionsBundle } from '@/lib/db/suggestions'
+import { OrgLogoStrip, type OrgLogoStripItem } from './OrgLogoStrip'
 
 // `PersonFormInput` é o tipo de OUTPUT do zod (após defaults aplicados).
 // O resolver usa o input do schema (campos com default ficam opcionais),
@@ -25,10 +26,12 @@ import { GeographySection } from './sections/Geography'
 import { EvaluationSection } from './sections/Evaluation'
 import { NotesSection } from './sections/Notes'
 import { MovementsSection } from './sections/Movements'
+import { AffiliationsSection } from './sections/Affiliations'
 
 type Props = {
   initial?: PersonWithRelations | null
   groups: Pick<Group, 'id' | 'name' | 'group_type'>[]
+  organizations: Organization[]
   introCandidates: Array<{ id: string; full_name: string }>
   suggestions: SuggestionsBundle
   onSubmit: (input: PersonFormInput) => Promise<{ ok: boolean; id?: string; error?: string }>
@@ -67,6 +70,7 @@ function buildDefaults(initial?: PersonWithRelations | null): PersonFormInput {
       groups: [],
       geography_action: [],
       signals: [],
+      organizations: [],
     }
   }
 
@@ -134,12 +138,22 @@ function buildDefaults(initial?: PersonWithRelations | null): PersonFormInput {
       content: s.content,
       source: s.source,
     })),
+    organizations: (initial.person_organizations ?? []).map((po) => ({
+      org_id: po.org_id,
+      new_org: null,
+      role: po.role,
+      start_year: po.start_year,
+      end_year: po.end_year,
+      is_current: po.is_current,
+      notes: po.notes,
+      sort_order: po.sort_order,
+    })),
   }
 }
 
 const SECTION_EASE = [0.22, 1, 0.36, 1] as const
 
-export function PersonForm({ initial, groups, introCandidates, suggestions, onSubmit, onDelete }: Props) {
+export function PersonForm({ initial, groups, organizations, introCandidates, suggestions, onSubmit, onDelete }: Props) {
   const router = useRouter()
   const isEdit = !!initial
   const [serverError, setServerError] = useState<string | null>(null)
@@ -230,7 +244,7 @@ export function PersonForm({ initial, groups, introCandidates, suggestions, onSu
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.36, ease: SECTION_EASE }}
       >
-        <Hero control={control} initial={initial} />
+        <Hero control={control} initial={initial} organizations={organizations} />
       </motion.div>
 
       {sectionWrap(1, <IdentitySection control={control} errors={errors} suggestions={suggestions} />)}
@@ -250,6 +264,7 @@ export function PersonForm({ initial, groups, introCandidates, suggestions, onSu
       {sectionWrap(7, <EvaluationSection control={control} errors={errors} />)}
       {sectionWrap(8, <NotesSection control={control} errors={errors} />)}
       {sectionWrap(9, <MovementsSection control={control} errors={errors} />)}
+      {sectionWrap(10, <AffiliationsSection control={control} errors={errors} orgs={organizations} />)}
 
       <FooterBar
         isEdit={isEdit}
@@ -273,9 +288,10 @@ export function PersonForm({ initial, groups, introCandidates, suggestions, onSu
 type HeroProps = {
   control: ReturnType<typeof useForm<PersonFormInput>>['control']
   initial?: PersonWithRelations | null
+  organizations: Organization[]
 }
 
-function Hero({ control, initial }: HeroProps) {
+function Hero({ control, initial, organizations }: HeroProps) {
   const values = useWatch({ control })
   const displayName =
     values.full_name && values.full_name.trim().length > 0
@@ -286,12 +302,42 @@ function Hero({ control, initial }: HeroProps) {
   const company = values.current_company ?? null
   const title = values.current_title ?? null
 
+  // Strip de logos: vínculos atuais do form (org_id resolvido OU new_org com logo já uploadado)
+  const watchedAff = values.organizations ?? []
+  const orgById = new Map(organizations.map((o) => [o.id, o]))
+  const logoItems: OrgLogoStripItem[] = watchedAff
+    .map((a) => {
+      const linked = a.org_id ? orgById.get(a.org_id) : null
+      if (linked) {
+        return {
+          org: linked,
+          role: a.role ?? null,
+          is_current: a.is_current ?? false,
+        }
+      }
+      if (a.new_org?.name) {
+        return {
+          org: {
+            id: `new-${a.new_org.name}`,
+            name: a.new_org.name,
+            kind: a.new_org.kind,
+            logo_url: a.new_org.logo_url ?? null,
+          },
+          role: a.role ?? null,
+          is_current: a.is_current ?? false,
+        }
+      }
+      return null
+    })
+    .filter((x): x is OrgLogoStripItem => x !== null)
+
   return (
     <header
       style={{
-        background: 'transparent',
-        borderRadius: 24,
-        padding: 8,
+        background: 'var(--bf-surface)',
+        border: '1px solid var(--bf-border)',
+        borderRadius: 16,
+        padding: 32,
         display: 'flex',
         flexDirection: 'column',
         gap: 32,
@@ -356,6 +402,22 @@ function Hero({ control, initial }: HeroProps) {
             )}
           </div>
         </div>
+
+        {logoItems.length > 0 && (
+          <div
+            style={{
+              flexShrink: 0,
+              minWidth: 0,
+              maxWidth: 360,
+              paddingTop: 24,
+              borderLeft: '1px solid var(--bf-border)',
+              paddingLeft: 24,
+              alignSelf: 'stretch',
+            }}
+          >
+            <OrgLogoStrip items={logoItems} />
+          </div>
+        )}
       </div>
 
       {/* Stat strip — pills totalmente arredondadas */}
