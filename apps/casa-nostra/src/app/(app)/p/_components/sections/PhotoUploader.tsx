@@ -1,6 +1,6 @@
 'use client'
 
-import { useId, useRef, useState } from 'react'
+import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { Upload, X } from 'lucide-react'
 import { uploadPersonPhoto } from '@/lib/storage/photos'
@@ -19,19 +19,47 @@ export function PhotoUploader({ value, onChange, disabled }: Props) {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [dragOver, setDragOver] = useState(false)
+  const [pasteFlash, setPasteFlash] = useState(false)
 
-  async function handleFile(file: File | null | undefined) {
-    if (!file) return
-    setError(null)
-    setBusy(true)
-    const result = await uploadPersonPhoto(file)
-    setBusy(false)
-    if (!result.ok) {
-      setError(result.error)
-      return
+  const handleFile = useCallback(
+    async (file: File | null | undefined) => {
+      if (!file) return
+      setError(null)
+      setBusy(true)
+      const result = await uploadPersonPhoto(file)
+      setBusy(false)
+      if (!result.ok) {
+        setError(result.error)
+        return
+      }
+      onChange(result.url)
+    },
+    [onChange],
+  )
+
+  useEffect(() => {
+    if (disabled) return
+
+    function onPaste(e: ClipboardEvent) {
+      const items = e.clipboardData?.items
+      if (!items) return
+      for (const item of items) {
+        if (item.kind === 'file' && item.type.startsWith('image/')) {
+          const file = item.getAsFile()
+          if (file) {
+            e.preventDefault()
+            setPasteFlash(true)
+            window.setTimeout(() => setPasteFlash(false), 600)
+            void handleFile(file)
+            return
+          }
+        }
+      }
     }
-    onChange(result.url)
-  }
+
+    window.addEventListener('paste', onPaste)
+    return () => window.removeEventListener('paste', onPaste)
+  }, [disabled, handleFile])
 
   function openPicker() {
     if (disabled || busy) return
@@ -83,11 +111,12 @@ export function PhotoUploader({ value, onChange, disabled }: Props) {
           gap: 16,
           padding: 14,
           borderRadius: 16,
-          border: `1px ${dragOver ? 'solid' : 'dashed'} ${
-            dragOver ? 'var(--bf-cn-napoli)' : 'var(--bf-border-strong)'
+          border: `1px ${dragOver || pasteFlash ? 'solid' : 'dashed'} ${
+            dragOver || pasteFlash ? 'var(--bf-cn-napoli)' : 'var(--bf-border-strong)'
           }`,
-          background: dragOver ? 'rgba(119,222,255,0.08)' : 'var(--bf-surface)',
-          transition: 'background 160ms ease-out, border-color 160ms ease-out',
+          background:
+            dragOver || pasteFlash ? 'rgba(119,222,255,0.08)' : 'var(--bf-surface)',
+          transition: 'background 240ms ease-out, border-color 240ms ease-out',
         }}
       >
         <Preview value={value} busy={busy} />
@@ -160,7 +189,7 @@ export function PhotoUploader({ value, onChange, disabled }: Props) {
               lineHeight: 1.45,
             }}
           >
-            JPG · PNG · WebP · até 5 MB · arraste pra cá ou clique
+            JPG · PNG · WebP · até 5 MB · arraste, clique ou cole (⌘V / Ctrl+V)
           </p>
 
           <AnimatePresence initial={false}>
