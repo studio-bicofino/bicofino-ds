@@ -4,16 +4,19 @@ import type { Control, FieldErrors } from 'react-hook-form'
 import { useFieldArray, Controller } from 'react-hook-form'
 import { Trash2, Plus } from 'lucide-react'
 import type { PersonFormInput } from '@/lib/db/schemas'
+import type { SuggestionsBundle } from '@/lib/db/suggestions'
 import { SectionShell, FullRow } from './SectionShell'
-import { TextField, SelectField, FieldShell } from '../Field'
+import { SelectField, FieldShell } from '../Field'
+import { AutocompleteField } from '../AutocompleteField'
 import { ChipInput } from './ChipInput'
 
 type Props = {
   control: Control<PersonFormInput>
   errors: FieldErrors<PersonFormInput>
+  suggestions: SuggestionsBundle
 }
 
-export function GeographySection({ control, errors }: Props) {
+export function GeographySection({ control, errors, suggestions }: Props) {
   const geoArr = useFieldArray({ control, name: 'geography_action' })
 
   return (
@@ -26,13 +29,14 @@ export function GeographySection({ control, errors }: Props) {
         name="home_city"
         control={control}
         render={({ field }) => (
-          <TextField
+          <AutocompleteField
             id="home_city"
             label="Cidade-base"
             value={field.value ?? ''}
-            onChange={(e) => field.onChange(e.target.value || null)}
+            onChange={(v) => field.onChange(v || null)}
             placeholder="Ex.: São Paulo"
             error={errors.home_city?.message}
+            suggestions={suggestions.home_city}
           />
         )}
       />
@@ -41,13 +45,14 @@ export function GeographySection({ control, errors }: Props) {
         name="home_country"
         control={control}
         render={({ field }) => (
-          <TextField
+          <AutocompleteField
             id="home_country"
             label="País"
             value={field.value ?? ''}
-            onChange={(e) => field.onChange(e.target.value || null)}
+            onChange={(v) => field.onChange(v || null)}
             placeholder="Ex.: Brasil"
             error={errors.home_country?.message}
+            suggestions={suggestions.home_country}
           />
         )}
       />
@@ -60,8 +65,9 @@ export function GeographySection({ control, errors }: Props) {
             label="Línguas"
             value={field.value ?? []}
             onChange={field.onChange}
-            placeholder="pt-BR, en, it…"
+            placeholder="Português, Inglês, Italiano…"
             hint="Enter ou vírgula para adicionar."
+            suggestions={suggestions.language}
           />
         )}
       />
@@ -74,8 +80,9 @@ export function GeographySection({ control, errors }: Props) {
             label="Passaportes"
             value={field.value ?? []}
             onChange={field.onChange}
-            placeholder="BR, IT, US…"
+            placeholder="Brasil, Itália, EUA…"
             hint="Enter ou vírgula para adicionar."
+            suggestions={suggestions.passport}
           />
         )}
       />
@@ -126,12 +133,13 @@ export function GeographySection({ control, errors }: Props) {
               name={`geography_action.${i}.region` as const}
               control={control}
               render={({ field }) => (
-                <TextField
+                <AutocompleteField
                   label="Região"
                   value={field.value ?? ''}
-                  onChange={(e) => field.onChange(e.target.value)}
+                  onChange={(v) => field.onChange(v)}
                   placeholder="Ex.: Milão"
                   error={errors.geography_action?.[i]?.region?.message}
+                  suggestions={suggestions.region}
                 />
               )}
             />

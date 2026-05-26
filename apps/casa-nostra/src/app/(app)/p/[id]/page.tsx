@@ -3,6 +3,7 @@ import { notFound, redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { PersonForm } from '@/app/(app)/p/_components/PersonForm'
 import { updatePerson, deletePerson } from '@/app/(app)/p/_actions/persons'
+import { getAllSuggestions } from '@/lib/db/suggestions'
 import type { PersonFormInput } from '@/lib/db/schemas'
 import type {
   BicofinoHistoryEntry,
@@ -74,7 +75,7 @@ export default async function PersonDetailPage({
     signals: data.signals ?? [],
   }
 
-  const [groupsRes, peopleRes] = await Promise.all([
+  const [groupsRes, peopleRes, suggestions] = await Promise.all([
     supabase
       .from('groups')
       .select('id, name, group_type')
@@ -84,6 +85,7 @@ export default async function PersonDetailPage({
       .select('id, full_name')
       .neq('id', id)
       .order('full_name', { ascending: true }),
+    getAllSuggestions(),
   ])
 
   const groups = (groupsRes.data ?? []) as Array<Pick<Group, 'id' | 'name' | 'group_type'>>
@@ -166,6 +168,7 @@ export default async function PersonDetailPage({
           initial={person}
           groups={groups}
           introCandidates={introCandidates}
+          suggestions={suggestions}
           onSubmit={handleUpdate}
           onDelete={handleDelete}
         />

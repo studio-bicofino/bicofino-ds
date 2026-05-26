@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState, useTransition } from 'react'
 import type { Group } from '@/lib/db/types'
+import type { Suggestion } from '@/lib/utils/strings'
 
 const CLUSTERS: Array<{ value: '' | 'A' | 'B' | 'C'; label: string }> = [
   { value: '', label: 'Todos clusters' },
@@ -13,10 +14,11 @@ const CLUSTERS: Array<{ value: '' | 'A' | 'B' | 'C'; label: string }> = [
 
 type Props = {
   groups: Array<Pick<Group, 'id' | 'name' | 'group_type'>>
+  cities: Suggestion[]
   initial: { q: string; cluster: string; group: string; city: string }
 }
 
-export function Filters({ groups, initial }: Props) {
+export function Filters({ groups, cities, initial }: Props) {
   const router = useRouter()
   const params = useSearchParams()
   const [, startTransition] = useTransition()
@@ -85,22 +87,19 @@ export function Filters({ groups, initial }: Props) {
         ))}
       </select>
 
-      <input
-        type="text"
-        placeholder="Cidade"
-        defaultValue={initial.city}
-        onBlur={(e) => {
-          const v = e.target.value.trim()
-          if (v !== initial.city) push({ city: v })
-        }}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            const v = (e.target as HTMLInputElement).value.trim()
-            if (v !== initial.city) push({ city: v })
-          }
-        }}
+      <select
+        value={initial.city}
+        onChange={(e) => push({ city: e.target.value })}
         className="cn-filter-input"
-      />
+        aria-label="Filtrar por cidade"
+      >
+        <option value="">Todas cidades</option>
+        {cities.map((c) => (
+          <option key={c.key} value={c.value}>
+            {c.value}
+          </option>
+        ))}
+      </select>
     </div>
   )
 }

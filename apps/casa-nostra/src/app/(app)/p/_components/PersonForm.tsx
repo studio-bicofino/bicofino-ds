@@ -9,6 +9,7 @@ import { Check, Trash2, User } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { personFormSchema, type PersonFormInput } from '@/lib/db/schemas'
 import type { PersonWithRelations, Group } from '@/lib/db/types'
+import type { SuggestionsBundle } from '@/lib/db/suggestions'
 
 // `PersonFormInput` é o tipo de OUTPUT do zod (após defaults aplicados).
 // O resolver usa o input do schema (campos com default ficam opcionais),
@@ -29,6 +30,7 @@ type Props = {
   initial?: PersonWithRelations | null
   groups: Pick<Group, 'id' | 'name' | 'group_type'>[]
   introCandidates: Array<{ id: string; full_name: string }>
+  suggestions: SuggestionsBundle
   onSubmit: (input: PersonFormInput) => Promise<{ ok: boolean; id?: string; error?: string }>
   onDelete?: (id: string) => Promise<{ ok: boolean; error?: string }>
 }
@@ -137,7 +139,7 @@ function buildDefaults(initial?: PersonWithRelations | null): PersonFormInput {
 
 const SECTION_EASE = [0.22, 1, 0.36, 1] as const
 
-export function PersonForm({ initial, groups, introCandidates, onSubmit, onDelete }: Props) {
+export function PersonForm({ initial, groups, introCandidates, suggestions, onSubmit, onDelete }: Props) {
   const router = useRouter()
   const isEdit = !!initial
   const [serverError, setServerError] = useState<string | null>(null)
@@ -231,10 +233,10 @@ export function PersonForm({ initial, groups, introCandidates, onSubmit, onDelet
         <Hero control={control} initial={initial} />
       </motion.div>
 
-      {sectionWrap(1, <IdentitySection control={control} errors={errors} />)}
+      {sectionWrap(1, <IdentitySection control={control} errors={errors} suggestions={suggestions} />)}
       {sectionWrap(2, <CategorizationSection control={control} errors={errors} />)}
       {sectionWrap(3, <ContactsSection control={control} errors={errors} />)}
-      {sectionWrap(4, <HistorySection control={control} errors={errors} />)}
+      {sectionWrap(4, <HistorySection control={control} errors={errors} suggestions={suggestions} />)}
       {sectionWrap(
         5,
         <ConnectionsSection
@@ -244,7 +246,7 @@ export function PersonForm({ initial, groups, introCandidates, onSubmit, onDelet
           introCandidates={introCandidates}
         />,
       )}
-      {sectionWrap(6, <GeographySection control={control} errors={errors} />)}
+      {sectionWrap(6, <GeographySection control={control} errors={errors} suggestions={suggestions} />)}
       {sectionWrap(7, <EvaluationSection control={control} errors={errors} />)}
       {sectionWrap(8, <NotesSection control={control} errors={errors} />)}
       {sectionWrap(9, <MovementsSection control={control} errors={errors} />)}

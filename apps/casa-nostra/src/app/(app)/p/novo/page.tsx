@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { PersonForm } from '@/app/(app)/p/_components/PersonForm'
 import { createPerson } from '@/app/(app)/p/_actions/persons'
+import { getAllSuggestions } from '@/lib/db/suggestions'
 import type { PersonFormInput } from '@/lib/db/schemas'
 import type { Group } from '@/lib/db/types'
 
@@ -13,12 +14,13 @@ type IntroCandidate = { id: string; full_name: string }
 export default async function NovaPessoaPage() {
   const supabase = await createClient()
 
-  const [groupsRes, peopleRes] = await Promise.all([
+  const [groupsRes, peopleRes, suggestions] = await Promise.all([
     supabase
       .from('groups')
       .select('id, name, group_type')
       .order('name', { ascending: true }),
     supabase.from('people').select('id, full_name').order('full_name', { ascending: true }),
+    getAllSuggestions(),
   ])
 
   const groups = (groupsRes.data ?? []) as Array<Pick<Group, 'id' | 'name' | 'group_type'>>
@@ -94,6 +96,7 @@ export default async function NovaPessoaPage() {
           initial={null}
           groups={groups}
           introCandidates={introCandidates}
+          suggestions={suggestions}
           onSubmit={handleCreate}
         />
       </section>

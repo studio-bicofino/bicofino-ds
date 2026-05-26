@@ -4,15 +4,18 @@ import type { Control, FieldErrors } from 'react-hook-form'
 import { useFieldArray, Controller } from 'react-hook-form'
 import { Trash2, Plus } from 'lucide-react'
 import type { PersonFormInput } from '@/lib/db/schemas'
+import type { SuggestionsBundle } from '@/lib/db/suggestions'
 import { SectionShell, FullRow } from './SectionShell'
 import { TextField, TextAreaField, FieldShell } from '../Field'
+import { AutocompleteField } from '../AutocompleteField'
 
 type Props = {
   control: Control<PersonFormInput>
   errors: FieldErrors<PersonFormInput>
+  suggestions: SuggestionsBundle
 }
 
-export function HistorySection({ control, errors }: Props) {
+export function HistorySection({ control, errors, suggestions }: Props) {
   const work = useFieldArray({ control, name: 'work_history' })
   const bicofino = useFieldArray({ control, name: 'bicofino_history' })
 
@@ -43,12 +46,13 @@ export function HistorySection({ control, errors }: Props) {
               name={`work_history.${i}.company` as const}
               control={control}
               render={({ field }) => (
-                <TextField
+                <AutocompleteField
                   label="Empresa"
                   value={field.value ?? ''}
-                  onChange={(e) => field.onChange(e.target.value)}
+                  onChange={(v) => field.onChange(v)}
                   placeholder="Ex.: BTG Pactual"
                   error={errors.work_history?.[i]?.company?.message}
+                  suggestions={suggestions.current_company}
                 />
               )}
             />

@@ -5,16 +5,19 @@ import { Controller } from 'react-hook-form'
 import { AnimatePresence, motion } from 'motion/react'
 import { Check } from 'lucide-react'
 import type { PersonFormInput } from '@/lib/db/schemas'
+import type { SuggestionsBundle } from '@/lib/db/suggestions'
 import { SectionShell, FullRow } from './SectionShell'
 import { TextField } from '../Field'
+import { AutocompleteField } from '../AutocompleteField'
 import { PhotoUploader } from './PhotoUploader'
 
 type Props = {
   control: Control<PersonFormInput>
   errors: FieldErrors<PersonFormInput>
+  suggestions: SuggestionsBundle
 }
 
-export function IdentitySection({ control, errors }: Props) {
+export function IdentitySection({ control, errors, suggestions }: Props) {
   return (
     <SectionShell
       eyebrow="01 · Identidade"
@@ -102,14 +105,15 @@ export function IdentitySection({ control, errors }: Props) {
         name="current_company"
         control={control}
         render={({ field }) => (
-          <TextField
+          <AutocompleteField
             id="current_company"
             label="Empresa atual"
             value={field.value ?? ''}
-            onChange={(e) => field.onChange(e.target.value || null)}
+            onChange={(v) => field.onChange(v || null)}
             onBlur={field.onBlur}
             placeholder="Ex.: Bicofino"
             error={errors.current_company?.message}
+            suggestions={suggestions.current_company}
           />
         )}
       />
@@ -135,14 +139,15 @@ export function IdentitySection({ control, errors }: Props) {
           name="expertise_area"
           control={control}
           render={({ field }) => (
-            <TextField
+            <AutocompleteField
               id="expertise_area"
               label="Área de expertise"
               value={field.value ?? ''}
-              onChange={(e) => field.onChange(e.target.value || null)}
+              onChange={(v) => field.onChange(v || null)}
               onBlur={field.onBlur}
               placeholder="Ex.: Wealth management, Futebol, Direito M&A…"
               error={errors.expertise_area?.message}
+              suggestions={suggestions.expertise_area}
             />
           )}
         />

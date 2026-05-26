@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { Filters } from './_components/Filters'
 import { PersonRowClient } from './p/_components/PersonRowClient'
+import { getCitySuggestions } from '@/lib/db/suggestions'
+import { normalizeKey } from '@/lib/utils/strings'
 import type { Cluster, Group } from '@/lib/db/types'
 
 const PAGE_SIZE = 20
@@ -44,10 +46,13 @@ export default async function PeoplePage({
 
   const supabase = await createClient()
 
-  const { data: groupsData } = await supabase
-    .from('groups')
-    .select('id, name, group_type')
-    .order('name', { ascending: true })
+  const [{ data: groupsData }, cities] = await Promise.all([
+    supabase
+      .from('groups')
+      .select('id, name, group_type')
+      .order('name', { ascending: true }),
+    getCitySuggestions(),
+  ])
 
   const groups = (groupsData ?? []) as Array<Pick<Group, 'id' | 'name' | 'group_type'>>
 
@@ -103,7 +108,7 @@ export default async function PeoplePage({
 
       <div className="cn-toolbar">
         <div className="cn-toolbar-filters">
-          <Filters groups={groups} initial={{ q, cluster, group: groupId, city }} />
+          <Filters groups={groups} cities={cities} initial={{ q, cluster, group: groupId, city }} />
         </div>
         <Link
           href="/p/novo"

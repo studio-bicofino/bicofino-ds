@@ -16,6 +16,12 @@ import { revalidatePath } from 'next/cache'
 
 import { createClient } from '@/lib/supabase/server'
 import { getSession } from '@/lib/auth/session'
+import { getAllSuggestions } from '@/lib/db/suggestions'
+import {
+  canonicalizeArray,
+  canonicalizeValue,
+  type Suggestion,
+} from '@/lib/utils/strings'
 
 import {
   personFormSchema,
@@ -29,6 +35,46 @@ type ActionResult =
 // ------------------------------------------------------------
 // Helpers
 // ------------------------------------------------------------
+
+function toCanonicalMap(suggestions: Suggestion[]): Map<string, string> {
+  const m = new Map<string, string>()
+  for (const s of suggestions) m.set(s.key, s.value)
+  return m
+}
+
+/**
+ * Substitui valores free-text pelo canônico existente quando há match de
+ * chave normalizada. Garante que "São Paulo" / "Sao Paulo" / "sao paulo"
+ * convirjam para a mesma grafia no DB.
+ */
+async function canonicalizeInput(input: PersonFormInput): Promise<PersonFormInput> {
+  const s = await getAllSuggestions()
+  const cities = toCanonicalMap(s.home_city)
+  const countries = toCanonicalMap(s.home_country)
+  const companies = toCanonicalMap(s.current_company)
+  const areas = toCanonicalMap(s.expertise_area)
+  const langs = toCanonicalMap(s.language)
+  const passports = toCanonicalMap(s.passport)
+  const regions = toCanonicalMap(s.region)
+
+  return {
+    ...input,
+    home_city: canonicalizeValue(input.home_city, cities),
+    home_country: canonicalizeValue(input.home_country, countries),
+    current_company: canonicalizeValue(input.current_company, companies),
+    expertise_area: canonicalizeValue(input.expertise_area, areas),
+    languages: canonicalizeArray(input.languages, langs),
+    passports: canonicalizeArray(input.passports, passports),
+    work_history: input.work_history.map((w) => ({
+      ...w,
+      company: canonicalizeValue(w.company, companies) ?? w.company,
+    })),
+    geography_action: input.geography_action.map((g) => ({
+      ...g,
+      region: canonicalizeValue(g.region, regions) ?? g.region,
+    })),
+  }
+}
 
 /**
  * Mantém apenas as chaves de Person (sem os arrays do form).
@@ -254,8 +300,10 @@ export async function createPerson(input: PersonFormInput): Promise<ActionResult
   if (!session) return { ok: false, error: 'Não autenticado.' }
   const supabase = await createClient()
 
+  const canonical = await canonicalizeInput(parsed.data)
+
   const row = {
-    ...pickPersonColumns(parsed.data),
+    ...pickPersonColumns(canonical),
     created_by: session.userId,
     updated_by: session.userId,
   }
@@ -270,7 +318,7 @@ export async function createPerson(input: PersonFormInput): Promise<ActionResult
     return { ok: false, error: error?.message ?? 'Falha ao criar pessoa.' }
   }
 
-  const childErr = await replaceChildren(supabase, data.id, parsed.data, session.userId)
+  const childErr = await replaceChildren(supabase, data.id, canonical, session.userId)
   if (childErr) {
     return { ok: false, error: childErr }
   }
@@ -293,15 +341,17 @@ export async function updatePerson(
   if (!session) return { ok: false, error: 'Não autenticado.' }
   const supabase = await createClient()
 
+  const canonical = await canonicalizeInput(parsed.data)
+
   const row = {
-    ...pickPersonColumns(parsed.data),
+    ...pickPersonColumns(canonical),
     updated_by: session.userId,
   }
 
   const { error } = await supabase.from('people').update(row).eq('id', id)
   if (error) return { ok: false, error: error.message }
 
-  const childErr = await replaceChildren(supabase, id, parsed.data, session.userId)
+  const childErr = await replaceChildren(supabase, id, canonical, session.userId)
   if (childErr) {
     return { ok: false, error: childErr }
   }
