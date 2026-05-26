@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
-import { Users, UsersRound, Activity, Settings, Menu, X, type LucideIcon } from 'lucide-react'
+import { User, Users, Activity, Settings, Menu, X, type LucideIcon } from 'lucide-react'
 import { LogoutButton } from '@/components/LogoutButton'
 import { BicofinoLogo } from '@/components/BicofinoLogo'
 
@@ -12,9 +12,9 @@ type Props = {
 }
 
 const ITEMS: { href: string; label: string; icon: LucideIcon }[] = [
-  { href: '/', label: 'Pessoas', icon: Users },
-  { href: '/grupos', label: 'Grupos', icon: UsersRound },
-  { href: '/sinais', label: 'Sinais', icon: Activity },
+  { href: '/', label: 'Pessoas', icon: User },
+  { href: '/grupos', label: 'Grupos', icon: Users },
+  { href: '/sinais', label: 'Movimentos', icon: Activity },
   { href: '/configuracoes', label: 'Configurações', icon: Settings },
 ]
 

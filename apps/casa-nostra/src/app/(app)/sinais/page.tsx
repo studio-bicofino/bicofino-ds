@@ -110,7 +110,7 @@ function Hero({ total, hasFilters }: { total: number; hasFilters: boolean }) {
           fontWeight: 500,
         }}
       >
-        // Sinais
+        // Movimentos
       </p>
       <h1
         style={{
@@ -121,7 +121,7 @@ function Hero({ total, hasFilters }: { total: number; hasFilters: boolean }) {
           color: 'var(--bf-text-primary)',
         }}
       >
-        Sinais
+        Movimentos
       </h1>
       <p
         style={{
@@ -142,7 +142,7 @@ function Hero({ total, hasFilters }: { total: number; hasFilters: boolean }) {
           marginTop: 4,
         }}
       >
-        {total} {total === 1 ? 'sinal' : 'sinais'}
+        {total} {total === 1 ? 'movimento' : 'movimentos'}
         {hasFilters ? ' · filtros ativos' : ''}
       </p>
     </header>

@@ -122,7 +122,7 @@ export function AddSignalForm({ people, defaultPersonId, onDone }: Props) {
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <p style={labelStyle}>Adicionar sinal</p>
+        <p style={labelStyle}>Adicionar movimento</p>
         <button
           type="button"
           onClick={onDone}
@@ -284,7 +284,7 @@ export function AddSignalForm({ people, defaultPersonId, onDone }: Props) {
             transition: 'opacity 160ms ease-out',
           }}
         >
-          {isPending ? 'Salvando…' : 'Salvar sinal'}
+          {isPending ? 'Salvando…' : 'Salvar movimento'}
         </button>
       </div>
     </form>

@@ -31,7 +31,7 @@ export function NotesSection({ control, errors }: Props) {
               value={field.value ?? ''}
               onChange={(e) => field.onChange(e.target.value || null)}
               placeholder={
-                'Histórico de conversas, sinais qualitativos, preferências, contexto familiar…\n\nMarkdown OK: # cabeçalhos, **negrito**, - listas.'
+                'Histórico de conversas, movimentos qualitativos, preferências, contexto familiar…\n\nMarkdown OK: # cabeçalhos, **negrito**, - listas.'
               }
               error={errors.private_notes?.message}
             />

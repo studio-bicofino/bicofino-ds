@@ -22,7 +22,7 @@ export function SignalsSection({ control, errors }: Props) {
 
   return (
     <SectionShell
-      eyebrow="09 · Sinais"
+      eyebrow="09 · Movimentos"
       title="Eventos qualitativos recentes"
       subtitle="Pequenos gatilhos de matchmaking: interesses declarados, life events, movimentos de capital, pedidos, recusas."
       gridStyle={{ gridTemplateColumns: '1fr', gap: 16 }}
@@ -39,7 +39,7 @@ export function SignalsSection({ control, errors }: Props) {
               textAlign: 'center',
             }}
           >
-            Nenhum sinal registrado.
+            Nenhum movimento registrado.
           </div>
         </FullRow>
       )}
@@ -118,7 +118,7 @@ export function SignalsSection({ control, errors }: Props) {
                 <button
                   type="button"
                   onClick={() => remove(i)}
-                  aria-label="Remover sinal"
+                  aria-label="Remover movimento"
                   className="cn-icon-btn-danger"
                 >
                   <Trash2 size={18} strokeWidth={2} />
@@ -175,7 +175,7 @@ export function SignalsSection({ control, errors }: Props) {
           }}
         >
           <Plus size={16} strokeWidth={1.5} />
-          Adicionar sinal
+          Adicionar movimento
         </button>
       </FullRow>
     </SectionShell>

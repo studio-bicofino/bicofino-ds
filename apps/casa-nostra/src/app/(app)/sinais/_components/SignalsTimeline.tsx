@@ -120,7 +120,7 @@ export function SignalsTimeline({
             cursor: 'pointer',
           }}
         >
-          {showForm ? '× Fechar' : '+ Adicionar sinal'}
+          {showForm ? '× Fechar' : '+ Adicionar movimento'}
         </button>
       </div>
 
@@ -216,7 +216,7 @@ function MonthHeader({ label, count }: { label: string; count: number }) {
           color: 'var(--bf-text-subtle)',
         }}
       >
-        {count} {count === 1 ? 'sinal' : 'sinais'}
+        {count} {count === 1 ? 'movimento' : 'movimentos'}
       </span>
     </header>
   )
@@ -425,8 +425,8 @@ function DeleteControl({
       type="button"
       onClick={onClick}
       disabled={isPending}
-      title="Apagar sinal"
-      aria-label="Apagar sinal"
+      title="Apagar movimento"
+      aria-label="Apagar movimento"
       style={{
         background: 'none',
         border: 'none',
@@ -521,10 +521,10 @@ function EmptyState() {
           marginBottom: 12,
         }}
       >
-        Nenhum sinal registrado
+        Nenhum movimento registrado
       </p>
       <p style={{ fontSize: 14, maxWidth: 420, margin: '0 auto' }}>
-        Cada sinal vira parte da memória qualitativa de uma pessoa. Comece pelo botão acima.
+        Cada movimento vira parte da memória qualitativa de uma pessoa. Comece pelo botão acima.
       </p>
     </div>
   )

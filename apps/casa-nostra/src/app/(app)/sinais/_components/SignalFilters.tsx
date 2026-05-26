@@ -50,7 +50,7 @@ export function SignalFilters({ people, initial }: Props) {
         value={initial.type}
         onChange={(e) => push({ type: e.target.value })}
         className="cn-filter-input"
-        aria-label="Filtrar por tipo de sinal"
+        aria-label="Filtrar por tipo de movimento"
       >
         {SIGNAL_TYPES.map((t) => (
           <option key={t.value} value={t.value}>

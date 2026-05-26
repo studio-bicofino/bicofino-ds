@@ -262,7 +262,7 @@ function StatGrid({ counts }: { counts: Counts }) {
   const items = [
     { label: 'Pessoas', value: counts.people, href: '/' },
     { label: 'Grupos', value: counts.groups, href: '/grupos' },
-    { label: 'Sinais', value: counts.signals, href: '/sinais' },
+    { label: 'Movimentos', value: counts.signals, href: '/sinais' },
   ]
   return (
     <div
