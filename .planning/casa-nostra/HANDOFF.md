@@ -1,13 +1,13 @@
 # HANDOFF — Casa Nostra (Bicofino)
 
-*Última atualização: 2026-05-26 (sessão tarde). v0.2 — polimento editorial + Sinais timeline. Próximo chat retoma daqui.*
+*Última atualização: 2026-05-26 (sessão noite). v0.3 — Sinais: agrupamento por mês + delete inline. Próximo chat retoma daqui.*
 
 **Pra retomar em chat novo:**
 > `Lê @.planning/casa-nostra/HANDOFF.md (e @.planning/casa-nostra/BRIEFING.md pro contexto original) e vamos continuar de onde parou.`
 
 ---
 
-## Status — v0.2 deployada
+## Status — v0.3 deployada
 
 **URL prod:** https://casa-nostra-two.vercel.app
 **Repo:** `feature/casa-nostra` (a partir de `feature/vanguarda`)
@@ -55,15 +55,16 @@
 - Projeto linkado, git conectado, 12 env entries (4 vars × 3 envs) + NEXT_PUBLIC_SITE_URL
 - Build clean, Site URL e Redirect URLs configurados no Supabase
 
-### Frente 7 — Sinais (timeline cross-person) ✅ — 2026-05-26 tarde
+### Frente 7 — Sinais (timeline cross-person) ✅ — 2026-05-26 tarde + noite
 - Rota `/sinais` server component em `(app)/sinais/page.tsx`
 - Filtros URL-driven: `?type=` (validado contra enum), `?person=<uuid>`
-- `_actions/signals.ts`: `createSignal` + `deleteSignal` (UI de delete pendente)
+- `_actions/signals.ts`: `createSignal` + `deleteSignal`
 - `SignalsTimeline` client: estado `showForm`, AnimatePresence pro form, motion stagger nos cards
 - `AddSignalForm`: RHF + zod, fecha + revalida no submit
 - `SignalFilters` URL-driven (mesmo padrão de `Filters.tsx`)
 - Mapping de cor por `signal_type`: interesse/ask=napoli · lifeevent=caffè · capital_move=sep · recusa=ops-danger · outro=text-secondary
 - Hero idêntico ao padrão: eyebrow `// Sinais` caffè + h1 clamp 40-64 + parágrafo curto + contador mono
+- **v0.3 (2026-05-26 noite):** agrupamento por mês via `useMemo(groupByMonth)` preservando ordem cronológica do server; `MonthHeader` sticky em `top: 0` (fundo crema + border-bottom nocciola, label "Maio de 2026" + contador mono); delete inline 2-step por card espelhando `GroupRow` (Trash2 ghost → "Confirmar?" pill com auto-cancel 4s, `useTransition`); `motion.article layout` + `AnimatePresence mode="popLayout"` → exit suave (`scale: 0.96`) sem reflow brusco
 
 ### Frente 8 — Polimento visual editorial v0.2 ✅ — 2026-05-26 tarde
 - **Tokens nocciola**: `--bf-border` virou `#d8d7d3` (nocciola sólida), `--bf-border-strong` virou `#b8b6ae`. Todas as bordas do site puxam pra paleta editorial agora.
@@ -224,15 +225,15 @@ Policy pattern: `select` em `people` honra `restrict_visibility`. Demais tabelas
 4. **`category_value` sem CHECK constraint** no DB — qualquer string passa. Schema zod pode travar com `z.enum([...])` se quiser disciplinar.
 5. **Sem transação no "replace-all"** das filhas em `updatePerson` — estado parcial possível se um insert falhar. Vira RPC Postgres quando precisar.
 6. **RLS no `created_by`** — `deletePerson` honra; pode bloquear delete entre Fabio e Woney. Verificar.
+7. **Vercel git integration mal configurada** — Root Directory aponta pro repo root, não pra `apps/casa-nostra/`. Toda push em `feature/casa-nostra` dispara build automática que falha em 5s (`Couldn't find any pages or app directory`). Workaround atual: deploys são CLI-only (`vercel deploy [--prod] --yes` de dentro de `apps/casa-nostra/`). Fix futuro: setar Root Directory no painel Vercel.
 
 ### Features pendentes (em ordem de valor)
-7. ~~**Timeline de Sinais**~~ — ✅ Frente 7 completa. UI de delete por sinal ainda pendente (action `deleteSignal` exportada mas não consumida).
+7. ~~**Timeline de Sinais**~~ — ✅ Frente 7 completa (v0.3 fechou delete inline + agrupamento por mês).
 8. **Tela `/configuracoes`** — placeholder pra ajustes da Casa.
 9. **Modal pop-up de detalhes** ou continuar com `/p/[id]` editável (já temos). Read-only view se Fabio pedir.
 10. **Customizar template de email Supabase** (header com logo, HTML editorial).
 11. **Cadência visual mais rica** na tabela (já tem barra; pode somar status text "em dia/atenção/atrasada").
 12. **Performance** — `revalidatePath('/')` toda mutation em `/grupos` força refetch caro. Otimizar quando base crescer.
-13. **Sinais — agrupamento por mês** na timeline + delete inline (próxima evolução natural da Frente 7).
 
 ---
 
@@ -297,4 +298,4 @@ Deploy: `vercel deploy --prod --yes` (primeiro deploy = production por padrão).
 
 ---
 
-*v0.2 está apresentável e mobile-clean. Próxima frente provável: UI de delete em /sinais + agrupar timeline por mês, ou começar /configuracoes.*
+*v0.3 está apresentável, mobile-clean e com Sinais fechado (delete + agrupamento por mês). Próximas frentes prováveis (em ordem do HANDOFF §Known issues): **B** photo upload Supabase Storage · **D** status cadência textual na tabela · **C** /configuracoes placeholder · **F** template editorial do email Supabase.*
