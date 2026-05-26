@@ -1,13 +1,13 @@
 # HANDOFF — Casa Nostra (Bicofino)
 
-*Última atualização: 2026-05-26 (sessão noite). v0.3 — Sinais: agrupamento por mês + delete inline. Próximo chat retoma daqui.*
+*Última atualização: 2026-05-26 (sessão noite). v0.4 — photo upload Supabase Storage + bypass de login (modo construção) + paste de foto (⌘V). Próximo chat retoma daqui.*
 
 **Pra retomar em chat novo:**
 > `Lê @.planning/casa-nostra/HANDOFF.md (e @.planning/casa-nostra/BRIEFING.md pro contexto original) e vamos continuar de onde parou.`
 
 ---
 
-## Status — v0.3 deployada
+## Status — v0.4 deployada
 
 **URL prod:** https://casa-nostra-two.vercel.app
 **Repo:** `feature/casa-nostra` (a partir de `feature/vanguarda`)
@@ -65,6 +65,23 @@
 - Mapping de cor por `signal_type`: interesse/ask=napoli · lifeevent=caffè · capital_move=sep · recusa=ops-danger · outro=text-secondary
 - Hero idêntico ao padrão: eyebrow `// Sinais` caffè + h1 clamp 40-64 + parágrafo curto + contador mono
 - **v0.3 (2026-05-26 noite):** agrupamento por mês via `useMemo(groupByMonth)` preservando ordem cronológica do server; `MonthHeader` sticky em `top: 0` (fundo crema + border-bottom nocciola, label "Maio de 2026" + contador mono); delete inline 2-step por card espelhando `GroupRow` (Trash2 ghost → "Confirmar?" pill com auto-cancel 4s, `useTransition`); `motion.article layout` + `AnimatePresence mode="popLayout"` → exit suave (`scale: 0.96`) sem reflow brusco
+
+### Frente 9 — Photo upload Supabase Storage ✅ — 2026-05-26 noite (v0.4)
+- Migration `db/migrations/0002_storage_people_photos.sql` cria bucket público `people-photos` + 3 policies (insert/update/delete pra `authenticated`)
+- `src/lib/storage/upload-action.ts` server action `uploadPhotoAction(formData)` valida MIME (jpg/png/webp/avif/heic) + 5MB, upload com filename UUID, retorna URL pública
+- `src/lib/storage/photos.ts` virou wrapper client que envia FormData pra action (refatorado pra funcionar em bypass mode também)
+- `src/app/(app)/p/_components/sections/PhotoUploader.tsx` substitui o input de URL: drop zone + click + **paste (⌘V/Ctrl+V global)** via listener `window.addEventListener('paste')`, preview circular 64px com spinner, "Trocar"/"Remover", flash napoli na captura de paste, erros animados
+- Cluster A: "núcleo duro" → "insider" (Categorization.tsx)
+
+### Frente 10 — Bypass de login (modo construção) ✅ — 2026-05-26 noite (v0.4)
+- Env var `CASA_NOSTRA_AUTH_BYPASS=1` (Infisical dev + Vercel dev/preview/prod via REST API)
+- `src/lib/auth/session.ts` — `getSession()` retorna sessão "bypass" (userId=null, isAuthenticated=false) quando flag on
+- Middleware: early return (sem redirect/refresh) quando bypass
+- `(app)/layout.tsx`: usa `getSession()` em vez de `auth.getUser()`; sidebar mostra "modo construção" no rodapé
+- `lib/supabase/server.ts`: quando bypass on, `createClient()` retorna admin client (service_role) — RLS ignorada server-side
+- `persons.ts`: refatorado pra usar `getSession()`; `created_by`/`updated_by` viram `null` em bypass
+- `groups.ts` e `signals.ts` já eram bypass-safe (`user?.id ?? null`)
+- **PENDÊNCIA pra final do projeto:** religar login removendo `CASA_NOSTRA_AUTH_BYPASS` das 3 envs Vercel + Infisical. Dados criados durante este período são de teste — limpar antes do go-live real.
 
 ### Frente 8 — Polimento visual editorial v0.2 ✅ — 2026-05-26 tarde
 - **Tokens nocciola**: `--bf-border` virou `#d8d7d3` (nocciola sólida), `--bf-border-strong` virou `#b8b6ae`. Todas as bordas do site puxam pra paleta editorial agora.
@@ -221,7 +238,7 @@ Policy pattern: `select` em `people` honra `restrict_visibility`. Demais tabelas
 2. **`backdrop-filter: blur` no footer** — reduzi de 12 → 10 e radius foi pra 9999. Se aparecer jank em mobile low-end, baixar pra 8.
 
 ### Schema / infra pendente
-3. **Bucket Supabase Storage `people-photos`** ainda não criado. Photo upload usa input de URL (paste manual). Quando criar bucket no painel: ativar policy de upload pros allowlisted emails.
+3. ~~**Bucket Supabase Storage `people-photos`**~~ — ✅ Frente 9 fechou. Bucket público + 3 policies criados via migration 0002. Upload via server action.
 4. **`category_value` sem CHECK constraint** no DB — qualquer string passa. Schema zod pode travar com `z.enum([...])` se quiser disciplinar.
 5. **Sem transação no "replace-all"** das filhas em `updatePerson` — estado parcial possível se um insert falhar. Vira RPC Postgres quando precisar.
 6. **RLS no `created_by`** — `deletePerson` honra; pode bloquear delete entre Fabio e Woney. Verificar.
@@ -298,4 +315,4 @@ Deploy: `vercel deploy --prod --yes` (primeiro deploy = production por padrão).
 
 ---
 
-*v0.3 está apresentável, mobile-clean e com Sinais fechado (delete + agrupamento por mês). Próximas frentes prováveis (em ordem do HANDOFF §Known issues): **B** photo upload Supabase Storage · **D** status cadência textual na tabela · **C** /configuracoes placeholder · **F** template editorial do email Supabase.*
+*v0.4 está em prod com photo upload (drop/click/⌘V), bypass de login pro modo construção e Sinais fechado. Próximas frentes prováveis: **D** status cadência textual na tabela · **C** /configuracoes placeholder · **F** template editorial do email Supabase (só relevante depois de religar o bypass).*
