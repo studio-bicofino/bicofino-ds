@@ -1,13 +1,13 @@
 # HANDOFF — Casa Nostra (Bicofino)
 
-*Última atualização: 2026-05-26 (sessão noite). v0.5 — StatPill torino/platinum + /configuracoes + seed Ruffino Fox. Próximo chat retoma daqui.*
+*Última atualização: 2026-05-26 (sessão noite). v0.6 — CadenceBar com status textual + Sinais→Movimentos rename + ícones User/Users + StatPill torino/platinum + /configuracoes + seed Ruffino Fox. Próximo chat retoma daqui.*
 
 **Pra retomar em chat novo:**
 > `Lê @.planning/casa-nostra/HANDOFF.md (e @.planning/casa-nostra/BRIEFING.md pro contexto original) e vamos continuar de onde parou.`
 
 ---
 
-## Status — v0.5 deployada
+## Status — v0.6 deployada
 
 **URL prod:** https://casa-nostra-two.vercel.app
 **Repo:** `feature/casa-nostra` (a partir de `feature/vanguarda`)
@@ -65,6 +65,12 @@
 - Mapping de cor por `signal_type`: interesse/ask=napoli · lifeevent=caffè · capital_move=sep · recusa=ops-danger · outro=text-secondary
 - Hero idêntico ao padrão: eyebrow `// Sinais` caffè + h1 clamp 40-64 + parágrafo curto + contador mono
 - **v0.3 (2026-05-26 noite):** agrupamento por mês via `useMemo(groupByMonth)` preservando ordem cronológica do server; `MonthHeader` sticky em `top: 0` (fundo crema + border-bottom nocciola, label "Maio de 2026" + contador mono); delete inline 2-step por card espelhando `GroupRow` (Trash2 ghost → "Confirmar?" pill com auto-cancel 4s, `useTransition`); `motion.article layout` + `AnimatePresence mode="popLayout"` → exit suave (`scale: 0.96`) sem reflow brusco
+
+### Frente 12 — CadenceBar status textual + rename Movimentos + ícones ✅ — 2026-05-26 noite (v0.6)
+- **CadenceBar** ganhou label mono uppercase colorido logo abaixo da barra: "EM DIA" (SEP verde) · "ATENÇÃO" (âmbar) · "ATRASADA" (SPFC danger). Thresholds (≤1.0/≤1.5/>1.5) batem com a stat strip da home — números do header coerentes com estados das linhas
+- Novo token `--bf-cn-amber #c2862a` (âmbar editorial) em `globals.css`
+- **Rename user-visible "Sinais" → "Movimentos"** (rota /sinais, tabela signals, componentes/tipos no código ficam como estão — só labels): Sidebar, hero `/sinais`, contadores ("X movimentos"), botões ("+ Adicionar movimento", "Salvar movimento"), empty states, aria-labels, eyebrow "09 · Movimentos" no PersonForm, placeholder de Notes ("movimentos qualitativos"), card de Volume em /configuracoes
+- **Ícones sidebar**: Pessoas usa `User` (silhueta única), Grupos usa `Users` (dupla) — antes era Users + UsersRound
 
 ### Frente 11 — /configuracoes + StatPill redesign + seed Ruffino ✅ — 2026-05-26 noite (v0.5)
 - **Cores ops Casa Nostra** novos tokens em `globals.css`: `--bf-cn-torino #821324` (score máximo) e `--bf-cn-platinum #a8c9e5` (score parcial)
@@ -256,7 +262,7 @@ Policy pattern: `select` em `people` honra `restrict_visibility`. Demais tabelas
 8. **Tela `/configuracoes`** — placeholder pra ajustes da Casa.
 9. **Modal pop-up de detalhes** ou continuar com `/p/[id]` editável (já temos). Read-only view se Fabio pedir.
 10. **Customizar template de email Supabase** (header com logo, HTML editorial).
-11. **Cadência visual mais rica** na tabela (já tem barra; pode somar status text "em dia/atenção/atrasada").
+11. ~~**Cadência visual mais rica** na tabela~~ — ✅ Frente 12 fechou (status text colorido em dia/atenção/atrasada).
 12. **Performance** — `revalidatePath('/')` toda mutation em `/grupos` força refetch caro. Otimizar quando base crescer.
 
 ---
@@ -322,4 +328,4 @@ Deploy: `vercel deploy --prod --yes` (primeiro deploy = production por padrão).
 
 ---
 
-*v0.5 em prod com StatPill cromado (torino 5/5 · platinum 1-4) + /configuracoes navegável + Ruffino Fox seed restaurado. Próximas frentes prováveis: **D** status cadência textual na tabela · **F** template editorial do email Supabase (só relevante depois de religar bypass) · vinculação com vanguarda apps.*
+*v0.6 em prod com CadenceBar textual coerente com stat strip + rename Movimentos + ícones User/Users limpos. Próximas frentes prováveis: **F** template editorial do email Supabase (só relevante depois de religar bypass) · refactor opcional Signal→Movement no código (cosmético — URL/tabela permanecem) · vinculação com vanguarda apps (matchmaking — terceira camada planejada).*
