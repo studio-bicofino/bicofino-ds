@@ -11,21 +11,29 @@
   --bf-platinum:    #a8c9e5;
   --bf-accent:      #BFA37A;
 
-  --bf-bg-page:         #f2f8ff;
-  --bf-surface:         #ffffff;
-  --bf-surface-subtle:  #f8fafc;
-  --bf-text-primary:    #2a2c2b;
-  --bf-text-secondary:  #6d7886;
-  --bf-text-subtle:     #a8c9e5;
-  --bf-border:          rgba(42,44,43,0.08);
-  --bf-border-strong:   rgba(42,44,43,0.16);
+  /* Casa Nostra — paleta editorial (EXCEÇÃO documentada em DESIGN.md) */
+  --bf-cn-crema:    #f3ebd4;  /* fc bicofino crema — fundo do site */
+  --bf-cn-caffe:    #33111a;  /* fc bicofino caffè — texto principal */
+  --bf-cn-nocciola: #d8d7d3;  /* nocciola — apoio / borders sutis */
+  --bf-cn-napoli:   #77deff;  /* napoli — accent info */
+  --bf-cn-sep:      #2fd298;  /* bf SEP — accent success/positivo */
 
-  /* Ops — EXCEÇÃO documentada em DESIGN.md (escopo: apps/casa-nostra apenas) */
-  --bf-ops-success:        #2FD298;  /* "verde BF SEP" — Bicofino brand */
+  --bf-bg-page:         var(--bf-cn-crema);
+  --bf-surface:         #ffffff;
+  --bf-surface-subtle:  rgba(216,215,211,0.32);  /* nocciola tint */
+  --bf-text-primary:    var(--bf-cn-caffe);
+  --bf-text-secondary:  rgba(51,17,26,0.62);
+  --bf-text-subtle:     rgba(51,17,26,0.40);
+  --bf-border:          rgba(51,17,26,0.10);
+  --bf-border-strong:   rgba(51,17,26,0.20);
+
+  /* Ops — derivados da paleta editorial Casa Nostra */
+  --bf-ops-success:        var(--bf-cn-sep);    /* verde BF SEP */
   --bf-ops-success-hover:  #25B582;
-  --bf-ops-success-fg:     #FFFFFF;  /* texto branco sobre verde (brand choice) */
-  --bf-ops-edit:           #3A6FA8;
-  --bf-ops-edit-hover:     #2F5E92;
+  --bf-ops-success-fg:     #FFFFFF;
+  --bf-ops-edit:           var(--bf-cn-napoli); /* napoli pra editar/info */
+  --bf-ops-edit-hover:     #5BC8F5;
+  --bf-ops-edit-fg:        var(--bf-cn-caffe);
   --bf-ops-danger:         #A03A3A;
 }
 
@@ -83,7 +91,73 @@ a { color: inherit; text-decoration: none; }
 
 .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
 
+/* Focus ring suave napoli — borda + halo nos controles do PersonForm */
+.cn-field-shell:focus-within > input,
+.cn-field-shell:focus-within > textarea,
+.cn-field-shell:focus-within > select,
+.cn-field-shell:focus-within > div[role="radiogroup"] + *,
+.cn-field-shell input:focus,
+.cn-field-shell textarea:focus,
+.cn-field-shell select:focus {
+  border-color: var(--bf-cn-napoli) !important;
+  box-shadow: 0 0 0 4px rgba(119, 222, 255, 0.18);
+  outline: none;
+}
+
+/* ============================================================
+   Sidebar / nav / mobile drawer
+   ============================================================ */
+
+.cn-app-shell {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 100vh;
+}
+@media (min-width: 1024px) {
+  .cn-app-shell {
+    grid-template-columns: 240px 1fr;
+  }
+}
+
+.cn-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--bf-text-primary);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background 140ms ease-out, color 140ms ease-out, transform 140ms ease-out;
+}
+.cn-nav-item:hover { background: rgba(51, 17, 26, 0.05); }
+.cn-nav-item:active { transform: translateX(1px); }
+.cn-nav-item[data-active="true"] {
+  background: rgba(51, 17, 26, 0.06);
+}
+.cn-nav-item[data-active="true"] .cn-nav-icon {
+  color: var(--bf-cn-napoli);
+}
+.cn-nav-icon {
+  color: var(--bf-text-secondary);
+  flex-shrink: 0;
+  transition: color 140ms ease-out;
+}
+.cn-nav-item:hover .cn-nav-icon { color: var(--bf-text-primary); }
+
+.cn-sidebar-static { display: none; }
+.cn-mobile-header { display: flex; }
+@media (min-width: 1024px) {
+  .cn-sidebar-static { display: block; }
+  .cn-mobile-header { display: none !important; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  * { transition-duration: 0.01ms !important; }
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
