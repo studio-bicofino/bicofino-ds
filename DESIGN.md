@@ -196,6 +196,26 @@ Interactions should feel subtle and precise.
 
 ---
 
+## Exceptions — Ops tokens (internal apps only)
+
+Some internal back-office apps need operational signal colors (save / edit / danger) that read instantly as actions without polluting the brand surface. The brand palette deliberately holds only one accent (`#BFA37A`), so these tools introduce a tightly-scoped, documented exception.
+
+**Scope:** strictly limited to internal apps listed below. Public-facing surfaces (`apps/web`, `apps/docs-site`, `apps/storybook`, `apps/ds-studio`, `apps/propostas/*`, `apps/vanguarda/*`) MUST NOT use these tokens.
+
+| Token | Value (light) | Value (dark) | Role |
+|---|---|---|---|
+| `--bf-ops-success` | `#2FD298` ("verde BF SEP") | `#2FD298` | Save / confirm |
+| `--bf-ops-success-fg` | `#FFFFFF` | `#FFFFFF` | Text on success bg (brand decision) |
+| `--bf-ops-edit`    | `#3A6FA8` | `#5188C2` | Edit |
+| `--bf-ops-danger`  | `#A03A3A` | `#C25555` | Destructive |
+
+**Authorized apps:**
+- `apps/casa-nostra` — internal relationship registry (added 2026-05-25)
+
+The brand accent `#BFA37A` remains the only accent on user-visible product and marketing surfaces. Ops tokens are tools, not brand expression.
+
+---
+
 ## Rules
 
 1. Do not introduce new colors outside the token system.
