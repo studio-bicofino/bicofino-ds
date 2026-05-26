@@ -15,6 +15,7 @@
 import { revalidatePath } from 'next/cache'
 
 import { createClient } from '@/lib/supabase/server'
+import { getSession } from '@/lib/auth/session'
 
 import {
   personFormSchema,
@@ -249,16 +250,14 @@ export async function createPerson(input: PersonFormInput): Promise<ActionResult
     return { ok: false, error: parsed.error.issues.map((i) => i.message).join('; ') }
   }
 
+  const session = await getSession()
+  if (!session) return { ok: false, error: 'Não autenticado.' }
   const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-  if (!user) return { ok: false, error: 'Não autenticado.' }
 
   const row = {
     ...pickPersonColumns(parsed.data),
-    created_by: user.id,
-    updated_by: user.id,
+    created_by: session.userId,
+    updated_by: session.userId,
   }
 
   const { data, error } = await supabase
@@ -271,7 +270,7 @@ export async function createPerson(input: PersonFormInput): Promise<ActionResult
     return { ok: false, error: error?.message ?? 'Falha ao criar pessoa.' }
   }
 
-  const childErr = await replaceChildren(supabase, data.id, parsed.data, user.id)
+  const childErr = await replaceChildren(supabase, data.id, parsed.data, session.userId)
   if (childErr) {
     return { ok: false, error: childErr }
   }
@@ -290,21 +289,19 @@ export async function updatePerson(
     return { ok: false, error: parsed.error.issues.map((i) => i.message).join('; ') }
   }
 
+  const session = await getSession()
+  if (!session) return { ok: false, error: 'Não autenticado.' }
   const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-  if (!user) return { ok: false, error: 'Não autenticado.' }
 
   const row = {
     ...pickPersonColumns(parsed.data),
-    updated_by: user.id,
+    updated_by: session.userId,
   }
 
   const { error } = await supabase.from('people').update(row).eq('id', id)
   if (error) return { ok: false, error: error.message }
 
-  const childErr = await replaceChildren(supabase, id, parsed.data, user.id)
+  const childErr = await replaceChildren(supabase, id, parsed.data, session.userId)
   if (childErr) {
     return { ok: false, error: childErr }
   }
@@ -315,11 +312,9 @@ export async function updatePerson(
 }
 
 export async function deletePerson(id: string): Promise<ActionResult> {
+  const session = await getSession()
+  if (!session) return { ok: false, error: 'Não autenticado.' }
   const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-  if (!user) return { ok: false, error: 'Não autenticado.' }
 
   const { error } = await supabase.from('people').delete().eq('id', id)
   if (error) return { ok: false, error: error.message }

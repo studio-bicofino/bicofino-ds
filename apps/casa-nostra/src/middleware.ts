@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
+import { isAuthBypassed } from '@/lib/auth/session'
 
 type SetCookie = { name: string; value: string; options?: CookieOptions }
 
@@ -9,8 +10,15 @@ type SetCookie = { name: string; value: string; options?: CookieOptions }
  *  - Refresca token quando perto de expirar
  *  - Propaga cookies atualizados pro browser
  *  - Redireciona pra /login se usuário não autenticado tentar acessar área protegida
+ *
+ * Em CASA_NOSTRA_AUTH_BYPASS=1 (período de construção): early return — sem
+ * sessão, sem redirect, sem refresh. Religar removendo a env var.
  */
 export async function middleware(request: NextRequest) {
+  if (isAuthBypassed()) {
+    return NextResponse.next({ request })
+  }
+
   let response = NextResponse.next({ request })
 
   const supabase = createServerClient(

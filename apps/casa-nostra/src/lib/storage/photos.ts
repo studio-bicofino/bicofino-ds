@@ -1,8 +1,7 @@
 'use client'
 
-import { createClient } from '@/lib/supabase/client'
+import { uploadPhotoAction, type UploadResult } from './upload-action'
 
-const BUCKET = 'people-photos'
 const MAX_BYTES = 5 * 1024 * 1024
 const ALLOWED_MIME = new Set([
   'image/jpeg',
@@ -13,16 +12,7 @@ const ALLOWED_MIME = new Set([
   'image/heif',
 ])
 
-export type UploadResult =
-  | { ok: true; url: string; path: string }
-  | { ok: false; error: string }
-
-function extFromFile(file: File): string {
-  const fromName = file.name.split('.').pop()?.toLowerCase()
-  if (fromName && fromName.length <= 5) return fromName
-  const fromMime = file.type.split('/').pop()?.toLowerCase()
-  return fromMime || 'jpg'
-}
+export type { UploadResult }
 
 export async function uploadPersonPhoto(file: File): Promise<UploadResult> {
   if (!file) return { ok: false, error: 'Arquivo inválido' }
@@ -33,24 +23,12 @@ export async function uploadPersonPhoto(file: File): Promise<UploadResult> {
     return { ok: false, error: 'Formato não suportado (use JPG, PNG, WebP, AVIF ou HEIC)' }
   }
 
-  const ext = extFromFile(file)
-  const path = `${crypto.randomUUID()}.${ext}`
-  const supabase = createClient()
+  const formData = new FormData()
+  formData.append('file', file)
 
-  const { error: uploadErr } = await supabase.storage
-    .from(BUCKET)
-    .upload(path, file, {
-      cacheControl: '3600',
-      upsert: false,
-      contentType: file.type || undefined,
-    })
-
-  if (uploadErr) return { ok: false, error: uploadErr.message }
-
-  const { data } = supabase.storage.from(BUCKET).getPublicUrl(path)
-  if (!data?.publicUrl) {
-    return { ok: false, error: 'Upload ok, mas URL pública não foi retornada' }
+  try {
+    return await uploadPhotoAction(formData)
+  } catch (err) {
+    return { ok: false, error: err instanceof Error ? err.message : 'Falha no upload' }
   }
-
-  return { ok: true, url: data.publicUrl, path }
 }

@@ -1,31 +1,29 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { isAllowed } from '@/lib/auth/allowlist'
+import { getSession, isAuthBypassed } from '@/lib/auth/session'
 import { Sidebar } from './_components/Sidebar'
 
 /**
  * Layout autenticado — tudo dentro de (app)/ exige sessão E allowlist.
- * O middleware já redireciona não-autenticados, mas aqui revalidamos
- * a allowlist (defesa em profundidade: se um email saiu da lista,
- * a sessão antiga ainda funcionaria sem este check).
+ * Em CASA_NOSTRA_AUTH_BYPASS=1 ambas as guardas são puladas.
  */
 export default async function AuthedLayout({ children }: { children: React.ReactNode }) {
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const session = await getSession()
 
-  if (!user) redirect('/login')
+  if (!session) redirect('/login')
 
-  const email = user.email ?? ''
-  if (!isAllowed(email)) {
+  if (session.isAuthenticated && !isAllowed(session.email)) {
+    const supabase = await createClient()
     await supabase.auth.signOut()
     redirect('/login?error=not_allowed')
   }
 
+  const displayEmail = isAuthBypassed() ? 'modo construção' : session.email
+
   return (
     <div className="cn-app-shell">
-      <Sidebar email={email} />
+      <Sidebar email={displayEmail} />
       <main style={{ minWidth: 0 }}>{children}</main>
     </div>
   )
