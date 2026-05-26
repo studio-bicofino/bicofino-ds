@@ -1,6 +1,6 @@
 # HANDOFF — Casa Nostra (Bicofino)
 
-*Última atualização: 2026-05-26 (sessão noite, 2). v0.8 — Organizations + Logos (frente 16), wrapper bege #f9f4e8, hero card branco. Próximo chat retoma daqui.*
+*Última atualização: 2026-05-26 (sessão noite, 3). v0.8.1 — Login religado. Magic link em vigor, allowlist ativa, dados intactos.*
 
 **Pra retomar em chat novo:**
 > `Lê @.planning/casa-nostra/HANDOFF.md (e @.planning/casa-nostra/BRIEFING.md pro contexto original) e vamos continuar de onde parou.`
@@ -20,7 +20,7 @@
 | Porta dev | `3040` |
 | Secrets | Infisical (5 vars em `dev`), Vercel (4 vars em preview/prod/dev + SITE_URL + BYPASS) |
 | DB | Supabase `bicofino-casa-nostra` — 12 tabelas + RLS + 22 grupos seed |
-| Auth | Magic link via `verifyOtp({token_hash, type})` — **bypass on** durante construção |
+| Auth | Magic link via `verifyOtp({token_hash, type})` — **religado em 2026-05-26** |
 | Allowlist | env var `CASA_NOSTRA_ALLOWLIST` |
 | Palette | Editorial Casa Nostra (crema/caffè/napoli/SEP/nocciola) — exceção DESIGN.md |
 | Vocabulário | "Movimentos" user-visible · "Movement" no código TS · `signals/signal_type` DB |
@@ -62,10 +62,10 @@
 - Migration 0002 cria bucket público `people-photos` + policies
 - `PhotoUploader` com drop zone + click + paste ⌘V global + spinner + erros animados
 
-### Frente 10 — Bypass de login (modo construção) ✅
-- `CASA_NOSTRA_AUTH_BYPASS=1` em Infisical dev + Vercel dev/preview/prod
+### Frente 10 — Bypass de login (modo construção) ✅ — religado em v0.8.1
+- `CASA_NOSTRA_AUTH_BYPASS=1` em Infisical dev + Vercel dev/preview/prod (durante a construção)
 - Session helper retorna pseudo-user · middleware early-return · server client vira admin (RLS ignorada)
-- **PENDÊNCIA crítica final:** religar — remover env var. Dados criados durante construção ficam.
+- **Religado em 2026-05-26:** Vercel 3 envs deletadas via REST API + Infisical setado como `0` (CLI 0.43.86 com bug em DELETE — workaround set=0). Smoke test: GET `/` retorna 307 → `/login?next=%2F`. Dados intactos.
 
 ### Frente 11 — /configuracoes + StatPill torino/platinum + seed Ruffino ✅
 - Tokens `--bf-cn-torino #821324` (5/5) e `--bf-cn-platinum #a8c9e5` (1–4)
@@ -318,13 +318,7 @@ Build local passou. Falta:
 4. `vercel deploy --prod --yes` de dentro de `apps/casa-nostra/`
 5. Smoke test em prod: criar pessoa nova com 2 vínculos (1 org existente do backfill + 1 nova com upload de logo), verificar Hero strip aparecendo, scroll funcionando com overflow
 
-### 2. Religar login (pendência crítica original)
-
-Remover `CASA_NOSTRA_AUTH_BYPASS` de Vercel dev/preview/prod + Infisical. Magic link já tá configurado e funcionando — só desligar o bypass. Dados criados durante construção ficam — NÃO limpar.
-
-**Pré-requisito pra:** offline-first (sem login, não tem usuário pra associar mutations queueadas).
-
-### 3. Offline-first (prioridade 3) — PWA + Background Sync
+### 2. Offline-first (prioridade 2) — PWA + Background Sync
 
 Use case: Fábio preencher pessoas no avião sem wifi, sync automático ao voltar online. Funciona em celular e laptop.
 
@@ -338,12 +332,12 @@ Use case: Fábio preencher pessoas no avião sem wifi, sync automático ao volta
 **Trade-offs:**
 - Next 16 + Server Actions não foi desenhado pra offline-first — exige wrapper custom
 - ~3-5 dias trabalho
-- Pré-requisito: login religado (sem ele, app nem chega na home offline)
+- Pré-requisito: login religado ✅
 
-### 4. Outros débitos menores
+### 3. Outros débitos menores
 - **`category_value` sem CHECK constraint** no DB
 - **Sem transação no "replace-all"** das filhas em updatePerson (estado parcial possível se um insert falhar)
-- **RLS no `created_by` delete** — `deletePerson` pode bloquear delete entre Fabio e Woney
+- **RLS no `created_by` delete** — `deletePerson` pode bloquear delete entre Fabio e Woney. **Agravado pelo religar:** registros criados durante bypass têm `created_by = null`. User real (uuid não-null) não consegue deletar via UI. Fix sugerido: ajustar policy pra `using (created_by IS NULL OR created_by = auth.uid())` ou backfill com user real.
 - **Vercel git integration mal configurada** — Root Directory aponta pro repo root. Deploys são CLI-only. Fix: setar Root Directory no painel Vercel.
 - **Performance** — `revalidatePath('/')` toda mutation força refetch caro. Otimizar quando base crescer (hoje 2 pessoas)
 - **Template de email Supabase** customizar (só vale depois de religar bypass)
@@ -422,4 +416,4 @@ PATCH (atualizar): `PATCH /v10/projects/{PID}/env/{envId}?teamId={TID}` com body
 
 ---
 
-*v0.8 com camada Organizations + Logos (caminho híbrido não destrutivo). Build local OK. Pendências imediatas: rodar migration 0003 + backfill script + deploy. Próximas frentes: religar login · offline-first PWA · drop de current_company/work_history.company/futebol_links se Fabio confirmar que organizations virou suficiente.*
+*v0.8.1 em prod. Camada Organizations + Logos ativa. Login religado, magic link em vigor, allowlist Woney + Branca. Próximas frentes: offline-first PWA · drop de current_company/work_history.company/futebol_links se Fabio confirmar que organizations virou suficiente · template de email Supabase customizar.*
