@@ -20,6 +20,7 @@
   --bf-cn-spfc:     #f0535e;  /* bf SPFC — accent destrutivo (apagar) */
   --bf-cn-torino:   #821324;  /* torino — score máximo (5/5) */
   --bf-cn-platinum: #a8c9e5;  /* bf platinum — score parcial (1-4) */
+  --bf-cn-amber:    #c2862a;  /* âmbar — cadência em atenção */
 
   --bf-bg-page:         var(--bf-cn-crema);
   --bf-surface:         #ffffff;

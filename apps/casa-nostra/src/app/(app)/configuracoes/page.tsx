@@ -372,7 +372,6 @@ function Roadmap() {
     'Editar allowlist via UI (hoje só env var)',
     'Exportar dados (CSV / JSON)',
     'Template editorial do email Supabase',
-    'Status textual de cadência na lista ("em dia", "atenção", "atrasada")',
     'Vincular pessoas a apps Vanguarda (matchmaking)',
   ]
   return (
