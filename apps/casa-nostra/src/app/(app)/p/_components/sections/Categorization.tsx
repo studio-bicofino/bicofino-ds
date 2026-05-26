@@ -27,7 +27,7 @@ const CATEGORIES: Array<{ value: string; label: string }> = [
 ]
 
 const CLUSTERS: Array<{ value: 'A' | 'B' | 'C' | ''; label: string; hint: string }> = [
-  { value: 'A', label: 'A', hint: 'núcleo duro' },
+  { value: 'A', label: 'A', hint: 'insider' },
   { value: 'B', label: 'B', hint: 'rede ativa' },
   { value: 'C', label: 'C', hint: 'rede ampla' },
   { value: '', label: '—', hint: 'sem classificação' },
