@@ -16,9 +16,21 @@
  *    devolve o input apenas com trim.
  */
 
+/**
+ * Símbolos ornamentais que NÃO devem distinguir entidades:
+ * emojis, símbolos decorativos, variation selectors, ZWJ, modificadores
+ * de tom de pele. "Bicofino ❇️" e "Bicofino" devem agrupar como a mesma
+ * empresa; "Bicofino" e "Bicofono Club" são entidades diferentes.
+ */
+const ORNAMENT_RE = /[\p{Extended_Pictographic}\p{So}\u{FE00}-\u{FE0F}‍\u{1F3FB}-\u{1F3FF}]/gu
+
+function stripOrnaments(s: string): string {
+  return s.replace(ORNAMENT_RE, '')
+}
+
 export function normalizeKey(s: string | null | undefined): string {
   if (!s) return ''
-  return s
+  return stripOrnaments(s)
     .normalize('NFD')
     .replace(/[̀-ͯ]/g, '')
     .toLowerCase()
@@ -26,17 +38,21 @@ export function normalizeKey(s: string | null | undefined): string {
     .replace(/\s+/g, ' ')
 }
 
-function countNonAscii(s: string): number {
+function countNonAsciiLetters(s: string): number {
   let n = 0
-  for (const ch of s) {
+  for (const ch of stripOrnaments(s)) {
     if (ch.charCodeAt(0) > 127) n++
   }
   return n
 }
 
 function startsUppercase(s: string): boolean {
-  const first = s.trim().charAt(0)
+  const first = stripOrnaments(s).trim().charAt(0)
   return first !== '' && first === first.toUpperCase() && first !== first.toLowerCase()
+}
+
+function isClean(s: string): boolean {
+  return stripOrnaments(s) === s
 }
 
 export function pickCanonical(variants: string[]): string {
@@ -54,9 +70,13 @@ export function pickCanonical(variants: string[]): string {
     const fb = freq.get(b) ?? 0
     if (fa !== fb) return fb - fa
 
-    const da = countNonAscii(a)
-    const db = countNonAscii(b)
+    const da = countNonAsciiLetters(a)
+    const db = countNonAsciiLetters(b)
     if (da !== db) return db - da
+
+    const ca = isClean(a) ? 1 : 0
+    const cb = isClean(b) ? 1 : 0
+    if (ca !== cb) return cb - ca
 
     const ua = startsUppercase(a) ? 1 : 0
     const ub = startsUppercase(b) ? 1 : 0

@@ -21,9 +21,15 @@ const supabase = createClient(url, key, {
 // Helpers — espelham src/lib/utils/strings.ts
 // ============================================================
 
+const ORNAMENT_RE = /[\p{Extended_Pictographic}\p{So}\u{FE00}-\u{FE0F}‍\u{1F3FB}-\u{1F3FF}]/gu
+
+function stripOrnaments(s) {
+  return s.replace(ORNAMENT_RE, '')
+}
+
 function normalizeKey(s) {
   if (!s) return ''
-  return s
+  return stripOrnaments(s)
     .normalize('NFD')
     .replace(/[̀-ͯ]/g, '')
     .toLowerCase()
@@ -31,15 +37,19 @@ function normalizeKey(s) {
     .replace(/\s+/g, ' ')
 }
 
-function countNonAscii(s) {
+function countNonAsciiLetters(s) {
   let n = 0
-  for (const ch of s) if (ch.charCodeAt(0) > 127) n++
+  for (const ch of stripOrnaments(s)) if (ch.charCodeAt(0) > 127) n++
   return n
 }
 
 function startsUppercase(s) {
-  const first = s.trim().charAt(0)
+  const first = stripOrnaments(s).trim().charAt(0)
   return first !== '' && first === first.toUpperCase() && first !== first.toLowerCase()
+}
+
+function isClean(s) {
+  return stripOrnaments(s) === s
 }
 
 function pickCanonical(variants) {
@@ -53,9 +63,12 @@ function pickCanonical(variants) {
     const fa = freq.get(a) ?? 0
     const fb = freq.get(b) ?? 0
     if (fa !== fb) return fb - fa
-    const da = countNonAscii(a)
-    const db = countNonAscii(b)
+    const da = countNonAsciiLetters(a)
+    const db = countNonAsciiLetters(b)
     if (da !== db) return db - da
+    const ca = isClean(a) ? 1 : 0
+    const cb = isClean(b) ? 1 : 0
+    if (ca !== cb) return cb - ca
     const ua = startsUppercase(a) ? 1 : 0
     const ub = startsUppercase(b) ? 1 : 0
     if (ua !== ub) return ub - ua
