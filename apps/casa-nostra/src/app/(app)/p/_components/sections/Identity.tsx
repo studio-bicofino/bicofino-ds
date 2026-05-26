@@ -7,6 +7,7 @@ import { Check } from 'lucide-react'
 import type { PersonFormInput } from '@/lib/db/schemas'
 import { SectionShell, FullRow } from './SectionShell'
 import { TextField } from '../Field'
+import { PhotoUploader } from './PhotoUploader'
 
 type Props = {
   control: Control<PersonFormInput>
@@ -18,7 +19,7 @@ export function IdentitySection({ control, errors }: Props) {
     <SectionShell
       eyebrow="01 · Identidade"
       title="Como esta pessoa é conhecida"
-      subtitle="Nome completo + apelido pelo qual costumamos chamá-la. Foto por enquanto via URL — bucket de upload virá depois."
+      subtitle="Nome completo + apelido pelo qual costumamos chamá-la. Foto vai direto pro bucket people-photos."
     >
       <Controller
         name="full_name"
@@ -89,16 +90,9 @@ export function IdentitySection({ control, errors }: Props) {
           name="photo_url"
           control={control}
           render={({ field }) => (
-            <TextField
-              id="photo_url"
-              label="URL da foto"
-              type="url"
-              value={field.value ?? ''}
-              onChange={(e) => field.onChange(e.target.value || null)}
-              onBlur={field.onBlur}
-              placeholder="https://… (cole o link de uma foto pública)"
-              hint="Por enquanto cole uma URL pública. Upload direto pra Supabase Storage virá em breve."
-              error={errors.photo_url?.message}
+            <PhotoUploader
+              value={field.value ?? null}
+              onChange={(url) => field.onChange(url)}
             />
           )}
         />
