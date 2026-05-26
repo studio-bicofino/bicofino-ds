@@ -52,17 +52,8 @@ export function ContactsSection({ control, errors }: Props) {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '160px 1fr 140px 40px 40px',
-              gap: 12,
-              alignItems: 'end',
-              padding: 16,
-              background: 'var(--bf-surface-subtle)',
-              borderRadius: 12,
-              border: '1px solid var(--bf-border)',
-              overflow: 'hidden',
-            }}
+            className="cn-form-row"
+            style={{ '--cols': '160px 1fr 140px 40px 40px', overflow: 'hidden' } as React.CSSProperties}
           >
             <Controller
               name={`contact_methods.${index}.type` as const}

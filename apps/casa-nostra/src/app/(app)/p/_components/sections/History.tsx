@@ -36,16 +36,8 @@ export function HistorySection({ control, errors }: Props) {
       {work.fields.map((row, i) => (
         <FullRow key={row.id}>
           <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr 100px 100px 40px',
-              gap: 12,
-              alignItems: 'end',
-              padding: 16,
-              background: 'var(--bf-surface-subtle)',
-              borderRadius: 12,
-              border: '1px solid var(--bf-border)',
-            }}
+            className="cn-form-row"
+            style={{ '--cols': '1fr 1fr 100px 100px 40px' } as React.CSSProperties}
           >
             <Controller
               name={`work_history.${i}.company` as const}
@@ -156,16 +148,8 @@ export function HistorySection({ control, errors }: Props) {
       {bicofino.fields.map((row, i) => (
         <FullRow key={row.id}>
           <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr 100px 40px',
-              gap: 12,
-              alignItems: 'end',
-              padding: 16,
-              background: 'var(--bf-surface-subtle)',
-              borderRadius: 12,
-              border: '1px solid var(--bf-border)',
-            }}
+            className="cn-form-row"
+            style={{ '--cols': '1fr 1fr 100px 40px' } as React.CSSProperties}
           >
             <Controller
               name={`bicofino_history.${i}.project` as const}

@@ -106,15 +106,7 @@ export default async function PersonDetailPage({
   const displayName = person.preferred_name || person.full_name
 
   return (
-    <div
-      style={{
-        padding: '48px 56px 64px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 32,
-        maxWidth: 1280,
-      }}
-    >
+    <div className="cn-page">
       <header style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         <nav
           className="mono"

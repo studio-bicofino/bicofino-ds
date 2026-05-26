@@ -1,13 +1,13 @@
 # HANDOFF — Casa Nostra (Bicofino)
 
-*Última atualização: 2026-05-26. v0.1 deployada e apresentável. Próximo chat retoma daqui.*
+*Última atualização: 2026-05-26 (sessão tarde). v0.2 — polimento editorial + Sinais timeline. Próximo chat retoma daqui.*
 
 **Pra retomar em chat novo:**
 > `Lê @.planning/casa-nostra/HANDOFF.md (e @.planning/casa-nostra/BRIEFING.md pro contexto original) e vamos continuar de onde parou.`
 
 ---
 
-## Status — v0.1 deployada
+## Status — v0.2 deployada
 
 **URL prod:** https://casa-nostra-two.vercel.app
 **Repo:** `feature/casa-nostra` (a partir de `feature/vanguarda`)
@@ -23,7 +23,8 @@
 | Auth | Magic link via `verifyOtp({token_hash, type})` |
 | Allowlist | env var `CASA_NOSTRA_ALLOWLIST` |
 | Palette | Editorial Casa Nostra (crema/caffè/napoli/SEP/nocciola) — exceção DESIGN.md |
-| Responsivo | Sidebar vira hamburger drawer abaixo de 1024px |
+| Responsivo | Sidebar drawer <1024px · cn-page padding adaptativo · sections empilham <720px |
+| Rotas | `/`, `/grupos`, `/p/[id]`, `/p/novo`, `/sinais`, `/login`, `/auth/callback` |
 
 ---
 
@@ -53,6 +54,29 @@
 ### Frente 6 — Deploy Vercel ✅
 - Projeto linkado, git conectado, 12 env entries (4 vars × 3 envs) + NEXT_PUBLIC_SITE_URL
 - Build clean, Site URL e Redirect URLs configurados no Supabase
+
+### Frente 7 — Sinais (timeline cross-person) ✅ — 2026-05-26 tarde
+- Rota `/sinais` server component em `(app)/sinais/page.tsx`
+- Filtros URL-driven: `?type=` (validado contra enum), `?person=<uuid>`
+- `_actions/signals.ts`: `createSignal` + `deleteSignal` (UI de delete pendente)
+- `SignalsTimeline` client: estado `showForm`, AnimatePresence pro form, motion stagger nos cards
+- `AddSignalForm`: RHF + zod, fecha + revalida no submit
+- `SignalFilters` URL-driven (mesmo padrão de `Filters.tsx`)
+- Mapping de cor por `signal_type`: interesse/ask=napoli · lifeevent=caffè · capital_move=sep · recusa=ops-danger · outro=text-secondary
+- Hero idêntico ao padrão: eyebrow `// Sinais` caffè + h1 clamp 40-64 + parágrafo curto + contador mono
+
+### Frente 8 — Polimento visual editorial v0.2 ✅ — 2026-05-26 tarde
+- **Tokens nocciola**: `--bf-border` virou `#d8d7d3` (nocciola sólida), `--bf-border-strong` virou `#b8b6ae`. Todas as bordas do site puxam pra paleta editorial agora.
+- **Wordmark mobile** no header (`Sidebar`): `Casa Nostra // Bicofino // v1.0 // Maio 2026` em mono 9.5px com ellipsis.
+- **Hero da lista**: eyebrow `// Bem-vindo à nossa casa` (caffè, mono 12px). Removida linha "Bicofino · Casa Nostra".
+- **Stats strip**: `whiteSpace: nowrap` + padding lateral 24→12 ("Em dia" cabe em 1 linha em 375px).
+- **Filtros pill**: `.cn-filter-input` (radius 9999, padding 12×18, focus napoli halo, chevron SVG inline em `<select>` pra matar o nativo cinza).
+- **Tabela → lista de pill-cards**: `.cn-people-row` (radius 9999, hover translateX 2px + nocciola, focus napoli halo). Mobile 3 cols (avatar+nome+empresa), ≥960px 6 cols. `PersonRowClient` virou `motion.div` com entrada stagger (delay = index × 40ms, max 400ms) + whileTap scale 0.997.
+- **Motion na navegação**: `app/(app)/template.tsx` faz fade-up suave (0.32s ease `[0.22,1,0.36,1]`) a cada navegação. Plus `.cn-stagger` CSS nas pages anima Hero/divider/toolbar via `animation-delay` por nth-child.
+- **Hover pulse no botão verde**: `cn-toolbar-add` ganhou keyframe `cn-pulse` (scale 1→1.035 + halo verde 18% alpha) loopando 1.6s enquanto :hover. `:active` scale 0.97.
+- **Sections do PersonForm responsivas**: nova classe `.cn-form-row` (mobile = 1fr stack, ≥720px = grid via `var(--cols)`). Aplicada em 7 grids: Contacts, History (work + bicofino), Connections (grupos + futebol), Geography, Signals. `SectionShell` refatorado pra `.cn-section-shell` (padding 20→32) + `.cn-section-grid` (1col → 2col via `var(--section-cols)`).
+- **Footer do PersonForm responsivo**: `.cn-form-footer` vira coluna em mobile com botões full-width centralizados; ≥720px volta row (Apagar esquerda, Cancelar/Salvar direita). Pill total (radius 9999), sticky bottom 12px.
+- **Page containers**: `.cn-page` (padding 20→32→56 + max-width 1280) + `.cn-toolbar` (column → row em 720px) substituem padding inline nas 4 telas (`/`, `/grupos`, `/p/novo`, `/p/[id]`). `body { overflow-x: hidden }` como cinto-e-suspensório.
 
 ---
 
@@ -100,6 +124,11 @@ Exceção ao DESIGN.md (escopo: só casa-nostra):
 12. **Sidebar responsivo**: hamburger drawer abaixo de 1024px.
 13. **Server actions Next "use server" só exportam funções** — types ficam locais ou em `@/lib/db/schemas.ts`.
 14. **Vercel env preview** seta-se via REST API (CLI 53.2.0 bug em non-interactive sem git).
+15. **Border tokens nocciola**: `--bf-border = #d8d7d3`, `--bf-border-strong = #b8b6ae`. Não voltar pra alpha caffè (perde coesão com paleta editorial).
+16. **Pages usam `.cn-page` + `.cn-toolbar` + `.cn-stagger`** (CSS classes em `globals.css`) em vez de padding/grid/maxWidth inline.
+17. **PersonForm sub-rows usam `.cn-form-row`** com `style={{ '--cols': '...' } as React.CSSProperties}` — mobile empilha, ≥720px aplica `--cols`.
+18. **`SectionShell` usa `.cn-section-shell` + `.cn-section-grid`** — backwards-compatible: ainda aceita `gridStyle.gridTemplateColumns` que é mapeado pra `--section-cols`.
+19. **Motion entre páginas**: `app/(app)/template.tsx` faz fade-up suave a cada navegação (0.32s). Trade-off conhecido: template.tsx desabilita streaming, mas pra audiência interna 2–3 vale a UX.
 
 ---
 
@@ -140,15 +169,23 @@ apps/casa-nostra/
 │   │   │   │           ├── Signals.tsx
 │   │   │   │           ├── SectionShell.tsx
 │   │   │   │           └── ChipInput.tsx
-│   │   │   └── grupos/
-│   │   │       ├── page.tsx                 ← lista agrupada por group_type
-│   │   │       ├── _actions/groups.ts       ← createGroup/updateGroup/deleteGroup
-│   │   │       └── _components/
-│   │   │           ├── AddGroupForm.tsx     ← RHF + zod
-│   │   │           └── GroupRow.tsx         ← edit inline + delete 2-step
+│   │   │   ├── grupos/
+│   │   │   │   ├── page.tsx                 ← lista agrupada por group_type
+│   │   │   │   ├── _actions/groups.ts       ← createGroup/updateGroup/deleteGroup
+│   │   │   │   └── _components/
+│   │   │   │       ├── AddGroupForm.tsx     ← RHF + zod
+│   │   │   │       └── GroupRow.tsx         ← edit inline + delete 2-step
+│   │   │   ├── sinais/                       ← Frente 7
+│   │   │   │   ├── page.tsx                 ← server, fetch signals + people, validate ?type=
+│   │   │   │   ├── _actions/signals.ts      ← createSignal + deleteSignal
+│   │   │   │   └── _components/
+│   │   │   │       ├── SignalFilters.tsx    ← URL-driven (type, person)
+│   │   │   │       ├── SignalsTimeline.tsx  ← lista + toolbar + showForm state
+│   │   │   │       └── AddSignalForm.tsx    ← RHF + zod inline
+│   │   │   └── template.tsx                  ← motion fade-up entre páginas
 │   │   ├── auth/callback/route.ts           ← verifyOtp
 │   │   ├── login/{page,LoginForm,actions}.tsx
-│   │   ├── globals.css                      ← palette + cn-nav + cn-app-shell + focus rings
+│   │   ├── globals.css                      ← palette + cn-page + cn-toolbar + cn-filters + cn-people-* + cn-form-row + cn-form-footer + cn-section-* + cn-stagger + cn-pulse
 │   │   └── layout.tsx
 │   ├── components/{BicofinoLogo,LogoutButton}.tsx
 │   ├── lib/
@@ -179,8 +216,8 @@ Policy pattern: `select` em `people` honra `restrict_visibility`. Demais tabelas
 ## Known issues — pendentes pra próximo chat
 
 ### Bugs visuais
-1. **Scroll lateral no mobile (≤1024px)** na linha de filtros + botão "+ Adicionar pessoa". Os 4 inputs/botão em grid `1fr 180px 220px 180px` + Add button forçam overflow horizontal. Precisa reflow: filtros viram coluna vertical no mobile, ou se mantém horizontal precisa de scroll container ou stack diferente. Mesma issue provável em `/grupos` e no hero do PersonForm.
-2. **`backdrop-filter: blur` no footer do PersonForm** pode dar jank em mobile low-end (Agent E sinalizou). Reduzir blur de 12 → 8 se aparecer.
+1. ~~**Scroll lateral no mobile**~~ — ✅ resolvido na Frente 8 (`.cn-page` + `.cn-filters` + `body { overflow-x: hidden }` + `.cn-form-row` nas sections).
+2. **`backdrop-filter: blur` no footer** — reduzi de 12 → 10 e radius foi pra 9999. Se aparecer jank em mobile low-end, baixar pra 8.
 
 ### Schema / infra pendente
 3. **Bucket Supabase Storage `people-photos`** ainda não criado. Photo upload usa input de URL (paste manual). Quando criar bucket no painel: ativar policy de upload pros allowlisted emails.
@@ -189,12 +226,13 @@ Policy pattern: `select` em `people` honra `restrict_visibility`. Demais tabelas
 6. **RLS no `created_by`** — `deletePerson` honra; pode bloquear delete entre Fabio e Woney. Verificar.
 
 ### Features pendentes (em ordem de valor)
-7. **Timeline de Sinais (frente 4 original)** — rota `/sinais` com signals cross-person ordenados. Form inline.
+7. ~~**Timeline de Sinais**~~ — ✅ Frente 7 completa. UI de delete por sinal ainda pendente (action `deleteSignal` exportada mas não consumida).
 8. **Tela `/configuracoes`** — placeholder pra ajustes da Casa.
 9. **Modal pop-up de detalhes** ou continuar com `/p/[id]` editável (já temos). Read-only view se Fabio pedir.
 10. **Customizar template de email Supabase** (header com logo, HTML editorial).
 11. **Cadência visual mais rica** na tabela (já tem barra; pode somar status text "em dia/atenção/atrasada").
 12. **Performance** — `revalidatePath('/')` toda mutation em `/grupos` força refetch caro. Otimizar quando base crescer.
+13. **Sinais — agrupamento por mês** na timeline + delete inline (próxima evolução natural da Frente 7).
 
 ---
 
@@ -259,4 +297,4 @@ Deploy: `vercel deploy --prod --yes` (primeiro deploy = production por padrão).
 
 ---
 
-*v0.1 está apresentável. Próxima frente provável: fix do scroll lateral mobile + Sinais timeline.*
+*v0.2 está apresentável e mobile-clean. Próxima frente provável: UI de delete em /sinais + agrupar timeline por mês, ou começar /configuracoes.*

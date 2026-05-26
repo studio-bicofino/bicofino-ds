@@ -56,16 +56,8 @@ export function SignalsSection({ control, errors }: Props) {
             style={{ overflow: 'hidden' }}
           >
           <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '160px 160px 1fr 40px',
-              gap: 12,
-              alignItems: 'end',
-              padding: 16,
-              background: 'var(--bf-surface-subtle)',
-              borderRadius: 12,
-              border: '1px solid var(--bf-border)',
-            }}
+            className="cn-form-row"
+            style={{ '--cols': '160px 160px 1fr 40px' } as React.CSSProperties}
           >
             <Controller
               name={`signals.${i}.signal_type` as const}

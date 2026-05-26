@@ -48,15 +48,7 @@ export default async function GruposPage() {
   }
 
   return (
-    <div
-      style={{
-        padding: '48px 56px 64px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 32,
-        maxWidth: 1100,
-      }}
-    >
+    <div className="cn-page cn-page--narrow">
       <Hero total={groups.length} />
 
       <div style={{ height: 1, background: 'var(--bf-border)' }} aria-hidden />

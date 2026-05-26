@@ -50,39 +50,20 @@ export function Filters({ groups, initial }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [q])
 
-  const inputBase: React.CSSProperties = {
-    fontFamily: 'inherit',
-    fontSize: 14,
-    padding: '10px 12px',
-    background: 'var(--bf-surface)',
-    color: 'var(--bf-text-primary)',
-    border: '1px solid var(--bf-border)',
-    borderRadius: 8,
-    outline: 'none',
-    transition: 'border-color 120ms ease-out',
-  }
-
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 180px 220px 180px',
-        gap: 8,
-        alignItems: 'center',
-      }}
-    >
+    <div className="cn-filters">
       <input
         type="search"
         placeholder="Buscar por nome ou empresa…"
         value={q}
         onChange={(e) => setQ(e.target.value)}
-        style={inputBase}
+        className="cn-filter-input"
       />
 
       <select
         value={initial.cluster}
         onChange={(e) => push({ cluster: e.target.value })}
-        style={inputBase}
+        className="cn-filter-input"
       >
         {CLUSTERS.map((c) => (
           <option key={c.value} value={c.value}>
@@ -94,7 +75,7 @@ export function Filters({ groups, initial }: Props) {
       <select
         value={initial.group}
         onChange={(e) => push({ group: e.target.value })}
-        style={inputBase}
+        className="cn-filter-input"
       >
         <option value="">Todos grupos</option>
         {groups.map((g) => (
@@ -118,7 +99,7 @@ export function Filters({ groups, initial }: Props) {
             if (v !== initial.city) push({ city: v })
           }
         }}
-        style={inputBase}
+        className="cn-filter-input"
       />
     </div>
   )

@@ -18,18 +18,13 @@ type Props = {
 }
 
 export function SectionShell({ eyebrow, title, subtitle, children, gridStyle }: Props) {
+  // Extract custom cols if provided via gridStyle, else default 2-col on desktop.
+  const cols = (gridStyle?.gridTemplateColumns as string | undefined) ?? undefined
+  const restGridStyle: CSSProperties = { ...gridStyle }
+  delete (restGridStyle as { gridTemplateColumns?: string }).gridTemplateColumns
+
   return (
-    <section
-      style={{
-        background: 'var(--bf-surface)',
-        border: '1px solid var(--bf-border)',
-        borderRadius: 16,
-        padding: 32,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 24,
-      }}
-    >
+    <section className="cn-section-shell">
       <header style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
         <span
           className="mono"
@@ -69,12 +64,13 @@ export function SectionShell({ eyebrow, title, subtitle, children, gridStyle }: 
       </header>
 
       <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-          gap: 20,
-          ...gridStyle,
-        }}
+        className="cn-section-grid"
+        style={
+          {
+            ...(cols ? ({ '--section-cols': cols } as React.CSSProperties) : {}),
+            ...restGridStyle,
+          } as React.CSSProperties
+        }
       >
         {children}
       </div>

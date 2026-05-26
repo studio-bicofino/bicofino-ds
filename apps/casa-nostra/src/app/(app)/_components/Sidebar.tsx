@@ -146,17 +146,25 @@ export function Sidebar({ email }: Props) {
         <span
           className="mono"
           style={{
-            fontSize: 11,
+            flex: 1,
+            minWidth: 0,
+            textAlign: 'center',
+            fontSize: 9.5,
             letterSpacing: '0.08em',
             textTransform: 'uppercase',
             color: 'var(--bf-text-secondary)',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
           }}
         >
-          Casa Nostra
+          Casa Nostra <span style={{ opacity: 0.5 }}>//</span> Bicofino{' '}
+          <span style={{ opacity: 0.5 }}>//</span> v1.0{' '}
+          <span style={{ opacity: 0.5 }}>//</span> Maio 2026
         </span>
 
         {/* spacer pra centralizar o título */}
-        <span style={{ width: 40, height: 40 }} aria-hidden />
+        <span style={{ width: 40, height: 40, flexShrink: 0 }} aria-hidden />
       </header>
 
       {/* Sidebar estática (>=1024px) */}

@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { motion } from 'motion/react'
 import type { Cluster } from '@/lib/db/types'
 import { CadenceBar } from '../../_components/CadenceBar'
 
@@ -19,27 +19,30 @@ export type PersonRowData = {
   updated_at: string
 }
 
-export function PersonRowClient({ person }: { person: PersonRowData }) {
-  const router = useRouter()
-  const [hover, setHover] = useState(false)
-  const displayName = person.preferred_name || person.full_name
+const ROW_EASE = [0.22, 1, 0.36, 1] as const
 
-  const cellStyle: React.CSSProperties = {
-    padding: '18px 20px',
-    borderBottom: '1px solid var(--bf-border)',
-    verticalAlign: 'middle',
-    fontSize: 14,
-  }
+export function PersonRowClient({
+  person,
+  index = 0,
+}: {
+  person: PersonRowData
+  index?: number
+}) {
+  const router = useRouter()
+  const displayName = person.preferred_name || person.full_name
 
   function go() {
     router.push(`/p/${person.id}`)
   }
 
   return (
-    <tr
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.36, ease: ROW_EASE, delay: Math.min(index * 0.04, 0.4) }}
+      whileTap={{ scale: 0.997 }}
+      className="cn-people-row"
       onClick={go}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault()
@@ -49,26 +52,50 @@ export function PersonRowClient({ person }: { person: PersonRowData }) {
       tabIndex={0}
       role="link"
       aria-label={`Abrir ficha de ${displayName}`}
-      style={{
-        cursor: 'pointer',
-        background: hover ? 'var(--bf-surface-subtle)' : 'transparent',
-        transition: 'background 120ms ease-out',
-        outline: 'none',
-      }}
     >
-      <td style={cellStyle}>
-        <Avatar name={displayName} photoUrl={person.photo_url} />
-      </td>
-      <td style={cellStyle}>
-        <div style={{ fontWeight: 500, color: 'var(--bf-text-primary)' }}>{displayName}</div>
+      <Avatar name={displayName} photoUrl={person.photo_url} />
+
+      <div style={{ minWidth: 0 }}>
+        <div
+          style={{
+            fontWeight: 500,
+            color: 'var(--bf-text-primary)',
+            fontSize: 14,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {displayName}
+        </div>
         {person.current_title && (
-          <div style={{ fontSize: 12, color: 'var(--bf-text-secondary)', marginTop: 2 }}>
+          <div
+            style={{
+              fontSize: 12,
+              color: 'var(--bf-text-secondary)',
+              marginTop: 2,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}
+          >
             {person.current_title}
           </div>
         )}
-      </td>
-      <td style={cellStyle}>
-        <div style={{ color: 'var(--bf-text-primary)' }}>{person.current_company ?? '—'}</div>
+      </div>
+
+      <div style={{ minWidth: 0 }}>
+        <div
+          style={{
+            color: 'var(--bf-text-primary)',
+            fontSize: 14,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {person.current_company ?? '—'}
+        </div>
         {person.home_city && (
           <div
             className="mono"
@@ -77,31 +104,38 @@ export function PersonRowClient({ person }: { person: PersonRowData }) {
               color: 'var(--bf-text-secondary)',
               letterSpacing: '0.04em',
               marginTop: 2,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
             }}
           >
             {person.home_city}
           </div>
         )}
-      </td>
-      <td style={cellStyle}>
+      </div>
+
+      <div className="cn-col-hide-mobile">
         {person.cluster ? <ClusterBadge cluster={person.cluster} /> : <Muted />}
-      </td>
-      <td style={cellStyle}>
+      </div>
+
+      <div className="cn-col-hide-mobile">
         <CadenceBar
           lastContactDate={person.last_contact_date}
           targetPerYear={person.cadence_target_per_year}
         />
-      </td>
-      <td style={{ ...cellStyle, fontFamily: '"JetBrains Mono", ui-monospace, monospace' }}>
-        <span style={{ fontSize: 11, color: 'var(--bf-text-secondary)' }}>
-          {new Date(person.updated_at).toLocaleDateString('pt-BR', {
-            day: '2-digit',
-            month: 'short',
-            year: '2-digit',
-          })}
-        </span>
-      </td>
-    </tr>
+      </div>
+
+      <div
+        className="cn-col-hide-mobile mono"
+        style={{ fontSize: 11, color: 'var(--bf-text-secondary)' }}
+      >
+        {new Date(person.updated_at).toLocaleDateString('pt-BR', {
+          day: '2-digit',
+          month: 'short',
+          year: '2-digit',
+        })}
+      </div>
+    </motion.div>
   )
 }
 
@@ -119,7 +153,13 @@ function Avatar({ name, photoUrl }: { name: string; photoUrl: string | null }) {
       <img
         src={photoUrl}
         alt=""
-        style={{ width: 36, height: 36, borderRadius: '50%', objectFit: 'cover' }}
+        style={{
+          width: 44,
+          height: 44,
+          borderRadius: '50%',
+          objectFit: 'cover',
+          flexShrink: 0,
+        }}
       />
     )
   }
@@ -128,17 +168,18 @@ function Avatar({ name, photoUrl }: { name: string; photoUrl: string | null }) {
     <div
       aria-hidden
       style={{
-        width: 36,
-        height: 36,
+        width: 44,
+        height: 44,
         borderRadius: '50%',
         background: 'var(--bf-surface-subtle)',
         border: '1px solid var(--bf-border)',
         display: 'grid',
         placeItems: 'center',
-        fontSize: 11,
+        fontSize: 12,
         fontWeight: 600,
         color: 'var(--bf-text-secondary)',
         letterSpacing: '0.04em',
+        flexShrink: 0,
       }}
     >
       {initials || '—'}
@@ -152,14 +193,14 @@ function ClusterBadge({ cluster }: { cluster: Cluster }) {
       className="mono"
       style={{
         display: 'inline-block',
-        padding: '3px 8px',
+        padding: '4px 10px',
         fontSize: 10,
         fontWeight: 500,
         letterSpacing: '0.08em',
         color: 'var(--bf-text-primary)',
         background: 'var(--bf-surface-subtle)',
         border: '1px solid var(--bf-border)',
-        borderRadius: 4,
+        borderRadius: 9999,
       }}
     >
       {cluster}

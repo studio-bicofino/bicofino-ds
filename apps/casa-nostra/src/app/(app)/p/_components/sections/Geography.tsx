@@ -119,16 +119,8 @@ export function GeographySection({ control, errors }: Props) {
       {geoArr.fields.map((row, i) => (
         <FullRow key={row.id}>
           <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 160px 160px 40px',
-              gap: 12,
-              alignItems: 'end',
-              padding: 16,
-              background: 'var(--bf-surface-subtle)',
-              borderRadius: 12,
-              border: '1px solid var(--bf-border)',
-            }}
+            className="cn-form-row"
+            style={{ '--cols': '1fr 160px 160px 40px' } as React.CSSProperties}
           >
             <Controller
               name={`geography_action.${i}.region` as const}

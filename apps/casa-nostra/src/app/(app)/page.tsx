@@ -96,32 +96,18 @@ export default async function PeoplePage({
   const hasFilters = Boolean(q || cluster || groupId || city)
 
   return (
-    <div
-      style={{
-        padding: '48px 56px 64px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 32,
-        maxWidth: 1280,
-      }}
-    >
+    <div className="cn-page cn-stagger">
       <Hero stats={stats} />
 
       <div style={{ height: 1, background: 'var(--bf-border)' }} aria-hidden />
 
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: 16,
-        }}
-      >
-        <div style={{ flex: 1 }}>
+      <div className="cn-toolbar">
+        <div className="cn-toolbar-filters">
           <Filters groups={groups} initial={{ q, cluster, group: groupId, city }} />
         </div>
         <Link
           href="/p/novo"
+          className="cn-toolbar-add"
           style={{
             padding: '12px 20px',
             fontSize: 13,
@@ -214,14 +200,15 @@ function Hero({ stats }: { stats: Stats }) {
         <p
           className="mono"
           style={{
-            fontSize: 11,
-            letterSpacing: '0.16em',
+            fontSize: 12,
+            letterSpacing: '0.14em',
             textTransform: 'uppercase',
-            color: 'var(--bf-text-secondary)',
+            color: 'var(--bf-cn-caffe)',
             marginBottom: 16,
+            fontWeight: 500,
           }}
         >
-          Bicofino · Casa Nostra
+          // Bem-vindo à nossa casa
         </p>
         <h1
           style={{
@@ -279,20 +266,24 @@ function Stat({
   return (
     <div
       style={{
-        padding: '20px 24px',
+        padding: '20px 12px',
         borderLeft: first ? 'none' : '1px solid var(--bf-border)',
         display: 'flex',
         flexDirection: 'column',
         gap: 4,
+        minWidth: 0,
       }}
     >
       <span
         className="mono"
         style={{
           fontSize: 10,
-          letterSpacing: '0.12em',
+          letterSpacing: '0.08em',
           textTransform: 'uppercase',
           color: 'var(--bf-text-secondary)',
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
         }}
       >
         {label}
@@ -312,45 +303,28 @@ function Stat({
 }
 
 function PeopleTable({ people }: { people: PersonRow[] }) {
-  const headerStyle: React.CSSProperties = {
+  const headCell: React.CSSProperties = {
     fontFamily: '"JetBrains Mono", ui-monospace, monospace',
     fontSize: 10,
     letterSpacing: '0.12em',
     textTransform: 'uppercase',
     color: 'var(--bf-text-secondary)',
     fontWeight: 500,
-    textAlign: 'left',
-    padding: '14px 20px',
-    borderBottom: '1px solid var(--bf-border)',
-    background: 'var(--bf-surface-subtle)',
   }
 
   return (
-    <div
-      style={{
-        background: 'var(--bf-surface)',
-        border: '1px solid var(--bf-border)',
-        borderRadius: 16,
-        overflow: 'hidden',
-      }}
-    >
-      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-        <thead>
-          <tr>
-            <th style={{ ...headerStyle, width: 56 }} />
-            <th style={headerStyle}>Nome</th>
-            <th style={headerStyle}>Empresa</th>
-            <th style={{ ...headerStyle, width: 88 }}>Cluster</th>
-            <th style={{ ...headerStyle, width: 140 }}>Cadência</th>
-            <th style={{ ...headerStyle, width: 120 }}>Atualizada</th>
-          </tr>
-        </thead>
-        <tbody>
-          {people.map((p) => (
-            <PersonRowClient key={p.id} person={p} />
-          ))}
-        </tbody>
-      </table>
+    <div className="cn-people-list">
+      <div className="cn-people-head" role="row" aria-hidden>
+        <span />
+        <span style={headCell}>Nome</span>
+        <span style={headCell}>Empresa</span>
+        <span style={headCell} className="cn-col-hide-mobile">Cluster</span>
+        <span style={headCell} className="cn-col-hide-mobile">Cadência</span>
+        <span style={headCell} className="cn-col-hide-mobile">Atualizada</span>
+      </div>
+      {people.map((p, i) => (
+        <PersonRowClient key={p.id} person={p} index={i} />
+      ))}
     </div>
   )
 }

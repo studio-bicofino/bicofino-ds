@@ -85,17 +85,8 @@ export function ConnectionsSection({ control, errors, groups, introCandidates }:
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 120px 1fr 40px',
-                gap: 12,
-                alignItems: 'end',
-                padding: 16,
-                background: 'var(--bf-surface-subtle)',
-                borderRadius: 12,
-                border: '1px solid var(--bf-border)',
-                overflow: 'hidden',
-              }}
+              className="cn-form-row"
+              style={{ '--cols': '1fr 120px 1fr 40px', overflow: 'hidden' } as React.CSSProperties}
             >
               <FieldShell label="Grupo">
                 <div
@@ -169,16 +160,8 @@ export function ConnectionsSection({ control, errors, groups, introCandidates }:
             style={{ overflow: 'hidden' }}
           >
           <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '160px 1fr 1fr 40px',
-              gap: 12,
-              alignItems: 'end',
-              padding: 16,
-              background: 'var(--bf-surface-subtle)',
-              borderRadius: 12,
-              border: '1px solid var(--bf-border)',
-            }}
+            className="cn-form-row"
+            style={{ '--cols': '160px 1fr 1fr 40px' } as React.CSSProperties}
           >
             <Controller
               name={`futebol_links.${i}.link_type` as const}

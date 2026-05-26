@@ -511,74 +511,59 @@ function FooterBar({
   onCancelConfirm,
 }: FooterProps) {
   return (
-    <div
-      style={{
-        position: 'sticky',
-        bottom: 0,
-        marginTop: 8,
-        padding: '16px 24px',
-        background: 'rgba(255, 255, 255, 0.78)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
-        border: '1px solid var(--bf-border)',
-        borderRadius: 16,
-        boxShadow: '0 -4px 16px rgba(0,0,0,0.04)',
-        display: 'flex',
-        alignItems: 'center',
-        gap: 12,
-        flexWrap: 'wrap',
-      }}
-    >
-      {isEdit && onDelete ? (
-        confirmDelete ? (
-          <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-            <span
-              className="mono"
-              style={{
-                fontSize: 11,
-                color: 'var(--bf-ops-danger)',
-                letterSpacing: '0.04em',
-              }}
-            >
-              Confirmar?
-            </span>
-            <button
-              type="button"
-              onClick={onCancelConfirm}
-              style={ghostButtonStyle}
-              disabled={deleting}
-            >
-              Cancelar
-            </button>
+    <div className="cn-form-footer">
+      <div className="cn-form-footer-left">
+        {isEdit && onDelete ? (
+          confirmDelete ? (
+            <div className="cn-form-footer-group">
+              <span
+                className="mono"
+                style={{
+                  fontSize: 11,
+                  color: 'var(--bf-ops-danger)',
+                  letterSpacing: '0.04em',
+                }}
+              >
+                Confirmar?
+              </span>
+              <button
+                type="button"
+                onClick={onCancelConfirm}
+                style={ghostButtonStyle}
+                disabled={deleting}
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                onClick={onDelete}
+                disabled={deleting}
+                style={{ ...primaryButtonStyle, background: 'var(--bf-ops-danger)', color: '#fff' }}
+              >
+                {deleting ? 'Apagando…' : 'Apagar definitivamente'}
+              </button>
+            </div>
+          ) : (
             <button
               type="button"
               onClick={onDelete}
-              disabled={deleting}
-              style={{ ...primaryButtonStyle, background: 'var(--bf-ops-danger)', color: '#fff' }}
+              style={{
+                ...ghostButtonStyle,
+                color: 'var(--bf-ops-danger)',
+                borderColor: 'var(--bf-ops-danger)',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
+              }}
             >
-              {deleting ? 'Apagando…' : 'Apagar definitivamente'}
+              <Trash2 size={16} strokeWidth={1.5} />
+              Apagar
             </button>
-          </div>
-        ) : (
-          <button
-            type="button"
-            onClick={onDelete}
-            style={{
-              ...ghostButtonStyle,
-              color: 'var(--bf-ops-danger)',
-              borderColor: 'var(--bf-ops-danger)',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 8,
-            }}
-          >
-            <Trash2 size={16} strokeWidth={1.5} />
-            Apagar
-          </button>
-        )
-      ) : null}
+          )
+        ) : null}
+      </div>
 
-      <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 12 }}>
+      <div className="cn-form-footer-right">
         {serverError ? (
           <span
             className="mono"
