@@ -1,6 +1,25 @@
 # HANDOFF — Casa Nostra (Bicofino)
 
-*Última atualização: 2026-05-26 (sessão noite, 3). v0.8.1 — Login religado. Magic link em vigor, allowlist ativa, dados intactos.*
+*Última atualização: 2026-05-26 (sessão noite, 4). v0.8.1 **CONGELADA**. Fabio achou o form com 10 sections complexo demais — próximo passo será um app NOVO simplificado, não refatoração desta. Casa Nostra fica intacta como referência/backup vivo.*
+
+---
+
+## ⚠️ STATUS DO PROJETO — congelado por feedback
+
+**Não tocar nesta app salvo bugfix crítico solicitado explicitamente.** Em 2026-05-26 o Fabio (audiência primária) avaliou o PersonForm com 10 sections como **complicado, muitos campos, complexo demais**. Decisão do usuário: construir um **app novo simplificado** ao invés de refatorar Casa Nostra.
+
+**O que Casa Nostra preserva como referência viva:**
+- Schema completo (12 tabelas + organizations layer)
+- Tokens editoriais (crema/caffè/napoli/SEP/torino/platinum)
+- Padrão de autocomplete + canonicalização (`normalizeKey` + `pickCanonical`)
+- Organizations + logos com `name_key` UNIQUE idempotente
+- Bypass de construção pattern (com workaround Infisical CLI bug)
+- Padrão Vercel CLI deploy via REST API
+- Magic link via `verifyOtp({token_hash, type})` + allowlist Infisical
+
+**Quando o usuário retornar com ajustes/briefing do app novo:** abrir `.planning/<nome-novo>/BRIEFING.md` separado e linkar daqui. Não estender este HANDOFF.
+
+---
 
 **Pra retomar em chat novo:**
 > `Lê @.planning/casa-nostra/HANDOFF.md (e @.planning/casa-nostra/BRIEFING.md pro contexto original) e vamos continuar de onde parou.`
