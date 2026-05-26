@@ -18,6 +18,8 @@
   --bf-cn-napoli:   #77deff;  /* napoli — accent info */
   --bf-cn-sep:      #2fd298;  /* bf SEP — accent success/positivo */
   --bf-cn-spfc:     #f0535e;  /* bf SPFC — accent destrutivo (apagar) */
+  --bf-cn-torino:   #821324;  /* torino — score máximo (5/5) */
+  --bf-cn-platinum: #a8c9e5;  /* bf platinum — score parcial (1-4) */
 
   --bf-bg-page:         var(--bf-cn-crema);
   --bf-surface:         #ffffff;

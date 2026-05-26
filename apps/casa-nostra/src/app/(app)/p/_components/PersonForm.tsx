@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useForm, useWatch, type Resolver } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Check, Trash2, User } from 'lucide-react'
-import { motion } from 'motion/react'
+import { AnimatePresence, motion } from 'motion/react'
 import { personFormSchema, type PersonFormInput } from '@/lib/db/schemas'
 import type { PersonWithRelations, Group } from '@/lib/db/types'
 
@@ -440,6 +440,22 @@ function ClusterBadge({ cluster }: { cluster: 'A' | 'B' | 'C' }) {
 
 function StatPill({ label, value }: { label: string; value: number | null }) {
   const empty = value == null
+  const full = value === 5
+  const partial = !empty && !full
+
+  const bg = full
+    ? 'var(--bf-cn-torino)'
+    : partial
+      ? 'var(--bf-cn-platinum)'
+      : 'transparent'
+  const labelColor = empty
+    ? 'var(--bf-text-secondary)'
+    : full
+      ? 'rgba(255,255,255,0.78)'
+      : 'rgba(255,255,255,0.85)'
+  const valueColor = empty ? 'var(--bf-text-subtle)' : '#ffffff'
+  const borderColor = empty ? 'var(--bf-border)' : 'transparent'
+
   return (
     <motion.div
       layout
@@ -449,12 +465,11 @@ function StatPill({ label, value }: { label: string; value: number | null }) {
         flexDirection: 'column',
         gap: 4,
         padding: '14px 22px',
-        border: '1px solid var(--bf-border)',
+        border: `1px solid ${borderColor}`,
         borderRadius: 9999,
-        background: empty
-          ? 'transparent'
-          : 'rgba(119, 222, 255, 0.10)' /* napoli tint quando preenchido */,
+        background: bg,
         minWidth: 110,
+        transition: 'background-color 280ms ease-out, border-color 280ms ease-out',
       }}
     >
       <span
@@ -464,7 +479,8 @@ function StatPill({ label, value }: { label: string; value: number | null }) {
           fontWeight: 500,
           textTransform: 'uppercase',
           letterSpacing: '0.12em',
-          color: 'var(--bf-text-secondary)',
+          color: labelColor,
+          transition: 'color 240ms ease-out',
         }}
       >
         {label}
@@ -472,12 +488,37 @@ function StatPill({ label, value }: { label: string; value: number | null }) {
       <span
         style={{
           fontSize: 19,
-          fontWeight: 500,
-          color: empty ? 'var(--bf-text-subtle)' : 'var(--bf-text-primary)',
           lineHeight: 1,
+          minHeight: 19,
+          color: valueColor,
+          fontWeight: empty ? 500 : 700,
+          display: 'inline-flex',
+          alignItems: 'center',
         }}
       >
-        {empty ? '—' : `${value}/5`}
+        <AnimatePresence mode="popLayout" initial={false}>
+          {empty ? (
+            <motion.span
+              key="empty"
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.6 }}
+              transition={{ type: 'spring', stiffness: 320, damping: 22 }}
+            >
+              —
+            </motion.span>
+          ) : (
+            <motion.span
+              key={`v-${value}`}
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.6 }}
+              transition={{ type: 'spring', stiffness: 320, damping: 22 }}
+            >
+              {value}/5
+            </motion.span>
+          )}
+        </AnimatePresence>
       </span>
     </motion.div>
   )
