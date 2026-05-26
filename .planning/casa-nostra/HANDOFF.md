@@ -94,7 +94,7 @@
 - `lib/supabase/server.ts`: quando bypass on, `createClient()` retorna admin client (service_role) — RLS ignorada server-side
 - `persons.ts`: refatorado pra usar `getSession()`; `created_by`/`updated_by` viram `null` em bypass
 - `groups.ts` e `signals.ts` já eram bypass-safe (`user?.id ?? null`)
-- **PENDÊNCIA pra final do projeto:** religar login removendo `CASA_NOSTRA_AUTH_BYPASS` das 3 envs Vercel + Infisical. Dados criados durante este período são de teste — limpar antes do go-live real.
+- **PENDÊNCIA CRÍTICA pra final do projeto:** religar login removendo `CASA_NOSTRA_AUTH_BYPASS` das 3 envs Vercel + Infisical. Dados criados durante este período ficam — não limpar.
 
 ### Frente 8 — Polimento visual editorial v0.2 ✅ — 2026-05-26 tarde
 - **Tokens nocciola**: `--bf-border` virou `#d8d7d3` (nocciola sólida), `--bf-border-strong` virou `#b8b6ae`. Todas as bordas do site puxam pra paleta editorial agora.
