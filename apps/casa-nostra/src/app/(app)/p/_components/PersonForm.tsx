@@ -289,13 +289,9 @@ function Hero({ control, initial }: HeroProps) {
   return (
     <header
       style={{
-        background:
-          'linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,1))',
-        backdropFilter: 'blur(8px)',
-        WebkitBackdropFilter: 'blur(8px)',
-        border: '1px solid var(--bf-border)',
+        background: 'transparent',
         borderRadius: 24,
-        padding: 40,
+        padding: 8,
         display: 'flex',
         flexDirection: 'column',
         gap: 32,

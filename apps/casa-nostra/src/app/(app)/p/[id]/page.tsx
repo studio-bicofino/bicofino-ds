@@ -158,7 +158,7 @@ export default async function PersonDetailPage({
 
       <section
         style={{
-          background: 'var(--bf-surface)',
+          background: 'rgba(244, 234, 212, 0.4)',
           border: '1px solid var(--bf-border)',
           borderRadius: 16,
           padding: 32,
