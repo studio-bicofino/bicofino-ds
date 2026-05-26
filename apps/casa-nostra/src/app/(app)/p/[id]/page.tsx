@@ -13,7 +13,7 @@ import type {
   Person,
   PersonCategory,
   PersonWithRelations,
-  Signal,
+  Movement,
   WorkHistoryEntry,
 } from '@/lib/db/types'
 
@@ -37,7 +37,7 @@ type PersonRawRow = Person & {
   bicofino_history: BicofinoHistoryEntry[] | null
   person_groups: PersonGroupJoinRow[] | null
   geography_action: GeographyAction[] | null
-  signals: Signal[] | null
+  signals: Movement[] | null
 }
 
 export default async function PersonDetailPage({

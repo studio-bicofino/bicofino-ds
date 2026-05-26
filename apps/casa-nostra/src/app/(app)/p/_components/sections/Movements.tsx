@@ -17,7 +17,7 @@ function todayIso(): string {
   return new Date().toISOString().slice(0, 10)
 }
 
-export function SignalsSection({ control, errors }: Props) {
+export function MovementsSection({ control, errors }: Props) {
   const { fields, append, remove } = useFieldArray({ control, name: 'signals' })
 
   return (

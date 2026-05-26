@@ -10,12 +10,12 @@ const APP_PERIOD = 'Maio 2026'
 type Counts = {
   people: number
   groups: number
-  signals: number
+  movements: number
 }
 
 async function fetchCounts(): Promise<Counts> {
   const supabase = await createClient()
-  const [people, groups, signals] = await Promise.all([
+  const [people, groups, movements] = await Promise.all([
     supabase.from('people').select('id', { count: 'exact', head: true }),
     supabase.from('groups').select('id', { count: 'exact', head: true }),
     supabase.from('signals').select('id', { count: 'exact', head: true }),
@@ -23,7 +23,7 @@ async function fetchCounts(): Promise<Counts> {
   return {
     people: people.count ?? 0,
     groups: groups.count ?? 0,
-    signals: signals.count ?? 0,
+    movements: movements.count ?? 0,
   }
 }
 
@@ -262,7 +262,7 @@ function StatGrid({ counts }: { counts: Counts }) {
   const items = [
     { label: 'Pessoas', value: counts.people, href: '/' },
     { label: 'Grupos', value: counts.groups, href: '/grupos' },
-    { label: 'Movimentos', value: counts.signals, href: '/sinais' },
+    { label: 'Movimentos', value: counts.movements, href: '/sinais' },
   ]
   return (
     <div

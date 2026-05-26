@@ -215,7 +215,7 @@ async function replaceChildren(
     }
   }
 
-  // signals
+  // movements (tabela DB: signals)
   {
     const { error } = await supabase
       .from('signals')

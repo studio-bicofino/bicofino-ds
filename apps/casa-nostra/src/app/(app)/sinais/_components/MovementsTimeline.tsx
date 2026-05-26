@@ -4,10 +4,10 @@ import Link from 'next/link'
 import { useEffect, useMemo, useState, useTransition } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { Trash2 } from 'lucide-react'
-import type { Signal, SignalType } from '@/lib/db/types'
-import { AddSignalForm } from './AddSignalForm'
-import { deleteSignal } from '../_actions/signals'
-import { SignalFilters, type PersonOption } from './SignalFilters'
+import type { Movement, MovementType } from '@/lib/db/types'
+import { AddMovementForm } from './AddMovementForm'
+import { deleteMovement } from '../_actions/movements'
+import { MovementFilters, type PersonOption } from './MovementFilters'
 
 const ROW_EASE = [0.22, 1, 0.36, 1] as const
 
@@ -18,7 +18,7 @@ type PersonLite = {
 }
 
 type Props = {
-  signals: Signal[]
+  movements: Movement[]
   peopleById: Record<string, PersonLite>
   people: PersonOption[]
   initialFilters: { type: string; person: string }
@@ -26,7 +26,7 @@ type Props = {
   defaultPersonId?: string
 }
 
-const TYPE_LABEL: Record<SignalType, string> = {
+const TYPE_LABEL: Record<MovementType, string> = {
   interesse: 'Interesse',
   lifeevent: 'Life event',
   capital_move: 'Capital move',
@@ -35,7 +35,7 @@ const TYPE_LABEL: Record<SignalType, string> = {
   outro: 'Outro',
 }
 
-const TYPE_COLOR: Record<SignalType, string> = {
+const TYPE_COLOR: Record<MovementType, string> = {
   interesse: 'var(--bf-cn-napoli)',
   lifeevent: 'var(--bf-cn-caffe)',
   capital_move: 'var(--bf-cn-sep)',
@@ -69,15 +69,15 @@ function monthLabel(key: string): string {
   return label.charAt(0).toUpperCase() + label.slice(1)
 }
 
-type MonthGroup = { key: string; label: string; items: Signal[] }
+type MonthGroup = { key: string; label: string; items: Movement[] }
 
-function groupByMonth(signals: Signal[]): MonthGroup[] {
-  const map = new Map<string, Signal[]>()
-  for (const s of signals) {
-    const k = monthKey(s.observed_at)
+function groupByMonth(movements: Movement[]): MonthGroup[] {
+  const map = new Map<string, Movement[]>()
+  for (const m of movements) {
+    const k = monthKey(m.observed_at)
     const arr = map.get(k)
-    if (arr) arr.push(s)
-    else map.set(k, [s])
+    if (arr) arr.push(m)
+    else map.set(k, [m])
   }
   return Array.from(map.entries()).map(([key, items]) => ({
     key,
@@ -86,8 +86,8 @@ function groupByMonth(signals: Signal[]): MonthGroup[] {
   }))
 }
 
-export function SignalsTimeline({
-  signals,
+export function MovementsTimeline({
+  movements,
   peopleById,
   people,
   initialFilters,
@@ -95,13 +95,13 @@ export function SignalsTimeline({
   defaultPersonId,
 }: Props) {
   const [showForm, setShowForm] = useState(showFormInitially)
-  const groups = useMemo(() => groupByMonth(signals), [signals])
+  const groups = useMemo(() => groupByMonth(movements), [movements])
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
       <div className="cn-toolbar">
         <div className="cn-toolbar-filters">
-          <SignalFilters people={people} initial={initialFilters} />
+          <MovementFilters people={people} initial={initialFilters} />
         </div>
         <button
           type="button"
@@ -134,7 +134,7 @@ export function SignalsTimeline({
             transition={{ duration: 0.28, ease: ROW_EASE }}
             style={{ overflow: 'hidden' }}
           >
-            <AddSignalForm
+            <AddMovementForm
               people={people}
               defaultPersonId={defaultPersonId}
               onDone={() => setShowForm(false)}
@@ -143,7 +143,7 @@ export function SignalsTimeline({
         )}
       </AnimatePresence>
 
-      {signals.length === 0 ? (
+      {movements.length === 0 ? (
         <EmptyState />
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
@@ -167,11 +167,11 @@ function MonthSection({
     <section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       <MonthHeader label={group.label} count={group.items.length} />
       <AnimatePresence initial={false} mode="popLayout">
-        {group.items.map((s, i) => (
-          <SignalCard
-            key={s.id}
-            signal={s}
-            person={peopleById[s.person_id]}
+        {group.items.map((m, i) => (
+          <MovementCard
+            key={m.id}
+            movement={m}
+            person={peopleById[m.person_id]}
             index={i}
           />
         ))}
@@ -222,12 +222,12 @@ function MonthHeader({ label, count }: { label: string; count: number }) {
   )
 }
 
-function SignalCard({
-  signal,
+function MovementCard({
+  movement,
   person,
   index,
 }: {
-  signal: Signal
+  movement: Movement
   person: PersonLite | undefined
   index: number
 }) {
@@ -247,7 +247,7 @@ function SignalCard({
       return
     }
     startTransition(async () => {
-      const result = await deleteSignal(signal.id)
+      const result = await deleteMovement(movement.id)
       if (!result.ok) {
         setError(result.error)
         setConfirmDelete(false)
@@ -256,8 +256,8 @@ function SignalCard({
   }
 
   const displayName = person ? person.preferred_name || person.full_name : '—'
-  const color = TYPE_COLOR[signal.signal_type]
-  const label = TYPE_LABEL[signal.signal_type]
+  const color = TYPE_COLOR[movement.signal_type]
+  const label = TYPE_LABEL[movement.signal_type]
 
   return (
     <motion.article
@@ -293,7 +293,7 @@ function SignalCard({
 
         <div style={{ minWidth: 0, flex: 1 }}>
           <Link
-            href={`/p/${signal.person_id}`}
+            href={`/p/${movement.person_id}`}
             style={{
               fontWeight: 500,
               fontSize: 14,
@@ -335,7 +335,7 @@ function SignalCard({
                 color: 'var(--bf-text-subtle)',
               }}
             >
-              {formatDate(signal.observed_at)}
+              {formatDate(movement.observed_at)}
             </span>
           </div>
         </div>
@@ -354,10 +354,10 @@ function SignalCard({
           lineHeight: 1.55,
         }}
       >
-        {signal.content}
+        {movement.content}
       </p>
 
-      {signal.source && (
+      {movement.source && (
         <p
           className="mono"
           style={{
@@ -366,7 +366,7 @@ function SignalCard({
             color: 'var(--bf-text-subtle)',
           }}
         >
-          fonte · {signal.source}
+          fonte · {movement.source}
         </p>
       )}
 

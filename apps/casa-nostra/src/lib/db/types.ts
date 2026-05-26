@@ -41,7 +41,7 @@ export type GeoScope = 'cidade' | 'estado' | 'pais' | 'continente' | 'global'
 
 export type GeoContext = 'mora' | 'atua' | 'tem_negocio' | 'tem_familia' | 'outro'
 
-export type SignalType =
+export type MovementType =
   | 'interesse'
   | 'lifeevent'
   | 'capital_move'
@@ -167,10 +167,10 @@ export interface GeographyAction {
   created_at: string
 }
 
-export interface Signal {
+export interface Movement {
   id: string
   person_id: string
-  signal_type: SignalType
+  signal_type: MovementType
   observed_at: string
   content: string
   source: string | null
@@ -190,7 +190,7 @@ export interface PersonWithRelations extends Person {
   bicofino_history: BicofinoHistoryEntry[]
   groups: Group[]
   geography_action: GeographyAction[]
-  signals: Signal[]
+  signals: Movement[]
 }
 
 // ============================================================
@@ -209,7 +209,7 @@ export type Database = {
       groups: TableShape<Group>
       person_groups: TableShape<PersonGroup>
       geography_action: TableShape<GeographyAction>
-      signals: TableShape<Signal>
+      signals: TableShape<Movement>
     }
   }
 }

@@ -74,7 +74,7 @@ export const geoContextEnum = z.enum([
   'outro',
 ])
 
-export const signalTypeEnum = z.enum([
+export const movementTypeEnum = z.enum([
   'interesse',
   'lifeevent',
   'capital_move',
@@ -304,13 +304,13 @@ export const geographyActionUpdateSchema = geographyActionSchema
   .extend({ id: z.string().uuid() })
 
 // ============================================================
-// 10. SIGNALS
+// 10. MOVEMENTS (tabela DB: signals)
 // ============================================================
 
-export const signalSchema = z.object({
+export const movementSchema = z.object({
   id: z.string().uuid(),
   person_id: z.string().uuid(),
-  signal_type: signalTypeEnum,
+  signal_type: movementTypeEnum,
   observed_at: z.string(), // ISO date
   content: z.string().min(1),
   source: z.string().nullable(),
@@ -318,11 +318,11 @@ export const signalSchema = z.object({
   created_by: z.string().uuid().nullable(),
 })
 
-export const signalInsertSchema = signalSchema
+export const movementInsertSchema = movementSchema
   .omit({ id: true, created_at: true })
   .partial({ person_id: true, source: true, created_by: true, observed_at: true })
 
-export const signalUpdateSchema = signalSchema
+export const movementUpdateSchema = movementSchema
   .partial()
   .extend({ id: z.string().uuid() })
 
@@ -401,8 +401,8 @@ const geographyActionFormSchema = z.object({
   context: geoContextEnum.nullable().optional(),
 })
 
-const signalFormSchema = z.object({
-  signal_type: signalTypeEnum,
+const movementFormSchema = z.object({
+  signal_type: movementTypeEnum,
   observed_at: z.string(),
   content: z.string().min(1),
   source: z.string().nullable().optional(),
@@ -416,7 +416,7 @@ export const personFormSchema = personFormFieldsSchema.extend({
   bicofino_history: z.array(bicofinoHistoryFormSchema).optional().default([]),
   groups: z.array(personGroupFormSchema).optional().default([]),
   geography_action: z.array(geographyActionFormSchema).optional().default([]),
-  signals: z.array(signalFormSchema).optional().default([]),
+  signals: z.array(movementFormSchema).optional().default([]),
 })
 
 export type PersonFormInput = z.infer<typeof personFormSchema>

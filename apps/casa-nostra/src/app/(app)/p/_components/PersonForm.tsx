@@ -23,7 +23,7 @@ import { ConnectionsSection } from './sections/Connections'
 import { GeographySection } from './sections/Geography'
 import { EvaluationSection } from './sections/Evaluation'
 import { NotesSection } from './sections/Notes'
-import { SignalsSection } from './sections/Signals'
+import { MovementsSection } from './sections/Movements'
 
 type Props = {
   initial?: PersonWithRelations | null
@@ -247,7 +247,7 @@ export function PersonForm({ initial, groups, introCandidates, onSubmit, onDelet
       {sectionWrap(6, <GeographySection control={control} errors={errors} />)}
       {sectionWrap(7, <EvaluationSection control={control} errors={errors} />)}
       {sectionWrap(8, <NotesSection control={control} errors={errors} />)}
-      {sectionWrap(9, <SignalsSection control={control} errors={errors} />)}
+      {sectionWrap(9, <MovementsSection control={control} errors={errors} />)}
 
       <FooterBar
         isEdit={isEdit}

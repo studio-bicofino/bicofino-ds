@@ -4,14 +4,14 @@ import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { signalTypeEnum } from '@/lib/db/schemas'
-import type { SignalType } from '@/lib/db/types'
-import { createSignal } from '../_actions/signals'
-import type { PersonOption } from './SignalFilters'
+import { movementTypeEnum } from '@/lib/db/schemas'
+import type { MovementType } from '@/lib/db/types'
+import { createMovement } from '../_actions/movements'
+import type { PersonOption } from './MovementFilters'
 
 const formSchema = z.object({
   person_id: z.string().uuid('Selecione uma pessoa'),
-  signal_type: signalTypeEnum,
+  signal_type: movementTypeEnum,
   observed_at: z.string().min(1, 'Data obrigatória'),
   content: z.string().min(1, 'Conteúdo obrigatório'),
   source: z.string().optional(),
@@ -19,7 +19,7 @@ const formSchema = z.object({
 
 type FormInput = z.infer<typeof formSchema>
 
-const SIGNAL_TYPE_OPTIONS: { value: SignalType; label: string }[] = [
+const MOVEMENT_TYPE_OPTIONS: { value: MovementType; label: string }[] = [
   { value: 'interesse', label: 'Interesse' },
   { value: 'lifeevent', label: 'Life event' },
   { value: 'capital_move', label: 'Capital move' },
@@ -63,7 +63,7 @@ type Props = {
   onDone: () => void
 }
 
-export function AddSignalForm({ people, defaultPersonId, onDone }: Props) {
+export function AddMovementForm({ people, defaultPersonId, onDone }: Props) {
   const [isPending, startTransition] = useTransition()
   const [serverError, setServerError] = useState<string | null>(null)
 
@@ -86,7 +86,7 @@ export function AddSignalForm({ people, defaultPersonId, onDone }: Props) {
   function onSubmit(values: FormInput) {
     setServerError(null)
     startTransition(async () => {
-      const result = await createSignal({
+      const result = await createMovement({
         person_id: values.person_id,
         signal_type: values.signal_type,
         observed_at: values.observed_at,
@@ -151,11 +151,11 @@ export function AddSignalForm({ people, defaultPersonId, onDone }: Props) {
         }}
       >
         <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-          <label style={labelStyle} htmlFor="signal-person">
+          <label style={labelStyle} htmlFor="movement-person">
             Pessoa
           </label>
           <select
-            id="signal-person"
+            id="movement-person"
             {...register('person_id')}
             style={{ ...inputStyle, cursor: 'pointer' }}
             disabled={isPending || people.length === 0}
@@ -175,16 +175,16 @@ export function AddSignalForm({ people, defaultPersonId, onDone }: Props) {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-          <label style={labelStyle} htmlFor="signal-type">
+          <label style={labelStyle} htmlFor="movement-type">
             Tipo
           </label>
           <select
-            id="signal-type"
+            id="movement-type"
             {...register('signal_type')}
             style={{ ...inputStyle, cursor: 'pointer' }}
             disabled={isPending}
           >
-            {SIGNAL_TYPE_OPTIONS.map((opt) => (
+            {MOVEMENT_TYPE_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>
                 {opt.label}
               </option>
@@ -193,11 +193,11 @@ export function AddSignalForm({ people, defaultPersonId, onDone }: Props) {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-          <label style={labelStyle} htmlFor="signal-date">
+          <label style={labelStyle} htmlFor="movement-date">
             Data observada
           </label>
           <input
-            id="signal-date"
+            id="movement-date"
             {...register('observed_at')}
             type="date"
             style={inputStyle}
@@ -211,11 +211,11 @@ export function AddSignalForm({ people, defaultPersonId, onDone }: Props) {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-          <label style={labelStyle} htmlFor="signal-source">
+          <label style={labelStyle} htmlFor="movement-source">
             Fonte (opcional)
           </label>
           <input
-            id="signal-source"
+            id="movement-source"
             {...register('source')}
             type="text"
             placeholder="Conversa, LinkedIn, café…"
@@ -227,14 +227,14 @@ export function AddSignalForm({ people, defaultPersonId, onDone }: Props) {
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-        <label style={labelStyle} htmlFor="signal-content">
+        <label style={labelStyle} htmlFor="movement-content">
           Conteúdo
         </label>
         <textarea
-          id="signal-content"
+          id="movement-content"
           {...register('content')}
           rows={3}
-          placeholder="Descreva o sinal observado…"
+          placeholder="Descreva o movimento observado…"
           style={{ ...inputStyle, resize: 'vertical', minHeight: 80, lineHeight: 1.5 }}
           disabled={isPending}
         />

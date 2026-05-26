@@ -1,10 +1,10 @@
 import { createClient } from '@/lib/supabase/server'
-import type { Signal, SignalType } from '@/lib/db/types'
-import { SignalsTimeline } from './_components/SignalsTimeline'
+import type { Movement, MovementType } from '@/lib/db/types'
+import { MovementsTimeline } from './_components/MovementsTimeline'
 
 export const dynamic = 'force-dynamic'
 
-const SIGNAL_TYPE_SET: ReadonlySet<SignalType> = new Set<SignalType>([
+const MOVEMENT_TYPE_SET: ReadonlySet<MovementType> = new Set<MovementType>([
   'interesse',
   'lifeevent',
   'capital_move',
@@ -32,14 +32,14 @@ export default async function SinaisPage({
 }) {
   const params = await searchParams
   const typeRaw = (params.type ?? '').trim()
-  const type: SignalType | '' = SIGNAL_TYPE_SET.has(typeRaw as SignalType)
-    ? (typeRaw as SignalType)
+  const type: MovementType | '' = MOVEMENT_TYPE_SET.has(typeRaw as MovementType)
+    ? (typeRaw as MovementType)
     : ''
   const personId = (params.person ?? '').trim()
 
   const supabase = await createClient()
 
-  // Pessoas — necessárias pra: resolver autor de cada sinal + popular filtros + form.
+  // Pessoas — necessárias pra: resolver autor de cada movimento + popular filtros + form.
   const { data: peopleData } = await supabase
     .from('people')
     .select('id, full_name, preferred_name, photo_url')
@@ -67,22 +67,22 @@ export default async function SinaisPage({
   if (type) query = query.eq('signal_type', type)
   if (personId) query = query.eq('person_id', personId)
 
-  const { data: signalsData, error } = await query.order('observed_at', { ascending: false })
+  const { data: movementsData, error } = await query.order('observed_at', { ascending: false })
 
-  const signals = (signalsData ?? []) as Signal[]
+  const movements = (movementsData ?? []) as Movement[]
   const hasFilters = Boolean(type || personId)
 
   return (
     <div className="cn-page cn-stagger">
-      <Hero total={signals.length} hasFilters={hasFilters} />
+      <Hero total={movements.length} hasFilters={hasFilters} />
 
       <div style={{ height: 1, background: 'var(--bf-border)' }} aria-hidden />
 
       {error ? (
         <ErrorBlock message={error.message} />
       ) : (
-        <SignalsTimeline
-          signals={signals}
+        <MovementsTimeline
+          movements={movements}
           peopleById={peopleById}
           people={people.map((p) => ({
             id: p.id,

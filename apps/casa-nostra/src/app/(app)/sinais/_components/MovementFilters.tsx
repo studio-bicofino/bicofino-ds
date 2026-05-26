@@ -2,9 +2,9 @@
 
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useTransition } from 'react'
-import type { SignalType } from '@/lib/db/types'
+import type { MovementType } from '@/lib/db/types'
 
-const SIGNAL_TYPES: Array<{ value: '' | SignalType; label: string }> = [
+const MOVEMENT_TYPES: Array<{ value: '' | MovementType; label: string }> = [
   { value: '', label: 'Todos tipos' },
   { value: 'interesse', label: 'Interesse' },
   { value: 'lifeevent', label: 'Life event' },
@@ -25,7 +25,7 @@ type Props = {
   initial: { type: string; person: string }
 }
 
-export function SignalFilters({ people, initial }: Props) {
+export function MovementFilters({ people, initial }: Props) {
   const router = useRouter()
   const params = useSearchParams()
   const [, startTransition] = useTransition()
@@ -52,7 +52,7 @@ export function SignalFilters({ people, initial }: Props) {
         className="cn-filter-input"
         aria-label="Filtrar por tipo de movimento"
       >
-        {SIGNAL_TYPES.map((t) => (
+        {MOVEMENT_TYPES.map((t) => (
           <option key={t.value} value={t.value}>
             {t.label}
           </option>
