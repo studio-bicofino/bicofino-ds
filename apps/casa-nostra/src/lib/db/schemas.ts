@@ -36,6 +36,7 @@ export const contactTypeEnum = z.enum([
   'whatsapp',
   'instagram',
   'linkedin',
+  'website',
   'outro',
 ])
 

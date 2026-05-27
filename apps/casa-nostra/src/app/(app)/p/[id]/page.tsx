@@ -84,6 +84,9 @@ export default async function PersonDetailPage({
     person_organizations: (data.person_organizations ?? [])
       .filter((po): po is PersonOrgJoinRow & { org: Organization } => po.org !== null)
       .map<PersonOrganizationWithOrg>((po) => ({ ...po, org: po.org })),
+    // v2: tags ainda não consumidas pela tela /p/[id]; populadas vazias até
+    // a Fase 2 (ontologia + matchmaking). Schema do tipo já exige a chave.
+    person_tags: [],
   }
 
   const [groupsRes, peopleRes, orgsRes, suggestions] = await Promise.all([

@@ -18,6 +18,7 @@ export type ContactType =
   | 'whatsapp'
   | 'instagram'
   | 'linkedin'
+  | 'website'
   | 'outro'
 
 export type FutebolLinkType =
@@ -56,6 +57,8 @@ export type OrganizationKind =
   | 'escola'
   | 'entidade'
 
+export type TagKind = 'skill' | 'grupo' | 'afiliacao'
+
 export type CategoryValue =
   | 'cliente'
   | 'ex-cliente'
@@ -91,6 +94,11 @@ export interface Person {
   network_reach: Score | null
   home_city: string | null
   home_country: string | null
+  address_street: string | null
+  address_number: string | null
+  address_complement: string | null
+  address_state: string | null
+  address_zip: string | null
   languages: string[]
   passports: string[]
   intro_by_person_id: string | null
@@ -213,6 +221,28 @@ export interface PersonOrganizationWithOrg extends PersonOrganization {
   org: Organization
 }
 
+export interface Tag {
+  id: string
+  name: string
+  name_key: string
+  kind: TagKind
+  metadata: Record<string, unknown>
+  created_at: string
+  created_by: string | null
+}
+
+export interface PersonTag {
+  person_id: string
+  tag_id: string
+  sort_order: number
+  created_at: string
+}
+
+// Helper consumido pela UI: vínculo + tag populada via select join.
+export interface PersonTagWithTag extends PersonTag {
+  tag: Tag
+}
+
 // ============================================================
 // Aggregate (view-model usado nas telas)
 // ============================================================
@@ -227,6 +257,7 @@ export interface PersonWithRelations extends Person {
   geography_action: GeographyAction[]
   signals: Movement[]
   person_organizations: PersonOrganizationWithOrg[]
+  person_tags: PersonTagWithTag[]
 }
 
 // ============================================================
@@ -248,6 +279,8 @@ export type Database = {
       signals: TableShape<Movement>
       organizations: TableShape<Organization>
       person_organizations: TableShape<PersonOrganization>
+      tags: TableShape<Tag>
+      person_tags: TableShape<PersonTag>
     }
   }
 }

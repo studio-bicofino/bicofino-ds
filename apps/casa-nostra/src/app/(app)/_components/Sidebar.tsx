@@ -3,7 +3,17 @@
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
-import { User, Users, Activity, Settings, Menu, X, type LucideIcon } from 'lucide-react'
+import {
+  User,
+  Users,
+  Activity,
+  Settings,
+  Menu,
+  X,
+  IdCard,
+  Plus,
+  type LucideIcon,
+} from 'lucide-react'
 import { LogoutButton } from '@/components/LogoutButton'
 import { BicofinoLogo } from '@/components/BicofinoLogo'
 
@@ -11,11 +21,39 @@ type Props = {
   email: string
 }
 
-const ITEMS: { href: string; label: string; icon: LucideIcon }[] = [
-  { href: '/', label: 'Pessoas', icon: User },
-  { href: '/grupos', label: 'Grupos', icon: Users },
-  { href: '/sinais', label: 'Movimentos', icon: Activity },
-  { href: '/configuracoes', label: 'Configurações', icon: Settings },
+type NavItem = {
+  href: string
+  label: string
+  icon: LucideIcon
+  isNew?: boolean
+}
+
+type NavGroup = { kind: 'group'; items: NavItem[] }
+type NavDivider = { kind: 'divider' }
+type NavSection = NavGroup | NavDivider
+
+const SECTIONS: NavSection[] = [
+  {
+    kind: 'group',
+    items: [
+      { href: '/', label: 'Pessoas', icon: User },
+      { href: '/grupos', label: 'Grupos', icon: Users },
+      { href: '/sinais', label: 'Movimentos', icon: Activity },
+    ],
+  },
+  { kind: 'divider' },
+  {
+    kind: 'group',
+    items: [
+      { href: '/membros', label: 'Membros', icon: IdCard, isNew: true },
+      { href: '/cadastro', label: 'Cadastrar', icon: Plus, isNew: true },
+    ],
+  },
+  { kind: 'divider' },
+  {
+    kind: 'group',
+    items: [{ href: '/configuracoes', label: 'Configurações', icon: Settings }],
+  },
 ]
 
 function isActive(pathname: string, href: string) {
@@ -42,21 +80,56 @@ function SidebarInner({ email, onLinkClick }: { email: string; onLinkClick?: () 
       </div>
 
       <nav style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-        {ITEMS.map((item) => {
-          const active = isActive(pathname, item.href)
-          const Icon = item.icon
+        {SECTIONS.map((section, idx) => {
+          if (section.kind === 'divider') {
+            return (
+              <div
+                key={`div-${idx}`}
+                aria-hidden
+                style={{
+                  height: 1,
+                  background: 'var(--bf-border)',
+                  margin: '8px 0',
+                }}
+              />
+            )
+          }
           return (
-            <a
-              key={item.href}
-              href={item.href}
-              onClick={onLinkClick}
-              className="cn-nav-item"
-              data-active={active ? 'true' : undefined}
-              aria-current={active ? 'page' : undefined}
-            >
-              <Icon size={20} strokeWidth={1.5} aria-hidden className="cn-nav-icon" />
-              <span>{item.label}</span>
-            </a>
+            <div key={`grp-${idx}`} style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              {section.items.map((item) => {
+                const active = isActive(pathname, item.href)
+                const Icon = item.icon
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={onLinkClick}
+                    className="cn-nav-item"
+                    data-active={active ? 'true' : undefined}
+                    aria-current={active ? 'page' : undefined}
+                  >
+                    <Icon size={20} strokeWidth={1.5} aria-hidden className="cn-nav-icon" />
+                    <span>{item.label}</span>
+                    {item.isNew && (
+                      <span
+                        className="mono"
+                        aria-label="novo"
+                        style={{
+                          fontSize: 9,
+                          opacity: 0.6,
+                          color: 'var(--bf-cn-napoli)',
+                          marginLeft: 8,
+                          letterSpacing: '0.08em',
+                          textTransform: 'lowercase',
+                        }}
+                      >
+                        • novo
+                      </span>
+                    )}
+                  </a>
+                )
+              })}
+            </div>
           )
         })}
       </nav>
