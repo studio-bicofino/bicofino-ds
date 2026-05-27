@@ -39,7 +39,7 @@
 | Porta dev | `3040` |
 | Secrets | Infisical (5 vars em `dev`), Vercel (4 vars em preview/prod/dev + SITE_URL + BYPASS) |
 | DB | Supabase `bicofino-casa-nostra` — 12 tabelas + RLS + 22 grupos seed |
-| Auth | Magic link via `verifyOtp({token_hash, type})` — **religado em 2026-05-26** |
+| Auth | Magic link configurado, mas **bypass reativado em 2026-05-26 noite** pra facilitar acesso à referência viva (`CASA_NOSTRA_AUTH_BYPASS=1`) |
 | Allowlist | env var `CASA_NOSTRA_ALLOWLIST` |
 | Palette | Editorial Casa Nostra (crema/caffè/napoli/SEP/nocciola) — exceção DESIGN.md |
 | Vocabulário | "Movimentos" user-visible · "Movement" no código TS · `signals/signal_type` DB |
@@ -81,10 +81,13 @@
 - Migration 0002 cria bucket público `people-photos` + policies
 - `PhotoUploader` com drop zone + click + paste ⌘V global + spinner + erros animados
 
-### Frente 10 — Bypass de login (modo construção) ✅ — religado em v0.8.1
+### Frente 10 — Bypass de login (modo construção) ✅ — religado v0.8.1 e reativado em seguida
 - `CASA_NOSTRA_AUTH_BYPASS=1` em Infisical dev + Vercel dev/preview/prod (durante a construção)
 - Session helper retorna pseudo-user · middleware early-return · server client vira admin (RLS ignorada)
-- **Religado em 2026-05-26:** Vercel 3 envs deletadas via REST API + Infisical setado como `0` (CLI 0.43.86 com bug em DELETE — workaround set=0). Smoke test: GET `/` retorna 307 → `/login?next=%2F`. Dados intactos.
+- **Linha do tempo:**
+  1. **2026-05-26 noite, sessão 3:** religado. Vercel 3 envs deletadas via REST API. Infisical CLI 0.43.86 com bug em DELETE; workaround `set=0`. Smoke: 307 → `/login`.
+  2. **2026-05-26 noite, sessão 4:** **reativado** após Fabio decidir congelar Casa Nostra e construir app novo simplificado. Bypass facilita acesso à referência viva. Vercel re-add via REST + Infisical set=1. Smoke: 200 direto.
+- **Estado atual:** bypass ON. Magic link configurado (Supabase) mas inativo. Pra religar de novo: set Infisical=0 + DELETE 3 envs Vercel + redeploy.
 
 ### Frente 11 — /configuracoes + StatPill torino/platinum + seed Ruffino ✅
 - Tokens `--bf-cn-torino #821324` (5/5) e `--bf-cn-platinum #a8c9e5` (1–4)
