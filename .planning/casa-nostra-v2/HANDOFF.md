@@ -4,6 +4,62 @@
 
 ---
 
+## STATUS ATUAL — 2026-05-29 noite (v2 EM PRODUÇÃO)
+
+**URL prod:** https://casa-nostra-two.vercel.app (deploy `casa-nostra-aw0ac3c50`)
+**Branch:** `feature/casa-nostra` · último commit `d838801` (Onda 8)
+**Banco:** 1 pessoa real (Henrique Galhardo — BoviChain, CEO, Agro/Tech), 120 tags seedadas (43 skills/32 grupos/45 afiliações).
+
+### O que está rodando em prod (Ondas 1 → 8)
+
+| Onda | Frente | Commit |
+|------|--------|--------|
+| 1-4 | Fase 1: /cadastro 8 campos, /membros, sistema de tags, migration `0004_tags_v2.sql` | `23e3068` |
+| 5 | Entry `/` → `/membros`, sidebar enxuta, CTA verde pulsante (cn-pulse v0.8.1 restaurado) | `c265929` |
+| 6 | Seed 120 tags (`db/seeds/0002_tags_v2.sql` + runner `.mjs`) | `5ef82ec` |
+| 7 | **CRITICAL FIX** `'use server'` schema + edit mode (`/membros/[id]`) | `e169f1b` |
+| 8 | CEP autocomplete via ViaCEP no `AddressPopover` | `d838801` |
+
+### Fluxo end-to-end funcionando
+
+1. `/` → redireciona `/membros` (esqueleto v0.8.1 fica em `/p/[id]`, `/grupos`, `/sinais`, `/configuracoes` por URL direta)
+2. `/membros` → lista de pessoas com botão "+ Novo membro" verde pulsante
+3. `/cadastro` → form 8 campos (foto + nome + cargo + empresa + 5 contatos + 3 blocos de tags). Foto upload OK, CEP autopreenche endereço, salva e volta pra `/membros`
+4. Click no card em `/membros` → `/membros/[id]` em modo edit (mesmo form prefilled). Salvar volta pra `/membros`
+
+### Lição cara: bug do `'use server'` (Onda 7)
+
+`'use server'` files SÓ podem ter `export async function`. Qualquer outro export de valor (`export const schema = z.object(...)`) passa no tsc + build mas crasha no runtime: `"A 'use server' file can only export async functions, found object"`. O Fabio bateu nesse bug no 1º submit em prod. Schema agora vive em `cadastro-schema.ts` (sem 'use server'). **Types são OK** (são erased em runtime).
+
+### Pendentes pro próximo chat (Onda 9)
+
+1. **Typeahead na busca de pessoas em `/membros`** — input atual filtra mas sem dropdown de sugestões com nomes/empresas
+2. **Autocomplete de cidade no `AddressPopover`** — canonicalização server-side já funciona via `getAllSuggestions().home_city` (passado pro action), mas o input direto da cidade não tem dropdown visual. Reaproveitar `AutocompleteField` em `apps/casa-nostra/src/app/(app)/p/_components/AutocompleteField.tsx`
+
+### Arquivos-chave da v2 (mapa rápido pra próximo chat)
+
+| Arquivo | Função |
+|---------|--------|
+| `src/app/(app)/cadastro/page.tsx` | Server component que carrega allTags + suggestions, renderiza CadastroV2 em create mode |
+| `src/app/(app)/cadastro/_components/CadastroV2.tsx` | Form com modos `create`/`edit`, props `personId` + `initialData` |
+| `src/app/(app)/cadastro/_components/AddressPopover.tsx` | Popover de endereço com CEP autocomplete via ViaCEP |
+| `src/app/(app)/cadastro/_components/TagInput.tsx` | Chip input com autocomplete client-side filtrado por kind |
+| `src/app/(app)/cadastro/_actions/cadastro.ts` | `createPersonV2` + `updatePersonV2` (ambos com try/catch top-level) |
+| `src/app/(app)/cadastro/_actions/cadastro-schema.ts` | `cadastroV2Schema` (zod) + `CadastroV2Input` (tipo) — isolado pra não quebrar 'use server' |
+| `src/app/(app)/cadastro/_actions/tags.ts` | `findOrCreateTagInternal` + `listTags` |
+| `src/app/(app)/membros/page.tsx` | Lista de pessoas, input de busca (sem typeahead ainda), botão Novo Membro pulsante |
+| `src/app/(app)/membros/_components/MemberRowClient.tsx` | Row clicável que vai pra `/membros/[id]` |
+| `src/app/(app)/membros/[id]/page.tsx` | Server component que carrega person + contacts + person_tags, renderiza CadastroV2 em edit mode |
+| `src/app/(app)/_components/Sidebar.tsx` | Sidebar enxuta (Membros, Cadastrar, Configurações) |
+| `src/app/globals.css` | Tokens Casa Nostra + `cn-pulse` keyframe (scale + halo, 1.6s ease-in-out infinite no hover) |
+| `db/seeds/seed-tags-v2.mjs` | Runner idempotente do seed via REST + service role |
+
+### Bypass auth (ainda ativo)
+
+`CASA_NOSTRA_AUTH_BYPASS=1` nas 3 envs Vercel + Infisical. `created_by`/`updated_by` ficam `null` em registros novos. Service role no server bypassa RLS. Pra reativar login real: deletar env nas 3 + redeploy.
+
+---
+
 ## 0 · TL;DR
 
 Casa Nostra v0.8.1 ficou complexa demais (Fabio: form de 10 sections). A v2 reduz a captura a **8 campos numa única tela sem scroll**, mantém o mesmo banco Supabase, mantém o visual Bicofino, e estrutura os dados via **sistema de tags** (Skills / Grupos / Afiliações) que vai alimentar um sistema de matchmaking nas fases seguintes. Sem i18n — só PT-BR.
