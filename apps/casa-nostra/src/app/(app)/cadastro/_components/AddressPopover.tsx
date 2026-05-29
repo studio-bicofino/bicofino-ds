@@ -13,7 +13,7 @@
  */
 
 import type { CSSProperties } from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { X } from 'lucide-react'
 
 export type AddressValue = {
@@ -106,8 +106,39 @@ const LABEL_STYLE: CSSProperties = {
   marginBottom: 4,
 }
 
+const CEP_HINT_STYLE: CSSProperties = {
+  fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+  fontSize: 9,
+  letterSpacing: '0.06em',
+  marginTop: 4,
+  color: 'var(--bf-text-subtle)',
+}
+
+function formatCep(raw: string): { digits: string; display: string } {
+  const digits = raw.replace(/\D/g, '').slice(0, 8)
+  const display =
+    digits.length > 5 ? `${digits.slice(0, 5)}-${digits.slice(5)}` : digits
+  return { digits, display }
+}
+
+type ViaCepResponse = {
+  erro?: boolean | string
+  logradouro?: string
+  bairro?: string
+  localidade?: string
+  uf?: string
+}
+
 export function AddressPopover({ value, onChange, anchorRef, open, onClose }: Props) {
   const panelRef = useRef<HTMLDivElement | null>(null)
+  const valueRef = useRef(value)
+  const lastLookupRef = useRef<string>('')
+  const [cepBusy, setCepBusy] = useState(false)
+  const [cepMsg, setCepMsg] = useState<{ kind: 'ok' | 'err'; text: string } | null>(null)
+
+  useEffect(() => {
+    valueRef.current = value
+  }, [value])
 
   useEffect(() => {
     if (!open) return
@@ -128,10 +159,55 @@ export function AddressPopover({ value, onChange, anchorRef, open, onClose }: Pr
     }
   }, [open, anchorRef, onClose])
 
+  const lookupCep = useCallback(
+    async (digits: string) => {
+      if (digits.length !== 8) return
+      if (lastLookupRef.current === digits) return
+      lastLookupRef.current = digits
+      setCepBusy(true)
+      setCepMsg(null)
+      try {
+        const res = await fetch(`https://viacep.com.br/ws/${digits}/json/`)
+        if (!res.ok) throw new Error(`status ${res.status}`)
+        const data = (await res.json()) as ViaCepResponse
+        if (data.erro) {
+          setCepMsg({ kind: 'err', text: 'cep não encontrado' })
+          return
+        }
+        const cur = valueRef.current
+        onChange({
+          ...cur,
+          street: data.logradouro || cur.street,
+          complement: data.bairro || cur.complement,
+          city: data.localidade || cur.city,
+          state: data.uf || cur.state,
+          country: 'Brasil',
+        })
+        setCepMsg({ kind: 'ok', text: 'endereço preenchido' })
+      } catch {
+        setCepMsg({ kind: 'err', text: 'falha ao buscar cep' })
+      } finally {
+        setCepBusy(false)
+      }
+    },
+    [onChange],
+  )
+
   if (!open) return null
 
   function patch<K extends keyof AddressValue>(k: K, v: AddressValue[K]) {
     onChange({ ...value, [k]: v })
+  }
+
+  function handleCepChange(raw: string) {
+    const { digits, display } = formatCep(raw)
+    onChange({ ...value, zip: display })
+    if (digits.length < 8) {
+      lastLookupRef.current = ''
+      setCepMsg(null)
+    } else {
+      void lookupCep(digits)
+    }
   }
 
   return (
@@ -219,10 +295,27 @@ export function AddressPopover({ value, onChange, anchorRef, open, onClose }: Pr
           <input
             type="text"
             value={value.zip}
-            onChange={(e) => patch('zip', e.target.value)}
+            onChange={(e) => handleCepChange(e.target.value)}
+            inputMode="numeric"
+            placeholder="00000-000"
+            maxLength={9}
             style={INPUT_STYLE}
             autoComplete="postal-code"
           />
+          {(cepBusy || cepMsg) && (
+            <p
+              style={{
+                ...CEP_HINT_STYLE,
+                color: cepBusy
+                  ? 'var(--bf-text-subtle)'
+                  : cepMsg?.kind === 'err'
+                    ? 'var(--bf-ops-danger)'
+                    : 'var(--bf-cn-sep)',
+              }}
+            >
+              {cepBusy ? 'buscando…' : cepMsg?.text}
+            </p>
+          )}
         </div>
         <div>
           <label style={LABEL_STYLE}>País</label>
