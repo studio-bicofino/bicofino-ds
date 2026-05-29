@@ -28,7 +28,7 @@ export function MemberRowClient({
   const reduce = useReducedMotion()
 
   function go() {
-    router.push(`/p/${person.id}`)
+    router.push(`/membros/${person.id}`)
   }
 
   const tooltip = pendencyTooltip(person.missingPhoto, person.missingAddress)

@@ -19,7 +19,6 @@
  * Validação: apenas `full_name` obrigatório. Resto opcional.
  */
 
-import { z } from 'zod'
 import { revalidatePath } from 'next/cache'
 
 import { createClient } from '@/lib/supabase/server'
@@ -31,41 +30,7 @@ import {
 } from '@/lib/utils/strings'
 
 import { findOrCreateTagInternal } from './tags'
-
-// ============================================================
-// Schema do form v2 (independente do personFormSchema da v1)
-// ============================================================
-
-const contactBlockSchema = z.object({
-  whatsapp: z.string().optional().nullable(),
-  email: z.string().optional().nullable(),
-  website: z.string().optional().nullable(),
-  instagram: z.string().optional().nullable(),
-})
-
-const addressBlockSchema = z.object({
-  street: z.string().optional().nullable(),
-  number: z.string().optional().nullable(),
-  complement: z.string().optional().nullable(),
-  city: z.string().optional().nullable(),
-  state: z.string().optional().nullable(),
-  zip: z.string().optional().nullable(),
-  country: z.string().optional().nullable(),
-})
-
-export const cadastroV2Schema = z.object({
-  full_name: z.string().min(1, 'Nome obrigatório').trim(),
-  current_title: z.string().optional().nullable(),
-  current_company: z.string().optional().nullable(),
-  photo_url: z.string().optional().nullable(),
-  contacts: contactBlockSchema.optional().default({}),
-  address: addressBlockSchema.optional().default({}),
-  skills: z.array(z.string().min(1)).optional().default([]),
-  grupos: z.array(z.string().min(1)).optional().default([]),
-  afiliacoes: z.array(z.string().min(1)).optional().default([]),
-})
-
-export type CadastroV2Input = z.infer<typeof cadastroV2Schema>
+import { cadastroV2Schema, type CadastroV2Input } from './cadastro-schema'
 
 type ActionResult =
   | { ok: true; id: string }
@@ -92,6 +57,16 @@ function emptyToNull(v: string | null | undefined): string | null {
 // ============================================================
 
 export async function createPersonV2(input: CadastroV2Input): Promise<ActionResult> {
+  try {
+    return await createPersonV2Inner(input)
+  } catch (err) {
+    const msg = err instanceof Error ? `${err.name}: ${err.message}` : String(err)
+    console.error('[createPersonV2] threw:', err)
+    return { ok: false, error: `cadastro-throw: ${msg}` }
+  }
+}
+
+async function createPersonV2Inner(input: CadastroV2Input): Promise<ActionResult> {
   const parsed = cadastroV2Schema.safeParse(input)
   if (!parsed.success) {
     return { ok: false, error: parsed.error.issues.map((i) => i.message).join('; ') }
@@ -210,4 +185,164 @@ export async function createPersonV2(input: CadastroV2Input): Promise<ActionResu
   revalidatePath('/membros')
   revalidatePath('/cadastro')
   return { ok: true, id: personId }
+}
+
+// ============================================================
+// Update
+// ============================================================
+
+export async function updatePersonV2(
+  id: string,
+  input: CadastroV2Input,
+): Promise<ActionResult> {
+  try {
+    return await updatePersonV2Inner(id, input)
+  } catch (err) {
+    const msg = err instanceof Error ? `${err.name}: ${err.message}` : String(err)
+    console.error('[updatePersonV2] threw:', err)
+    return { ok: false, error: `cadastro-update-throw: ${msg}` }
+  }
+}
+
+async function updatePersonV2Inner(
+  id: string,
+  input: CadastroV2Input,
+): Promise<ActionResult> {
+  if (!id || typeof id !== 'string') {
+    return { ok: false, error: 'ID inválido.' }
+  }
+
+  const parsed = cadastroV2Schema.safeParse(input)
+  if (!parsed.success) {
+    return { ok: false, error: parsed.error.issues.map((i) => i.message).join('; ') }
+  }
+  const data = parsed.data
+
+  const session = await getSession()
+  if (!session) return { ok: false, error: 'Não autenticado.' }
+  const supabase = await createClient()
+
+  // Canonicalização leve: cidade/país/empresa
+  const sug = await getAllSuggestions()
+  const cities = toCanonicalMap(sug.home_city)
+  const countries = toCanonicalMap(sug.home_country)
+  const companies = toCanonicalMap(sug.current_company)
+
+  const homeCity = canonicalizeValue(data.address.city, cities)
+  const homeCountry = canonicalizeValue(data.address.country, countries)
+  const currentCompany = canonicalizeValue(data.current_company, companies)
+
+  // 1. UPDATE em people. Trigger cuida de updated_at.
+  const personRow = {
+    full_name: data.full_name,
+    current_title: emptyToNull(data.current_title),
+    current_company: currentCompany,
+    photo_url: emptyToNull(data.photo_url),
+    home_city: homeCity,
+    home_country: homeCountry,
+    address_street: emptyToNull(data.address.street),
+    address_number: emptyToNull(data.address.number),
+    address_complement: emptyToNull(data.address.complement),
+    address_state: emptyToNull(data.address.state),
+    address_zip: emptyToNull(data.address.zip),
+    updated_by: session.userId,
+  }
+
+  const { data: updated, error: updErr } = await supabase
+    .from('people')
+    .update(personRow)
+    .eq('id', id)
+    .select('id')
+    .single()
+
+  if (updErr || !updated) {
+    return { ok: false, error: updErr?.message ?? 'Falha ao atualizar pessoa.' }
+  }
+
+  // 2. Contact methods — estratégia delete-all + reinsert.
+  const { error: delContactsErr } = await supabase
+    .from('contact_methods')
+    .delete()
+    .eq('person_id', id)
+  if (delContactsErr) {
+    return { ok: false, error: `contact_methods.delete: ${delContactsErr.message}` }
+  }
+
+  const contactRows: Array<{
+    person_id: string
+    type: 'whatsapp' | 'email' | 'website' | 'instagram'
+    value: string
+    is_primary: boolean
+    label: null
+  }> = []
+  const contactMap = {
+    whatsapp: data.contacts.whatsapp,
+    email: data.contacts.email,
+    website: data.contacts.website,
+    instagram: data.contacts.instagram,
+  } as const
+  for (const [type, raw] of Object.entries(contactMap) as Array<
+    [keyof typeof contactMap, string | null | undefined]
+  >) {
+    const v = emptyToNull(raw)
+    if (!v) continue
+    contactRows.push({
+      person_id: id,
+      type,
+      value: v,
+      is_primary: false,
+      label: null,
+    })
+  }
+  if (contactRows.length) {
+    const { error } = await supabase.from('contact_methods').insert(contactRows)
+    if (error) return { ok: false, error: `contact_methods.insert: ${error.message}` }
+  }
+
+  // 3. person_tags — delete junção (preserva tags) + reinsert.
+  const { error: delTagsErr } = await supabase
+    .from('person_tags')
+    .delete()
+    .eq('person_id', id)
+  if (delTagsErr) {
+    return { ok: false, error: `person_tags.delete: ${delTagsErr.message}` }
+  }
+
+  const tagPayload: Array<{ kind: 'skill' | 'grupo' | 'afiliacao'; names: string[] }> = [
+    { kind: 'skill', names: data.skills },
+    { kind: 'grupo', names: data.grupos },
+    { kind: 'afiliacao', names: data.afiliacoes },
+  ]
+
+  const personTagRows: Array<{
+    person_id: string
+    tag_id: string
+    sort_order: number
+  }> = []
+
+  for (const block of tagPayload) {
+    for (let i = 0; i < block.names.length; i++) {
+      const name = block.names[i]
+      const r = await findOrCreateTagInternal(
+        supabase,
+        { name, kind: block.kind },
+        session.userId,
+      )
+      if ('error' in r) {
+        return { ok: false, error: `tags.${block.kind}: ${r.error}` }
+      }
+      personTagRows.push({ person_id: id, tag_id: r.id, sort_order: i })
+    }
+  }
+
+  if (personTagRows.length) {
+    const { error } = await supabase.from('person_tags').insert(personTagRows)
+    if (error) return { ok: false, error: `person_tags.insert: ${error.message}` }
+  }
+
+  revalidatePath('/')
+  revalidatePath('/membros')
+  revalidatePath(`/membros/${id}`)
+  revalidatePath(`/p/${id}`)
+  return { ok: true, id }
 }

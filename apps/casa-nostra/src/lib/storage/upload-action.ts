@@ -25,36 +25,42 @@ function extFromFile(file: File): string {
 }
 
 export async function uploadPhotoAction(formData: FormData): Promise<UploadResult> {
-  const file = formData.get('file')
-  if (!(file instanceof File)) {
-    return { ok: false, error: 'Arquivo não recebido' }
+  try {
+    const file = formData.get('file')
+    if (!(file instanceof File)) {
+      return { ok: false, error: 'Arquivo não recebido' }
+    }
+    if (file.size > MAX_BYTES) {
+      return { ok: false, error: 'Imagem acima de 5 MB' }
+    }
+    if (file.type && !ALLOWED_MIME.has(file.type)) {
+      return { ok: false, error: 'Formato não suportado (use JPG, PNG, WebP, AVIF ou HEIC)' }
+    }
+
+    const ext = extFromFile(file)
+    const path = `${crypto.randomUUID()}.${ext}`
+    const supabase = await createClient()
+
+    const arrayBuffer = await file.arrayBuffer()
+    const { error: uploadErr } = await supabase.storage
+      .from(BUCKET)
+      .upload(path, arrayBuffer, {
+        cacheControl: '3600',
+        upsert: false,
+        contentType: file.type || 'application/octet-stream',
+      })
+
+    if (uploadErr) return { ok: false, error: `storage.upload: ${uploadErr.message}` }
+
+    const { data } = supabase.storage.from(BUCKET).getPublicUrl(path)
+    if (!data?.publicUrl) {
+      return { ok: false, error: 'Upload ok, mas URL pública não foi retornada' }
+    }
+
+    return { ok: true, url: data.publicUrl, path }
+  } catch (err) {
+    const msg = err instanceof Error ? `${err.name}: ${err.message}` : String(err)
+    console.error('[uploadPhotoAction] threw:', err)
+    return { ok: false, error: `upload-throw: ${msg}` }
   }
-  if (file.size > MAX_BYTES) {
-    return { ok: false, error: 'Imagem acima de 5 MB' }
-  }
-  if (file.type && !ALLOWED_MIME.has(file.type)) {
-    return { ok: false, error: 'Formato não suportado (use JPG, PNG, WebP, AVIF ou HEIC)' }
-  }
-
-  const ext = extFromFile(file)
-  const path = `${crypto.randomUUID()}.${ext}`
-  const supabase = await createClient()
-
-  const arrayBuffer = await file.arrayBuffer()
-  const { error: uploadErr } = await supabase.storage
-    .from(BUCKET)
-    .upload(path, arrayBuffer, {
-      cacheControl: '3600',
-      upsert: false,
-      contentType: file.type || 'application/octet-stream',
-    })
-
-  if (uploadErr) return { ok: false, error: uploadErr.message }
-
-  const { data } = supabase.storage.from(BUCKET).getPublicUrl(path)
-  if (!data?.publicUrl) {
-    return { ok: false, error: 'Upload ok, mas URL pública não foi retornada' }
-  }
-
-  return { ok: true, url: data.publicUrl, path }
 }

@@ -43,7 +43,8 @@ import { AutocompleteField } from '@/app/(app)/p/_components/AutocompleteField'
 import type { Suggestion } from '@/lib/utils/strings'
 import type { Tag } from '@/lib/db/types'
 
-import { createPersonV2, type CadastroV2Input } from '../_actions/cadastro'
+import { createPersonV2, updatePersonV2 } from '../_actions/cadastro'
+import { type CadastroV2Input } from '../_actions/cadastro-schema'
 import { ContactBlock, EMPTY_CONTACTS, type ContactValues } from './ContactBlock'
 import { EMPTY_ADDRESS, type AddressValue } from './AddressPopover'
 import { TagInput } from './TagInput'
@@ -54,6 +55,9 @@ type Props = {
     current_company: Suggestion[]
     current_title: Suggestion[]
   }
+  mode?: 'create' | 'edit'
+  personId?: string
+  initialData?: CadastroV2Input
 }
 
 const TITLE_STYLE: CSSProperties = {
@@ -133,22 +137,57 @@ const ERROR_STYLE: CSSProperties = {
   letterSpacing: '0.04em',
 }
 
-export function CadastroV2({ allTags, suggestions }: Props) {
+export function CadastroV2({
+  allTags,
+  suggestions,
+  mode = 'create',
+  personId,
+  initialData,
+}: Props) {
   const router = useRouter()
   const reduce = useReducedMotion()
   const [pending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
 
-  // Estado do form
-  const [fullName, setFullName] = useState('')
-  const [currentTitle, setCurrentTitle] = useState('')
-  const [currentCompany, setCurrentCompany] = useState('')
-  const [photoUrl, setPhotoUrl] = useState<string | null>(null)
-  const [contacts, setContacts] = useState<ContactValues>(EMPTY_CONTACTS)
-  const [address, setAddress] = useState<AddressValue>(EMPTY_ADDRESS)
-  const [skills, setSkills] = useState<string[]>([])
-  const [grupos, setGrupos] = useState<string[]>([])
-  const [afiliacoes, setAfiliacoes] = useState<string[]>([])
+  const isEdit = mode === 'edit'
+
+  // Estado do form — inicializado a partir de initialData quando edit.
+  const [fullName, setFullName] = useState(initialData?.full_name ?? '')
+  const [currentTitle, setCurrentTitle] = useState(initialData?.current_title ?? '')
+  const [currentCompany, setCurrentCompany] = useState(
+    initialData?.current_company ?? '',
+  )
+  const [photoUrl, setPhotoUrl] = useState<string | null>(
+    initialData?.photo_url ?? null,
+  )
+  const [contacts, setContacts] = useState<ContactValues>(
+    initialData
+      ? {
+          whatsapp: initialData.contacts?.whatsapp ?? '',
+          email: initialData.contacts?.email ?? '',
+          website: initialData.contacts?.website ?? '',
+          instagram: initialData.contacts?.instagram ?? '',
+        }
+      : EMPTY_CONTACTS,
+  )
+  const [address, setAddress] = useState<AddressValue>(
+    initialData
+      ? {
+          street: initialData.address?.street ?? '',
+          number: initialData.address?.number ?? '',
+          complement: initialData.address?.complement ?? '',
+          city: initialData.address?.city ?? '',
+          state: initialData.address?.state ?? '',
+          zip: initialData.address?.zip ?? '',
+          country: initialData.address?.country ?? '',
+        }
+      : EMPTY_ADDRESS,
+  )
+  const [skills, setSkills] = useState<string[]>(initialData?.skills ?? [])
+  const [grupos, setGrupos] = useState<string[]>(initialData?.grupos ?? [])
+  const [afiliacoes, setAfiliacoes] = useState<string[]>(
+    initialData?.afiliacoes ?? [],
+  )
 
   function handleSubmit(e?: React.FormEvent) {
     e?.preventDefault()
@@ -186,14 +225,21 @@ export function CadastroV2({ allTags, suggestions }: Props) {
     }
 
     startTransition(async () => {
-      const result = await createPersonV2(payload)
+      const result =
+        isEdit && personId
+          ? await updatePersonV2(personId, payload)
+          : await createPersonV2(payload)
       if (result.ok) {
-        router.push(`/p/${result.id}`)
+        router.push('/membros')
       } else {
         setError(result.error)
       }
     })
   }
+
+  const headerTitle = isEdit
+    ? fullName.trim() || initialData?.full_name?.trim() || 'Editar pessoa'
+    : 'Casa Nostra'
 
   return (
     <motion.form
@@ -220,7 +266,24 @@ export function CadastroV2({ allTags, suggestions }: Props) {
           flexWrap: 'wrap',
         }}
       >
-        <h1 style={TITLE_STYLE}>Casa Nostra</h1>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          {isEdit && (
+            <span
+              className="mono"
+              style={{
+                fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+                fontSize: 11,
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                color: 'var(--bf-cn-caffe)',
+                fontWeight: 500,
+              }}
+            >
+              // EDITAR · v2
+            </span>
+          )}
+          <h1 style={TITLE_STYLE}>{headerTitle}</h1>
+        </div>
       </header>
 
       {/* Linha 1 — Foto + Nome/Cargo/Empresa */}
