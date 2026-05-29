@@ -4,9 +4,6 @@ import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import {
-  User,
-  Users,
-  Activity,
   Settings,
   Menu,
   X,
@@ -33,15 +30,6 @@ type NavDivider = { kind: 'divider' }
 type NavSection = NavGroup | NavDivider
 
 const SECTIONS: NavSection[] = [
-  {
-    kind: 'group',
-    items: [
-      { href: '/', label: 'Pessoas', icon: User },
-      { href: '/grupos', label: 'Grupos', icon: Users },
-      { href: '/sinais', label: 'Movimentos', icon: Activity },
-    ],
-  },
-  { kind: 'divider' },
   {
     kind: 'group',
     items: [

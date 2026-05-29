@@ -36,6 +36,7 @@ import type { CSSProperties } from 'react'
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, useReducedMotion } from 'motion/react'
+import { Check } from 'lucide-react'
 
 import { PhotoUploaderHero } from './PhotoUploaderHero'
 import { AutocompleteField } from '@/app/(app)/p/_components/AutocompleteField'
@@ -94,16 +95,24 @@ const SAVE_BUTTON_STYLE: CSSProperties = {
   display: 'inline-flex',
   alignItems: 'center',
   gap: 8,
-  padding: '10px 20px',
-  fontSize: 13,
+  padding: '16px 32px',
+  fontSize: 14,
   fontFamily: 'inherit',
   fontWeight: 500,
-  background: 'var(--bf-cn-caffe)',
-  color: 'var(--bf-cn-crema)',
+  background: 'var(--bf-cn-sep)',
+  color: 'var(--bf-ops-success-fg)',
   border: 'none',
-  borderRadius: 9999,
+  borderRadius: 16,
   cursor: 'pointer',
-  transition: 'opacity 140ms ease-out',
+  transition: 'opacity 140ms ease-out, box-shadow 140ms ease-out',
+}
+
+const SAVE_BUTTON_ROW_STYLE: CSSProperties = {
+  display: 'flex',
+  justifyContent: 'flex-end',
+  alignItems: 'center',
+  gap: 16,
+  marginTop: 16,
 }
 
 const FOOTER_STYLE: CSSProperties = {
@@ -201,7 +210,7 @@ export function CadastroV2({ allTags, suggestions }: Props) {
         gap: 16,
       }}
     >
-      {/* Header — título grande + Salvar */}
+      {/* Header — título grande */}
       <header
         style={{
           display: 'flex',
@@ -212,17 +221,6 @@ export function CadastroV2({ allTags, suggestions }: Props) {
         }}
       >
         <h1 style={TITLE_STYLE}>Casa Nostra</h1>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          {error && <span style={ERROR_STYLE}>{error}</span>}
-          <button
-            type="submit"
-            disabled={pending}
-            style={{ ...SAVE_BUTTON_STYLE, opacity: pending ? 0.6 : 1 }}
-          >
-            {pending ? 'Salvando…' : 'Salvar'}
-          </button>
-        </div>
       </header>
 
       {/* Linha 1 — Foto + Nome/Cargo/Empresa */}
@@ -269,7 +267,7 @@ export function CadastroV2({ allTags, suggestions }: Props) {
               label="Cargo"
               value={currentTitle}
               onChange={setCurrentTitle}
-              placeholder="Ex.: Diretor de Marketing"
+              placeholder="Ex.: CEO"
               suggestions={suggestions.current_title}
             />
             <AutocompleteField
@@ -277,7 +275,7 @@ export function CadastroV2({ allTags, suggestions }: Props) {
               label="Empresa"
               value={currentCompany}
               onChange={setCurrentCompany}
-              placeholder="Ex.: Globo"
+              placeholder="Ex.: Julius Baer"
               suggestions={suggestions.current_company}
             />
           </div>
@@ -303,7 +301,7 @@ export function CadastroV2({ allTags, suggestions }: Props) {
           value={skills}
           onChange={setSkills}
           allTags={allTags}
-          placeholder="Ex.: Comunicação, Futebol Atleta"
+          placeholder="Ex.: Tech, Futebol Atleta, Futebol Dirigente, Financeiro"
         />
       </section>
 
@@ -315,7 +313,7 @@ export function CadastroV2({ allTags, suggestions }: Props) {
           value={grupos}
           onChange={setGrupos}
           allTags={allTags}
-          placeholder="Ex.: Colégio Bandeirantes, Clube Pinheiros"
+          placeholder="Ex.: Clube Pinheiros, Mercado Publicitário"
         />
       </section>
 
@@ -327,15 +325,56 @@ export function CadastroV2({ allTags, suggestions }: Props) {
           value={afiliacoes}
           onChange={setAfiliacoes}
           allTags={allTags}
-          placeholder="Ex.: FIFA, Napoli, Globo"
+          placeholder="Ex.: FIFA, Palmeiras, Adidas, Federação Paulista de Futebol"
         />
       </section>
+
+      {/* Salvar — fim do form, alinhado à direita */}
+      <div style={SAVE_BUTTON_ROW_STYLE}>
+        {error && <span style={ERROR_STYLE}>{error}</span>}
+        <button
+          type="submit"
+          disabled={pending}
+          className="cn-cadastro-v2__save"
+          style={{
+            ...SAVE_BUTTON_STYLE,
+            opacity: pending ? 0.5 : 1,
+            cursor: pending ? 'not-allowed' : 'pointer',
+          }}
+        >
+          {pending ? 'Salvando…' : 'Salvar'}
+          <Check size={20} strokeWidth={1.5} />
+        </button>
+      </div>
 
       {/* Footer — selo */}
       <footer style={FOOTER_STYLE}>
         <span style={{ opacity: 0.7 }}>//</span> BICOFINO{' '}
         <span style={{ opacity: 0.7 }}>//</span> CASA NOSTRA v2
       </footer>
+
+      <style jsx>{`
+        @keyframes cn-save-pulse {
+          0%, 100% {
+            transform: scale(1);
+            box-shadow: 0 0 0 0
+              color-mix(in srgb, var(--bf-cn-sep) 0%, transparent);
+          }
+          50% {
+            transform: scale(1.035);
+            box-shadow: 0 0 0 10px
+              color-mix(in srgb, var(--bf-cn-sep) 18%, transparent);
+          }
+        }
+        .cn-cadastro-v2__save:not(:disabled):hover {
+          animation: cn-save-pulse 1.6s ease-in-out infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .cn-cadastro-v2__save:not(:disabled):hover {
+            animation: none;
+          }
+        }
+      `}</style>
     </motion.form>
   )
 }

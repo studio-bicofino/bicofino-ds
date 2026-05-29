@@ -210,33 +210,7 @@ function Header() {
       >
         Membros
       </h1>
-      <p
-        style={{
-          fontSize: 16,
-          color: 'var(--bf-text-secondary)',
-          maxWidth: 520,
-        }}
-      >
-        Listagem direta da rede. O marcador <PendencyDot /> sinaliza que falta foto ou endereço.
-      </p>
     </header>
-  )
-}
-
-function PendencyDot() {
-  return (
-    <span
-      aria-hidden
-      style={{
-        display: 'inline-block',
-        width: 8,
-        height: 8,
-        borderRadius: '50%',
-        background: 'var(--bf-ops-danger)',
-        verticalAlign: 'middle',
-        margin: '0 2px',
-      }}
-    />
   )
 }
 

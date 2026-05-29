@@ -16,6 +16,7 @@
 import type { CSSProperties } from 'react'
 import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
+import { User } from 'lucide-react'
 import { uploadPersonPhoto } from '@/lib/storage/photos'
 
 type Props = {
@@ -70,14 +71,6 @@ const HINT_STYLE: CSSProperties = {
   textAlign: 'center',
   lineHeight: 1.45,
   margin: 0,
-}
-
-const EMPTY_LABEL_STYLE: CSSProperties = {
-  fontFamily: '"JetBrains Mono", ui-monospace, monospace',
-  fontSize: 11,
-  letterSpacing: '0.12em',
-  textTransform: 'uppercase',
-  color: 'var(--bf-text-subtle)',
 }
 
 const ERROR_STYLE: CSSProperties = {
@@ -210,9 +203,19 @@ export function PhotoUploaderHero({ value, onChange, disabled }: Props) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={reduce ? { duration: 0 } : { duration: 0.2, ease: 'easeOut' }}
-              style={EMPTY_LABEL_STYLE}
+              style={{
+                display: 'grid',
+                placeItems: 'center',
+                width: '100%',
+                height: '100%',
+              }}
+              aria-label="sem foto"
             >
-              sem foto
+              <User
+                size={64}
+                strokeWidth={1.5}
+                color="color-mix(in srgb, var(--bf-cn-caffe) 30%, transparent)"
+              />
             </motion.span>
           )}
         </AnimatePresence>
