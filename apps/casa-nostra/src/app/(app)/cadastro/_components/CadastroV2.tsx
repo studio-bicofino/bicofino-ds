@@ -54,6 +54,7 @@ type Props = {
   suggestions: {
     current_company: Suggestion[]
     current_title: Suggestion[]
+    home_city: Suggestion[]
   }
   mode?: 'create' | 'edit'
   personId?: string
@@ -353,6 +354,7 @@ export function CadastroV2({
           onContactsChange={setContacts}
           address={address}
           onAddressChange={setAddress}
+          citySuggestions={suggestions.home_city}
         />
       </section>
 

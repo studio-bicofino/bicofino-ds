@@ -46,21 +46,27 @@ type PersonTagJoinRow = {
   tags: TagJoin | TagJoin[] | null
 }
 
-type TitleRow = { current_title: string | null; current_company: string | null }
+type SuggestionRow = {
+  current_title: string | null
+  current_company: string | null
+  home_city: string | null
+}
 
-async function getTitleAndCompanySuggestions(): Promise<{
+async function getFormSuggestions(): Promise<{
   current_title: Suggestion[]
   current_company: Suggestion[]
+  home_city: Suggestion[]
 }> {
   const supabase = await createClient()
   const { data } = await supabase
     .from('people')
-    .select('current_title, current_company')
+    .select('current_title, current_company, home_city')
 
-  const rows = (data ?? []) as TitleRow[]
+  const rows = (data ?? []) as SuggestionRow[]
   return {
     current_title: buildSuggestions(rows.map((r) => r.current_title)),
     current_company: buildSuggestions(rows.map((r) => r.current_company)),
+    home_city: buildSuggestions(rows.map((r) => r.home_city)),
   }
 }
 
@@ -98,7 +104,7 @@ export default async function EditPersonPage({
         .eq('person_id', id)
         .order('sort_order', { ascending: true }),
       listTags(),
-      getTitleAndCompanySuggestions(),
+      getFormSuggestions(),
     ])
 
   const person = personResp.data as PersonRow | null

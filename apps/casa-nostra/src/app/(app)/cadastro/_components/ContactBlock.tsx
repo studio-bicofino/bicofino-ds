@@ -24,6 +24,7 @@ import {
 } from 'lucide-react'
 
 import { AddressPopover, type AddressValue } from './AddressPopover'
+import type { Suggestion } from '@/lib/utils/strings'
 
 export type ContactValues = {
   whatsapp: string
@@ -44,6 +45,7 @@ type Props = {
   onContactsChange: (next: ContactValues) => void
   address: AddressValue
   onAddressChange: (next: AddressValue) => void
+  citySuggestions?: Suggestion[]
 }
 
 type SimpleField = keyof ContactValues
@@ -162,6 +164,7 @@ export function ContactBlock({
   onContactsChange,
   address,
   onAddressChange,
+  citySuggestions = [],
 }: Props) {
   const [active, setActive] = useState<SimpleField | null>(null)
   const [addressOpen, setAddressOpen] = useState(false)
@@ -258,6 +261,7 @@ export function ContactBlock({
           anchorRef={addressAnchorRef}
           open={addressOpen}
           onClose={() => setAddressOpen(false)}
+          citySuggestions={citySuggestions}
         />
       </div>
     </div>

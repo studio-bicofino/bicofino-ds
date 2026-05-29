@@ -16,6 +16,9 @@ import type { CSSProperties } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { X } from 'lucide-react'
 
+import { AutocompleteField } from '@/app/(app)/p/_components/AutocompleteField'
+import type { Suggestion } from '@/lib/utils/strings'
+
 export type AddressValue = {
   street: string
   number: string
@@ -42,6 +45,8 @@ type Props = {
   anchorRef: React.RefObject<HTMLElement | null>
   open: boolean
   onClose: () => void
+  /** Cidades já cadastradas, pra typeahead canônico. */
+  citySuggestions?: Suggestion[]
 }
 
 const PANEL_STYLE: CSSProperties = {
@@ -129,7 +134,14 @@ type ViaCepResponse = {
   uf?: string
 }
 
-export function AddressPopover({ value, onChange, anchorRef, open, onClose }: Props) {
+export function AddressPopover({
+  value,
+  onChange,
+  anchorRef,
+  open,
+  onClose,
+  citySuggestions = [],
+}: Props) {
   const panelRef = useRef<HTMLDivElement | null>(null)
   const valueRef = useRef(value)
   const lastLookupRef = useRef<string>('')
@@ -269,12 +281,11 @@ export function AddressPopover({ value, onChange, anchorRef, open, onClose }: Pr
       <div style={ROW_STYLE}>
         <div>
           <label style={LABEL_STYLE}>Cidade</label>
-          <input
-            type="text"
+          <AutocompleteField
             value={value.city}
-            onChange={(e) => patch('city', e.target.value)}
-            style={INPUT_STYLE}
-            autoComplete="address-level2"
+            onChange={(next) => patch('city', next)}
+            suggestions={citySuggestions}
+            inputStyle={INPUT_STYLE}
           />
         </div>
         <div>

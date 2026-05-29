@@ -16,6 +16,8 @@ type Props = {
   error?: string
   suggestions: Suggestion[]
   maxResults?: number
+  /** Override do estilo do input — usado quando embutido fora do shell padrão (ex.: AddressPopover). */
+  inputStyle?: CSSProperties
 }
 
 const DROPDOWN_STYLE: CSSProperties = {
@@ -63,6 +65,7 @@ export function AutocompleteField({
   error,
   suggestions,
   maxResults = 6,
+  inputStyle,
 }: Props) {
   const [open, setOpen] = useState(false)
   const [highlight, setHighlight] = useState(-1)
@@ -145,7 +148,7 @@ export function AutocompleteField({
           onKeyDown={onKeyDown}
           placeholder={placeholder}
           autoComplete="off"
-          style={fieldInputBaseStyle}
+          style={inputStyle ? { ...fieldInputBaseStyle, ...inputStyle } : fieldInputBaseStyle}
         />
 
         {showDropdown && (

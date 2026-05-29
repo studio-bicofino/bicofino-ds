@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { MemberRowClient, type MemberRowData } from './_components/MemberRowClient'
+import { MemberSearch, type MemberSearchOption } from './_components/MemberSearch'
 
 const PAGE_SIZE = 50
 
@@ -54,6 +55,21 @@ export default async function MembrosPage({
     .order('full_name', { ascending: true })
     .range(offset, offset + PAGE_SIZE - 1)
 
+  // Pool leve pro typeahead — independente do filtro/paginação da lista.
+  const { data: searchData } = await supabase
+    .from('people')
+    .select('id, full_name, current_company')
+    .order('full_name', { ascending: true })
+    .limit(500)
+
+  const searchOptions: MemberSearchOption[] = (
+    (searchData ?? []) as Array<{
+      id: string
+      full_name: string
+      current_company: string | null
+    }>
+  ).map((p) => ({ id: p.id, name: p.full_name, company: p.current_company }))
+
   const peopleRaw = (data ?? []) as PersonRow[]
   const total = count ?? 0
   const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE))
@@ -78,29 +94,7 @@ export default async function MembrosPage({
       <div style={{ height: 1, background: 'var(--bf-border)' }} aria-hidden />
 
       <div className="cn-toolbar">
-        <form
-          method="GET"
-          action="/membros"
-          style={{ display: 'flex', gap: 8, flex: 1, minWidth: 0 }}
-        >
-          <input
-            type="search"
-            name="q"
-            defaultValue={q}
-            placeholder="Buscar por nome ou empresa"
-            style={{
-              flex: 1,
-              minWidth: 0,
-              padding: '10px 16px',
-              fontSize: 14,
-              background: 'var(--bf-surface)',
-              border: '1px solid var(--bf-border)',
-              borderRadius: 9999,
-              color: 'var(--bf-text-primary)',
-              outline: 'none',
-            }}
-          />
-        </form>
+        <MemberSearch initialQuery={q} options={searchOptions} />
         <Link
           href="/cadastro"
           className="cn-toolbar-add"
