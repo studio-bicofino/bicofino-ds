@@ -93,7 +93,7 @@ export default async function MembrosPage({
 
       <div style={{ height: 1, background: 'var(--bf-border)' }} aria-hidden />
 
-      <div className="cn-toolbar">
+      <div className="cn-toolbar" style={{ position: 'relative', zIndex: 40 }}>
         <MemberSearch initialQuery={q} options={searchOptions} />
         <Link
           href="/cadastro"
@@ -121,6 +121,8 @@ export default async function MembrosPage({
           fontSize: 11,
           color: 'var(--bf-text-secondary)',
           letterSpacing: '0.04em',
+          position: 'relative',
+          zIndex: 0,
         }}
       >
         {total} {total === 1 ? 'membro' : 'membros'}
