@@ -1,0 +1,310 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ─── Tailwind theme: maps CSS vars to Tailwind utility classes ─── */
+@theme inline {
+  /* shadcn mappings (required) */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 8px);
+
+  /* Bicofino semantic colors as Tailwind classes */
+  --color-bf-black: var(--bf-black);
+  --color-bf-power-black: var(--bf-power-black);
+  --color-bf-white: var(--bf-white);
+  --color-bf-steel: var(--bf-steel);
+  --color-bf-platinum: var(--bf-platinum);
+  --color-bf-aluminium: var(--bf-aluminium);
+  --color-bf-accent: var(--bf-accent);
+  --color-bf-bg-page: var(--bf-bg-page);
+  --color-bf-surface: var(--bf-surface);
+  --color-bf-text-primary: var(--bf-text-primary);
+  --color-bf-text-secondary: var(--bf-text-secondary);
+  --color-bf-text-subtle: var(--bf-text-subtle);
+
+  /* Bicofino team accent colors */
+  --color-bf-spfc: #f0535e;
+  --color-bf-sep: #2fd298;
+  --color-bf-torino: #821324;
+  --color-bf-como: #0d8aff;
+  --color-bf-venezia: #38e0e3;
+  --color-bf-fiorentina: #711cfe;
+
+  /* Fonts */
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
+
+  /* Bicofino closed spacing (only these three values) */
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 32px;
+}
+
+/* ─── Bicofino base palette (light mode) ─── */
+:root {
+  /* Palette */
+  --bf-black: #2a2c2b;
+  --bf-power-black: #061015;
+  --bf-white: #ffffff;
+  --bf-steel: #6d7886;
+  --bf-platinum: #a8c9e5;
+  --bf-aluminium: #e2eaf2;
+  --bf-crema: #f3ebd4;
+  --bf-caffe: #33111a;
+
+  /* Semantic tokens */
+  --bf-bg-page: #ffffff;
+  --bf-surface: #f2f8ff;
+  --bf-surface-subtle: #f8fafc;
+  --bf-text-primary: #2a2c2b;
+  --bf-text-secondary: #5f6b77;
+  --bf-text-subtle: #a8c9e5;
+  --bf-border: rgba(42, 44, 43, 0.08);
+  --bf-border-strong: rgba(42, 44, 43, 0.16);
+  --bf-accent: #bfa37a;
+
+  /* Spacing (closed system — only sm/md/lg) */
+  --bf-space-sm: 8px;
+  --bf-space-md: 16px;
+  --bf-space-lg: 32px;
+
+  /* Radius (closed system) */
+  --bf-radius-sm: 4px;
+  --bf-radius-md: 8px;
+  --bf-radius-lg: 16px;
+
+  /* Motion */
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 360ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* shadcn bridge — maps shadcn tokens to Bicofino values */
+  --background: #ffffff;
+  --foreground: #2a2c2b;
+  --card: #ffffff;
+  --card-foreground: #2a2c2b;
+  --popover: #ffffff;
+  --popover-foreground: #2a2c2b;
+  --primary: #2a2c2b;
+  --primary-foreground: #ffffff;
+  --secondary: #f2f8ff;
+  --secondary-foreground: #2a2c2b;
+  --muted: #f8fafc;
+  --muted-foreground: #5f6b77;
+  --accent: #bfa37a;
+  --accent-foreground: #ffffff;
+  --destructive: #f0535e;
+  --border: rgba(42, 44, 43, 0.08);
+  --input: rgba(42, 44, 43, 0.1);
+  --ring: #bfa37a;
+  --radius: 8px;
+
+  /* Sidebar (dark by default — Bicofino brand) */
+  --sidebar: #2a2c2b;
+  --sidebar-foreground: #f2f8ff;
+  --sidebar-primary: #bfa37a;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: rgba(255, 255, 255, 0.06);
+  --sidebar-accent-foreground: #f2f8ff;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-ring: #bfa37a;
+
+  /* Charts — team palette */
+  --chart-1: #0d8aff;
+  --chart-2: #2fd298;
+  --chart-3: #f0535e;
+  --chart-4: #38e0e3;
+  --chart-5: #bfa37a;
+}
+
+/* ─── Dark mode ─── */
+.dark {
+  --bf-bg-page: #061015;
+  --bf-surface: #2a2c2b;
+  --bf-surface-subtle: #1a1d1c;
+  --bf-text-primary: #f2f8ff;
+  --bf-text-secondary: #a8c9e5;
+  --bf-text-subtle: #6d7886;
+  --bf-border: rgba(242, 248, 255, 0.08);
+  --bf-border-strong: rgba(242, 248, 255, 0.16);
+
+  --background: #061015;
+  --foreground: #f2f8ff;
+  --card: #2a2c2b;
+  --card-foreground: #f2f8ff;
+  --popover: #1a1d1c;
+  --popover-foreground: #f2f8ff;
+  --primary: #f2f8ff;
+  --primary-foreground: #2a2c2b;
+  --secondary: #2a2c2b;
+  --secondary-foreground: #f2f8ff;
+  --muted: #1a1d1c;
+  --muted-foreground: #a8c9e5;
+  --accent: #bfa37a;
+  --accent-foreground: #ffffff;
+  --destructive: #f0535e;
+  --border: rgba(242, 248, 255, 0.08);
+  --input: rgba(242, 248, 255, 0.1);
+  --ring: #bfa37a;
+
+  --sidebar: #0d1318;
+  --sidebar-foreground: #f2f8ff;
+  --sidebar-primary: #bfa37a;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: rgba(255, 255, 255, 0.06);
+  --sidebar-accent-foreground: #f2f8ff;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-ring: #bfa37a;
+}
+
+/* ─── Base resets ─── */
+@layer base {
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-inter), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Scroll behaviour */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Focus visible */
+  :focus-visible {
+    outline: 2px solid var(--bf-accent);
+    outline-offset: 2px;
+  }
+
+  /* Selection */
+  ::selection {
+    background: var(--bf-aluminium);
+    color: var(--bf-text-primary);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--bf-aluminium); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--bf-steel); }
+}
+
+/* ─── Prefers-reduced-motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Skeleton animation ─── */
+@keyframes bf-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.bf-skeleton {
+  animation: bf-pulse 1.5s ease-in-out infinite;
+}
+
+/* ─── Responsive section padding ─── */
+/* Replaces the hardcoded H_PAD = 72 inline style used in all section files.
+   Fluid: 16px on mobile → 72px on wide desktop. */
+.section-h-pad {
+  padding-left: clamp(16px, 6vw, 72px);
+  padding-right: clamp(16px, 6vw, 72px);
+}
+
+/* ─── Responsive section title ─── */
+/* Replaces fontSize: 52 hardcoded in SectionTitle / BsHeader atoms.
+   Fluid: 28px on mobile → 52px on desktop. */
+.section-title {
+  font-size: clamp(28px, 5vw, 52px) !important;
+}
+
+/* ─── Responsive grid: 2-col collapses to 1 on mobile ─── */
+@media (max-width: 640px) {
+  .grid-2-col-responsive {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ─── Responsive grid: 3-col collapses on tablet/mobile ─── */
+@media (max-width: 767px) {
+  .grid-3-col-responsive {
+    grid-template-columns: 1fr !important;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .grid-3-col-responsive {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+/* ─── Responsive table: fixed-first-col collapses to 1 col on mobile ─── */
+@media (max-width: 640px) {
+  .table-fixed-col {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ─── Font cards: stacked on tablet/mobile ─── */
+@media (max-width: 900px) {
+  .font-card-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .font-card-grid > *:nth-child(2) {
+    border-left: none !important;
+    border-top: 1px solid var(--bf-border) !important;
+  }
+}

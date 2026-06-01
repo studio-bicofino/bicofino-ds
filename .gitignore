@@ -50,3 +50,16 @@ legacy/
 
 # Design handoff bundle — local reference for DS v3.1 Phase 1 (delete after Phase 1; not versioned)
 design_handoff_bicofino_v3_1/
+
+# Claude Code — framework/tooling instalado localmente (NÃO versionar).
+# Os agents/skills curados do bicofino em .claude/agents e .claude/skills
+# permanecem versionados; aqui só ignoramos o framework GSD e installs transitórios.
+.claude/get-shit-done/
+.claude/gsd-file-manifest.json
+.claude/gsd-install-state.json
+.claude/gsd-migration-journal/
+.claude/.gsd-profile
+.claude/hooks/
+.claude/commands/
+.claude/package.json
+.agents/
