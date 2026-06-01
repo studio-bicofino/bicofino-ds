@@ -1,17 +1,19 @@
 # Bicofino DS — Status
 
-Atualizado em: 10 mai 2026 (apps/web fase 3 — preview https://bicofino-nrp6jk02d-woney-malians-projects.vercel.app)
+Atualizado em: 01 jun 2026 (DS v3.1 Fase 0+1 em prod · rename On/Off Pitch · docs-site migrado p/ Vercel da empresa)
 
 ---
 
 ## Monorepo
 
-| App               | Porta | URL produção                      | Estado       |
-|-------------------|-------|-----------------------------------|--------------|
-| apps/docs-site    | 3001  | https://bicofino.vercel.app       | ✅ estável   |
-| apps/storybook    | 6006  | —                                 | ✅ estável   |
-| apps/web          | 3002  | https://bicofino-web.vercel.app   | ✅ em prod   |
-| packages/design-system | — | —                                | ✅ estável   |
+| App               | Porta | URL produção                              | Estado       |
+|-------------------|-------|-------------------------------------------|--------------|
+| apps/docs-site    | 3001  | https://bicofino-ds-umber.vercel.app      | ✅ em prod (Vercel empresa `bicofino-ds`) |
+| apps/storybook    | 6006  | —                                         | ✅ estável   |
+| apps/web          | 3002  | https://bicofino-web.vercel.app           | ✅ em prod   |
+| packages/design-system | — | —                                        | ✅ estável   |
+
+> **Vercel:** docs-site vive no projeto **`bicofino-ds`** (team `studio-bicofinos-projects`, conta `woney@bicofino.com`), git-conectado a `studio-bicofino/bicofino-ds`, `rootDirectory=apps/docs-site`, prod branch `main`. Proteção SSO **desligada** (público). O projeto pessoal `bicofino` (woneymalian@gmail.com) está deprecado para este uso.
 
 ---
 
@@ -28,19 +30,25 @@ Atualizado em: 10 mai 2026 (apps/web fase 3 — preview https://bicofino-nrp6jk0
 ### 02 • Design System
 - [x] Universo Visual (visão geral do DS)
 - [x] Cores (Paleta Core + Especial + Tokens)
+- [x] One Vibrant — regra 90/10 + `--current-accent` randomizado (Fase 1)
 - [x] Tipografia
 - [x] Heading (título hero — curto, categórico, sem frase completa)
 - [x] Spacing & Motion
+- [x] Corner Languages — sharp/soft/pill via `[data-corners]` (Fase 1)
 
 ### 03 • Brand
 - [x] Logotipo
 - [x] Voz & Tom
+- [x] Grafismo Técnico (M-01) — SVG `.bf-schematic`, motion ambiente (Fase 1)
+- [x] Post-System 60/40 (M-04) — grid unity-in-variety (Fase 1)
+- [x] Intervenção de Cor (M-03) — bloco editorial `--current-accent` (Fase 1)
 
 ### 04 • Componentes
 - [x] Botões
 - [x] Badges
 - [x] Forms
 - [x] Cards (editorial, resultado, campanha)
+- [x] Bento de Dados (M-05) — chassi de dashboard (Fase 1)
 
 ### 05 • Verticais
 - [x] Verticais (// 05.1)
@@ -74,12 +82,29 @@ Atualizado em: 10 mai 2026 (apps/web fase 3 — preview https://bicofino-nrp6jk0
 
 ## Branches ativas
 
-- main → estado estável do DS
+- main → estado estável do DS (DS v3.1 Fase 0+1 + rename On/Off Pitch)
 - experiments/athlete-profile → (criar antes de começar os novos componentes)
 
 ---
 
+## Pendências / próximos passos (p/ retomar)
+
+- [ ] **DS v3.1 Fase 2** — self-hosting da fonte **Gotham** (`--bf-font-impact`, pesos 300/500/700/900 + itálicos) p/ títulos de impacto (M-02: nomes de atleta). Arquivos em `apps/docs-site/public/fonts/`, wire no `globals.css`. (handoff local `design_handoff_bicofino_v3_1/` — apagar após Fase 2.)
+- [ ] **Rename On/Off Pitch — identificadores internos** (opcional, adiado): chaves `t()` (`onfield.*`), nome `OnFieldSection.tsx`, classes CSS e âncora `#on-field` ainda são "field" (invisíveis). Aplicar só se quiser consistência total de código.
+- [ ] **Rename On/Off Pitch — apps WIP**: ds-studio, casa-nostra, vanguarda, propostas ficaram de fora; aplicar se/quando reativados.
+- [ ] **Athlete Profile (/verticais)** — spec pronta em `design_handoff_bicofino_v3_1/PHASE1_athlete_profile.md`; estende `AthleteStatCard`/`AthleteCampaignCarousel`/`OnFieldSection`.
+
+---
+
 ## Changelog
+
+### 01 jun 2026 — DS v3.1 (Fase 0+1) + rename On/Off Pitch + migração Vercel da empresa
+
+- **DS v3.1 Fase 0 (cânone)** — `DESIGN.md` + `tokens.{css,ts}` + `globals.css` reconciliados: expression modes SYSTEM/EDITORIAL, duas linguagens de canto (sharp/soft via `[data-corners]`), regra one-vibrant com `--current-accent` randomizado por refresh, lines-on-dark, motion ambiente (`.bf-schematic`, `--dur-ambient` 6s), biblioteca de 5 módulos. (PR #1, já estava em prod.)
+- **DS v3.1 Fase 1 (UI nova)** — 6 seções bespoke recriadas das `references/*.html`: One Vibrant (`#one-vibrant`), Corner Languages (`#corner-languages`), Grafismo Técnico M-01 (`#grafismo-tecnico`), Post-System 60/40 M-04 (`#post-system`), Intervenção de Cor M-03 (`#intervencao-cor`), Bento de Dados M-05 (`#bento`). Componentes em `src/components/dsfase1/`, i18n em `src/content/dsfase1/` (paridade BR/EN/IT), âncoras no `Sidebar`. (PR #9)
+- **Rename de marca On/Off Field → On/Off Pitch** — todo texto visível (docs-site i18n + componentes + docs raiz) + rotas do apps/web (`/on-pitch`, `/off-pitch` com redirect permanente). Chaves `t()`/paths de asset/âncoras internas mantidos de propósito. Convenção permanente daqui em diante. (PR #9, commit 2)
+- **Vercel** — docs-site **migrado** do projeto pessoal `bicofino` p/ o da empresa `bicofino-ds` (re-link local), proteção SSO **desligada** (público). Build da Fase 0 que tinha errado foi corrigido pelo commit das deps do AI SDK.
+
 
 ### 10 mai 2026 — Fase 3 — Accordion, fundo azul, ícones platinum, fix vídeo
 
