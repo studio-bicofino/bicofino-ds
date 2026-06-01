@@ -544,7 +544,21 @@ function Typography() {
         ]
       )}
 
-      <SubHeader label="// 02.3.3" title="Type Scale" />
+      <SubHeader label="// 02.3.3 · impacto" title="Gotham" />
+      {fontCard(
+        'Gotham',
+        t('font.gotham.subtitle'),
+        <div style={{ fontSize: 72, fontWeight: 900, letterSpacing: '0.01em', color: C.black, lineHeight: 1, fontFamily: 'var(--bf-font-impact)', textTransform: 'uppercase' }}>Kerchner</div>,
+        [
+          [t('font.meta.family'),   t('font.gotham.family')],
+          [t('font.meta.weights'),  t('font.gotham.weights')],
+          [t('font.meta.coverage'), t('font.gotham.coverage')],
+          [t('font.meta.usage'),    t('font.gotham.usage')],
+          [t('font.meta.license'),  t('font.gotham.license')],
+        ]
+      )}
+
+      <SubHeader label="// 02.3.4" title="Type Scale" />
       <div style={{ margin: `0 ${H_PAD}px 0` }}>
         {scale.map(({ label, size, lh, ls, fw }) => (
           <div key={label} style={{ display: 'grid', gridTemplateColumns: '100px 1fr 220px', alignItems: 'center', borderBottom: hairline, padding: '12px 0', gap: 24 }}>
