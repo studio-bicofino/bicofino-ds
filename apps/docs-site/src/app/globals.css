@@ -1,6 +1,52 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap");
 
+/* ─── Gotham — self-hosted, impact only (M-02) — DS v3.1 Fase 2 ───
+   Reserved for 1–2 impact words (post titles, athlete names), uppercase.
+   Never use for body or running text. Weights: 300 / 500 / 700 / 900 (+ italics). */
+@font-face {
+  font-family: "Gotham";
+  src: url("/fonts/Gotham-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Gotham";
+  src: url("/fonts/Gotham-LightItalic.woff2") format("woff2");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Gotham";
+  src: url("/fonts/Gotham-Book.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Gotham";
+  src: url("/fonts/Gotham-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Gotham";
+  src: url("/fonts/Gotham-BoldItalic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Gotham";
+  src: url("/fonts/Gotham-Black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ─── Bicofino Design System — Palette ─── */
 :root {
   --bf-bg:          #f2f8ff;
@@ -32,6 +78,10 @@
      layout.tsx (over all 12 Highlights). This is only the SSR/no-JS fallback. */
   --current-accent: var(--bf-spfc);
   --bf-signal:      var(--current-accent); /* back-compat alias */
+  /* ─── Type families ─── */
+  --bf-font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --bf-font-mono:    "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+  --bf-font-impact:  "Gotham", "Inter", ui-sans-serif, system-ui, sans-serif; /* M-02 — 1–2 impact words only */
   --sp-1: 0.25rem;
   --sp-2: 0.5rem;
   --sp-3: 0.75rem;
@@ -167,6 +217,15 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6, .text-balance {
+  text-wrap: balance;
+}
+
+/* ─── Impact type — M-02, Gotham, 1–2 words only, uppercase ─── */
+.bf-impact {
+  font-family: var(--bf-font-impact);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
   text-wrap: balance;
 }
 

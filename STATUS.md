@@ -89,7 +89,7 @@ Atualizado em: 01 jun 2026 (DS v3.1 Fase 0+1 em prod · rename On/Off Pitch · d
 
 ## Pendências / próximos passos (p/ retomar)
 
-- [ ] **DS v3.1 Fase 2** — self-hosting da fonte **Gotham** (`--bf-font-impact`, pesos 300/500/700/900 + itálicos) p/ títulos de impacto (M-02: nomes de atleta). Arquivos em `apps/docs-site/public/fonts/`, wire no `globals.css`. (handoff local `design_handoff_bicofino_v3_1/` — apagar após Fase 2.)
+- [x] ~~**DS v3.1 Fase 2** — self-hosting da Gotham~~ — **FEITO 01 jun 2026** (ver changelog abaixo). 6 woff2 em `public/fonts/`, `@font-face` + token `--bf-font-impact` + utility `.bf-impact` no `globals.css`, font card documentado na Tipografia (`// 02.3.3`). Handoff local `design_handoff_bicofino_v3_1/` pode ser apagado.
 - [ ] **Rename On/Off Pitch — identificadores internos** (opcional, adiado): chaves `t()` (`onfield.*`), nome `OnFieldSection.tsx`, classes CSS e âncora `#on-field` ainda são "field" (invisíveis). Aplicar só se quiser consistência total de código.
 - [ ] **Rename On/Off Pitch — apps WIP**: ds-studio, casa-nostra, vanguarda, propostas ficaram de fora; aplicar se/quando reativados.
 - [ ] **Athlete Profile (/verticais)** — spec pronta em `design_handoff_bicofino_v3_1/PHASE1_athlete_profile.md`; estende `AthleteStatCard`/`AthleteCampaignCarousel`/`OnFieldSection`.
@@ -97,6 +97,14 @@ Atualizado em: 01 jun 2026 (DS v3.1 Fase 0+1 em prod · rename On/Off Pitch · d
 ---
 
 ## Changelog
+
+### 01 jun 2026 — DS v3.1 Fase 2 — Gotham self-hosted (fonte de impacto M-02)
+
+- **Conversão** — 6 Gothams (`Light · LightItalic · Book · Bold · BoldItalic · Black`) convertidas de `.otf` → **woff2** via fonttools+brotli (~85 KB total, ~50% menor). Fonte: `AI-OS-BASE/.../card-jogos-motion/fonts/`. Destino: `apps/docs-site/public/fonts/`.
+- **globals.css** — 6 blocos `@font-face` (family `"Gotham"`, `font-display: swap`, pesos 300/500/700/900 + itálicos via Light/Bold). Token `--bf-font-impact` adicionado ao `:root` (+ a tríade explícita `--bf-font-display` / `--bf-font-mono`). Utility class `.bf-impact` (Gotham 900, uppercase, `letter-spacing 0.01em`) como hook único p/ nomes de atleta / títulos de post.
+- **Tipografia (docs-site)** — terceiro font card **Gotham** (`// 02.3.3 · impacto`, specimen "KERCHNER" peso 900 uppercase) inserido após JetBrains Mono; Type Scale renumerado `// 02.3.3` → `// 02.3.4`. Chaves `font.gotham.*` adicionadas com paridade BR/EN/IT.
+- **Regra** — Gotham é reservada a 1–2 palavras de impacto (uppercase); nunca body/running text — conforme DESIGN.md M-02.
+- **Build** — `npm run build` verde, tsc limpo, 5 páginas estáticas. Fontes confirmadas como tracked (não-ignoradas) p/ build Vercel.
 
 ### 01 jun 2026 — DS v3.1 (Fase 0+1) + rename On/Off Pitch + migração Vercel da empresa
 
