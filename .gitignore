@@ -47,3 +47,16 @@ AI-OS-BASE/
 assets Bicofino/
 bicofino/
 legacy/
+
+# Claude Code — framework/tooling instalado localmente (NÃO versionar).
+# Os agents/skills curados do bicofino em .claude/agents e .claude/skills
+# permanecem versionados; aqui só ignoramos o framework GSD e installs transitórios.
+.claude/get-shit-done/
+.claude/gsd-file-manifest.json
+.claude/gsd-install-state.json
+.claude/gsd-migration-journal/
+.claude/.gsd-profile
+.claude/hooks/
+.claude/commands/
+.claude/package.json
+.agents/
