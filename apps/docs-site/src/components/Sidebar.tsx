@@ -37,16 +37,21 @@ function buildNav(t: (k: string) => string) {
       items: [
         { label: t('nav.universo'),   href: '#overview' },
         { label: t('nav.colors'),     href: '#colors' },
+        { label: t('nav.vibrant'),    href: '#one-vibrant' },
         { label: t('nav.typography'), href: '#typography' },
         { label: t('nav.slash'),      href: '#slash-heading' },
         { label: t('nav.spacing'),    href: '#spacing-motion' },
+        { label: t('nav.corners'),    href: '#corner-languages' },
       ],
     },
     {
       group: '// 03 • BRAND',
       items: [
-        { label: t('nav.logo'),   href: '#logotipo' },
-        { label: t('nav.voice'),  href: '#voice-tone' },
+        { label: t('nav.logo'),         href: '#logotipo' },
+        { label: t('nav.voice'),        href: '#voice-tone' },
+        { label: t('nav.grafismo'),     href: '#grafismo-tecnico' },
+        { label: t('nav.postsys'),      href: '#post-system' },
+        { label: t('nav.intervencao'),  href: '#intervencao-cor' },
       ],
     },
     {
@@ -56,6 +61,7 @@ function buildNav(t: (k: string) => string) {
         { label: t('nav.badges'),  href: '#badges' },
         { label: t('nav.forms'),   href: '#forms' },
         { label: t('nav.cards'),   href: '#cards' },
+        { label: t('nav.bento'),   href: '#bento' },
       ],
     },
     {

@@ -10,6 +10,12 @@ import { IconGrid } from '@/components/IconGrid'
 import { OnFieldSection } from '@/components/OnFieldSection'
 import { OperationsSection } from '@/components/OperationsSection'
 import BrandSystem from '@/components/BrandSystem'
+import { OneVibrant } from '@/components/dsfase1/OneVibrant'
+import { CornerLanguages } from '@/components/dsfase1/CornerLanguages'
+import { GrafismoTecnico } from '@/components/dsfase1/GrafismoTecnico'
+import { PostSystem } from '@/components/dsfase1/PostSystem'
+import { IntervencaoCor } from '@/components/dsfase1/IntervencaoCor'
+import { BentoData } from '@/components/dsfase1/BentoData'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { useLang, type Lang } from '@/content'
 import { Clock, TrendingUp, ArrowDownRight, Zap, Cpu, Activity } from 'lucide-react'
@@ -1466,11 +1472,17 @@ export default function Page() {
       <BrandSystem />
       <Overview />
       <Colors />
+      <OneVibrant />
       <Typography />
       <SlashHeading />
       <SpacingMotion />
+      <CornerLanguages />
       <Brand />
+      <GrafismoTecnico />
+      <PostSystem />
+      <IntervencaoCor />
       <Components />
+      <BentoData />
       <VerticaisSection />
       <OnFieldSection />
       <MotionPerformance />
