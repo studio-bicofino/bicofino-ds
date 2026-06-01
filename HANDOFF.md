@@ -18,15 +18,15 @@ Leia do início ao fim antes de qualquer ação.
 
 ### Fase 7 — fix responsivo mobile (11 mai 2026) ✅ em produção
 
-- **on-field/page.tsx, off-field/page.tsx, foundation/page.tsx** — adicionado `width: '100%'` ao `<section>`. Causa: dentro de flex-column, `marginInline: 'auto'` cancela o `align-self: stretch`, fazendo o section se dimensionar pelo conteúdo (~500-550px) em vez do viewport. Corrigido com `width: '100%'; maxWidth: 720`.
+- **on-pitch/page.tsx, off-pitch/page.tsx, foundation/page.tsx** — adicionado `width: '100%'` ao `<section>`. Causa: dentro de flex-column, `marginInline: 'auto'` cancela o `align-self: stretch`, fazendo o section se dimensionar pelo conteúdo (~500-550px) em vez do viewport. Corrigido com `width: '100%'; maxWidth: 720`.
 - **globals.css** — adicionado `overflow-x: clip` ao `html` como proteção extra contra overflow horizontal em qualquer página.
 
 ### Fase 6 — alterações (11 mai 2026) ✅ em produção
 
 - **HeroBlock.tsx** — fonte do vídeo hero trocada: `herovideo.webm` → `herovideo2.webm`.
 - **Footer.tsx** — copyright reduzido de 12px → 10px (`fontSize: 10` no span do copyright).
-- **on-field/page.tsx** — vídeo `video-onfield.webm` (500×500px) inserido entre intro e accordion; intro caption 12/1.45/400; CTA closing `--bf-power-black`.
-- **off-field/page.tsx** — vídeo `video-offfield.webm` (500×500px) inserido entre intro e accordion; intro caption 12/1.45/400; CTA closing `--bf-power-black`.
+- **on-pitch/page.tsx** — vídeo `video-onfield.webm` (500×500px) inserido entre intro e accordion; intro caption 12/1.45/400; CTA closing `--bf-power-black`.
+- **off-pitch/page.tsx** — vídeo `video-offfield.webm` (500×500px) inserido entre intro e accordion; intro caption 12/1.45/400; CTA closing `--bf-power-black`.
 - **foundation/page.tsx** — CTA closing `--bf-power-black`.
 - **content/br.ts, en.ts, it.ts** — 3 parágrafos hero (home.mensch.p1/p2/p3) reescritos com novo texto.
 
@@ -64,8 +64,8 @@ apps/web/
 │   ├── page.tsx                    # homepage (/)
 │   ├── (sections)/
 │   │   ├── foundation/page.tsx     # /foundation
-│   │   ├── on-field/page.tsx       # /on-field
-│   │   ├── off-field/page.tsx      # /off-field
+│   │   ├── on-pitch/page.tsx       # /on-pitch
+│   │   ├── off-pitch/page.tsx      # /off-pitch
 │   │   └── club/page.tsx           # /club (tela de acesso, sem header/footer)
 │   └── globals.css                 # tokens CSS do apps/web
 ├── components/
@@ -75,7 +75,7 @@ apps/web/
 │   │   └── MobileMenu.tsx          # overlay mobile com stagger
 │   ├── primitives/
 │   │   ├── Container.tsx           # max-width 1280, padding --bf-space-lg
-│   │   └── Accordion.tsx           # colapsável motion v12, compartilhado em foundation/off-field/on-field
+│   │   └── Accordion.tsx           # colapsável motion v12, compartilhado em foundation/off-pitch/on-pitch
 │   └── home/
 │       ├── FourCsHeading.tsx       # heading animado "Connect. Curate. Create. Consult."
 │       └── HeroBlock.tsx           # grid com vídeo + 4Cs + Mensch
@@ -219,7 +219,7 @@ npm run build
 # comando efetivo: next build --webpack
 ```
 
-O build gera 6 rotas estáticas: `/`, `/_not-found`, `/foundation`, `/on-field`, `/off-field`, `/club`.
+O build gera 6 rotas estáticas: `/`, `/_not-found`, `/foundation`, `/on-pitch`, `/off-pitch`, `/club`.
 Tempo esperado: ~30s. Se terminar com "✓ Generating static pages" e sem erro, está ok.
 
 **Verificar TypeScript antes:**
@@ -251,7 +251,7 @@ vercel --cwd apps/web
 BASE="https://<url-preview>"
 node -e "
 const https = require('https');
-const paths = ['/', '/foundation', '/on-field', '/off-field', '/club'];
+const paths = ['/', '/foundation', '/on-pitch', '/off-pitch', '/club'];
 let done = 0;
 paths.forEach(p => {
   https.get('$BASE' + p, res => {

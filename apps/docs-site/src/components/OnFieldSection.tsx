@@ -126,7 +126,7 @@ export function OnFieldSection() {
 
         {/* Tabs */}
         <div style={{ display: 'flex', gap: 0, marginBottom: 20, borderBottom: hairline, overflowX: 'auto' }}>
-          {['on field', 'off field'].map((tab, i) => (
+          {['on pitch', 'off pitch'].map((tab, i) => (
             <div key={tab} style={{
               padding: '8px 20px',
               fontFamily: mono,
@@ -312,7 +312,7 @@ export function OnFieldSection() {
             // PLAYER PROFILE // @BICOFINO
           </p>
           <p style={{ fontFamily: mono, fontSize: 9, color: C.platinum, margin: 0, letterSpacing: '0.1em' }}>
-            ON FIELD v1.0
+            ON PITCH v1.0
           </p>
         </div>
       </div>
@@ -359,7 +359,7 @@ export function OnFieldSection() {
         {/* Page footer */}
         <div style={{ paddingTop: 32, borderTop: hairline, marginTop: 32 }}>
           <p style={{ fontFamily: mono, fontSize: 10, color: C.platinum, margin: 0, letterSpacing: '0.1em' }}>
-            // BICOFINO DESIGN SYSTEM · ON FIELD IMAGE SYSTEM · v1.0 · 04/2026
+            // BICOFINO DESIGN SYSTEM · ON PITCH IMAGE SYSTEM · v1.0 · 04/2026
           </p>
         </div>
       </div>

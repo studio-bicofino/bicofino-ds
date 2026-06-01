@@ -4,7 +4,7 @@
 > Visual source of truth: philosophy, the invariants, the modes, and the token canon.
 > *v3.1 · São Paulo, BR*
 
-`README.md` carries **who** Bicofino is — the 4 Cs, On/Off Field/Club, how the brand writes.
+`README.md` carries **who** Bicofino is — the 4 Cs, On/Off Pitch/Club, how the brand writes.
 This file carries **how it looks and why** — the taste that must survive across every material,
 and the tokens that encode it. Read both. When the two disagree, this file wins on visuals.
 
@@ -211,7 +211,7 @@ Distilled from the reference diagnostic. Each is a named, reusable composition p
 
 | # | Module | What it is | When | Lives in |
 |---|---|---|---|---|
-| **M-01** | **Grafismo Técnico** | mono + fio + ✦ instrumentation: spec-tags, orbit diagrams, unit grids. High density, small footprint (≤ one quadrant). Carries the **ambient "living-organism" motion** (§8). | dossiers, On Field data, seals | `--bf-line-on-dark`, `--dur-ambient`, mono |
+| **M-01** | **Grafismo Técnico** | mono + fio + ✦ instrumentation: spec-tags, orbit diagrams, unit grids. High density, small footprint (≤ one quadrant). Carries the **ambient "living-organism" motion** (§8). | dossiers, On Pitch data, seals | `--bf-line-on-dark`, `--dur-ambient`, mono |
 | **M-02** | **Órbita Editorial** | heavy Gotham title block anchored low + mono satellite labels orbiting the corners + optional visible column guides. | campaign covers, athlete pieces | `.bf-orbit-label`, Gotham heavy/light |
 | **M-03** | **Intervenção de Cor** | neutral (B&W / mono) photo + ONE chromatic interference (block / trace / band) for layered depth. | EDITORIAL only | `--current-accent`, `data-mode="editorial"` |
 | **M-04** | **Post-System 60/40** | social grid where unity comes from repeated constants (palette, ✦, arc, mono name, cut-out) while layout varies; ~60% breathing, symmetric filled zone vs. empty zone. | instagram campaigns | constants checklist, Special palette |

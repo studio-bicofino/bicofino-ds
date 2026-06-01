@@ -4,11 +4,16 @@ import React, { createContext, useContext, useState, useEffect } from 'react'
 import { br } from './br'
 import { en } from './en'
 import { it } from './it'
+import { fase1 } from './dsfase1'
 
 export type Lang = 'br' | 'en' | 'it'
 
 type Dict = Record<string, string>
-const dicts: Record<Lang, Dict> = { br: br as Dict, en: en as Dict, it: it as Dict }
+const dicts: Record<Lang, Dict> = {
+  br: { ...(br as Dict), ...(fase1.br as Dict) },
+  en: { ...(en as Dict), ...(fase1.en as Dict) },
+  it: { ...(it as Dict), ...(fase1.it as Dict) },
+}
 
 interface LangContext {
   lang: Lang

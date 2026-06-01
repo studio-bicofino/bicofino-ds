@@ -12,8 +12,8 @@ interface MobileMenuProps {
 }
 
 const navLinks = [
-  { key: 'nav.on-field',   href: '/on-field'   },
-  { key: 'nav.off-field',  href: '/off-field'  },
+  { key: 'nav.on-field',   href: '/on-pitch'   },
+  { key: 'nav.off-field',  href: '/off-pitch'  },
   { key: 'nav.foundation', href: '/foundation' },
 ]
 
