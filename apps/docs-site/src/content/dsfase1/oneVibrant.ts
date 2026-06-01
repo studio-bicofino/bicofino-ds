@@ -28,7 +28,7 @@ export const oneVibrantI18n = {
 
     // Demo card fields
     'vibrant.card.stat': '94,2',
-    'vibrant.card.tag': 'on field',
+    'vibrant.card.tag': 'on pitch',
     'vibrant.card.bar.label': 'participação de mercado',
 
     'vibrant.card.a.name': 'composição A',
@@ -89,7 +89,7 @@ export const oneVibrantI18n = {
       'The three compositions below are structurally identical. Only `--current-accent` differs — demonstrating how a single token reconfigures the visual register without altering hierarchy or layout.',
 
     'vibrant.card.stat': '94.2',
-    'vibrant.card.tag': 'on field',
+    'vibrant.card.tag': 'on pitch',
     'vibrant.card.bar.label': 'market share',
 
     'vibrant.card.a.name': 'composition A',
@@ -147,7 +147,7 @@ export const oneVibrantI18n = {
       'Le tre composizioni qui sotto sono strutturalmente identiche. Solo `--current-accent` differisce — dimostrando come un singolo token riconfigura il registro visivo senza alterare gerarchia o layout.',
 
     'vibrant.card.stat': '94,2',
-    'vibrant.card.tag': 'on field',
+    'vibrant.card.tag': 'on pitch',
     'vibrant.card.bar.label': 'quota di mercato',
 
     'vibrant.card.a.name': 'composizione A',

@@ -203,8 +203,8 @@ Site público bicofino.com em produção.
 
 **Páginas:**
 - `/` — Hero principal com HeroBlock
-- `/on-field` (= on-pitch) — Vídeo hero `video-onpitch.webm`, overlay 80%
-- `/off-field` (= off-pitch) — Vídeo hero `video-offpitch.webm`, overlay 80%
+- `/on-pitch` (= on-pitch) — Vídeo hero `video-onpitch.webm`, overlay 80%
+- `/off-pitch` (= off-pitch) — Vídeo hero `video-offpitch.webm`, overlay 80%
 - `/foundation` — Fundação
 - `/club` — Club (placeholder, 5 violações conhecidas)
 

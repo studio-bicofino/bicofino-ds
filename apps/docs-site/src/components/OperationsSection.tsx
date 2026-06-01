@@ -125,7 +125,7 @@ export function OperationsSection() {
       
       <div style={{ margin: '0 ' + H_PAD + 'px', display: 'grid', gridTemplateColumns: '1fr', gap: 40 }}>
         
-        {/* On Field */}
+        {/* On Pitch */}
         <div style={{ background: C.white, padding: '40px', borderTop: '3px solid ' + C.black }}>
           <div style={{ marginBottom: 24 }}>
             <h3 style={{ fontSize: 24, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: '0 0 8px', fontFamily: sans }}>{t('ops.onfield.title')}</h3>
@@ -157,7 +157,7 @@ export function OperationsSection() {
           </div>
         </div>
 
-        {/* Off Field */}
+        {/* Off Pitch */}
         <div style={{ background: C.white, padding: '40px', borderTop: '3px solid ' + C.steel }}>
           <div style={{ marginBottom: 24 }}>
             <h3 style={{ fontSize: 24, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: '0 0 8px', fontFamily: sans }}>{t('ops.offfield.title')}</h3>
@@ -218,11 +218,11 @@ export function OperationsSection() {
         </p>
         <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 12 }}>
           <li style={{ fontSize: 14, color: C.steel, display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-            <span style={{ color: C.black, fontWeight: 600 }}>On Field:</span>
+            <span style={{ color: C.black, fontWeight: 600 }}>On Pitch:</span>
             <span>{t('ops.visual.onfield')}</span>
           </li>
           <li style={{ fontSize: 14, color: C.steel, display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-            <span style={{ color: C.black, fontWeight: 600 }}>Off Field:</span>
+            <span style={{ color: C.black, fontWeight: 600 }}>Off Pitch:</span>
             <span>{t('ops.visual.offfield')}</span>
           </li>
         </ul>

@@ -44,7 +44,7 @@ Atualizado em: 10 mai 2026 (apps/web fase 3 — preview https://bicofino-nrp6jk0
 
 ### 05 • Verticais
 - [x] Verticais (// 05.1)
-- [x] On Field — Image System (// 05.2)
+- [x] On Pitch — Image System (// 05.2)
 
 ### 06 • Assets
 - [x] Motion Intelligence (métricas animadas)
@@ -52,7 +52,7 @@ Atualizado em: 10 mai 2026 (apps/web fase 3 — preview https://bicofino-nrp6jk0
 - [x] Icons
 
 ### 07 • Operações
-- [x] Arquitetura de Marca (On Field / Off Field / Club)
+- [x] Arquitetura de Marca (On Pitch / Off Pitch / Club)
 - [x] Padrões de Entrega (Princípios, Ferramentas, Fluxo, Política Comercial)
 
 ### 08 • Governança
@@ -86,7 +86,7 @@ Atualizado em: 10 mai 2026 (apps/web fase 3 — preview https://bicofino-nrp6jk0
 - **Header** — `borderBottom` removido. Separação visual entre header (branco puro) e conteúdo (azul `--bf-surface`) feita puramente por contraste de cor, sem linha divisória.
 - **Footer** — Ícones unificados: MapPin, IconDiamond e ícone do Instagram agora usam `var(--bf-platinum)` (`#a8c9e5`). IconDiamond recebeu prop `style` para suportar a substituição.
 - **Accordion** — Novo componente primitivo `components/primitives/Accordion.tsx`. Motion v12 (`AnimatePresence` + `motion.div`) com `height: auto`, opacidade, 260ms `[0.16,1,0.3,1]`. Hover altera cor do heading para `var(--bf-text-primary)`. Indicador `+` rotaciona 45° ao abrir.
-- **Foundation, Off Field, On Field** — Fundo alterado de `var(--bf-bg-page)` para `var(--bf-surface)`. Blocos de serviço/4Cs convertidos de lista/grid estático para Accordion colapsável. CTA/closing estilizado como EYEBROW (JetBrains Mono 11px, uppercase, letterSpacing 0.14em, `var(--bf-text-subtle)`) com prefixo `//`.
+- **Foundation, Off Pitch, On Pitch** — Fundo alterado de `var(--bf-bg-page)` para `var(--bf-surface)`. Blocos de serviço/4Cs convertidos de lista/grid estático para Accordion colapsável. CTA/closing estilizado como EYEBROW (JetBrains Mono 11px, uppercase, letterSpacing 0.14em, `var(--bf-text-subtle)`) com prefixo `//`.
 - **Vídeo homepage** — `public/media` removido do `.vercelignore` para que `herovideo.mp4` e `herovideo.gif` sejam incluídos no deploy Vercel CLI.
 - **next.config.ts** — `outputFileTracingRoot` removido (pitfall de deploy — já documentado).
 - **Build** — TypeScript limpo, 6 rotas estáticas. Commit `7b381a9`.
@@ -156,8 +156,8 @@ Atualizado em: 10 mai 2026 (apps/web fase 3 — preview https://bicofino-nrp6jk0
 ### 05 mai 2026 — Verticais movida para 05 • VERTICAIS
 
 - **Refactor estrutural** — Seção "Verticais" removida de `// 03 • BRAND` e inserida como primeiro item de `// 05 • VERTICAIS`.
-- **Sidebar atualizado** — `// 03 • BRAND` agora tem apenas Logotipo e Voz & Tom. `// 05 • VERTICAIS` agora tem Verticais (primeiro) e On Field — Image System (segundo).
-- **Renumeração** — Eyebrow da seção Verticais: `// 03.3` → `// 05.1`. Cards internos: `// 03.3.1` → `// 05.1.1`, `// 03.3.2` → `// 05.1.2`. Eyebrow do On Field: `// 05.1` → `// 05.2`. Sub-item catalog: `// 05.1.2` → `// 05.2.2`.
+- **Sidebar atualizado** — `// 03 • BRAND` agora tem apenas Logotipo e Voz & Tom. `// 05 • VERTICAIS` agora tem Verticais (primeiro) e On Pitch — Image System (segundo).
+- **Renumeração** — Eyebrow da seção Verticais: `// 03.3` → `// 05.1`. Cards internos: `// 03.3.1` → `// 05.1.1`, `// 03.3.2` → `// 05.1.2`. Eyebrow do On Pitch: `// 05.1` → `// 05.2`. Sub-item catalog: `// 05.1.2` → `// 05.2.2`.
 - **Anchors preservados** — `id="verticais"` e `id="on-field"` inalterados. Todos os links da sidebar, scroll targets e IntersectionObserver mappings continuam funcionando.
 - **Zero mudança visual** — Layout, estilos, tipografia, dark mode, mobile drawer e accordion 100% preservados.
 - **Build** — Compilado e tipagem limpa. READY.
@@ -192,12 +192,12 @@ Atualizado em: 10 mai 2026 (apps/web fase 3 — preview https://bicofino-nrp6jk0
   - `// 01.x` (Design System body) → `// 02.x` (colors=02.2, typo=02.3, heading=02.4, spacing=02.5)
   - `// 02 · Brand` → `// 03 • BRAND`; subsections 02.2–02.3 → 03.2–03.3
   - `// 03 · Components` → `// 04 • COMPONENTES`; subsections 03.2–03.4 → 04.2–04.4
-  - `// 04 · On Field` → `// 05.1 · On Field — Image System`
+  - `// 04 · On Pitch` → `// 05.1 · On Pitch — Image System`
   - `// 05.x` (perf/sponsors/icons) → `// 06.1–06.3`
   - `// 06.x` (ops) → `// 07.x`; `// 07.x` (governance) → `// 08.x`
 - **Deploy** — Produção: https://bicofino.vercel.app · Build READY · Commit `ab1bfa1`
 
-### 05 mai 2026 — Icons — Custom SVGs On-Field
+### 05 mai 2026 — Icons — Custom SVGs On-Pitch
 
 - **13 ícones customizados adicionados** — Body, Dumbbell, Fingerprint, Fist, Football, Medal, Medal1, Pitch, Sneaker, Speed, StarCircle, Trophy, Watch. Fonte: `public/assets/on-field/icons/`.
 - **`CustomSvgIcon` wrapper** — Componente interno que renderiza SVGs fill-based com `currentColor`. Todos os ícones respondem aos estados de hover e copied exatamente como os Lucide (mesma transição de cor 140ms ease-out).
@@ -265,7 +265,7 @@ Atualizado em: 10 mai 2026 (apps/web fase 3 — preview https://bicofino-nrp6jk0
 
 - **Sidebar accordion** — Sidebar convertido em acordeão colapsável. Cada seção é um `<button>` com `aria-expanded`. Estado aberto derivado do scroll via `IntersectionObserver` — sem hardcode. Comportamento single-open: abrir uma seção fecha as outras automaticamente. Animação `max-height 180ms ease-out`.
 - **Novo esquema de numeração** — Seções renumeradas de `// NN · Name` para `// NN • NAME` (01–08). Separador alterado de `·` para `•`, labels em uppercase.
-- **Estrutura de 8 seções** — Adicionadas: `01 • Brand System` (antes sem número), `07 • Operações` (nova). Renomeadas: `Foundations → Design System`, `On Field → Verticais`, `Performance → Assets`, `Governance → Governança`. Items em PT-BR: Botões, Voz & Tom, Cores, Tipografia, Heading, Universo Visual.
+- **Estrutura de 8 seções** — Adicionadas: `01 • Brand System` (antes sem número), `07 • Operações` (nova). Renomeadas: `Foundations → Design System`, `On Pitch → Verticais`, `Performance → Assets`, `Governance → Governança`. Items em PT-BR: Botões, Voz & Tom, Cores, Tipografia, Heading, Universo Visual.
 - **Sub-anchors em OperationsSection** — Adicionados `id="ops-arch"` e `id="ops-delivery"` para linking direto de Arquitetura de Marca e Padrões de Entrega.
 - **Estilo dos headers** — Cor do texto dos headers de seção elevada para `--bf-sidebar-text` (branco). Background sutil `rgba(242,248,255,0.06)`. Items em 12px / `--bf-sidebar-muted` (steel `#6d7886`).
 - **Metadata do Sidebar** — Atualizada para `// Brand System` / `// v1.0 • maio 2026` / `// São Paulo • BR`.
@@ -308,15 +308,15 @@ Atualizado em: 10 mai 2026 (apps/web fase 3 — preview https://bicofino-nrp6jk0
 - **Brand System Component** — Ajustes no layout da página: título "Brand System" em caixa alta/baixa, inclusão da versão display do Logo, e nova formatação para o subtítulo usando JetBrains Mono.
 - **Índice (Docs-Site)** — Refatoração do grid para exibir 1 coluna com fontes JetBrains Mono em caixa alta e baixa nos subitens.
 - **Motion (Docs-Site)** — Adição de transição suave de abertura/fechamento (`ease-out`) no componente `AccordionItem` através de manipulação de `grid-template-rows`.
-- **Operações (Docs-Site)** — Criado o novo componente `OperationsSection.tsx` implementando a Arquitetura de Marca (On Field, Off Field, Club), Princípios, Ferramentas e Política Comercial. A seção foi inserida no `page.tsx`, assumindo a posição 06 e renumerando Governance para 07. Resolvidos bugs de parse (SWC) no componente.
+- **Operações (Docs-Site)** — Criado o novo componente `OperationsSection.tsx` implementando a Arquitetura de Marca (On Pitch, Off Pitch, Club), Princípios, Ferramentas e Política Comercial. A seção foi inserida no `page.tsx`, assumindo a posição 06 e renumerando Governance para 07. Resolvidos bugs de parse (SWC) no componente.
 
 ---
 
 ### 09 mai 2026 — Fase 2B — Páginas de conteúdo apps/web
 
 - **foundation implementado** — eyebrow `// fundamentos`, heading "Connect. Curate. Create. Consult.", intro, grid 2×2 (Connect / Curate / Create / Consult), closing "Unlike Any Other." Inclui Header + MobileMenu + Footer.
-- **on-field implementado** — eyebrow `// on field`, heading "The Athlete Is the Asset.", intro, 4 serviços em lista vertical separada por borders (Agenciamento, Performance, Internacional, Marca Pessoal), closing "Do Brasil para o mundo."
-- **off-field implementado** — eyebrow `// off field`, heading "Image. Connection. Legacy.", intro, 5 serviços (Branding, Advertising, Conexão de Marcas, Wealth, PR), closing "Unlike Any Other."
+- **on-field implementado** — eyebrow `// on pitch`, heading "The Athlete Is the Asset.", intro, 4 serviços em lista vertical separada por borders (Agenciamento, Performance, Internacional, Marca Pessoal), closing "Do Brasil para o mundo."
+- **off-field implementado** — eyebrow `// off pitch`, heading "Image. Connection. Legacy.", intro, 5 serviços (Branding, Advertising, Conexão de Marcas, Wealth, PR), closing "Unlike Any Other."
 - **club criado** — tela de acesso fullscreen sobre `--bf-power-black`. Logo branco (CSS filter), 2 inputs controlados (acesso + senha), botão "Entrar" sem auth, link "← voltar" para /, rodapé "// members only". SEM Header/Footer globais.
 - **Footer** — ícone CLUB linkado para `/club` (href="#" → href="/club").
 - **i18n** — 50+ chaves novas em BR, EN e IT cobrindo todos os textos das 4 páginas + club access.

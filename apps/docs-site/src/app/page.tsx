@@ -264,7 +264,7 @@ function Overview() {
     { label: t('overview.meta.published'), value: 'maio · 2026' },
     { label: t('overview.meta.owner'),     value: 'Woney Malian / Fabio Brancatelli' },
     { label: t('overview.meta.base'),      value: 'DS Bicofino 2026' },
-    { label: t('overview.meta.verticals'), value: 'On Field · Off Field' },
+    { label: t('overview.meta.verticals'), value: 'On Pitch · Off Pitch' },
   ]
 
   return (
@@ -578,7 +578,7 @@ function SlashHeading() {
   const examples = [
     { heading: 'Connect. Curate. Create. Consult.', context: t('slash.ex1.context') },
     { heading: 'Unlike Any Other.',                 context: t('slash.ex2.context') },
-    { heading: 'On Field. Off Field.',              context: t('slash.ex3.context') },
+    { heading: 'On Pitch. Off Pitch.',              context: t('slash.ex3.context') },
     { heading: 'Brand. Identity. Image.',           context: t('slash.ex4.context') },
     { heading: 'Access. Built with time.',          context: t('slash.ex5.context') },
     { heading: 'Guilherme Kerchner. The Playmaker.', context: t('slash.ex6.context') },
@@ -965,12 +965,12 @@ function VerticaisSection() {
       <div className="bf-stagger-parent" style={{ margin: `40px ${H_PAD}px 64px`, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: 'rgba(42,44,43,0.1)' }}>
         <div className="bf-stagger-item" style={{ background: C.white, padding: '40px 36px', borderTop: `3px solid ${C.black}` }}>
           <p style={{ fontFamily: mono, fontSize: 9, color: C.steel, margin: '0 0 20px', letterSpacing: '0.1em' }}>// 05.1.1</p>
-          <h3 style={{ fontSize: 24, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: '0 0 12px', fontFamily: sans }}>On Field</h3>
+          <h3 style={{ fontSize: 24, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: '0 0 12px', fontFamily: sans }}>On Pitch</h3>
           <p style={{ fontSize: 14, lineHeight: 1.65, color: C.steel }}>{t('verticais.onfield.desc')}</p>
         </div>
         <div className="bf-stagger-item" style={{ background: C.white, padding: '40px 36px', borderTop: `3px solid ${C.steel}` }}>
           <p style={{ fontFamily: mono, fontSize: 9, color: C.steel, margin: '0 0 20px', letterSpacing: '0.1em' }}>// 05.1.2</p>
-          <h3 style={{ fontSize: 24, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: '0 0 12px', fontFamily: sans }}>Off Field</h3>
+          <h3 style={{ fontSize: 24, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: '0 0 12px', fontFamily: sans }}>Off Pitch</h3>
           <p style={{ fontSize: 14, lineHeight: 1.65, color: C.steel }}>{t('verticais.offfield.desc')}</p>
         </div>
       </div>
@@ -1045,8 +1045,8 @@ function Components() {
 
         <div style={{ margin: `40px ${H_PAD}px 64px`, display: 'flex', gap: 10, flexWrap: 'wrap' as const }}>
           {[
-            { label: 'On Field',  bg: C.black,    color: C.bg },
-            { label: 'Off Field', bg: C.aluminium,color: PALETTE.black },
+            { label: 'On Pitch',  bg: C.black,    color: C.bg },
+            { label: 'Off Pitch', bg: C.aluminium,color: PALETTE.black },
             { label: 'ADS',       bg: C.spfc,     color: C.bg },
             { label: 'LAB',       bg: C.cacao,    color: PALETTE.bg },
             { label: 'Draft',     bg: C.aluminium,color: PALETTE.steel },
@@ -1116,8 +1116,8 @@ function Components() {
 
         <div className="bf-stagger-parent" style={{ margin: `40px ${H_PAD}px 64px`, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: 'rgba(42,44,43,0.1)' }}>
           {[
-            { program: 'On Field',  color: C.black, tag: t('card.onfield.tag'),  title: t('card.onfield.title'),  meta: t('card.onfield.meta') },
-            { program: 'Off Field', color: C.steel, tag: t('card.offfield.tag'), title: t('card.offfield.title'), meta: t('card.offfield.meta') },
+            { program: 'On Pitch',  color: C.black, tag: t('card.onfield.tag'),  title: t('card.onfield.title'),  meta: t('card.onfield.meta') },
+            { program: 'Off Pitch', color: C.steel, tag: t('card.offfield.tag'), title: t('card.offfield.title'), meta: t('card.offfield.meta') },
             { program: 'ADS',       color: C.spfc,  tag: t('card.ads.tag'),      title: t('card.ads.title'),      meta: t('card.ads.meta') },
           ].map(({ program, color, tag, title, meta }) => (
             <div key={program} className="bf-stagger-item" style={{ background: C.white, padding: '28px 28px 32px', borderTop: `3px solid ${color}` }}>

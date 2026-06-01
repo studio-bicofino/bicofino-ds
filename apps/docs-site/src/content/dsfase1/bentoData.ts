@@ -19,7 +19,7 @@ export const bentoDataI18n = {
     // ── Cell labels ──────────────────────────────────────────────────────────
     'bento.cell.atleta':    'atleta',
     'bento.cell.indice':    'índice',
-    'bento.cell.onfield':   'on field',
+    'bento.cell.onfield':   'on pitch',
     'bento.cell.dossie':    'dossiê',
     'bento.cell.velocidade':'velocidade',
     'bento.cell.passe':     'passe',
@@ -75,7 +75,7 @@ export const bentoDataI18n = {
     // ── Cell labels ──────────────────────────────────────────────────────────
     'bento.cell.atleta':    'athlete',
     'bento.cell.indice':    'index',
-    'bento.cell.onfield':   'on field',
+    'bento.cell.onfield':   'on pitch',
     'bento.cell.dossie':    'dossier',
     'bento.cell.velocidade':'speed',
     'bento.cell.passe':     'passing',
@@ -131,7 +131,7 @@ export const bentoDataI18n = {
     // ── Cell labels ──────────────────────────────────────────────────────────
     'bento.cell.atleta':    'atleta',
     'bento.cell.indice':    'indice',
-    'bento.cell.onfield':   'on field',
+    'bento.cell.onfield':   'on pitch',
     'bento.cell.dossie':    'dossier',
     'bento.cell.velocidade':'velocità',
     'bento.cell.passe':     'passaggio',

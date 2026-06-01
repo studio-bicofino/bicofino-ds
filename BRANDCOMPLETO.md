@@ -38,7 +38,7 @@
 - Filosofia Visual
 - Símbolo e Logotipo — O Diamond
 - Imagens Arquetípicas
-- Sistema On Field / Off Field
+- Sistema On Pitch / Off Pitch
 
 **Visual System** *(técnico · tokens · componentes)*
 - Guia de Cores
@@ -47,7 +47,7 @@
 - Componentes
 
 **Operações**
-- Arquitetura de Marca — On Field · Off Field · Club
+- Arquitetura de Marca — On Pitch · Off Pitch · Club
 - Padrões de Entrega
 
 ---
@@ -210,7 +210,7 @@ O Bicofino tem referências — e há sabedoria nisso. O perigo é quando a refe
 
 ### O risco da inconsistência entre vertentes
 
-**Guard rail:** Cada vertente deve soar como filha do Bicofino — mesma estética de fundo, adaptada para seu contexto. Um card de atleta On Field e uma proposta Off Field devem ser reconhecivelmente da mesma família.
+**Guard rail:** Cada vertente deve soar como filha do Bicofino — mesma estética de fundo, adaptada para seu contexto. Um card de atleta On Pitch e uma proposta Off Pitch devem ser reconhecivelmente da mesma família.
 
 ---
 
@@ -238,17 +238,17 @@ O Bicofino não define seu público por faixa etária ou renda. Define por menta
 
 O público-chave é formado por pessoas e marcas que entendem que imagem é estratégia, que tempo de relação é ativo, que bom gosto não é subjetivo — é educável e valorizável. São agentes que operam nas camadas superiores de seus respectivos mercados e que buscam parceiros no mesmo nível de exigência que eles.
 
-### Cluster 1 — O Atleta com Visão de Carreira *(On Field)*
+### Cluster 1 — O Atleta com Visão de Carreira *(On Pitch)*
 Jovem talento esportivo que entende que sua trajetória é maior que os contratos que assina. Busca construção de marca pessoal, acesso a mercados internacionais e gestão de imagem com o mesmo rigor com que treina. Vê o Bicofino como sócio estratégico, não como agência.
 
 **Perfil de referência:** Guilherme Kerchner — 17 anos, Palmeiras, Nike, passaporte italiano. *From Palmeiras to the World.*
 
-### Cluster 2 — A Marca que Quer Mais que Exposição *(Off Field)*
+### Cluster 2 — A Marca que Quer Mais que Exposição *(Off Pitch)*
 Empresa ou marca que quer que sua conexão com o universo esportivo gere cultura, narrativa e pertencimento — não apenas logo em camisa. Entende ROI mas valoriza percepção. Sabe que a qualidade da associação importa tanto quanto o alcance.
 
 **Perfil de referência:** Nike, Loro Piana, Piaggio/Vespa — marcas com herança, estética e propósito que se complementam ao universo Bicofino.
 
-### Cluster 3 — O Cliente Premium Off Field
+### Cluster 3 — O Cliente Premium Off Pitch
 Empresa ou executivo que precisa de identidade visual, estratégia de marca, consultoria criativa ou acesso a players específicos de mercado no mais alto nível. Sabe que pagar pelo melhor é mais econômico do que corrigir o mediano.
 
 **Perfil de referência:** BoviChain — empresa de tech no agronegócio premium que entende que sua marca visual precisa refletir o padrão da tecnologia que entrega.
@@ -638,8 +638,8 @@ O padrão Bicofino exige frases que afirmem sem precisar negar, que demonstrem s
 **Dossiê** — O formato de proposta Bicofino. Documento que conta uma história estratégica, não uma lista de serviços.
 **Raposa** — O mascote. O ponto de vista interno. Ágil, inteligente, invisível quando não há nada a acrescentar.
 **Diamond** — O símbolo ✦. A marca isolada. O filtro com forma: quatro pontos de precisão.
-**On Field** — Tudo relativo ao atleta em campo e à sua performance integral.
-**Off Field** — Tudo que existe fora do campo: marca, negócio, imagem, legado, conexões.
+**On Pitch** — Tudo relativo ao atleta em campo e à sua performance integral.
+**Off Pitch** — Tudo que existe fora do campo: marca, negócio, imagem, legado, conexões.
 
 ### Palavras a evitar
 
@@ -686,9 +686,9 @@ Campo, apito, treino, pressão, preparação, timing, escalação. Evocações e
 
 **Gesto de Cavalheiro** — Código interno para a prática de riscar o sobrenome na assinatura de email e no cartão de visitas, deixando apenas o primeiro nome visível. O gesto diz, sem palavras: "você pode me chamar pelo meu nome." Um ato de intimidade e confiança — a criação de um vínculo pessoal onde antes havia formalidade.
 
-**Image as Presence. Data as Proof.** — O princípio editorial do sistema de imagens On Field. O atleta é o ativo visual principal. A imagem cria hierarquia e tensão. O dado sustenta a narrativa com precisão.
+**Image as Presence. Data as Proof.** — O princípio editorial do sistema de imagens On Pitch. O atleta é o ativo visual principal. A imagem cria hierarquia e tensão. O dado sustenta a narrativa com precisão.
 
-**On Field / Off Field** — As duas grandes vertentes operacionais do Bicofino.
+**On Pitch / Off Pitch** — As duas grandes vertentes operacionais do Bicofino.
 
 **Club** — Projeto confidencial. Território da Raposa.
 
@@ -791,17 +791,17 @@ O logotipo e o diamond podem ser aplicados em qualquer cor da paleta aprovada, c
 
 ---
 
-## Sistema On Field / Off Field
+## Sistema On Pitch / Off Pitch
 
 As duas vertentes compartilham o mesmo DNA visual — tipografia, paleta core, hierarquia. O que muda é o universo de imagem.
 
-**On Field:** imagens dos atletas em campo, em treino, em competição. Presença atlética como linguagem. O dado como prova. A narrativa construída em torno da performance e da carreira.
+**On Pitch:** imagens dos atletas em campo, em treino, em competição. Presença atlética como linguagem. O dado como prova. A narrativa construída em torno da performance e da carreira.
 
-**Off Field:** imagens dos atletas em contexto de marcas, campanhas publicitárias e projetos criativos. Mais estúdio, mais direção de arte, mais diálogo com o universo das marcas parceiras e do design.
+**Off Pitch:** imagens dos atletas em contexto de marcas, campanhas publicitárias e projetos criativos. Mais estúdio, mais direção de arte, mais diálogo com o universo das marcas parceiras e do design.
 
-### On Field — Image as Presence. Data as Proof.
+### On Pitch — Image as Presence. Data as Proof.
 
-O sistema On Field trata o atleta como o principal ativo visual. As imagens não são colocadas dentro de cards genéricos — elas criam hierarquia, tensão e presença. O dado sustenta a narrativa com precisão.
+O sistema On Pitch trata o atleta como o principal ativo visual. As imagens não são colocadas dentro de cards genéricos — elas criam hierarquia, tensão e presença. O dado sustenta a narrativa com precisão.
 
 **Estrutura de apresentação:**
 - Imagem do atleta em posição de presença, não de ação genérica
@@ -903,18 +903,18 @@ Nenhum tamanho fora do sistema. A consistência tipográfica é parte da identid
 
 ---
 
-## Arquitetura de Marca — On Field · Off Field · Club
+## Arquitetura de Marca — On Pitch · Off Pitch · Club
 
 O Bicofino Group organiza suas operações em duas grandes vertentes e um projeto confidencial.
 
 ---
 
-### ON FIELD
+### ON PITCH
 *Tudo relativo ao atleta e sua performance em campo*
 
-On Field reúne todos os serviços e especialistas dedicados ao atleta como performer. Médicos, especialistas em performance física, nutricionistas, psicólogos esportivos, coaches táticos, tecnologia de análise de dados — tudo que potencializa o atleta dentro do campo e garante que ele chegue ao mais alto nível de competição.
+On Pitch reúne todos os serviços e especialistas dedicados ao atleta como performer. Médicos, especialistas em performance física, nutricionistas, psicólogos esportivos, coaches táticos, tecnologia de análise de dados — tudo que potencializa o atleta dentro do campo e garante que ele chegue ao mais alto nível de competição.
 
-**O que On Field entrega:**
+**O que On Pitch entrega:**
 - Agenciamento e representação de atletas
 - Desenvolvimento físico, tático, mental e cognitivo
 - Monitoramento de performance e saúde
@@ -926,12 +926,12 @@ On Field reúne todos os serviços e especialistas dedicados ao atleta como perf
 
 ---
 
-### OFF FIELD
+### OFF PITCH
 *Tudo que existe fora do campo*
 
-Off Field reúne todos os serviços que fazem o atleta, a marca ou a empresa crescer além da performance esportiva. É aqui que o Bicofino também serve marcas e empresas — com ou sem conexão direta com atletas.
+Off Pitch reúne todos os serviços que fazem o atleta, a marca ou a empresa crescer além da performance esportiva. É aqui que o Bicofino também serve marcas e empresas — com ou sem conexão direta com atletas.
 
-**O que Off Field entrega:**
+**O que Off Pitch entrega:**
 - Branding e identidade visual (atletas, marcas, empresas)
 - Advertising e produção de conteúdo
 - Design, motion e direção de arte
@@ -942,7 +942,7 @@ Off Field reúne todos os serviços que fazem o atleta, a marca ou a empresa cre
 
 **Quem serve:** Atletas do portfólio (no extra-campo), marcas que querem conexão com o universo esportivo e premium, executivos e empresas que buscam curadoria criativa e estratégica de alto nível.
 
-**O diferencial Off Field:** O Bicofino conecta marcas e empresas a atletas, celebridades e personalidades que estão fora do alcance da grande maioria. Esse acesso foi construído com anos de relacionamentos éticos, negociações limpas e presença consistente nos mercados certos. Toda conexão é estruturada para que todos os lados ganhem.
+**O diferencial Off Pitch:** O Bicofino conecta marcas e empresas a atletas, celebridades e personalidades que estão fora do alcance da grande maioria. Esse acesso foi construído com anos de relacionamentos éticos, negociações limpas e presença consistente nos mercados certos. Toda conexão é estruturada para que todos os lados ganhem.
 
 ---
 
@@ -957,10 +957,10 @@ O Club é o projeto mais íntimo e seletivo do Bicofino. Seu perfil, critérios 
 
 ### Arquitetura visual das vertentes
 
-On Field e Off Field compartilham o mesmo DNA visual — Inter, diamond ✦, paleta core, hierarquia de leitura. O que diferencia uma da outra é o universo de imagem:
+On Pitch e Off Pitch compartilham o mesmo DNA visual — Inter, diamond ✦, paleta core, hierarquia de leitura. O que diferencia uma da outra é o universo de imagem:
 
-- **On Field:** sempre imagens dos atletas em campo, em treino, em competição
-- **Off Field:** imagens dos atletas em relação a marcas, campanhas, empresas e design — além de projetos que não envolvem atletas
+- **On Pitch:** sempre imagens dos atletas em campo, em treino, em competição
+- **Off Pitch:** imagens dos atletas em relação a marcas, campanhas, empresas e design — além de projetos que não envolvem atletas
 
 ---
 
@@ -994,7 +994,7 @@ Todo output do Bicofino passa pelo filtro dos 6 Princípios de Operação antes 
 
 ---
 
-### Fluxo de entrega Off Field — Studio
+### Fluxo de entrega Off Pitch — Studio
 
 1. Briefing ou entrada de demanda (sexta-feira preferencial)
 2. Produção — 2 dias úteis para projetos recorrentes
