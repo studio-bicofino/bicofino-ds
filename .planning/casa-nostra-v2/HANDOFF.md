@@ -19,6 +19,7 @@
 | 6 | Seed 120 tags (`db/seeds/0002_tags_v2.sql` + runner `.mjs`) | `5ef82ec` |
 | 7 | **CRITICAL FIX** `'use server'` schema + edit mode (`/membros/[id]`) | `e169f1b` |
 | 8 | CEP autocomplete via ViaCEP no `AddressPopover` | `d838801` |
+| 9 | Typeahead em `/membros` (`MemberSearch`) + autocomplete de cidade no `AddressPopover` (reusa `AutocompleteField`) | `9c92ac5` |
 
 ### Fluxo end-to-end funcionando
 
@@ -31,10 +32,14 @@
 
 `'use server'` files SÓ podem ter `export async function`. Qualquer outro export de valor (`export const schema = z.object(...)`) passa no tsc + build mas crasha no runtime: `"A 'use server' file can only export async functions, found object"`. O Fabio bateu nesse bug no 1º submit em prod. Schema agora vive em `cadastro-schema.ts` (sem 'use server'). **Types são OK** (são erased em runtime).
 
-### Pendentes pro próximo chat (Onda 9)
+### Onda 9 — ENTREGUE (2026-05-29 noite, commit `9c92ac5`)
 
-1. **Typeahead na busca de pessoas em `/membros`** — input atual filtra mas sem dropdown de sugestões com nomes/empresas
-2. **Autocomplete de cidade no `AddressPopover`** — canonicalização server-side já funciona via `getAllSuggestions().home_city` (passado pro action), mas o input direto da cidade não tem dropdown visual. Reaproveitar `AutocompleteField` em `apps/casa-nostra/src/app/(app)/p/_components/AutocompleteField.tsx`
+1. ✅ **Typeahead na busca de `/membros`** — `membros/_components/MemberSearch.tsx` (client). Pool leve client-side (query `limit(500)` na page), dropdown nome+empresa, navega pra `/membros/[id]` ao selecionar; Enter sem seleção faz busca server-side. Substitui o `<form>` GET.
+2. ✅ **Autocomplete de cidade no `AddressPopover`** — `AutocompleteField` ganhou prop opcional `inputStyle` e é reaproveitado no campo Cidade com o estilo compacto do popover. `home_city` suggestions propagadas: `cadastro/page` + `membros/[id]/page` (`getFormSuggestions`) → `CadastroV2` → `ContactBlock` → `AddressPopover`.
+
+Preview: https://casa-nostra-l8k7u4yre-woney-malians-projects.vercel.app (READY, commit `6d011d3`, inclui fix do z-index do dropdown) — **pendente promoção pra prod** (Fabio escolheu validar o preview primeiro). Promover com `vercel --prod` em `apps/casa-nostra` após OK.
+
+**Fix `6d011d3`:** o dropdown do `MemberSearch` aparecia ATRÁS do contador "N membros" e da tabela (ambos filhos de `.cn-stagger`, animados com transform → criam stacking context). Resolvido forçando `.cn-toolbar` com `zIndex: 40` (inline) e o `<p>` do contador com `zIndex: 0`. `.cn-toolbar` original tinha só `z-index: 1` no globals.css — insuficiente contra os irmãos animados.
 
 ### Arquivos-chave da v2 (mapa rápido pra próximo chat)
 
