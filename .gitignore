@@ -60,3 +60,7 @@ legacy/
 .claude/commands/
 .claude/package.json
 .agents/
+
+# apps/web — assets de upload manual (vídeos, brand). Não versionar (ver CLAUDE.md).
+apps/web/public/media/
+apps/web/public/brand/
