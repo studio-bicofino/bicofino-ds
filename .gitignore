@@ -47,3 +47,6 @@ AI-OS-BASE/
 assets Bicofino/
 bicofino/
 legacy/
+
+# Design handoff bundle — local reference for DS v3.1 Phase 1 (delete after Phase 1; not versioned)
+design_handoff_bicofino_v3_1/

@@ -14,13 +14,24 @@
   --bf-caffe:       #33111a;
   --bf-champagne:   #d8d7d3;
   --bf-cacao:       #5e4c41;
+  --bf-nocciola:    #d8d7d3;
+  /* ── Highlights — the "one vibrant" set (max 10% surface) ── */
   --bf-spfc:        #f0535e;
   --bf-sep:         #2fd298;
+  --bf-usa:         #05185c;
+  --bf-niederland:  #fe4600;
+  --bf-australia:   #e5ff78;
+  --bf-benfica:     #ed0007;
+  --bf-miami:       #f4b3cb;
+  --bf-napoli:      #77deff;
   --bf-torino:      #821324;
   --bf-como:        #0d8aff;
   --bf-venezia:     #38e0e3;
   --bf-fiorentina:  #711cfe;
-  --current-accent: var(--bf-torino);
+  /* One vibrant per composition — randomised per refresh by the inline script in
+     layout.tsx (over all 12 Highlights). This is only the SSR/no-JS fallback. */
+  --current-accent: var(--bf-spfc);
+  --bf-signal:      var(--current-accent); /* back-compat alias */
   --sp-1: 0.25rem;
   --sp-2: 0.5rem;
   --sp-3: 0.75rem;
@@ -34,6 +45,22 @@
   --dur-base: 200ms;
   --dur-slow: 360ms;
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --dur-ambient:   6000ms;                       /* ambient "living-organism" loop (M-01) */
+  --ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ─── Lines on dark (Grafismo Técnico) ─── */
+  --bf-line-on-dark:        rgba(168, 201, 229, 0.20);
+  --bf-line-on-dark-strong: rgba(168, 201, 229, 0.32);
+  --bf-dot-on-dark:         rgba(168, 201, 229, 0.10);
+  --bf-hairline-dark:       1px solid rgba(168, 201, 229, 0.20);
+
+  /* ─── Two corner languages — read via --bf-corner-1/2/3; switch with [data-corners] ─── */
+  --bf-radius-pill: 9999px;
+  --bf-sharp-1: 2px;   --bf-sharp-2: 4px;   --bf-sharp-3: 8px;
+  --bf-soft-1: 12px;   --bf-soft-2: 18px;   --bf-soft-3: 28px;
+  --bf-corner-1: var(--bf-sharp-1);              /* default language = sharp */
+  --bf-corner-2: var(--bf-sharp-2);
+  --bf-corner-3: var(--bf-sharp-3);
 
   /* ─── Semantic theme tokens — light mode defaults ─── */
   --bf-bg-page:         #f2f8ff;
@@ -53,6 +80,44 @@
   --bf-sidebar-text-hover:  rgba(242,248,255,0.75);
   --bf-sidebar-hover:       rgba(242,248,255,0.06);
 }
+
+/* ─── Corner language switch (D2) — opt a container into soft/sharp ─── */
+[data-corners="soft"], .bf-corners-soft {
+  --bf-corner-1: var(--bf-soft-1);
+  --bf-corner-2: var(--bf-soft-2);
+  --bf-corner-3: var(--bf-soft-3);
+}
+[data-corners="sharp"], .bf-corners-sharp {
+  --bf-corner-1: var(--bf-sharp-1);
+  --bf-corner-2: var(--bf-sharp-2);
+  --bf-corner-3: var(--bf-sharp-3);
+}
+
+/* ─── Ambient "living-organism" motion — M-01 (Grafismo Técnico) ───
+   Scoped to .bf-schematic so it can never leak into other sections. */
+@keyframes bf-orbit-draw {
+  0%        { stroke-dashoffset: var(--len, 320); }
+  35%, 100% { stroke-dashoffset: 0; }
+}
+@keyframes bf-node-pulse {
+  0%, 100% { opacity: .35; transform: scale(.85); }
+  50%      { opacity: 1;   transform: scale(1.15); }
+}
+@keyframes bf-ant {            /* unit-grid cells fading on/off, like an anthill */
+  0%, 100% { opacity: .25; }
+  50%      { opacity: .95; }
+}
+@keyframes bf-digit-roll {     /* numbers/letters slowly forming */
+  0%,18%   { transform: translateY(0); }
+  20%,38%  { transform: translateY(-1em); }
+  40%,58%  { transform: translateY(-2em); }
+  60%,78%  { transform: translateY(-3em); }
+  80%,100% { transform: translateY(-4em); }
+}
+.bf-schematic .bf-orbit-ring  { stroke-dashoffset: var(--len, 320); animation: bf-orbit-draw var(--dur-ambient) var(--ease-out) infinite; }
+.bf-schematic .bf-node        { transform-box: fill-box; transform-origin: center; animation: bf-node-pulse 3.6s ease-in-out infinite; }
+.bf-schematic .bf-unit        { animation: bf-ant var(--dur-ambient) ease-in-out infinite; }
+.bf-schematic .bf-digit-strip { animation: bf-digit-roll 6s steps(1) infinite; }
 
 /* ─── Dark mode — bf Power Black system ─── */
 [data-theme="dark"] {
@@ -666,6 +731,16 @@ html[data-theme-loaded] .bf-topbar {
   .bf-motion-bar--fast { animation: none !important; width: 100%; }
   .bf-motion-bar--base { animation: none !important; width: 100%; }
   .bf-motion-bar--slow { animation: none !important; width: 100%; }
+
+  /* M-01 ambient motion stops — schematic stays a clean still */
+  .bf-schematic .bf-orbit-ring,
+  .bf-schematic .bf-node,
+  .bf-schematic .bf-unit,
+  .bf-schematic .bf-digit-strip { animation: none !important; }
+  .bf-schematic .bf-orbit-ring  { stroke-dashoffset: 0; }
+  .bf-schematic .bf-node        { opacity: .9; transform: none; }
+  .bf-schematic .bf-unit        { opacity: .55; }
+  .bf-schematic .bf-digit-strip { transform: translateY(0) !important; }
 
   .bf-theme-icon,
   .bf-theme-icon--hidden {

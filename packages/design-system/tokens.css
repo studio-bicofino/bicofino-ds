@@ -1,6 +1,10 @@
-/* ─── Bicofino Design System — CSS Tokens ─── */
+/* ─── Bicofino Design System — CSS Tokens · v3.1 ─── */
 /* Single source of truth for all CSS custom properties.  */
 /* Import this file in any app to get the full token set.  */
+/*                                                          */
+/* v3.1 — adds: --current-accent (the one vibrant, randomised */
+/* per refresh), two corner languages (sharp/soft), lines on  */
+/* dark, ambient motion. Reconciled with apps/docs-site.      */
 
 :root {
   /* ── Palette · Básicas ── */
@@ -12,14 +16,14 @@
   --bf-aluminium:   #e2eaf2;
   --bf-platinum:    #a8c9e5;
 
-  /* ── Palette · Especiais ── */
+  /* ── Palette · Especiais (FC Bicofino / Italian / Raposa) ── */
   --bf-crema:      #f3ebd4;
   --bf-caffe:      #33111a;
   --bf-champagne:  #d8d7d3;
   --bf-cacao:      #5e4c41;
   --bf-nocciola:   #d8d7d3;
 
-  /* ── Palette · Destaques (max 10% surface) ── */
+  /* ── Palette · Destaques / Highlights (max ~10% surface) ── */
   --bf-spfc:       #f0535e;
   --bf-sep:        #2fd298;
   --bf-usa:        #05185c;
@@ -33,6 +37,15 @@
   --bf-venezia:    #38e0e3;
   --bf-fiorentina: #711cfe;
 
+  /* ── THE ONE VIBRANT of the current composition ──
+     One Highlight plays "vibrant" per composition (the 90/10 rule).
+     DEFAULT is RANDOMISED per page refresh from the Highlights set
+     (see AccentRandomizer) — this static value is the SSR fallback.
+     A section/piece may PIN its own: [data-theme] { --current-accent: var(--bf-sep); }
+     --bf-signal is a back-compat alias of the same value. */
+  --current-accent: var(--bf-spfc);
+  --bf-signal:      var(--current-accent);
+
   /* ── Spacing ── */
   --sp-1: 0.25rem;  /* 4px  */
   --sp-2: 0.5rem;   /* 8px  */
@@ -45,13 +58,52 @@
   --sp-9: 6rem;     /* 96px */
 
   /* ── Motion ── */
-  --dur-fast: 120ms;
-  --dur-base: 200ms;
-  --dur-slow: 360ms;
+  --dur-fast:    120ms;
+  --dur-base:    200ms;
+  --dur-slow:    360ms;
+  --dur-ambient: 6000ms;   /* ambient "living-organism" loops (M-01). Long, looping, near-imperceptible. */
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-out:      cubic-bezier(0.16, 1, 0.3, 1);  /* draw-in / orbit reveals */
 
-  /* ── Border ── */
+  /* ── Border & lines ── */
   --bf-hairline: 1px solid rgba(42, 44, 43, 0.08);
   --bf-border:   rgba(42, 44, 43, 0.12);
-  --radius:      2px;
+  /* Lines & dots on DARK (power-black) surfaces — the "grafismo técnico" module (M-01). */
+  --bf-line-on-dark:        rgba(168, 201, 229, 0.20);
+  --bf-line-on-dark-strong: rgba(168, 201, 229, 0.32);
+  --bf-dot-on-dark:         rgba(168, 201, 229, 0.10);
+  --bf-hairline-dark:       1px solid rgba(168, 201, 229, 0.20);
+
+  /* ── Radius — TWO corner languages, chosen per material, never mixed in one piece.
+     What unifies a piece as Bicofino is cleanliness, color, alignment & spacing —
+     NOT the radius. Pills & avatars are full-round in BOTH languages. ── */
+  --radius:         2px;     /* legacy base (= sharp-1) */
+  --bf-radius-pill: 9999px;  /* pills, avatars — full round, both languages */
+
+  /* SHARP — cartesian, order, structure. The DEFAULT language. */
+  --bf-sharp-1: 2px;
+  --bf-sharp-2: 4px;
+  --bf-sharp-3: 8px;
+  /* SOFT — circular movement, carousel, warmth. */
+  --bf-soft-1: 12px;
+  --bf-soft-2: 18px;
+  --bf-soft-3: 28px;
+
+  /* Switchable corner scale — COMPONENTS read these three. Default = SHARP.
+     Flip a subtree with [data-corners="soft"] (or .bf-corners-soft). */
+  --bf-corner-1: var(--bf-sharp-1);
+  --bf-corner-2: var(--bf-sharp-2);
+  --bf-corner-3: var(--bf-sharp-3);
+}
+
+/* ── Corner language switch (D2) ── */
+[data-corners="soft"], .bf-corners-soft {
+  --bf-corner-1: var(--bf-soft-1);
+  --bf-corner-2: var(--bf-soft-2);
+  --bf-corner-3: var(--bf-soft-3);
+}
+[data-corners="sharp"], .bf-corners-sharp {
+  --bf-corner-1: var(--bf-sharp-1);
+  --bf-corner-2: var(--bf-sharp-2);
+  --bf-corner-3: var(--bf-sharp-3);
 }
