@@ -54,9 +54,10 @@ export async function uploadOne(args: {
   meta: BatchMeta
   date: string
   batchIndex: number
+  contentHash: string | null
   onProgress: (ratio: number) => void
 }): Promise<MediaItem> {
-  const { file, athlete, meta, date, batchIndex, onProgress } = args
+  const { file, athlete, meta, date, batchIndex, contentHash, onProgress } = args
 
   // 1) Sessão resumable + nome padronizado.
   const sres = await fetch('/api/upload/session', {
@@ -100,6 +101,7 @@ export async function uploadOne(args: {
       drivePath: session.drivePath,
       driveFileId: drive.id,
       webViewLink: drive.webViewLink,
+      contentHash,
     }),
   })
   const completed = (await cres.json()) as { item: MediaItem; error?: string }

@@ -29,6 +29,7 @@ interface Body {
   drivePath: string
   driveFileId: string | null
   webViewLink: string | null
+  contentHash: string | null
 }
 
 const VALID_CATEGORIES = new Set(CATEGORIES.map((c) => c.value))
@@ -69,6 +70,7 @@ export async function POST(req: Request) {
       drivePath: b.drivePath,
       driveFileId: b.driveFileId,
       webViewLink: b.webViewLink,
+      contentHash: b.contentHash ?? null,
     })
 
     const { data, error } = await supabaseAdmin()

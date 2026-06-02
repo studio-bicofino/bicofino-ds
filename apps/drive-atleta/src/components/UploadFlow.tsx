@@ -1,14 +1,15 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { ArrowLeft, ArrowRight, X, Plus, Lock } from 'lucide-react'
+import { ArrowLeft, ArrowRight, X, Plus, Lock, AlertTriangle } from 'lucide-react'
 import type { Athlete } from '@/lib/athletes'
 import type { BatchMeta, Category, MediaItem, MediaKind } from '@/lib/types'
 import { CATEGORIES, TAG_SUGGESTIONS } from '@/lib/categories'
 import { kindFromMime } from '@/lib/filename'
 import { destinationFolder } from '@/lib/destination'
 import { uploadOne } from '@/lib/upload-client'
-import { formatBytes } from '@/lib/format'
+import { sha256Hex } from '@/lib/hash'
+import { formatBytes, formatDate } from '@/lib/format'
 import { TopBar } from './TopBar'
 import { Dropzone } from './Dropzone'
 import { Thumb } from './Thumb'
@@ -23,6 +24,9 @@ interface Picked {
   file: File
   kind: MediaKind
   previewUrl?: string
+  hash?: string
+  /** Preenchido se um arquivo idêntico já existe no acervo do atleta. */
+  dup?: { filename: string; date: string | null } | null
 }
 
 function todayISO(): string {
@@ -69,6 +73,35 @@ export function UploadFlow({ athlete }: { athlete: Athlete }) {
 
   useEffect(() => () => revokeAll(), [revokeAll])
 
+  // Hasheia as fotos do lote e marca as que já existem no acervo do atleta.
+  // Só avisa — nunca bloqueia. Silencioso em caso de erro (é conveniência).
+  const checkDuplicates = useCallback(async (items: Picked[]) => {
+    const fotos = items.filter((p) => p.kind === 'foto')
+    if (fotos.length === 0) return
+    const hashed = await Promise.all(
+      fotos.map(async (p) => ({ id: p.id, hash: await sha256Hex(p.file) })),
+    )
+    setPicked((prev) => prev.map((p) => {
+      const h = hashed.find((x) => x.id === p.id)
+      return h ? { ...p, hash: h.hash } : p
+    }))
+    try {
+      const res = await fetch('/api/check-duplicate', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ athleteSlug: athlete.slug, hashes: hashed.map((x) => x.hash) }),
+      })
+      const json = (await res.json()) as { matches: Record<string, { filename: string; date: string | null }> }
+      setPicked((prev) => prev.map((p) => {
+        const h = hashed.find((x) => x.id === p.id)
+        if (!h) return p
+        return { ...p, dup: json.matches?.[h.hash] ?? null }
+      }))
+    } catch {
+      /* dedup é só conveniência — ignora falha */
+    }
+  }, [athlete.slug])
+
   const addFiles = useCallback((files: File[]) => {
     const next: Picked[] = files.map((file) => {
       const kind = kindFromMime(file.type)
@@ -82,7 +115,8 @@ export function UploadFlow({ athlete }: { athlete: Athlete }) {
     setPicked((p) => [...p, ...next])
     // Prefill da data a partir do primeiro arquivo (lastModified) — toque de mobile.
     setMeta((m) => (m.date ? m : { ...m, date: dateFromFile(files[0]) }))
-  }, [])
+    void checkDuplicates(next)
+  }, [checkDuplicates])
 
   function removeFile(id: string) {
     setPicked((p) => {
@@ -123,6 +157,7 @@ export function UploadFlow({ athlete }: { athlete: Athlete }) {
           meta,
           date,
           batchIndex: 0, // sequencial: a contagem no banco já reflete os anteriores
+          contentHash: picked[i].hash ?? null,
           onProgress: (r) => setRatio((i + r) / total),
         })
         sentRef.current = [...sentRef.current, item]
@@ -189,6 +224,12 @@ export function UploadFlow({ athlete }: { athlete: Athlete }) {
                       <span className="bf-mono" style={{ color: 'var(--bf-text-subtle)' }}>
                         {p.kind === 'video' ? 'Vídeo' : 'Foto'} · {formatBytes(p.file.size)}
                       </span>
+                      {p.dup && (
+                        <span className="bf-mono row" style={{ gap: 'var(--sp-2)', alignItems: 'flex-start', color: 'var(--current-accent-ink)' }}>
+                          <AlertTriangle size={13} strokeWidth={1.5} aria-hidden style={{ flex: '0 0 auto', marginTop: 2 }} />
+                          <span>Já no acervo{p.dup.date ? ` (${formatDate(p.dup.date)})` : ''} — você pode enviar mesmo assim.</span>
+                        </span>
+                      )}
                     </div>
                     <button className="btn btn--ghost" aria-label="Remover" onClick={() => removeFile(p.id)} style={{ flex: '0 0 auto', padding: 'var(--sp-2)' }}>
                       <X size={16} strokeWidth={1.5} />

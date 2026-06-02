@@ -52,6 +52,8 @@ export interface MediaItem {
   driveFileId: string | null
   /** Link de visualização no Drive. */
   webViewLink: string | null
+  /** SHA-256 dos bytes — detecta reenvio do arquivo idêntico. */
+  contentHash: string | null
   /** Timestamp ISO de quando entrou no acervo. */
   uploadedAt: string
 }
