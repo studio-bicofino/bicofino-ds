@@ -1,0 +1,507 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+/* ─── Gotham — self-hosted, impact only (M-02) — DS v3.1 ───
+   Reservada para 1–2 palavras de impacto, uppercase. Nunca corpo. */
+@font-face { font-family: "Gotham"; src: url("/fonts/Gotham-Light.woff2") format("woff2"); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: "Gotham"; src: url("/fonts/Gotham-Book.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Gotham"; src: url("/fonts/Gotham-Bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Gotham"; src: url("/fonts/Gotham-Black.woff2") format("woff2"); font-weight: 900; font-style: normal; font-display: swap; }
+
+/* ─────────────────────────────────────────────────────────────
+   Drive do Atleta Bicofino — Design tokens (Bicofino DS v3.1)
+   SYSTEM mode · SHARP corners · 90/10 com um vibrante (--current-accent).
+   Split de superfície: fluxo do atleta em power-black, Painel em off-white.
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Palette · Básicas ── */
+  --bf-black:       #2a2c2b;
+  --bf-power-black: #061015;
+  --bf-white:       #ffffff;
+  --bf-steel:       #6d7886;
+  --bf-aluminium:   #e2eaf2;
+  --bf-platinum:    #a8c9e5;
+  --bf-bg:          #f2f8ff;
+
+  /* ── Highlights — candidatos a vibrante ── */
+  --bf-spfc:       #f0535e;
+  --bf-sep:        #2fd298;
+  --bf-usa:        #05185c;
+  --bf-niederland: #fe4600;
+  --bf-australia:  #e5ff78;
+  --bf-benfica:    #ed0007;
+  --bf-miami:      #f4b3cb;
+  --bf-napoli:     #77deff;
+  --bf-torino:     #821324;
+  --bf-como:       #0d8aff;
+  --bf-venezia:    #38e0e3;
+  --bf-fiorentina: #711cfe;
+
+  /* O único vibrante da composição. SSR fallback = coral SPFC;
+     randomizado por refresh pelo AccentRandomizer (assinatura da casa). */
+  --current-accent:     var(--bf-spfc);
+  --bf-signal:          var(--current-accent);
+  --current-accent-on:  #ffffff;
+  --current-accent-ink: var(--current-accent); /* nunca re-pinar um accent fixo */
+
+  /* ── Semantic (tema claro — default) ── */
+  --bf-bg-page:        #ffffff;
+  --bf-surface:        #f2f8ff;
+  --bf-surface-subtle: #f8fafc;
+  --bf-text-primary:   #2a2c2b;
+  --bf-text-secondary: #5f6b77;
+  --bf-text-subtle:    #98a4b2;
+  --bf-border:         rgba(42, 44, 43, 0.08);
+  --bf-border-strong:  rgba(42, 44, 43, 0.16);
+  --bf-hairline:       1px solid rgba(42, 44, 43, 0.08);
+  --bf-line-on-dark:        rgba(168, 201, 229, 0.20);
+  --bf-line-on-dark-strong: rgba(168, 201, 229, 0.32);
+
+  /* ── Spacing ── */
+  --sp-1: 0.25rem;  --sp-2: 0.5rem;  --sp-3: 0.75rem;  --sp-4: 1rem;
+  --sp-5: 1.5rem;   --sp-6: 2rem;    --sp-7: 3rem;     --sp-8: 4rem;  --sp-9: 6rem;
+
+  /* ── Motion ── */
+  --dur-fast: 120ms;  --dur-base: 200ms;  --dur-slow: 360ms;
+  --dur-reveal: 280ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ── Corner languages (SHARP default) ── */
+  --bf-sharp-1: 2px;  --bf-sharp-2: 4px;  --bf-sharp-3: 8px;
+  --bf-soft-1: 12px;  --bf-soft-2: 18px;  --bf-soft-3: 28px;
+  --bf-radius-pill: 9999px;
+  --bf-corner-1: var(--bf-sharp-1);
+  --bf-corner-2: var(--bf-sharp-2);
+  --bf-corner-3: var(--bf-sharp-3);
+
+  /* Fontes */
+  --bf-font: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --bf-font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --bf-font-impact: "Gotham", "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+[data-corners="soft"] {
+  --bf-corner-1: var(--bf-soft-1);
+  --bf-corner-2: var(--bf-soft-2);
+  --bf-corner-3: var(--bf-soft-3);
+}
+
+/* ─── Split de superfície — escopo escuro (fluxo do atleta) ───
+   Remapeia só os tokens semânticos: .cell, .pill, .btn etc. se
+   adaptam sozinhos, sem CSS por componente. */
+[data-surface="dark"] {
+  --bf-bg-page:        #0c1a23; /* superfícies/cards levantados */
+  --bf-surface:        #08131a;
+  --bf-surface-subtle: rgba(168, 201, 229, 0.05);
+  --bf-text-primary:   #eaf2fa;
+  --bf-text-secondary: #9fb2c4;
+  --bf-text-subtle:    #61788c;
+  --bf-border:         var(--bf-line-on-dark);
+  --bf-border-strong:  var(--bf-line-on-dark-strong);
+  --bf-hairline:       1px solid var(--bf-line-on-dark);
+  /* Sobre power-black todo Highlight é legível como texto — o "ink"
+     volta a ser o próprio vibrante (no claro ele às vezes cai p/ preto). */
+  --current-accent-ink: var(--current-accent);
+  background: var(--bf-power-black);
+  color: var(--bf-text-primary);
+}
+
+/* ─── Reset ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; background: var(--bf-surface); color-scheme: light; }
+/* Controles nativos (date picker, dropdown do select) seguem a superfície escura. */
+[data-surface="dark"] { color-scheme: dark; }
+
+body {
+  background: var(--bf-bg-page);
+  color: var(--bf-text-primary);
+  font-family: var(--bf-font);
+  font-weight: 400;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100svh;
+}
+
+h1, h2, h3, h4, h5, h6 { text-wrap: balance; font-weight: 400; }
+p { text-wrap: pretty; }
+a { color: inherit; text-decoration: none; }
+
+::selection { background: var(--current-accent); color: var(--current-accent-on); }
+
+:focus-visible {
+  outline: 2px solid var(--current-accent);
+  outline-offset: 2px;
+  border-radius: var(--bf-corner-1);
+}
+
+button { font-family: inherit; cursor: pointer; }
+
+/* Toque: remove o delay de 300ms e o flash de tap em elementos acionáveis. */
+button, a, [role="button"], .chip, label.btn {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ─── Type presets (DESIGN.md §6) ─── */
+.bf-display { font-weight: 700; line-height: 0.95; letter-spacing: -0.03em; }
+.bf-h1 { font-size: clamp(1.75rem, 3.5vw, 2.75rem); font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; }
+.bf-h2 { font-size: clamp(1.25rem, 2vw, 1.6rem); font-weight: 600; line-height: 1.15; letter-spacing: -0.01em; }
+.bf-h3 { font-size: 1.05rem; font-weight: 600; line-height: 1.25; }
+.bf-body { font-size: 1rem; line-height: 1.7; color: var(--bf-text-secondary); }
+.bf-body-sm { font-size: 0.875rem; line-height: 1.6; color: var(--bf-text-secondary); }
+.bf-eyebrow {
+  font-family: var(--bf-font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bf-text-subtle);
+}
+.bf-mono { font-family: var(--bf-font-mono); font-size: 0.8125rem; letter-spacing: 0.01em; }
+.bf-impact {
+  font-family: var(--bf-font-impact);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+  line-height: 0.92;
+  text-wrap: balance;
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--bf-border-strong); border-radius: var(--bf-corner-1); }
+
+/* ─── Reveal (entrada suave, DESIGN.md §8) ─── */
+@keyframes bf-reveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.bf-reveal { animation: bf-reveal var(--dur-slow) var(--ease-out) both; }
+
+.bf-reveal-io {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity var(--dur-reveal) var(--ease-out), transform var(--dur-reveal) var(--ease-out);
+}
+.bf-reveal-io.is-in { opacity: 1; transform: none; }
+
+/* ─────────────────────────────────────────────────────────────
+   Layout
+   ───────────────────────────────────────────────────────────── */
+.shell { max-width: 1180px; margin: 0 auto; padding: 0 var(--sp-5); }
+.shell-narrow { max-width: 640px; margin: 0 auto; padding: 0 var(--sp-5); }
+.shell-main { padding: var(--sp-7) var(--sp-5) var(--sp-9); }
+.stack-2 { display: flex; flex-direction: column; gap: var(--sp-2); }
+.stack-3 { display: flex; flex-direction: column; gap: var(--sp-3); }
+.stack-4 { display: flex; flex-direction: column; gap: var(--sp-4); }
+.stack-5 { display: flex; flex-direction: column; gap: var(--sp-5); }
+.stack-6 { display: flex; flex-direction: column; gap: var(--sp-6); }
+.row { display: flex; align-items: center; gap: var(--sp-3); }
+.row-wrap { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.between { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); }
+
+/* full-bleed dark wrapper para o fluxo do atleta */
+.surface-dark { min-height: 100svh; background: var(--bf-power-black); }
+
+/* ─────────────────────────────────────────────────────────────
+   M-05 — Bento de Dados (chassi do Painel)
+   ───────────────────────────────────────────────────────────── */
+.bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--sp-4); }
+
+.cell {
+  background: var(--bf-bg-page);
+  border: var(--bf-hairline);
+  border-radius: var(--bf-corner-3);
+  padding: var(--sp-6);
+}
+.cell--quiet { background: var(--bf-surface-subtle); }
+.cell--pad-sm { padding: var(--sp-4); }
+
+/* Pills */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-1) var(--sp-3);
+  border-radius: var(--bf-radius-pill);
+  border: var(--bf-hairline);
+  font-family: var(--bf-font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: var(--bf-text-secondary);
+  background: var(--bf-bg-page);
+  white-space: nowrap;
+}
+.pill--accent {
+  border-color: color-mix(in srgb, var(--current-accent) 40%, transparent);
+  color: var(--current-accent-ink);
+  background: color-mix(in srgb, var(--current-accent) 8%, transparent);
+}
+.pill--ok {
+  border-color: color-mix(in srgb, var(--bf-sep) 40%, transparent);
+  color: color-mix(in srgb, var(--bf-sep) 70%, var(--bf-black));
+  background: color-mix(in srgb, var(--bf-sep) 8%, transparent);
+}
+
+.bignum { font-weight: 700; line-height: 0.92; letter-spacing: -0.035em; font-variant-numeric: tabular-nums; color: var(--bf-text-primary); }
+.rule { height: 1px; background: var(--bf-border); border: 0; }
+.mono-path {
+  font-family: var(--bf-font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.01em;
+  color: var(--bf-text-secondary);
+  word-break: break-word;
+}
+
+/* ─── Botões ─── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--bf-corner-2);
+  border: 1px solid var(--bf-border-strong);
+  background: var(--bf-bg-page);
+  color: var(--bf-text-primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background var(--dur-fast) var(--ease-standard),
+              border-color var(--dur-fast) var(--ease-standard),
+              transform var(--dur-fast) var(--ease-standard);
+}
+.btn:hover { background: var(--bf-surface-subtle); border-color: var(--bf-text-primary); }
+.btn:active { transform: scale(0.98); } /* feedback de press — emil-design-eng */
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn--primary { background: var(--bf-text-primary); color: var(--bf-bg-page); border-color: var(--bf-text-primary); }
+.btn--primary:hover { background: var(--bf-text-primary); filter: brightness(1.12); }
+.btn--accent { background: var(--current-accent); color: var(--current-accent-on); border-color: var(--current-accent); }
+.btn--accent:hover { background: var(--current-accent); border-color: var(--current-accent); filter: brightness(1.06); }
+.btn--ghost { border-color: transparent; background: transparent; }
+.btn--ghost:hover { background: var(--bf-surface-subtle); border-color: transparent; }
+.btn--lg { padding: var(--sp-4) var(--sp-6); font-size: 1rem; }
+.btn--block { width: 100%; }
+
+/* Pill outline (links de navegação / atalhos) */
+.pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--bf-radius-pill);
+  border: 1px solid var(--bf-border-strong);
+  background: transparent;
+  font-family: var(--bf-font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--bf-text-secondary);
+  transition: border-color var(--dur-fast) var(--ease-standard),
+              color var(--dur-fast) var(--ease-standard),
+              background var(--dur-fast) var(--ease-standard);
+}
+.pill-btn:hover {
+  border-color: var(--current-accent);
+  color: var(--current-accent-ink);
+  background: color-mix(in srgb, var(--current-accent) 8%, transparent);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Dropzone
+   ───────────────────────────────────────────────────────────── */
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
+  text-align: center;
+  padding: var(--sp-8) var(--sp-5);
+  border: 1.5px dashed var(--bf-border-strong);
+  border-radius: var(--bf-corner-3);
+  background: var(--bf-surface-subtle);
+  color: var(--bf-text-secondary);
+  transition: border-color var(--dur-base) var(--ease-standard),
+              background var(--dur-base) var(--ease-standard);
+  cursor: pointer;
+}
+.dropzone:hover { border-color: var(--current-accent); }
+.dropzone.is-drag {
+  border-color: var(--current-accent);
+  background: color-mix(in srgb, var(--current-accent) 7%, transparent);
+}
+.dropzone__icon {
+  display: grid;
+  place-items: center;
+  width: 48px; height: 48px;
+  border-radius: var(--bf-radius-pill);
+  border: var(--bf-hairline);
+  color: var(--current-accent-ink);
+}
+
+/* ─── Thumbnail técnica (M-01) — placeholder por tipo ─── */
+.thumb {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--bf-corner-2);
+  border: var(--bf-hairline);
+  background: var(--bf-surface-subtle);
+  display: grid;
+  place-items: center;
+  color: var(--bf-text-subtle);
+  overflow: hidden;
+}
+.thumb img { width: 100%; height: 100%; object-fit: cover; }
+.thumb__tag {
+  position: absolute;
+  top: var(--sp-2); left: var(--sp-2);
+  font-family: var(--bf-font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bf-text-secondary);
+  background: color-mix(in srgb, var(--bf-bg-page) 70%, transparent);
+  padding: var(--sp-1) var(--sp-2);
+  border-radius: var(--bf-corner-1);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Form controls
+   ───────────────────────────────────────────────────────────── */
+.field { display: flex; flex-direction: column; gap: var(--sp-2); }
+.field__label {
+  font-family: var(--bf-font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bf-text-subtle);
+}
+.field__hint { font-size: 0.75rem; color: var(--bf-text-subtle); }
+
+.input, .textarea, .select {
+  width: 100%;
+  font-family: var(--bf-font);
+  font-size: 1rem; /* ≥16px: evita zoom no iOS */
+  color: var(--bf-text-primary);
+  background: var(--bf-bg-page);
+  border: 1px solid var(--bf-border-strong);
+  border-radius: var(--bf-corner-2);
+  padding: var(--sp-3) var(--sp-4);
+  transition: border-color var(--dur-fast) var(--ease-standard);
+}
+.input::placeholder, .textarea::placeholder { color: var(--bf-text-subtle); }
+/* foco: borda accent no ponteiro; anel visível no teclado (:focus-visible) — nunca outline:none sem troca */
+.input:focus, .textarea:focus, .select:focus { border-color: var(--current-accent); }
+.input:focus-visible, .textarea:focus-visible, .select:focus-visible {
+  outline: 2px solid var(--current-accent);
+  outline-offset: 1px;
+}
+.textarea { resize: vertical; min-height: 64px; line-height: 1.6; }
+.select { appearance: none; cursor: pointer; }
+
+/* Chips (categoria + tags sugeridas) */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--bf-radius-pill);
+  border: 1px solid var(--bf-border-strong);
+  background: var(--bf-bg-page);
+  color: var(--bf-text-secondary);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  transition: border-color var(--dur-fast) var(--ease-standard),
+              background var(--dur-fast) var(--ease-standard),
+              color var(--dur-fast) var(--ease-standard);
+}
+.chip:hover { border-color: var(--bf-text-secondary); }
+.chip.is-on {
+  border-color: var(--current-accent);
+  background: color-mix(in srgb, var(--current-accent) 12%, transparent);
+  color: var(--current-accent-ink);
+}
+.chip__x { display: inline-flex; opacity: 0.6; }
+.chip__x:hover { opacity: 1; }
+
+/* ─────────────────────────────────────────────────────────────
+   Stepper de envio
+   ───────────────────────────────────────────────────────────── */
+.progress-track { height: 4px; width: 100%; background: var(--bf-border); border-radius: var(--bf-radius-pill); overflow: hidden; }
+.progress-fill {
+  height: 100%;
+  width: 100%;
+  background: var(--current-accent);
+  border-radius: var(--bf-radius-pill);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform var(--dur-slow) var(--ease-out); /* só transform — GPU, sem layout */
+}
+.step { display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-2) 0; }
+.step__dot {
+  flex: 0 0 auto;
+  width: 16px; height: 16px;
+  border-radius: var(--bf-radius-pill);
+  border: 1.5px solid var(--bf-border-strong);
+  display: grid; place-items: center;
+  transition: border-color var(--dur-base) var(--ease-standard), background var(--dur-base) var(--ease-standard);
+}
+.step.is-active .step__dot { border-color: var(--current-accent); }
+.step.is-done .step__dot { border-color: var(--current-accent); background: var(--current-accent); color: var(--current-accent-on); }
+.step__label { font-size: 0.9375rem; color: var(--bf-text-subtle); transition: color var(--dur-base) var(--ease-standard); }
+.step.is-active .step__label, .step.is-done .step__label { color: var(--bf-text-primary); }
+
+/* Selo de sucesso — assenta (não "estoura"): entrada de opacidade + scale curto. */
+@keyframes bf-pop { from { transform: scale(0.94); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.seal {
+  width: 64px; height: 64px;
+  border-radius: var(--bf-radius-pill);
+  display: grid; place-items: center;
+  background: color-mix(in srgb, var(--bf-sep) 16%, transparent);
+  color: var(--bf-sep);
+  animation: bf-pop var(--dur-slow) var(--ease-out) both;
+}
+
+/* ─── Breadcrumb do Drive ─── */
+.breadcrumb {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2);
+  font-family: var(--bf-font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--bf-text-secondary);
+}
+.breadcrumb__sep { color: var(--bf-text-subtle); }
+.breadcrumb__leaf { color: var(--current-accent-ink); }
+
+/* ─────────────────────────────────────────────────────────────
+   Responsivo
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .bento { grid-template-columns: 1fr; }
+  .bento > * { grid-column: 1 / -1 !important; min-width: 0 !important; }
+}
+@media (max-width: 600px) {
+  .form-grid-2 { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 480px) {
+  .shell, .shell-narrow { padding-left: var(--sp-4); padding-right: var(--sp-4); }
+  .shell-main { padding-left: var(--sp-4); padding-right: var(--sp-4); padding-top: var(--sp-6); }
+  .dropzone { padding: var(--sp-6) var(--sp-4); }
+}
+
+.form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--sp-4); }
