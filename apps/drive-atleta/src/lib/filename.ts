@@ -37,6 +37,18 @@ export function matchToken(match: string): string {
   return deburr(match).toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8)
 }
 
+/** Campeonato/contexto → token CamelCase legível e ordenável.
+    "Apresentacao Alashkert" → "ApresentacaoAlashkert" · "Campeonato Paulista" → "CampeonatoPaulista". */
+export function contextToken(text: string): string {
+  const clean = deburr(text).replace(/[^A-Za-z0-9 ]/g, ' ').trim()
+  if (!clean) return ''
+  const camel = clean
+    .split(/\s+/)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join('')
+  return camel.slice(0, 28)
+}
+
 /** Extensão derivada do MIME, com fallbacks sensatos. */
 export function extFromMime(mime: string, originalName: string): string {
   const fromName = originalName.includes('.') ? originalName.split('.').pop()!.toLowerCase() : ''
@@ -82,12 +94,12 @@ export interface FilenameParts {
 export function generateFilename(p: FilenameParts): string {
   const athlete = deburr(p.athlete.firstName).toUpperCase().replace(/[^A-Z0-9]/g, '')
   const date = dateToken(p.date)
-  const context = p.match.trim()
-    ? matchToken(p.match)
-    : p.competition.trim()
-      ? matchToken(p.competition)
-      : p.category.toUpperCase()
+  // Jogo (se houver) + Campeonato/contexto (se houver). Sem nenhum, cai na categoria.
+  const segs: string[] = []
+  if (p.match.trim()) segs.push(matchToken(p.match))
+  if (p.competition.trim()) segs.push(contextToken(p.competition))
+  if (segs.length === 0) segs.push(p.category.toUpperCase())
   const seq = String(p.seq).padStart(3, '0')
   const ext = extFromMime(p.mimeType, p.originalName)
-  return `${athlete}_${date}_${context}_${p.category}_${seq}.${ext}`
+  return `${athlete}_${date}_${segs.join('_')}_${p.category}_${seq}.${ext}`
 }
