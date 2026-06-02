@@ -27,6 +27,13 @@ export const ATHLETES: Athlete[] = [
     position: 'Winger',
     club: 'Benfica',
   },
+  {
+    slug: 'julio-cezar',
+    name: 'Julio Cezar',
+    firstName: 'Julio',
+    // Espelha ATLETAS/JULIO CEZAR no Shared Drive CENTRAL BICOFINO.
+    driveFolder: 'JULIO CEZAR',
+  },
 ]
 
 export const DEFAULT_ATHLETE = ATHLETES[0]
