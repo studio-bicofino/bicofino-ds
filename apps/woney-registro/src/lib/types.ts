@@ -16,6 +16,10 @@ export interface Settings {
   dev_salario_base: number
   dev_mult_empregador: number
   dev_fracao_fte: number
+  /* Drive do Atleta — projeção de catalogação de mídia */
+  drive_fotos_semana: number
+  drive_seg_antes: number
+  drive_seg_depois: number
 }
 
 export interface Sistema {

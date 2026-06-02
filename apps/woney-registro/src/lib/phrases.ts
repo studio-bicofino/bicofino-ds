@@ -23,6 +23,7 @@ export function gerarFrases(s: Settings, sistemas: Sistema[], imp: Impacto): Fra
   const propostas = sistemas.find((x) => x.papel === 'propostas')
   const site = sistemas.find((x) => x.tipo === 'projeto')
   const ds = sistemas.find((x) => x.tipo === 'infraestrutura')
+  const drive = sistemas.find((x) => x.id === 'sis-drive-atleta')
 
   const frases: Frase[] = []
 
@@ -86,6 +87,19 @@ export function gerarFrases(s: Settings, sistemas: Sistema[], imp: Impacto): Fra
       id: 'ds',
       destaque: { valor: '1 mês', rotulo: 'custo único · sustenta tudo' },
       texto: `O Design System custou cerca de um mês do meu tempo, uma vez. Sustenta site, propostas e toda peça futura. Comporta-se como trilho de ferrovia: caro de assentar, barato de usar, e destrava rotas que antes não existiam.`,
+    })
+  }
+
+  if (drive) {
+    const fotosMes = (s.drive_fotos_semana * 52) / 12
+    const horasMes = (fotosMes * (s.drive_seg_antes - s.drive_seg_depois)) / 3600
+    const speedX = s.drive_seg_depois > 0 ? s.drive_seg_antes / s.drive_seg_depois : 0
+    frases.push({
+      id: 'drive',
+      destaque: { valor: fmtX(speedX), rotulo: 'mais rápido para catalogar mídia' },
+      texto: `Cada foto e vídeo do atleta chega ao Drive já nomeado e na pasta certa. Trinta fotos entram em cerca de meio minuto; nomear uma a uma levaria mais de sete minutos. No ritmo de ${s.drive_fotos_semana} fotos por semana, isso devolve ${fmtHoras(
+        horasMes,
+      )} de catalogação por mês — e o acervo nasce organizado, sem caça a arquivo nem nome genérico.`,
     })
   }
 

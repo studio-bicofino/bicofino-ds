@@ -16,6 +16,10 @@ export const settings: Settings = {
   dev_salario_base: 4500, // vaga de dev júnior — R$/mês (valor da vaga)
   dev_mult_empregador: 1, // a vaga vale R$ 4.500/mês cheios
   dev_fracao_fte: 1, // a capacidade evitada equivale à vaga inteira
+  // Drive do Atleta — base da projeção de catalogação de mídia
+  drive_fotos_semana: 100, // volume estimado de fotos/vídeos recebidos por semana
+  drive_seg_antes: 15, // segundos para nomear/organizar cada arquivo manualmente
+  drive_seg_depois: 1, // segundos por arquivo via sistema (30 fotos entram em ~30s)
 }
 
 export const sistemas: Sistema[] = [
@@ -61,6 +65,16 @@ export const sistemas: Sistema[] = [
     tempo_depois_dias: 5,
     notas:
       'Benchmark — site BoviChain levou 6 semanas no Framer; Bicofino é mais simples; base no Design System.',
+  },
+  {
+    id: 'sis-drive-atleta',
+    nome: 'Drive do Atleta',
+    tipo: 'infraestrutura',
+    criado_em: '2026-06-02',
+    investimento_horas: 7,
+    destravou:
+      'Upload catalogado direto do celular do atleta para o Drive — cada arquivo cai já nomeado (atleta, data, jogo) e na pasta certa. Acaba com baixar, renomear e organizar um a um.',
+    natureza_valor: 'Ativo permanente — pipeline que faz o acervo se organizar sozinho',
   },
 ]
 
@@ -117,5 +131,13 @@ export const usos: Uso[] = [
     legenda: 'Site Bicofino',
     imagem_url: '/pecas/site-bicofino.png',
     link: 'https://bicofino.com',
+  },
+  {
+    id: 'uso-drive',
+    sistema_id: 'sis-drive-atleta',
+    data: '2026-06-02',
+    legenda: 'Drive do Atleta',
+    imagem_url: '/pecas/drive-atleta.png',
+    link: 'https://drive-atleta.vercel.app',
   },
 ]

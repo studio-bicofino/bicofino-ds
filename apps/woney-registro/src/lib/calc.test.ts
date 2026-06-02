@@ -72,7 +72,7 @@ describe('agregação — critérios de aceite (bloco 9)', () => {
   it('custo fixo evitado = R$ 4.500/mês', () => {
     expect(imp.custoFixoEvitado).toBeCloseTo(4500, 0)
   })
-  it('capital de infraestrutura (DS) = R$ 17.000', () => {
-    expect(imp.capitalInfraBrl).toBeCloseTo(17000, 0)
+  it('capital de infraestrutura = R$ 17.744 (DS 160h + Drive 7h)', () => {
+    expect(imp.capitalInfraBrl).toBeCloseTo(17743.75, 1)
   })
 })
