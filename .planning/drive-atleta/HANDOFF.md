@@ -26,8 +26,9 @@ A camada `src/lib/` isola toda a lógica de domínio. **Trocar de fase = trocar 
 | `lib/filename.ts` | gera o nome | **inalterado** — vira o nome real no Drive |
 | `lib/athletes.ts` | config estática | tabela `athletes` (Fase 4) |
 
-Árvore de destino (espelha o Drive real de `woney@bicofino.com`):
-`BICOFINO / ATLETAS / <ATLETA> / {FOTOS, VIDEOS}`
+Árvore de destino (Shared Drive **CENTRAL BICOFINO**, em `woney@bicofino.com`):
+`CENTRAL BICOFINO (shared drive) / ATLETAS / <ATLETA> / {FOTOS, VIDEOS}`
+⚠️ Nota p/ o código: num Shared Drive a "raiz" é o próprio drive (`driveId`), não um segmento de path. O `lib/destination.ts` atual usa `DRIVE_ROOT = ['BICOFINO','ATLETAS']` (string de display) — ajustar para resolver dentro do `driveId` do CENTRAL BICOFINO e exibir o breadcrumb com esse nome.
 
 ---
 
@@ -37,14 +38,27 @@ A camada `src/lib/` isola toda a lógica de domínio. **Trocar de fase = trocar 
 - O upload precisa ser **server-side** (credencial do Google NUNCA vai pro navegador).
 - O metadado catalogado precisa morar em algo consultável → Supabase.
 
-### Decisões de arquitetura (validar antes de codar)
+### Decisões de arquitetura — ✅ TRAVADAS (2026-06-02)
 
-**D1 · Como o servidor escreve no Drive** — *recomendo: Service Account + Shared Drive*
-- ✅ **Service Account + Shared Drive (recomendado):** cria-se uma service account no Google Cloud, move-se `BICOFINO/ATLETAS` (ou só `ATLETAS`) para um **Shared Drive** e compartilha com a SA. Backend escreve direto, sem OAuth, sem refresh token, sem tela de consentimento. É o padrão para upload automatizado.
-  - ⚠️ A estrutura hoje está no **"My Drive"** da conta (ver screenshot do briefing), não num Shared Drive. Service accounts **não** escrevem bem em My Drive pessoal sem domain-wide delegation. → **Ação:** mover `ATLETAS` para um Shared Drive, OU usar a opção OAuth abaixo.
-- ⭕ **Alternativa — OAuth refresh token (woney@bicofino.com):** escreve direto no My Drive atual, sem mover nada. Mais frágil (token expira/revoga, precisa do fluxo de consentimento uma vez). Só se mover pra Shared Drive não for viável.
+**D1 = Service Account + Shared Drive `CENTRAL BICOFINO` (já existe).**
+- O Shared Drive **CENTRAL BICOFINO** (criado pelo Fabio, admin do Workspace) já tem a árvore `ATLETAS / <ATLETA> / {ARTES, CONTRATOS, FOTOS, LINKS, VIDEOS}` para ~16 atletas. **Nenhuma reestruturação necessária.**
+- Backend autentica com a **chave JSON de uma Service Account** (sem OAuth, sem refresh token, sem domain-wide delegation). A SA entra como **membro Content manager** do Shared Drive → escreve direto, arquivos pertencem à empresa, storage do Workspace (não 15GB pessoal).
+- Upload do atleta mira só **FOTOS** (imagem) e **VIDEOS** (vídeo) — roteado por MIME (`kindFromMime`). ARTES/CONTRATOS/LINKS são para outros fins.
+- **Setup (pré-requisito do chat novo):**
+  1. GCP: projeto → ativar Drive API → criar SA → gerar chave JSON → **Infisical** (não commitar).
+  2. Drive: CENTRAL BICOFINO → Gerenciar membros → adicionar o email da SA como **Content manager** (precisa ser Manager do Shared Drive → Fabio ou Woney promovido).
+  3. Código: chamadas com `supportsAllDrives: true` + `driveId` do CENTRAL BICOFINO; resolve pastas existentes por nome.
+- **Pendências de info:** (a) `driveId` do CENTRAL BICOFINO; (b) confirmar quem tem acesso ao GCP da Bicofino; (c) IDs (ou resolução por nome) das pastas FOTOS/VIDEOS por atleta.
+- ⛔ Descartado: OAuth refresh token (frágil, cota pessoal) — não é mais necessário, já que o Shared Drive existe.
 
-**D2 · Upload de vídeo grande (limite da Vercel)** — *recomendo: resumable direto browser→Google*
+**D2 = Resumable direto browser→Google.** Servidor inicia a sessão (`uploadType=resumable`, no Shared Drive) e devolve a `uploadUrl` descartável; o navegador faz PUT dos bytes em chunks direto no Google; ao concluir, grava metadado no Supabase. O arquivo não passa pela Vercel.
+
+**D3 = Supabase fonte da verdade.** Tabela `media_items` (= `lib/types.ts`), RLS por atleta (Fase 4). A linha guarda `drive_file_id` + `web_view_link`. Painel lê do Supabase, nunca do Drive. Segredos no Infisical.
+
+---
+
+#### (referência) o raciocínio por trás de D2
+**D2 · Upload de vídeo grande (limite da Vercel)** — *resumable direto browser→Google*
 - Função serverless da Vercel tem teto de corpo (~4.5MB) e tempo. Vídeo de jogo tem 100MB+.
 - ✅ **Recomendado:** o servidor (route handler) inicia uma **sessão de upload resumable do Drive** (`uploadType=resumable`) e devolve a `uploadUrl` ao navegador; o **navegador faz PUT dos bytes direto no Google** (em chunks). Ao terminar, o cliente avisa o servidor → grava metadado no Supabase. O arquivo **não passa pela Vercel**.
 - ⭕ Alternativa: navegador → Vercel Blob / Supabase Storage (signed URL) → job move pro Drive. Mais peças móveis.
@@ -83,7 +97,7 @@ Não construir tudo de uma vez. Provar o cano com 1 upload real ponta-a-ponta, d
 
 ## 4 · Riscos / gotchas
 - **Vercel turbopack monorepo:** `next.config.ts` já tem `turbopack.root` correto (ver [[project_turbopack_root]]). Manter.
-- **My Drive vs Shared Drive** (D1) — resolver ANTES de codar o upload, senão a SA falha em escrever.
+- ~~My Drive vs Shared Drive (D1)~~ ✅ RESOLVIDO — usar o Shared Drive `CENTRAL BICOFINO` existente; SA como membro Content manager (sem domain-wide delegation). Lembrar de `supportsAllDrives: true` em toda chamada da Drive API.
 - **Tamanho/tempo de função** (D2) — não rotear vídeo pela Vercel.
 - **Não commitar** fontes/assets manuais nem segredos. Gotham já está em `public/fonts` (precedente do woney-registro).
 - **Deploy:** projeto Vercel da empresa é `bicofino-ds` / studio-bicofino (ver [[project_docs_site_vercel]]) — confirmar se o monorepo deploya esse app ou se cria projeto próprio.
