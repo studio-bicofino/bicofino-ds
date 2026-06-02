@@ -4,6 +4,16 @@
 > App em `apps/woney-registro/`. Dashboard interno que mostra, em horas e reais,
 > o valor que os sistemas do Woney (designer + dev com Claude Code) devolvem ao Studio Bicofino.
 
+## Produção & Git (handoff)
+
+- **Produção:** https://woney-registro.vercel.app — projeto Vercel `woney-registro`, team
+  `studio-bicofinos-projects` (org da empresa). `.vercel/` é gitignored.
+- **Branch:** `feat/woney-registro` (a partir da `main`), commit `56688a1`, empurrada pros 2 remotes
+  (WoneyMalian + studio-bicofino). **PR pendente** se quiser merge na `main`.
+- **Não commitado de propósito:** `package-lock.json` da raiz tinha alteração gigante alheia a esta
+  frente — deixado fora. Só `package.json` (script `registro`) + `apps/woney-registro/**` entraram.
+- **Redeploy:** `cd apps/woney-registro && vercel deploy --prod --yes --scope studio-bicofinos-projects`.
+
 ## Como rodar / validar
 
 ```bash
@@ -102,22 +112,23 @@ App nasceu **sem breakpoints** (só `prefers-reduced-motion` e `print`). Adicion
   `video_url` e `link`.
 - **Screenshots em produção** — 4 PNGs reais em `public/pecas/`: `site-bicofino.png`,
   `design-system.png`, `proposta-o-outro-mapa.png`, `proposta-boviclass.png`. `PecaMedia` usa
-  `<img onError>` → quem não tem PNG (patrocínio federações) cai no placeholder `// sem preview`.
+  `<img onError>` → fallback pro placeholder `// sem preview` se algum PNG faltar.
 - **Showcases na galeria** — DS (infra) e Site (projeto) entram como peças; não criam mês no
   seletor (`mesesDisponiveis` filtra só eficiência) nem afetam o cálculo. Pill do card varia por
   tipo: eficiência=tempo, projeto=dias, infra="ativo permanente".
-- **Propostas reconciliadas com `apps/propostas`** — os 3 usos viraram os artefatos reais:
-  O Outro Mapa, BoviClass (masterclass-bovichain) e Patrocínio federações (só briefing, sem preview).
+- **Propostas reconciliadas com `apps/propostas`** — 2 usos reais:
+  O Outro Mapa e BoviClass (masterclass-bovichain).
 - **Links "ver ao vivo" ligados** — Site `bicofino.com` · DS `bicofino-ds-umber.vercel.app` ·
   O Outro Mapa (Vercel) · BoviClass `masterclass-bovichain.vercel.app`.
 
 ## Aberto / próximos passos
 
-- [ ] Preview da proposta **Patrocínio federações** quando ela sair do briefing (hoje placeholder).
+- [x] **Deploy Vercel** — ✅ produção: **https://woney-registro.vercel.app** (projeto `woney-registro`,
+      team `studio-bicofinos-projects`). Redeploy: `cd apps/woney-registro && vercel deploy --prod --yes
+      --scope studio-bicofinos-projects`.
 - [ ] **Supabase** — migration pronta em `supabase/migrations/0001_init.sql`, env em
       `.env.local.example`. Ao conectar, só `src/lib/data.ts` troca de fonte; `calc.ts` e telas não mudam.
       Conta da empresa (woney@bicofino.com). Sem auth por ora.
-- [ ] **Deploy Vercel** — projeto novo na org studio-bicofino.
 - [ ] Confirmar com o Woney se o rodapé deve mostrar **só** "pagamento Woney" ou também "capital de infra".
 - [ ] Revisar `/sistemas`, `/galeria`, `/fechamento` com o mesmo rigor visual do Painel
       (o feedback em magenta até agora focou no Painel).
