@@ -1,5 +1,7 @@
 'use client'
 
+import { useState } from 'react'
+import { Eye, EyeOff } from 'lucide-react'
 import type { MediaItem, Status } from '@/lib/types'
 import { CATEGORY_LABEL, STATUSES } from '@/lib/categories'
 import { formatBytes, formatDate } from '@/lib/format'
@@ -14,6 +16,8 @@ export function PanelCard({
   item: MediaItem
   onStatusChange: (id: string, status: Status) => void
 }) {
+  const [showNote, setShowNote] = useState(false)
+
   return (
     <div className="cell cell--pad-sm stack-3" style={{ borderRadius: 'var(--bf-corner-3)' }}>
       <Thumb
@@ -56,6 +60,27 @@ export function PanelCard({
           </a>
         )}
       </div>
+
+      {item.notes && (
+        <div className="stack-2">
+          <button
+            type="button"
+            className="btn btn--ghost"
+            aria-expanded={showNote}
+            aria-label={showNote ? 'Ocultar observação' : 'Ver observação'}
+            onClick={() => setShowNote((v) => !v)}
+            style={{ alignSelf: 'flex-start', paddingLeft: 0, gap: 'var(--sp-2)' }}
+          >
+            {showNote ? <EyeOff size={14} strokeWidth={1.5} aria-hidden /> : <Eye size={14} strokeWidth={1.5} aria-hidden />}
+            <span className="bf-mono">{showNote ? 'ocultar observação' : 'observação'}</span>
+          </button>
+          {showNote && (
+            <p className="bf-body-sm cell cell--quiet cell--pad-sm bf-reveal" style={{ margin: 0 }}>
+              {item.notes}
+            </p>
+          )}
+        </div>
+      )}
 
       <hr className="rule" />
 
