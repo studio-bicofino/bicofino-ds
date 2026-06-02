@@ -22,6 +22,7 @@ export interface MediaRow {
   drive_path: string
   drive_file_id: string | null
   web_view_link: string | null
+  content_hash: string | null
   uploaded_at: string
 }
 
@@ -45,6 +46,7 @@ export function rowToItem(r: MediaRow): MediaItem {
     drivePath: r.drive_path,
     driveFileId: r.drive_file_id,
     webViewLink: r.web_view_link,
+    contentHash: r.content_hash,
     uploadedAt: r.uploaded_at,
   }
 }
@@ -69,5 +71,6 @@ export function itemToInsertRow(it: Omit<MediaItem, 'id' | 'uploadedAt'>): Omit<
     drive_path: it.drivePath,
     drive_file_id: it.driveFileId,
     web_view_link: it.webViewLink,
+    content_hash: it.contentHash,
   }
 }
