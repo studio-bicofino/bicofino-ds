@@ -6,6 +6,7 @@
     "docs": "cd apps/docs-site && npm run dev",
     "storybook": "cd apps/storybook && npm run storybook",
     "web": "cd apps/web && npm run dev",
+    "registro": "cd apps/woney-registro && npm run dev",
     "install:docs": "cd apps/docs-site && npm install",
     "install:storybook": "cd apps/storybook && npm install",
     "install:web": "cd apps/web && npm install",
