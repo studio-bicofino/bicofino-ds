@@ -31,14 +31,7 @@ export const ATHLETES: Athlete[] = [
   { slug: 'pedro-cialone', name: 'Pedro Cialone', firstName: 'Pedro', driveFolder: 'PEDRO CIALONE' },
   { slug: 'rhian-marinho', name: 'Rhian Marinho', firstName: 'Rhian', driveFolder: 'RHIAN MARINHO' },
   { slug: 'ronaldo-prado', name: 'Ronaldo Prado', firstName: 'Ronaldo', driveFolder: 'RONALDO PRADO' },
-  {
-    slug: 'salvatore-brancatelli',
-    name: 'Salvatore Brancatelli',
-    firstName: 'Salvatore',
-    driveFolder: 'SALVATORE BRANCATELLI',
-    position: 'Winger',
-    club: 'Benfica',
-  },
+  { slug: 'salvatore-brancatelli', name: 'Salvatore Brancatelli', firstName: 'Salvatore', driveFolder: 'SALVATORE BRANCATELLI' },
   { slug: 'yuri-lima', name: 'Yuri Lima', firstName: 'Yuri', driveFolder: 'YURI LIMA' },
 ]
 
