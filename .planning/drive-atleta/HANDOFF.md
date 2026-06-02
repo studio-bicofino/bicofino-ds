@@ -40,16 +40,18 @@ A camada `src/lib/` isola toda a lógica de domínio. **Trocar de fase = trocar 
 
 ### Decisões de arquitetura — ✅ TRAVADAS (2026-06-02)
 
-**D1 = Service Account + Shared Drive `CENTRAL BICOFINO` (já existe).**
-- O Shared Drive **CENTRAL BICOFINO** (criado pelo Fabio, admin do Workspace) já tem a árvore `ATLETAS / <ATLETA> / {ARTES, CONTRATOS, FOTOS, LINKS, VIDEOS}` para ~16 atletas. **Nenhuma reestruturação necessária.**
-- Backend autentica com a **chave JSON de uma Service Account** (sem OAuth, sem refresh token, sem domain-wide delegation). A SA entra como **membro Content manager** do Shared Drive → escreve direto, arquivos pertencem à empresa, storage do Workspace (não 15GB pessoal).
+**D1 = OAuth como o usuário Content-manager, escrevendo no Shared Drive `CENTRAL BICOFINO` (já existe).**
+- **Por que NÃO service account (por enquanto):** verificado em 2026-06-02 que o Woney é só **Content manager** do CENTRAL BICOFINO (Manager = `hello@bicofino.com` / Bicofino Group S.A., = Fabio/org, fora do país agora). **Content manager não pode adicionar membros** → o Woney não consegue adicionar uma SA sozinho, e o Manager está indisponível. Então a SA fica para depois.
+- **A abordagem:** OAuth agindo **como o próprio Woney** (que já tem Content manager) escreve direto no Shared Drive. Os arquivos caem **dentro do CENTRAL BICOFINO** → storage agrupado do Workspace (**aguenta vídeo grande**, não é 15GB nem My Drive pessoal). É o destino **definitivo**, não temporário.
+- Como Woney tem Workspace, o **app OAuth pode ser "Internal"** (só a organização) → sem tela de app não-verificado, sem verificação do Google. Escopo `https://www.googleapis.com/auth/drive` (ou `drive.file`).
 - Upload do atleta mira só **FOTOS** (imagem) e **VIDEOS** (vídeo) — roteado por MIME (`kindFromMime`). ARTES/CONTRATOS/LINKS são para outros fins.
-- **Setup (pré-requisito do chat novo):**
-  1. GCP: projeto → ativar Drive API → criar SA → gerar chave JSON → **Infisical** (não commitar).
-  2. Drive: CENTRAL BICOFINO → Gerenciar membros → adicionar o email da SA como **Content manager** (precisa ser Manager do Shared Drive → Fabio ou Woney promovido).
-  3. Código: chamadas com `supportsAllDrives: true` + `driveId` do CENTRAL BICOFINO; resolve pastas existentes por nome.
-- **Pendências de info:** (a) `driveId` do CENTRAL BICOFINO; (b) confirmar quem tem acesso ao GCP da Bicofino; (c) IDs (ou resolução por nome) das pastas FOTOS/VIDEOS por atleta.
-- ⛔ Descartado: OAuth refresh token (frágil, cota pessoal) — não é mais necessário, já que o Shared Drive existe.
+- **Setup (pré-requisito do chat novo, Woney faz sozinho):**
+  1. GCP: projeto → ativar **Drive API** → **OAuth consent screen = Internal** → criar **OAuth client (Web)** → client ID + secret → **Infisical** (não commitar).
+  2. Fazer o fluxo OAuth uma vez logando com a conta que aparece como **"(você) Content manager"** no CENTRAL BICOFINO → guardar o **refresh token** no Infisical.
+  3. Código: chamadas com `supportsAllDrives: true` + `driveId` do CENTRAL BICOFINO; resolve `ATLETAS/<atleta>/{FOTOS,VIDEOS}` (pastas já existem) por nome.
+- **Email:** o membro aparece como `studio@bicofino.com`; conta foi/está sendo renomeada para `woney@bicofino.com`. No consentimento OAuth, **logar com a conta que tem o Content manager**. Confirmar com o admin (`hello@`/Fabio) qual é a viva — não bloqueia o upload.
+- **Migração futura (quando Fabio voltar):** Manager adiciona uma **Service Account** como Content manager → troca-se OAuth por SA key (mais robusto, sem refresh token). Nenhum componente muda, só a auth no backend.
+- **Pendência de info:** `driveId` do CENTRAL BICOFINO (pega-se no chat novo via API/URL).
 
 **D2 = Resumable direto browser→Google.** Servidor inicia a sessão (`uploadType=resumable`, no Shared Drive) e devolve a `uploadUrl` descartável; o navegador faz PUT dos bytes em chunks direto no Google; ao concluir, grava metadado no Supabase. O arquivo não passa pela Vercel.
 
@@ -97,7 +99,7 @@ Não construir tudo de uma vez. Provar o cano com 1 upload real ponta-a-ponta, d
 
 ## 4 · Riscos / gotchas
 - **Vercel turbopack monorepo:** `next.config.ts` já tem `turbopack.root` correto (ver [[project_turbopack_root]]). Manter.
-- ~~My Drive vs Shared Drive (D1)~~ ✅ RESOLVIDO — usar o Shared Drive `CENTRAL BICOFINO` existente; SA como membro Content manager (sem domain-wide delegation). Lembrar de `supportsAllDrives: true` em toda chamada da Drive API.
+- ~~My Drive vs Shared Drive (D1)~~ ✅ RESOLVIDO — escrever no Shared Drive `CENTRAL BICOFINO` via **OAuth como o usuário Content-manager** (Woney não é Manager, não pode adicionar SA; Fabio/Manager fora). Arquivos no Shared Drive = storage do Workspace (ok p/ vídeo). `supportsAllDrives: true` em toda chamada. SA fica para quando o Manager puder adicioná-la.
 - **Tamanho/tempo de função** (D2) — não rotear vídeo pela Vercel.
 - **Não commitar** fontes/assets manuais nem segredos. Gotham já está em `public/fonts` (precedente do woney-registro).
 - **Deploy:** projeto Vercel da empresa é `bicofino-ds` / studio-bicofino (ver [[project_docs_site_vercel]]) — confirmar se o monorepo deploya esse app ou se cria projeto próprio.
@@ -111,7 +113,7 @@ cd apps/drive-atleta && npm install && npm run dev   # confere a Fase 1 rodando 
 Ler este HANDOFF + `apps/drive-atleta/README.md` (fases 2/3/4) integralmente antes de propor schema/scope.
 
 ## Critério de "pronto" da próxima fase
-- [ ] D1/D2/D3 decididos (Shared Drive criado, SA com acesso, Supabase + Infisical configurados)
+- [ ] OAuth Internal configurado (client ID/secret + refresh token da conta Content-manager no Infisical) + Supabase + Infisical prontos
 - [ ] 1 foto sobe de verdade: Drive (nome gerado) + Supabase + Painel — ponta a ponta
 - [ ] 1 vídeo grande sobe via resumable sem passar pela Vercel
 - [ ] `lib/storage.ts` e `lib/destination.ts` trocados; componentes **inalterados**
