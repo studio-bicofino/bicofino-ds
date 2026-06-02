@@ -9,6 +9,27 @@ Before writing any component, page, or style:
 2. Apply the tokens, philosophy, and rules described there.
 3. Do not introduce patterns that are not derivable from that document.
 
+## Design Craft Layer — complementary skills
+
+`DESIGN.md` owns **what is Bicofino** (tokens, palette, type system, the invariants).
+It does not, and should not, re-document **general craft** — typographic measure,
+visual hierarchy, spacing rhythm, motion feel, accessibility. For that, consult the
+complementary skills installed globally:
+
+- **`web-design-guidelines`** (Vercel eng) — layout, typography, color, motion, a11y for product UI.
+- **`emil-design-eng`** — UI polish, component design, animation decisions, the invisible details.
+
+**Precedence is absolute:** when a skill and `DESIGN.md` disagree on anything brand-specific
+(a token, a color, a corner, the one-vibrant rule), **`DESIGN.md` wins** — the skills inform
+*craft*, never *brand*. Never let a skill introduce a value outside the closed token system.
+
+**The enrichment loop (this is a rule):** when a complementary skill surfaces a durable,
+brand-agnostic principle that `DESIGN.md` does not yet capture — and we adopt it — **fold it
+into `DESIGN.md`** (the relevant section + a line in §11 changelog), with credit to the source.
+Do not leave it as tribal knowledge in one component. `DESIGN.md` should get richer over time,
+absorbing the craft we prove out. First instance: the **measure rule** in §6 (no text runs the
+full container width).
+
 ## What This Means in Practice
 
 **Colors** — use only the tokens defined in `DESIGN.md`. No hex values outside that set. One vibrant per composition via `--current-accent` (randomised per refresh from the 12 Highlights; SSR fallback `--bf-spfc`). Never pin a hardcoded accent.
