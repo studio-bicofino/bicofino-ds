@@ -57,6 +57,17 @@ A camada `src/lib/` isola toda a lógica de domínio. **Trocar de fase = trocar 
 
 **D3 = Supabase fonte da verdade.** Tabela `media_items` (= `lib/types.ts`), RLS por atleta (Fase 4). A linha guarda `drive_file_id` + `web_view_link`. Painel lê do Supabase, nunca do Drive. Segredos no Infisical.
 
+### ✅ PREP CONCLUÍDO (2026-06-02) — valores concretos p/ o chat novo
+- **GCP:** projeto `bicofino-drive` (org `bicofino.com`, Woney = org admin). Drive API ativada. OAuth consent = **Internal**. OAuth client (Web) criado, com redirect `https://developers.google.com/oauthplayground` registrado. Escopo `https://www.googleapis.com/auth/drive` (restricted, mas OK por ser Internal).
+- **Supabase:** projeto `bicofino-drive-atleta` (org `studio-bicofino`, Free), ref **`epfqgyczujaroayqslwk`**, URL **`https://epfqgyczujaroayqslwk.supabase.co`**, região `us-west-2`. **Sem migrations ainda → criar a tabela `media_items`.**
+- **Infisical:** projeto `bicofino-drive-atleta`, env `Development`. **JÁ tem:** `GOOGLE_OAUTH_CLIENT_ID`, `GOOGLE_OAUTH_CLIENT_SECRET`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_DB_PASSWORD`. **FALTAM (gerar no chat novo):** `GOOGLE_OAUTH_REFRESH_TOKEN`, `GOOGLE_DRIVE_ID`.
+
+### Primeiros passos da Fatia 1 (chat novo)
+1. **Refresh token:** OAuth Playground (developers.google.com/oauthplayground) → engrenagem → "Use your own OAuth credentials" → cola Client ID/Secret → autoriza o escopo `…/auth/drive` **logando com a conta Content-manager do CENTRAL BICOFINO** → "Exchange authorization code for tokens" → copia o **refresh token** → Infisical (`GOOGLE_OAUTH_REFRESH_TOKEN`).
+2. **driveId:** abrir o Shared Drive CENTRAL BICOFINO no navegador → o ID está na URL (`drive/folders/<ID>` ou via API `drives.list`) → Infisical (`GOOGLE_DRIVE_ID`).
+3. **Tabela:** criar `media_items` no Supabase (SQL espelhando `lib/types.ts`).
+4. Codar `POST /api/upload` (foto) + trocar `lib/storage.ts` p/ Supabase + `lib/destination.ts` p/ resolver pastas no Shared Drive (`supportsAllDrives:true`). Verificar 1 foto ponta-a-ponta. Depois: resumable (vídeo) + deploy Vercel.
+
 ---
 
 #### (referência) o raciocínio por trás de D2
