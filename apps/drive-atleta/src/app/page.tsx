@@ -30,7 +30,7 @@ export default function Home() {
               <li key={a.slug}>
                 <Link
                   href={`/a/${a.slug}`}
-                  className="cell cell--pad-sm between"
+                  className="cell cell--pad-sm between hub-link"
                   style={{ alignItems: 'center', gap: 'var(--sp-4)', textDecoration: 'none' }}
                 >
                   <span className="stack-2" style={{ minWidth: 0 }}>
@@ -42,6 +42,7 @@ export default function Home() {
                     )}
                   </span>
                   <ArrowRight
+                    className="hub-link__arrow"
                     size={18}
                     strokeWidth={1.5}
                     aria-hidden

@@ -231,6 +231,22 @@ button, a, [role="button"], .chip, label.btn {
 .cell--quiet { background: var(--bf-surface-subtle); }
 .cell--pad-sm { padding: var(--sp-4); }
 
+/* Card-link do hub de atletas — hover acende a borda no vibrante e desliza a
+   seta; click dá o feedback de press. Só border-color/transform (GPU), teto do DS. */
+.hub-link {
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-standard),
+              background var(--dur-fast) var(--ease-standard),
+              transform var(--dur-fast) var(--ease-standard);
+}
+.hub-link:hover { border-color: var(--current-accent); background: var(--bf-surface-subtle); }
+.hub-link:focus-visible { outline: 2px solid var(--current-accent); outline-offset: 2px; }
+.hub-link:active { transform: scale(0.99); }
+.hub-link .hub-link__arrow {
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.hub-link:hover .hub-link__arrow { transform: translateX(4px); }
+
 /* Pills */
 .pill {
   display: inline-flex;

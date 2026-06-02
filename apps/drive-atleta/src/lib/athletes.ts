@@ -24,7 +24,6 @@ export const ATHLETES: Athlete[] = [
   { slug: 'gabriel-mendes', name: 'Gabriel Mendes', firstName: 'Gabriel', driveFolder: 'GABRIEL MENDES' },
   { slug: 'guilherme-kerchner', name: 'Guilherme Kerchner', firstName: 'Guilherme', driveFolder: 'GUILHERME KERCHNER' },
   { slug: 'jean-jesus', name: 'Jean Jesus', firstName: 'Jean', driveFolder: 'JEAN JESUS' },
-  { slug: 'joao-kheirallah', name: 'João Kheirallah', firstName: 'João', driveFolder: 'JOÃO KHEIRALLAH' },
   { slug: 'joaquim-miranda', name: 'Joaquim Miranda', firstName: 'Joaquim', driveFolder: 'JOAQUIM MIRANDA' },
   { slug: 'julio-cezar', name: 'Julio Cezar', firstName: 'Julio', driveFolder: 'JULIO CEZAR' },
   { slug: 'lucas-henrique', name: 'Lucas Henrique', firstName: 'Lucas', driveFolder: 'LUCAS HENRIQUE' },
