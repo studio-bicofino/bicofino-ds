@@ -160,6 +160,12 @@ Os 8: `GOOGLE_OAUTH_CLIENT_ID/SECRET/REFRESH_TOKEN`, `GOOGLE_DRIVE_ID`, `NEXT_PU
 - `cleanup-test.mjs` — remove artefato de teste (Drive→lixeira + linha no Supabase).
 
 ### O que falta (próximas fatias)
+- **ARTES (posts de Instagram) — pedido do Fabio (2026-06-02):** cada atleta tem `ATLETAS/<atleta>/ARTES` (além de FOTOS/VIDEOS/CONTRATOS/LINKS/NIKE). Hoje o upload roteia SÓ por MIME (`kindFromMime`: imagem→FOTOS, vídeo→VIDEOS) — mas uma "arte" também é imagem (PNG), então MIME não distingue. Próxima rodada: deixar o atleta/curadoria escolher mandar pra **ARTES**. Pontos de toque:
+  - `lib/types.ts` — `MediaKind` hoje é `'foto'|'video'`; precisa de um terceiro destino `'arte'` (ou um campo `bucket`/`destino` separado do `kind`, já que arte é image/*). Decidir: ampliar `MediaKind` vs. coluna nova.
+  - `supabase/migrations/` — o `check` de `media_items.kind` é `('foto','video')`; nova migration p/ incluir `'arte'` (ou nova coluna + check).
+  - `lib/destination.ts` — `kindFolder()`/`driveSegments()` mapeando `arte`→`ARTES`.
+  - UI: um toggle/opção no `UploadFlow` ("É arte/post de Instagram?") e filtro `ARTES` no Painel (`categories.ts` KIND_LABEL + filtro de tipo em `painel/page.tsx`).
+  - `lib/drive.ts` resolveFolderId já acha-ou-cria qualquer segmento — a pasta ARTES já existe, então é só passar o segmento certo.
 - **Fatia 2/3 — robustez de vídeo:** chunked PUT com retry por chunk (hoje é single-PUT; ok p/ foto e vídeo médio, mas conexão de celular caindo no meio de um vídeo grande reinicia do zero). Progresso já é real.
 - **Preview env na Vercel** (rodar `vercel env add ... preview` informando branch).
 - **Fase 4:** token assinado por atleta + auth do painel (hoje leitura pública no MVP — RLS só com policy de select).
