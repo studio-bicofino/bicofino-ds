@@ -16,7 +16,10 @@ export function PanelCard({
 }) {
   return (
     <div className="cell cell--pad-sm stack-3" style={{ borderRadius: 'var(--bf-corner-3)' }}>
-      <Thumb kind={item.kind} />
+      <Thumb
+        kind={item.kind}
+        previewUrl={item.kind === 'foto' && item.driveFileId ? `/api/thumb?id=${item.driveFileId}` : undefined}
+      />
 
       <div className="row-wrap">
         <span className="pill pill--accent">{CATEGORY_LABEL[item.category]}</span>
