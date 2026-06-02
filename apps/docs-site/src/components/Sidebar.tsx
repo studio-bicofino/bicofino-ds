@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { ChevronRight } from 'lucide-react'
+import Link from 'next/link'
+import { ChevronRight, MessageCircle } from 'lucide-react'
 import { BicofinoLogo } from './BicofinoLogo'
 import { useLang } from '@/content'
 
@@ -13,7 +14,7 @@ const C = {
   active:      'var(--current-accent)',
   hover:       'var(--bf-sidebar-hover)',
   divider:     'var(--bf-sidebar-divider)',
-  headerBg:    'rgba(242,248,255,0.06)',
+  headerBg:    'var(--bf-sidebar-hover)',
 }
 
 const sans = '"Inter", sans-serif'
@@ -197,6 +198,29 @@ export default function Sidebar({ onNavClick }: SidebarProps = {}) {
           ))}
         </div>
       </div>
+
+      {/* Consigliere — IA contextual (layout/clique; sem backend ainda) */}
+      <Link
+        href="/consigliere"
+        onClick={() => onNavClick?.()}
+        aria-label="Bicofino Consigliere"
+        title="Consigliere"
+        className="bf-consigliere-link"
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          margin: '0 24px 24px',
+          width: 36,
+          height: 36,
+          borderRadius: 'var(--bf-corner-3)',
+          border: `1px solid ${C.divider}`,
+          color: C.muted,
+          transition: 'color 150ms ease-out, border-color 150ms ease-out',
+        }}
+      >
+        <MessageCircle size={18} strokeWidth={1.5} />
+      </Link>
 
       {/* Divider */}
       <div style={{ height: 1, background: C.divider, margin: '0 24px 20px' }} />
