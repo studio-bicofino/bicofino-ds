@@ -20,6 +20,7 @@ export interface Athlete {
 }
 
 export const ATHLETES: Athlete[] = [
+  { slug: 'caio-henrique', name: 'Caio Henrique', firstName: 'Caio', driveFolder: 'CAIO HENRIQUE' },
   { slug: 'eloi-gomez-saus', name: 'Eloi Gómez Saus', firstName: 'Eloi', driveFolder: 'ELOI GÓMEZ SAUS' },
   { slug: 'gabriel-mendes', name: 'Gabriel Mendes', firstName: 'Gabriel', driveFolder: 'GABRIEL MENDES' },
   { slug: 'guilherme-kerchner', name: 'Guilherme Kerchner', firstName: 'Guilherme', driveFolder: 'GUILHERME KERCHNER' },
