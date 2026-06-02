@@ -2,26 +2,36 @@ import type { Athlete } from './athletes'
 import type { MediaKind } from './types'
 
 /* ─────────────────────────────────────────────────────────────
-   Caminho de destino no Drive — espelha a árvore real:
-     BICOFINO / ATLETAS / SALVATORE BRANCATELLI / FOTOS
-                                                / VIDEOS
+   Caminho de destino no Shared Drive CENTRAL BICOFINO:
+     CENTRAL BICOFINO / ATLETAS / SALVATORE BRANCATELLI / FOTOS
+                                                        / VIDEOS
    FOTOS x VIDEOS é derivado do tipo do arquivo (kindFromMime),
-   nunca de um campo manual. Na Fase 3 isto vira o destino real
-   da Google Drive API (createFolderPath + upload).
+   nunca de um campo manual.
+
+   Duas vistas do mesmo caminho:
+   • DRIVE_DISPLAY_ROOT → breadcrumb humano (inclui o nome do drive).
+   • driveSegments()     → segmentos a resolver via API, SOB o driveId
+     (a raiz é o próprio Shared Drive, então NÃO entra como segmento).
    ───────────────────────────────────────────────────────────── */
 
-export const DRIVE_ROOT = ['BICOFINO', 'ATLETAS'] as const
+/** Nome do Shared Drive — só para exibição/breadcrumb. */
+export const DRIVE_DISPLAY_ROOT = ['CENTRAL BICOFINO', 'ATLETAS'] as const
 
 export function kindFolder(kind: MediaKind): 'FOTOS' | 'VIDEOS' {
   return kind === 'video' ? 'VIDEOS' : 'FOTOS'
 }
 
-/** Segmentos da árvore, sem o arquivo — útil para breadcrumbs. */
-export function destinationFolder(athlete: Athlete, kind: MediaKind): string[] {
-  return [...DRIVE_ROOT, athlete.driveFolder, kindFolder(kind)]
+/** Segmentos a resolver dentro do driveId (sem o nome do drive). */
+export function driveSegments(athlete: Athlete, kind: MediaKind): string[] {
+  return ['ATLETAS', athlete.driveFolder, kindFolder(kind)]
 }
 
-/** Caminho completo incluindo o arquivo. */
+/** Segmentos da árvore p/ breadcrumb (com o nome do drive), sem o arquivo. */
+export function destinationFolder(athlete: Athlete, kind: MediaKind): string[] {
+  return [...DRIVE_DISPLAY_ROOT, athlete.driveFolder, kindFolder(kind)]
+}
+
+/** Caminho completo de exibição, incluindo o arquivo. */
 export function buildDrivePath(
   athlete: Athlete,
   kind: MediaKind,

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Search, RotateCcw } from 'lucide-react'
 import type { MediaItem, Status, Category, MediaKind } from '@/lib/types'
-import { loadItems, updateStatus, resetItems } from '@/lib/storage'
+import { loadItems, updateStatus } from '@/lib/storage'
 import { CATEGORIES, STATUSES, KIND_LABEL } from '@/lib/categories'
 import { TopBar } from '@/components/TopBar'
 import { PanelCard } from '@/components/PanelCard'
@@ -22,13 +22,27 @@ export default function PanelPage() {
   const [status, setStatus] = useState<StatusFilter>('all')
   const [kind, setKind] = useState<KindFilter>('all')
 
+  const [error, setError] = useState<string | null>(null)
+
+  function refresh() {
+    setError(null)
+    loadItems()
+      .then(setItems)
+      .catch((e) => setError(e instanceof Error ? e.message : 'Falha ao carregar o acervo.'))
+      .finally(() => setMounted(true))
+  }
+
   useEffect(() => {
-    setItems(loadItems())
-    setMounted(true)
+    refresh()
   }, [])
 
   function handleStatus(id: string, s: Status) {
-    setItems(updateStatus(id, s))
+    const prev = items
+    setItems((list) => list.map((it) => (it.id === id ? { ...it, status: s } : it))) // otimista
+    updateStatus(id, s).catch(() => {
+      setError('Não consegui salvar o status. Restaurei o valor anterior.')
+      setItems(prev)
+    })
   }
 
   const filtered = useMemo(() => {
@@ -65,17 +79,19 @@ export default function PanelPage() {
               <h1 className="bf-h1">Acervo</h1>
               <button
                 className="btn btn--ghost bf-mono"
-                title="Restaura o acervo de demonstração"
-                onClick={() => {
-                  if (window.confirm('Restaurar o acervo de demonstração? Os envios desta sessão serão descartados.')) {
-                    setItems(resetItems())
-                  }
-                }}
+                title="Recarrega o acervo do Supabase"
+                onClick={refresh}
               >
-                <RotateCcw size={14} strokeWidth={1.5} aria-hidden /> resetar demo
+                <RotateCcw size={14} strokeWidth={1.5} aria-hidden /> atualizar
               </button>
             </div>
           </div>
+
+          {error && (
+            <div className="cell cell--pad-sm" style={{ borderColor: 'var(--bf-border-strong)' }}>
+              <p className="bf-body-sm">{error}</p>
+            </div>
+          )}
 
           {/* Estatísticas (M-05 bento) */}
           <div className="bento">

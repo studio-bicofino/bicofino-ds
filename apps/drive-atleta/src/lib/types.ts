@@ -46,8 +46,12 @@ export interface MediaItem {
   notes: string | null
 
   status: Status
-  /** Caminho simulado no Drive: BICOFINO / ATLETAS / … / FOTOS / arquivo. */
+  /** Caminho de exibição: CENTRAL BICOFINO / ATLETAS / … / FOTOS / arquivo. */
   drivePath: string
+  /** Id real do arquivo no Google Drive (preenchido após o upload). */
+  driveFileId: string | null
+  /** Link de visualização no Drive. */
+  webViewLink: string | null
   /** Timestamp ISO de quando entrou no acervo. */
   uploadedAt: string
 }

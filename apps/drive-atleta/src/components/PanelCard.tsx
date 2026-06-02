@@ -41,6 +41,17 @@ export function PanelCard({
       <div className="stack-2">
         <span className="bf-eyebrow">// destino</span>
         <span className="mono-path">{item.drivePath}</span>
+        {item.webViewLink && (
+          <a
+            className="bf-mono"
+            href={item.webViewLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: 'var(--current-accent-ink)' }}
+          >
+            ver no Drive ↗
+          </a>
+        )}
       </div>
 
       <hr className="rule" />

@@ -124,8 +124,42 @@ cd apps/drive-atleta && npm install && npm run dev   # confere a Fase 1 rodando 
 Ler este HANDOFF + `apps/drive-atleta/README.md` (fases 2/3/4) integralmente antes de propor schema/scope.
 
 ## Critério de "pronto" da próxima fase
-- [ ] OAuth Internal configurado (client ID/secret + refresh token da conta Content-manager no Infisical) + Supabase + Infisical prontos
-- [ ] 1 foto sobe de verdade: Drive (nome gerado) + Supabase + Painel — ponta a ponta
-- [ ] 1 vídeo grande sobe via resumable sem passar pela Vercel
-- [ ] `lib/storage.ts` e `lib/destination.ts` trocados; componentes **inalterados**
-- [ ] build/typecheck passam; sem segredo commitado
+- [x] OAuth Internal configurado (client ID/secret + refresh token da conta Content-manager no Infisical) + Supabase + Infisical prontos
+- [x] 1 foto sobe de verdade: Drive (nome gerado) + Supabase + Painel — ponta a ponta ✅ (verificado em dev E em prod, e limpo)
+- [x] Upload via resumable sem passar pela Vercel — vale p/ foto E vídeo (single-PUT; retry de chunk fica p/ Fatia 3)
+- [x] `lib/storage.ts` e `lib/destination.ts` trocados; componentes praticamente inalterados (storage virou async → ajustes mínimos no painel/upload)
+- [x] build/typecheck passam; sem segredo commitado
+
+---
+
+## ✅ FATIA 1 CONCLUÍDA (2026-06-02) — está NO AR
+
+**Produção: https://drive-atleta.vercel.app** (projeto Vercel `drive-atleta`, time studio-bicofino,
+orgId `team_i0JJAtJE82qUjMOqY08RTD3o`). Atleta: `/a/salvatore-brancatelli` · Painel: `/painel`.
+
+### Fatos concretos travados
+- **driveId CENTRAL BICOFINO:** `0AFqfyA1jOTXGUk9PVA` (no Infisical como `GOOGLE_DRIVE_ID`).
+- **Refresh token:** gerado via OAuth Playground logando como Content-manager → Infisical (`GOOGLE_OAUTH_REFRESH_TOKEN`).
+- **Supabase pooler que FUNCIONA p/ migrations:** `aws-1-us-west-2.pooler.supabase.com:5432` (o `aws-0` dá XX000). Direto `db.<ref>` é IPv6-only.
+- **CORS:** o PUT resumable direto browser→Google FUNCIONA. A rota `/api/upload/session` passa o `Origin` do request ao iniciar a sessão; o Google devolve `Access-Control-Allow-Origin: <origin>` + `Allow-Methods: PUT`. Verificado em localhost e em `https://drive-atleta.vercel.app`.
+- **`files.delete` permanente em Shared Drive é proibido p/ Content manager (404)** → para remover, mandar pra lixeira (`PATCH {trashed:true}`). Ver `scripts/cleanup-test.mjs`.
+
+### O cano (3 passos, D2 + D3)
+1. `POST /api/upload/session` — gera o nome padronizado (seq = count no Supabase), resolve `ATLETAS/<atleta>/{FOTOS,VIDEOS}` sob o driveId (acha-ou-cria), inicia sessão resumable, devolve `uploadUrl`.
+2. Navegador faz **PUT dos bytes direto no Google** (XHR com progresso). Não passa pela Vercel.
+3. `POST /api/upload/complete` — grava a linha em `media_items` (service role). Painel lê do Supabase.
+4. `POST /api/curate` — muda status (service role). Chave anon do navegador é só leitura (RLS).
+
+### Env vars na Vercel (production + development; **preview ficou pendente** — CLI pede branch)
+Os 8: `GOOGLE_OAUTH_CLIENT_ID/SECRET/REFRESH_TOKEN`, `GOOGLE_DRIVE_ID`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_DB_PASSWORD`. Fonte: Infisical projeto `bicofino-drive-atleta` env `dev` (id `db5128c3-f199-46d4-88e8-b02e60d8a1e7`).
+
+### Scripts utilitários (em `apps/drive-atleta/scripts/`)
+- `migrate.mjs` — roda `supabase/migrations/*.sql` (via `infisical run -- node scripts/migrate.mjs`).
+- `drive-setup.mjs` — valida refresh token + lista Shared Drives + acha o driveId.
+- `test-e2e.mjs` — teste do cano (`E2E_BASE=<url> node scripts/test-e2e.mjs`).
+- `cleanup-test.mjs` — remove artefato de teste (Drive→lixeira + linha no Supabase).
+
+### O que falta (próximas fatias)
+- **Fatia 2/3 — robustez de vídeo:** chunked PUT com retry por chunk (hoje é single-PUT; ok p/ foto e vídeo médio, mas conexão de celular caindo no meio de um vídeo grande reinicia do zero). Progresso já é real.
+- **Preview env na Vercel** (rodar `vercel env add ... preview` informando branch).
+- **Fase 4:** token assinado por atleta + auth do painel (hoje leitura pública no MVP — RLS só com policy de select).

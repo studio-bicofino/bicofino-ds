@@ -5,9 +5,9 @@ import { ArrowLeft, ArrowRight, X, Plus, Lock } from 'lucide-react'
 import type { Athlete } from '@/lib/athletes'
 import type { BatchMeta, Category, MediaItem, MediaKind } from '@/lib/types'
 import { CATEGORIES, TAG_SUGGESTIONS } from '@/lib/categories'
-import { generateFilename, kindFromMime } from '@/lib/filename'
-import { buildDrivePath, destinationFolder } from '@/lib/destination'
-import { addItems, countForAthlete } from '@/lib/storage'
+import { kindFromMime } from '@/lib/filename'
+import { destinationFolder } from '@/lib/destination'
+import { uploadOne } from '@/lib/upload-client'
 import { formatBytes } from '@/lib/format'
 import { TopBar } from './TopBar'
 import { Dropzone } from './Dropzone'
@@ -52,8 +52,14 @@ export function UploadFlow({ athlete }: { athlete: Athlete }) {
   const [picked, setPicked] = useState<Picked[]>([])
   const [meta, setMeta] = useState<BatchMeta>(emptyMeta)
   const [tagInput, setTagInput] = useState('')
-  const [pending, setPending] = useState<MediaItem[]>([])
   const [sent, setSent] = useState<MediaItem[]>([])
+
+  // Progresso real do envio.
+  const [ratio, setRatio] = useState(0)
+  const [current, setCurrent] = useState(0)
+  const [uploadError, setUploadError] = useState<string | null>(null)
+  const sentRef = useRef<MediaItem[]>([]) // permite retomar de onde parou
+
   const urls = useRef<Set<string>>(new Set())
 
   const revokeAll = useCallback(() => {
@@ -98,61 +104,51 @@ export function UploadFlow({ athlete }: { athlete: Athlete }) {
     setMeta((m) => ({ ...m, tags: m.tags.filter((x) => x !== t) }))
   }
 
-  function handleSubmit() {
-    if (picked.length === 0) return
-    const base = countForAthlete(athlete.slug)
-    const items: MediaItem[] = picked.map((p, i) => {
-      const filename = generateFilename({
-        athlete,
-        date: meta.date || todayISO(),
-        match: meta.match,
-        competition: meta.competition,
-        category: meta.category,
-        mimeType: p.file.type,
-        originalName: p.file.name,
-        seq: base + i + 1,
-      })
-      return {
-        id: crypto.randomUUID(),
-        athleteSlug: athlete.slug,
-        athleteName: athlete.name,
-        kind: p.kind,
-        filename,
-        originalName: p.file.name,
-        mimeType: p.file.type,
-        sizeBytes: p.file.size,
-        date: meta.date || todayISO(),
-        match: meta.match.trim() || null,
-        competition: meta.competition.trim() || null,
-        category: meta.category,
-        tags: meta.tags,
-        notes: meta.notes.trim() || null,
-        status: 'recebido',
-        drivePath: buildDrivePath(athlete, p.kind, filename),
-        uploadedAt: new Date().toISOString(),
-      }
-    })
-    setPending(items)
+  /* Envia o lote de verdade: por arquivo, sessão → PUT direto no Google →
+     grava no Supabase. Sequencial (mais gentil no celular) e retomável: o
+     que já subiu fica em sentRef, então "tentar de novo" continua do ponto. */
+  const runUploads = useCallback(async () => {
+    setUploadError(null)
     setStage('sending')
-  }
+    const total = picked.length
+    const date = meta.date || todayISO()
 
-  function handleSendingComplete() {
-    addItems(pending)
-    setSent(pending)
-    setStage('success')
-  }
+    try {
+      for (let i = sentRef.current.length; i < total; i++) {
+        setCurrent(i + 1)
+        setRatio(i / total)
+        const item = await uploadOne({
+          file: picked[i].file,
+          athlete,
+          meta,
+          date,
+          batchIndex: 0, // sequencial: a contagem no banco já reflete os anteriores
+          onProgress: (r) => setRatio((i + r) / total),
+        })
+        sentRef.current = [...sentRef.current, item]
+        setSent(sentRef.current)
+      }
+      setRatio(1)
+      setStage('success')
+    } catch (e) {
+      setUploadError(e instanceof Error ? e.message : 'Falha no envio. Tente de novo.')
+    }
+  }, [picked, meta, athlete])
 
   function resetToForm() {
     revokeAll()
     setPicked([])
     setMeta(emptyMeta())
     setTagInput('')
-    setPending([])
     setSent([])
+    sentRef.current = []
+    setRatio(0)
+    setCurrent(0)
+    setUploadError(null)
     setStage('form')
   }
 
-  // Destino previsto (para a prévia no hero/topo do form).
+  // Destino previsto (para a prévia no topo do form).
   const destFolders = Array.from(new Set(picked.map((p) => destinationFolder(athlete, p.kind).join(' / '))))
 
   return (
@@ -282,7 +278,7 @@ export function UploadFlow({ athlete }: { athlete: Athlete }) {
                     <Lock size={14} strokeWidth={1.5} aria-hidden style={{ flex: '0 0 auto', marginTop: 4 }} />
                     Ao enviar, você autoriza a Bicofino a curar e arquivar este material no seu acervo.
                   </p>
-                  <button className="btn btn--accent btn--lg btn--block" onClick={handleSubmit} disabled={picked.length === 0}>
+                  <button className="btn btn--accent btn--lg btn--block" onClick={runUploads} disabled={picked.length === 0}>
                     Enviar para Bicofino <ArrowRight size={18} strokeWidth={1.5} />
                   </button>
                 </div>
@@ -292,7 +288,13 @@ export function UploadFlow({ athlete }: { athlete: Athlete }) {
         )}
 
         {stage === 'sending' && (
-          <SendingState count={pending.length} onComplete={handleSendingComplete} />
+          <SendingState
+            ratio={ratio}
+            current={current}
+            total={picked.length}
+            error={uploadError}
+            onRetry={runUploads}
+          />
         )}
 
         {stage === 'success' && (
