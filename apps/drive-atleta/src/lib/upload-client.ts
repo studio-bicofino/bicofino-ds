@@ -73,6 +73,8 @@ export async function uploadOne(args: {
       match: meta.match,
       competition: meta.competition,
       category: meta.category,
+      tags: meta.tags,
+      notes: meta.notes,
     }),
   })
   const session = (await sres.json()) as SessionResponse & { error?: string }
