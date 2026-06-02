@@ -4,6 +4,7 @@ import { generateFilename, kindFromMime } from '@/lib/filename'
 import { buildDrivePath, driveSegments } from '@/lib/destination'
 import { resolveFolderId, startResumableUpload } from '@/lib/drive'
 import { supabaseAdmin } from '@/lib/supabase-server'
+import { buildDriveDescription } from '@/lib/description'
 import type { Category } from '@/lib/types'
 
 export const runtime = 'nodejs'
@@ -25,6 +26,8 @@ interface Body {
   match: string
   competition: string
   category: Category
+  tags?: string[]
+  notes?: string
 }
 
 export async function POST(req: Request) {
@@ -63,12 +66,22 @@ export async function POST(req: Request) {
 
     const folderId = await resolveFolderId(driveSegments(athlete, kind))
     const origin = req.headers.get('origin') ?? new URL(req.url).origin
+    const description = buildDriveDescription({
+      athleteName: athlete.name,
+      date: body.date,
+      category: body.category,
+      match: body.match?.trim() || null,
+      competition: body.competition?.trim() || null,
+      tags: body.tags ?? [],
+      notes: body.notes?.trim() || null,
+    })
     const uploadUrl = await startResumableUpload({
       name: filename,
       mimeType: body.mimeType,
       parentId: folderId,
       sizeBytes: body.sizeBytes,
       origin,
+      description,
     })
 
     return NextResponse.json({

@@ -87,6 +87,7 @@ export async function startResumableUpload(opts: {
   parentId: string
   sizeBytes: number
   origin: string
+  description?: string
 }): Promise<string> {
   const url = new URL('https://www.googleapis.com/upload/drive/v3/files')
   url.searchParams.set('uploadType', 'resumable')
@@ -104,7 +105,11 @@ export async function startResumableUpload(opts: {
       // Vincula a sessão à origem do app para liberar o PUT cross-origin (CORS).
       Origin: opts.origin,
     },
-    body: JSON.stringify({ name: opts.name, parents: [opts.parentId] }),
+    body: JSON.stringify({
+      name: opts.name,
+      parents: [opts.parentId],
+      ...(opts.description ? { description: opts.description } : {}),
+    }),
     cache: 'no-store',
   })
   if (!res.ok) throw new Error(`Drive iniciar resumable falhou (${res.status}): ${await res.text()}`)
