@@ -2,3 +2,10 @@
 node_modules
 *.log
 public/brand
+
+# MP4s acima do limite de 100 MB/arquivo do Vercel. As seções usam os .webm
+# (video-onpitch.webm / video-offpitch.webm), que SÃO enviados no deploy.
+public/media/video-onpitch.mp4
+public/media/video-offpitch.mp4
+public/media/herovideo2.mp4
+public/media/.DS_Store
