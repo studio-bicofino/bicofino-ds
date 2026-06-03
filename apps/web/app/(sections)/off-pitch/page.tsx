@@ -21,9 +21,27 @@ export default function OffFieldPage() {
 
   return (
     <>
+      {/* Fixed video background */}
+      <div aria-hidden="true" style={{ position: 'fixed', inset: 0, zIndex: -2, overflow: 'hidden' }}>
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-hidden="true"
+          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+        >
+          <source src="/media/video-offpitch.webm" type="video/webm" />
+        </video>
+      </div>
+
+      {/* Fixed dark overlay */}
+      <div aria-hidden="true" style={{ position: 'fixed', inset: 0, zIndex: -1, background: 'rgba(0,0,0,0.8)' }} />
+
       <Header onMenuOpen={() => setMenuOpen(true)} />
       <MobileMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
-      <main id="main-content" style={{ flex: 1, background: 'var(--bf-surface)', display: 'flex', flexDirection: 'column' }}>
+
+      <main id="main-content" style={{ flex: 1, background: 'transparent', display: 'flex', flexDirection: 'column' }}>
         <section
           style={{
             width: '100%',
@@ -39,7 +57,7 @@ export default function OffFieldPage() {
               fontSize: 11,
               letterSpacing: '0.14em',
               textTransform: 'uppercase',
-              color: 'var(--bf-text-secondary)',
+              color: 'rgba(255, 255, 255, 0.6)',
               marginBottom: 'var(--bf-space-md)',
             }}
           >
@@ -52,7 +70,7 @@ export default function OffFieldPage() {
               fontSize: 'clamp(36px, 5vw, 56px)',
               fontWeight: 700,
               lineHeight: 1.05,
-              color: 'var(--bf-text-primary)',
+              color: '#ffffff',
               marginBottom: 'var(--bf-space-lg)',
             }}
           >
@@ -66,7 +84,7 @@ export default function OffFieldPage() {
               lineHeight: 1.45,
               fontWeight: 400,
               letterSpacing: 0,
-              color: 'var(--bf-text-secondary)',
+              color: 'rgba(255, 255, 255, 0.8)',
               marginBottom: 'var(--bf-space-lg)',
             }}
           >
@@ -75,28 +93,14 @@ export default function OffFieldPage() {
 
           <div
             style={{
-              width: 400,
-              height: 400,
-              maxWidth: '100%',
-              overflow: 'hidden',
               marginBottom: 'calc(var(--bf-space-lg) * 2)',
-            }}
-            aria-hidden="true"
+              '--bf-border': 'rgba(255, 255, 255, 0.2)',
+              '--bf-text-primary': '#ffffff',
+              '--bf-text-secondary': 'rgba(255, 255, 255, 0.75)',
+              '--bf-text-subtle': 'rgba(255, 255, 255, 0.5)',
+              '--bf-accent': 'rgba(255, 255, 255, 0.9)',
+            } as React.CSSProperties}
           >
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              aria-hidden="true"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-            >
-              <source src="/media/video-offfield.webm" type="video/webm" />
-              <source src="/media/video-offfield.mp4" type="video/mp4" />
-            </video>
-          </div>
-
-          <div style={{ marginBottom: 'calc(var(--bf-space-lg) * 2)' }}>
             <Accordion items={items} />
           </div>
 
@@ -106,14 +110,25 @@ export default function OffFieldPage() {
               fontSize: 11,
               letterSpacing: '0.14em',
               textTransform: 'uppercase',
-              color: 'var(--bf-power-black)',
+              color: 'rgba(255, 255, 255, 0.6)',
             }}
           >
             // {t('off-field.closing')}
           </p>
         </section>
       </main>
-      <div style={{ background: 'var(--bf-surface)' }}>
+
+      <div
+        style={{
+          '--bf-surface': 'transparent',
+          '--bf-border': 'rgba(255, 255, 255, 0.15)',
+          '--bf-text-primary': '#ffffff',
+          '--bf-text-secondary': 'rgba(255, 255, 255, 0.65)',
+          '--bf-text-subtle': 'rgba(255, 255, 255, 0.4)',
+          '--bf-platinum': 'rgba(255, 255, 255, 0.5)',
+          '--bf-accent': 'rgba(191, 163, 122, 1)',
+        } as React.CSSProperties}
+      >
         <Footer />
       </div>
     </>
