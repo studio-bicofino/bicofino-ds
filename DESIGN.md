@@ -160,6 +160,11 @@ Closed scale; never more than two type styles per piece.
   never body. The **heavy/light pairing** (Black title + Light contracanto, e.g. `KERCHNER` over
   `present future`) is the signature editorial title block.
 
+**Measure (v3.1).** No text runs the full container width. Long body holds a **680–760px**
+(~66–75ch) measure; short text — intros, captions, eyebrows, the contracanto under an impact
+title — gets a tighter **~34–48ch** so it reads as a designed block, not a stretched line.
+Constrain with a `ch`-based `max-width`, left-aligned. *(craft folded in from `web-design-guidelines`.)*
+
 Presets in `colors_and_type.css`: `.bf-display · .bf-impact · .bf-h1 · .bf-h2 · .bf-h3 ·
 .bf-body · .bf-body-sm · .bf-eyebrow · .bf-mono`.
 
@@ -183,6 +188,13 @@ Presets in `colors_and_type.css`: `.bf-display · .bf-impact · .bf-h1 · .bf-h2
 (`cubic-bezier(0.16, 1, 0.3, 1)`) for draw-in / orbit reveals. Entrances = short fade + 8–12px
 upward translate, ~55–70ms stagger (the site's `.bf-reveal` / `.bf-stagger-parent` system). No
 bounces, no springs, nothing over `360ms`. Focus is always visible: a visible outline, 2px offset.
+
+**Properties & focus (v3.1).** Animate **only `transform` and `opacity`** — never `width`,
+`height`, `margin`, `top` (they force layout; use `transform: scaleX()` for a progress bar, not
+`width`). List the properties explicitly; **never `transition: all`**. Nothing enters from
+`scale(0)` — start at `≥0.94` + `opacity`, since nothing real appears from nothing. Focus is
+shown via **`:focus-visible`** (keyboard), never `outline: none` without an equivalent
+replacement. *(craft folded in from `emil-design-eng` + `web-design-guidelines`.)*
 
 ### Ambient motion — *the living organism*
 
@@ -250,6 +262,10 @@ re-declares the same set in **`apps/docs-site/src/app/globals.css`**. New in thi
   `--bf-hairline-dark`. (M-01)
 - **Ambient motion** — `--dur-ambient` (≈6s) + `--ease-out`, scoped to `.bf-schematic`. (§8)
 - **`[data-mode="editorial"]`** — the expression-mode hook. (D1)
+- **Measure rule** — §6: no text runs full container width; short text tightens to ~34–48ch.
+  First principle folded in via the *Design Craft Layer* (`CLAUDE.md`), from `web-design-guidelines`.
+- **Motion properties & focus** — §8: animate only `transform`/`opacity`, no `transition: all`,
+  no `scale(0)` entries, focus via `:focus-visible`. From `emil-design-eng` + `web-design-guidelines`.
 
 Interaction durations stay at the live `120 / 200 / 360ms`. `--radius` (2px) remains as the legacy
 base; new work should prefer `--bf-corner-*`.
