@@ -1,8 +1,33 @@
 # STATUS — Registro de Impacto
 
-> Handoff para continuar em outro chat. Última atualização: 2026-06-01.
+> Handoff para continuar em outro chat. Última atualização: 2026-06-03.
 > App em `apps/woney-registro/`. Dashboard interno que mostra, em horas e reais,
 > o valor que os sistemas do Woney (designer + dev com Claude Code) devolvem ao Studio Bicofino.
+
+## ⏩ Onde paramos (2026-06-03) — ler primeiro
+
+Duas rodadas registradas no acervo desde o deploy inicial, ambas **no ar** em produção
+(`https://woney-registro.vercel.app`), branch `feat/woney-registro`, commit **`c4b07d3`**:
+
+1. **Drive do Atleta** (commit `c968c97`) — novo sistema **`infraestrutura`** (`sis-drive-atleta`,
+   7h de build = capital), showcase na galeria com thumbnail `/pecas/drive-atleta.png` + link
+   `drive-atleta.vercel.app`, e uma **frase do Connector** com a projeção de catalogação
+   (15× mais rápido · ~1,7h/mês a 100 fotos/semana). Inputs em `settings`
+   (`drive_fotos_semana/seg_antes/seg_depois`). **Decisão:** entrou como infra (não "projeto")
+   porque era o único tipo que renderiza limpo sem inventar "dias de build". A projeção fica
+   **fora** do headline recorrente do topo — fold no `calc` é trivial se o Woney quiser somar lá.
+2. **+4 stories de jogos** (commit `c4b07d3`) — 4 motions reais do `card-jogos-motion` como usos do
+   Template de stories (Gui Brasileirão 04/jun, Gui Paulista 06/jun, Júlio Paulista 06/jun,
+   Ronaldo Copa Rio 07/jun). Template subiu de **2 → 6 usos** → agora **PAGO**.
+
+**Fluxo de edição usado (importante):** o source do woney-registro **só existe na branch
+`feat/woney-registro`** (não está na `main` nem na `feat/drive-atleta`). Trabalhei via
+**git worktree isolado** (`git worktree add ../woney-registro-edit feat/woney-registro`),
+reaproveitando o `node_modules` da árvore principal por symlink (basta p/ vitest+tsc; o Turbopack
+recusa symlink p/ fora da raiz, então p/ `next build` local copie o `node_modules`).
+Deploy: copiar `.vercel/project.json` pro worktree e `vercel --prod --yes`.
+
+**Pendências de jogos (memória `jogos-semana-junho`):** falta o **Júlio 09/jun**.
 
 ## Produção & Git (handoff)
 
@@ -46,14 +71,16 @@ npm run build    # build de produção ok (7 rotas)
 
 Espelha o bloco 5 do `PROMPT_MASTER_Registro_de_Impacto.md`. Números atuais do seed:
 
-| Métrica | Valor |
+| Métrica | Valor (atualizado 2026-06-03) |
 |---|---|
 | custo/hora | R$ 106,25 (17000/160) |
-| Economia até hoje (realizado) | **R$ 13.175** (R$ 425 peças + R$ 12.750 site) |
-| Líquido recorrente/ano | **R$ 61.712** |
+| Economia até hoje (realizado) | **R$ 13.671** (R$ 921 peças + R$ 12.750 site) |
+| Peças (eficiência) | R$ 920,83 = 6 stories (7,0h) + 2 propostas (1,67h) |
+| Capital de infraestrutura | R$ 17.744 (DS 160h + Drive do Atleta 7h) |
+| Líquido recorrente/ano | **R$ 61.712** (inalterado — usa volume mensal, não contagem de usos) |
 | Líquido recorrente/mês | R$ 5.143 = eficiência 1.169 + dev 4.500 − Claude 526 |
 | Claude Max se paga | **10,8×**/mês (custa US$ 100 ≈ R$ 526) |
-| Story | 20 min em vez de 1h30 · Proposta 40 min em vez de 1h30 |
+| Story | 20 min em vez de 1h30 (template **pago**: 6 usos ≥ payback 4) · Proposta 40 min em vez de 1h30 |
 
 > **Correções 2026-06-01:** vaga de dev júnior = **R$ 4.500/mês** (era 9.000 carregado no card;
 > `custoFixoEvitado` já era 4.500, recorrente não mudou). Propostas: tempo antes **90 min** (era 180).
@@ -68,8 +95,9 @@ fade+translateY(12px), `--dur-reveal: 280ms` ease-out, stagger `index*60ms`. Red
 na hora; `@media print` força `opacity:1` (PDF do fechamento seguro). Aplicado em cards, títulos e
 blocos das 5 telas (acima da dobra segue `.bf-reveal` de load). Auditado pelo motion-curator: PASS.
 
-Seed (`src/lib/seed.ts`): 4 sistemas (template stories `eficiencia`, propostas `eficiencia`,
-Design System `infraestrutura`, site v1 `projeto`) + 5 usos (todos em maio/2026).
+Seed (`src/lib/seed.ts`): **5 sistemas** (template stories `eficiencia`, propostas `eficiencia`,
+Design System `infraestrutura`, site v1 `projeto`, **Drive do Atleta `infraestrutura`**) +
+**10 usos** (6 stories até jun, 2 propostas, 2 showcases infra/projeto, 1 showcase Drive).
 
 ## Telas (todas prontas, seed-first)
 
