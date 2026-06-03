@@ -1,7 +1,7 @@
 # HANDOFF — Drive do Atleta Bicofino
 
-*Documento de retomada. Última atualização: 2026-06-02.*
-*Objetivo da próxima fase: tornar o app funcional de verdade — upload real no Google Drive + metadados no Supabase.*
+*Documento de retomada. Última atualização: 2026-06-03.*
+*▶ ESTADO ATUAL: backend real NO AR e em uso pelo Fabio (drive-atleta.vercel.app). Pula direto para a seção "✅ NO AR E EM USO REAL" abaixo — as seções 1-3 são o histórico de como chegamos aqui. Próximas fatias: ARTES, retry de vídeo, preview env, Fase 4.*
 
 ---
 
@@ -132,10 +132,22 @@ Ler este HANDOFF + `apps/drive-atleta/README.md` (fases 2/3/4) integralmente ant
 
 ---
 
-## ✅ FATIA 1 CONCLUÍDA (2026-06-02) — está NO AR
+## ✅ NO AR E EM USO REAL (atualizado 2026-06-03)
 
 **Produção: https://drive-atleta.vercel.app** (projeto Vercel `drive-atleta`, time studio-bicofino,
-orgId `team_i0JJAtJE82qUjMOqY08RTD3o`). Atleta: `/a/salvatore-brancatelli` · Painel: `/painel`.
+orgId `team_i0JJAtJE82qUjMOqY08RTD3o`). Hub em `/` (lista os atletas) · upload em `/a/<slug>` · Painel `/painel`.
+Fabio já está usando ao vivo — há uploads reais no acervo (Salvatore, Julio, Caio). Tudo mergeado na `main` (último PR #17). **Working tree limpo, nada pendente de commit.**
+
+### Funcionalidades no ar (entregues nesta fase, todas mergeadas + deployadas)
+- **Hub `/`** lista os atletas (cards `.hub-link` com hover/press/focus). Cada → `/a/<slug>`.
+- **14 atletas** em `lib/athletes.ts` (Caio Henrique, Eloi Gómez Saus, Gabriel Mendes, Guilherme Kerchner, Jean Jesus, Joaquim Miranda, Julio Cezar, Lucas Henrique, Luigi Brancatelli, Pedro Cialone, Rhian Marinho, Ronaldo Prado, Salvatore Brancatelli, Yuri Lima). Todos sem position/club. `driveFolder` = nome EXATO da pasta (acentos). Adicionar = 1 linha; confirmar nome com `scripts/drive-setup.mjs`-style antes.
+- **Preview real das fotos no Painel** via proxy `/api/thumb?id=<driveFileId>` (thumbnailLink do Drive, ~10-50KB, com token de serviço; cache 1h no browser). `Thumb` cai no placeholder se a miniatura falhar.
+- **Detecção de foto repetida (arquivo idêntico):** SHA-256 dos bytes no navegador (`lib/hash.ts`) → coluna `media_items.content_hash` (migration 0002). `/api/check-duplicate` avisa no card ("Já no acervo (data)"), **nunca bloqueia**. Vídeo não é hasheado. Backfill do legado feito (`scripts/backfill-hash.mjs`).
+- **Nome do arquivo:** inclui Jogo (se houver) E Campeonato/Contexto (se houver) via `contextToken` CamelCase. Ex.: `CAIO_2025out20_ApresentacaoAlashkert_viagem_002.png`.
+- **Metadados na descrição do arquivo no Drive** (`lib/description.ts`): atleta, data, categoria, jogo, contexto, tags, obs. viajam COM o arquivo (painel Detalhes do Drive). Backfill feito (`scripts/backfill-description.mjs`).
+- **Observação no card do Painel:** escondida por padrão, botão "olho" (Eye/EyeOff) revela inline.
+
+### Fatos concretos travados
 
 ### Fatos concretos travados
 - **driveId CENTRAL BICOFINO:** `0AFqfyA1jOTXGUk9PVA` (no Infisical como `GOOGLE_DRIVE_ID`).
@@ -144,20 +156,32 @@ orgId `team_i0JJAtJE82qUjMOqY08RTD3o`). Atleta: `/a/salvatore-brancatelli` · Pa
 - **CORS:** o PUT resumable direto browser→Google FUNCIONA. A rota `/api/upload/session` passa o `Origin` do request ao iniciar a sessão; o Google devolve `Access-Control-Allow-Origin: <origin>` + `Allow-Methods: PUT`. Verificado em localhost e em `https://drive-atleta.vercel.app`.
 - **`files.delete` permanente em Shared Drive é proibido p/ Content manager (404)** → para remover, mandar pra lixeira (`PATCH {trashed:true}`). Ver `scripts/cleanup-test.mjs`.
 
-### O cano (3 passos, D2 + D3)
-1. `POST /api/upload/session` — gera o nome padronizado (seq = count no Supabase), resolve `ATLETAS/<atleta>/{FOTOS,VIDEOS}` sob o driveId (acha-ou-cria), inicia sessão resumable, devolve `uploadUrl`.
+### O cano + rotas (D2 + D3)
+1. `POST /api/upload/session` — gera o nome (seq = count no Supabase), resolve `ATLETAS/<atleta>/{FOTOS,VIDEOS}` sob o driveId (acha-ou-cria), monta a descrição, inicia sessão resumable, devolve `uploadUrl`. Recebe tags+notes (pra descrição) + hash via complete.
 2. Navegador faz **PUT dos bytes direto no Google** (XHR com progresso). Não passa pela Vercel.
-3. `POST /api/upload/complete` — grava a linha em `media_items` (service role). Painel lê do Supabase.
+3. `POST /api/upload/complete` — grava a linha em `media_items` (service role), incl. `content_hash`. Painel lê do Supabase.
 4. `POST /api/curate` — muda status (service role). Chave anon do navegador é só leitura (RLS).
+5. `POST /api/check-duplicate` — { athleteSlug, hashes[] } → matches por hash (filename+date).
+6. `GET /api/thumb?id=<driveFileId>` — proxy da miniatura do Drive p/ o preview do Painel.
+
+**Migrations** (`supabase/migrations/`, idempotentes — `node scripts/migrate.mjs`): `0001_media_items.sql` (tabela, 19 cols, RLS+policy de leitura), `0002_content_hash.sql` (coluna + index por atleta,hash).
 
 ### Env vars na Vercel (production + development; **preview ficou pendente** — CLI pede branch)
 Os 8: `GOOGLE_OAUTH_CLIENT_ID/SECRET/REFRESH_TOKEN`, `GOOGLE_DRIVE_ID`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_DB_PASSWORD`. Fonte: Infisical projeto `bicofino-drive-atleta` env `dev` (id `db5128c3-f199-46d4-88e8-b02e60d8a1e7`).
 
-### Scripts utilitários (em `apps/drive-atleta/scripts/`)
-- `migrate.mjs` — roda `supabase/migrations/*.sql` (via `infisical run -- node scripts/migrate.mjs`).
+### Scripts utilitários (em `apps/drive-atleta/scripts/`) — todos via `infisical run --projectId db5128c3-... --env dev --silent -- node scripts/<x>.mjs`
+- `migrate.mjs` — roda `supabase/migrations/*.sql`.
 - `drive-setup.mjs` — valida refresh token + lista Shared Drives + acha o driveId.
 - `test-e2e.mjs` — teste do cano (`E2E_BASE=<url> node scripts/test-e2e.mjs`).
 - `cleanup-test.mjs` — remove artefato de teste (Drive→lixeira + linha no Supabase).
+- `backfill-hash.mjs` — preenche `content_hash` do acervo legado (baixa alt=media, sha256).
+- `backfill-description.mjs` — preenche a descrição no Drive do acervo legado.
+
+### Como rodar/deployar (chat novo)
+- **Dev local:** `infisical run --projectId db5128c3-f199-46d4-88e8-b02e60d8a1e7 --env dev -- npm run dev` (na pasta do app; porta 3042). NUNCA subir sem o `infisical run` (faltam env → rotas quebram). Matar server velho na 3042 antes (`lsof -ti :3042 | xargs kill -9`).
+- **Build:** `infisical run ... -- npm run build`.
+- **Deploy prod:** `cd apps/drive-atleta && vercel --prod --scope studio-bicofinos-projects --yes` (sobe do working tree).
+- **Git:** branch `feat/drive-atleta`; `git push origin ...` envia pros 2 remotes. PRs `gh pr create/merge --repo studio-bicofino/bicofino-ds --base main` (a `main` canônica é a do studio-bicofino, NÃO o mirror WoneyMalian — ver [[project_github_setup]]). `zsh` não faz word-split: usar arrays; `curl/jq` às vezes somem do PATH → usar `/usr/bin/curl`.
 
 ### O que falta (próximas fatias)
 - **ARTES (posts de Instagram) — pedido do Fabio (2026-06-02):** cada atleta tem `ATLETAS/<atleta>/ARTES` (além de FOTOS/VIDEOS/CONTRATOS/LINKS/NIKE). Hoje o upload roteia SÓ por MIME (`kindFromMime`: imagem→FOTOS, vídeo→VIDEOS) — mas uma "arte" também é imagem (PNG), então MIME não distingue. Próxima rodada: deixar o atleta/curadoria escolher mandar pra **ARTES**. Pontos de toque:
