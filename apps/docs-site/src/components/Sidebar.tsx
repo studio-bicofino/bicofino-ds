@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { ChevronRight, MessageCircle } from 'lucide-react'
 import { BicofinoLogo } from './BicofinoLogo'
@@ -15,7 +14,6 @@ const C = {
   active:      'var(--current-accent)',
   hover:       'var(--bf-sidebar-hover)',
   divider:     'var(--bf-sidebar-divider)',
-  headerBg:    'var(--bf-sidebar-hover)',
 }
 
 const sans = '"Inter", sans-serif'
@@ -242,9 +240,9 @@ export default function Sidebar({ onNavClick }: SidebarProps = {}) {
       </div>
 
       {/* Consigliere — IA contextual (layout/clique; sem backend ainda) */}
-      <Link
-        href="/consigliere"
-        onClick={() => onNavClick?.()}
+      <a
+        href="/#consigliere"
+        onClick={(e) => { e.preventDefault(); navigateToSection('#consigliere') }}
         aria-label="Bicofino Consigliere"
         title="Consigliere"
         className="bf-consigliere-link"
@@ -252,17 +250,16 @@ export default function Sidebar({ onNavClick }: SidebarProps = {}) {
           display: 'inline-flex',
           alignItems: 'center',
           justifyContent: 'center',
-          margin: '0 24px 24px',
-          width: 36,
-          height: 36,
-          borderRadius: 'var(--bf-corner-3)',
-          border: `1px solid ${C.divider}`,
+          margin: '0 24px 24px 18px',
+          padding: 6,
+          borderRadius: 'var(--bf-corner-2)',
           color: C.muted,
-          transition: 'color 150ms ease-out, border-color 150ms ease-out',
+          cursor: 'pointer',
+          transition: 'color 150ms ease-out, background 150ms ease-out',
         }}
       >
-        <MessageCircle size={18} strokeWidth={1.5} />
-      </Link>
+        <MessageCircle size={20} strokeWidth={1.5} />
+      </a>
 
       {/* Divider */}
       <div style={{ height: 1, background: C.divider, margin: '0 24px 20px' }} />
@@ -276,6 +273,7 @@ export default function Sidebar({ onNavClick }: SidebarProps = {}) {
               <button
                 onClick={() => toggleSection(group)}
                 aria-expanded={isOpen}
+                className="bf-nav-group"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -289,7 +287,7 @@ export default function Sidebar({ onNavClick }: SidebarProps = {}) {
                   padding: '12px 24px 4px',
                   textTransform: 'uppercase',
                   lineHeight: 1.4,
-                  background: C.headerBg,
+                  background: 'transparent',
                   border: 'none',
                   cursor: 'pointer',
                   textAlign: 'left',

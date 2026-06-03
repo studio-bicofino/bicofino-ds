@@ -263,10 +263,14 @@ a {
 /* ─── Sidebar scrollbar — on dark ─── */
 .bf-sidebar::-webkit-scrollbar-thumb { background: rgba(242, 248, 255, 0.1); }
 
-/* Consigliere sidebar link */
+/* Consigliere sidebar link — flat by default, subtle box on hover only */
 .bf-consigliere-link:hover {
   color: var(--current-accent) !important;
-  border-color: var(--current-accent) !important;
+  background: var(--bf-sidebar-hover) !important;
+}
+/* Nav group headers — flat by default, subtle box on hover only */
+.bf-nav-group:hover {
+  background: var(--bf-sidebar-hover) !important;
 }
 .bf-sidebar::-webkit-scrollbar-thumb:hover { background: rgba(242, 248, 255, 0.2); }
 
