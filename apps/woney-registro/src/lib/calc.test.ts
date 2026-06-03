@@ -26,12 +26,14 @@ describe('eficiência', () => {
   it('economia por uso do template = 70min (90→20)', () => {
     expect(economiaPorUsoH(template)).toBeCloseTo(1.1667, 3)
   })
-  it('template ainda não pagou (faltam usos)', () => {
+  it('template já pagou (6 usos ≥ payback de 4)', () => {
     const a = analisarEficiencia(template, usos)
-    expect(a.usosAteHoje).toBe(2)
+    expect(a.usosAteHoje).toBe(6)
     expect(a.usosPayback).toBe(4)
-    expect(a.pago).toBe(false)
-    expect(a.status).toContain('Faltam 2')
+    expect(a.pago).toBe(true)
+    expect(a.status).toContain('Pago')
+    // 70min = 1,1667h por uso · 6 usos = 7,0h
+    expect(a.economiaAcumH).toBeCloseTo(7.0, 3)
   })
   it('propostas pagaram (investimento 0)', () => {
     const a = analisarEficiencia(propostas, usos)
@@ -53,11 +55,11 @@ describe('projeto', () => {
 describe('agregação — critérios de aceite (bloco 9)', () => {
   const imp = calcularImpacto(settings, sistemas, usos)
 
-  it('peças ~R$ 425', () => {
-    expect(imp.valorEconomizadoBrl).toBeCloseTo(425, 1)
+  it('peças ~R$ 921 (6 stories + 2 propostas)', () => {
+    expect(imp.valorEconomizadoBrl).toBeCloseTo(920.83, 1)
   })
-  it('valor realizado até hoje ~R$ 13.175', () => {
-    expect(imp.valorRealizadoAteHoje).toBeCloseTo(13175, 1)
+  it('valor realizado até hoje ~R$ 13.671', () => {
+    expect(imp.valorRealizadoAteHoje).toBeCloseTo(13670.83, 1)
   })
   it('valor líquido recorrente ~R$ 5.143/mês', () => {
     expect(imp.valorRecorrenteMes).toBeCloseTo(5142.67, 1)
