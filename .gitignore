@@ -42,6 +42,10 @@ storybook-static/
 # Turbo
 .turbo/
 
+# apps/web — uploads manuais grandes (NÃO versionar — ver CLAUDE.md)
+apps/web/public/brand/
+apps/web/public/media/
+
 # Large local folders
 AI-OS-BASE/
 assets Bicofino/

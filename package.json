@@ -13,6 +13,7 @@
     "vanguarda:mercados": "cd apps/vanguarda/mercados-globais && npm run dev",
     "vanguarda:ideias": "cd apps/vanguarda/100-ideias && npm run dev",
     "vanguarda:italia": "cd apps/vanguarda/italia-2027 && npm run dev",
+    "sync": "bash scripts/sync.sh",
     "install:docs": "cd apps/docs-site && npm install",
     "install:storybook": "cd apps/storybook && npm install",
     "install:web": "cd apps/web && npm install",
