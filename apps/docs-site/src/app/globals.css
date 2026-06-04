@@ -122,13 +122,13 @@
   --bf-border:          rgba(42,44,43,0.08);
   --bf-border-strong:   rgba(42,44,43,0.16);
   --bf-pill-bg:         rgba(42,44,43,0.06);
-  --bf-sidebar-bg:          #2a2c2b;
+  --bf-sidebar-bg:          #f2f8ff;
   --bf-sidebar-muted:       #6d7886;
-  --bf-sidebar-subtle:      rgba(168,201,229,0.7);
-  --bf-sidebar-divider:     rgba(242,248,255,0.08);
-  --bf-sidebar-text:        #f2f8ff;
-  --bf-sidebar-text-hover:  rgba(242,248,255,0.75);
-  --bf-sidebar-hover:       rgba(242,248,255,0.06);
+  --bf-sidebar-subtle:      rgba(42,44,43,0.45);
+  --bf-sidebar-divider:     rgba(42,44,43,0.10);
+  --bf-sidebar-text:        #2a2c2b;
+  --bf-sidebar-text-hover:  #2a2c2b;
+  --bf-sidebar-hover:       rgba(42,44,43,0.04);
 }
 
 /* ─── Corner language switch (D2) — opt a container into soft/sharp ─── */
@@ -262,6 +262,16 @@ a {
 
 /* ─── Sidebar scrollbar — on dark ─── */
 .bf-sidebar::-webkit-scrollbar-thumb { background: rgba(242, 248, 255, 0.1); }
+
+/* Consigliere sidebar link — flat by default, subtle box on hover only */
+.bf-consigliere-link:hover {
+  color: var(--current-accent) !important;
+  background: var(--bf-sidebar-hover) !important;
+}
+/* Nav group headers — flat by default, subtle box on hover only */
+.bf-nav-group:hover {
+  background: var(--bf-sidebar-hover) !important;
+}
 .bf-sidebar::-webkit-scrollbar-thumb:hover { background: rgba(242, 248, 255, 0.2); }
 
 /* ─── Scroll helpers ─── */

@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { ChevronRight } from 'lucide-react'
+import { useRouter, usePathname } from 'next/navigation'
+import { ChevronRight, MessageCircle } from 'lucide-react'
 import { BicofinoLogo } from './BicofinoLogo'
 import { useLang } from '@/content'
 
@@ -13,7 +14,6 @@ const C = {
   active:      'var(--current-accent)',
   hover:       'var(--bf-sidebar-hover)',
   divider:     'var(--bf-sidebar-divider)',
-  headerBg:    'rgba(242,248,255,0.06)',
 }
 
 const sans = '"Inter", sans-serif'
@@ -114,8 +114,45 @@ export default function Sidebar({ onNavClick }: SidebarProps = {}) {
 
   const nav = buildNav(t)
 
+  const router = useRouter()
+  const pathname = usePathname()
+
   // Single open section — null means all collapsed
   const [openSection, setOpenSection] = useState<string | null>(null)
+  // When navigating home from another route, scroll to this section once it mounts
+  const [pendingHash, setPendingHash] = useState<string | null>(null)
+
+  // Scroll the page to a section by id, retrying until it has mounted
+  function scrollToId(id: string) {
+    let tries = 0
+    const tryScroll = () => {
+      const el = document.getElementById(id)
+      if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); return }
+      if (tries++ < 60) requestAnimationFrame(tryScroll)
+    }
+    requestAnimationFrame(tryScroll)
+  }
+
+  // A nav item was clicked: scroll if on home, otherwise route home then scroll
+  function navigateToSection(href: string) {
+    onNavClick?.()
+    setActive(href)
+    if (pathname === '/') {
+      scrollToId(href.slice(1))
+    } else {
+      setPendingHash(href.slice(1))
+      router.push('/')
+    }
+  }
+
+  // Flush a pending scroll after landing back on home
+  useEffect(() => {
+    if (pathname === '/' && pendingHash) {
+      scrollToId(pendingHash)
+      setPendingHash(null)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname, pendingHash])
 
   // Derive initial open section from URL hash on mount
   useEffect(() => {
@@ -176,13 +213,17 @@ export default function Sidebar({ onNavClick }: SidebarProps = {}) {
       {/* Wordmark + meta */}
       <div style={{ padding: '36px 24px 28px' }}>
         <a
-          href="#"
+          href="/"
           onClick={e => {
             e.preventDefault()
             onNavClick?.()
-            requestAnimationFrame(() => {
-              document.getElementById('main-content')?.scrollTo({ top: 0, behavior: 'smooth' })
-            })
+            if (pathname === '/') {
+              requestAnimationFrame(() => {
+                document.getElementById('main-content')?.scrollTo({ top: 0, behavior: 'smooth' })
+              })
+            } else {
+              router.push('/')
+            }
           }}
           style={{ display: 'block', lineHeight: 0, cursor: 'pointer' }}
           aria-label="Voltar ao início"
@@ -198,6 +239,28 @@ export default function Sidebar({ onNavClick }: SidebarProps = {}) {
         </div>
       </div>
 
+      {/* Consigliere — IA contextual (layout/clique; sem backend ainda) */}
+      <a
+        href="/#consigliere"
+        onClick={(e) => { e.preventDefault(); navigateToSection('#consigliere') }}
+        aria-label="Bicofino Consigliere"
+        title="Consigliere"
+        className="bf-consigliere-link"
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          margin: '0 24px 24px 18px',
+          padding: 6,
+          borderRadius: 'var(--bf-corner-2)',
+          color: C.muted,
+          cursor: 'pointer',
+          transition: 'color 150ms ease-out, background 150ms ease-out',
+        }}
+      >
+        <MessageCircle size={20} strokeWidth={1.5} />
+      </a>
+
       {/* Divider */}
       <div style={{ height: 1, background: C.divider, margin: '0 24px 20px' }} />
 
@@ -210,6 +273,7 @@ export default function Sidebar({ onNavClick }: SidebarProps = {}) {
               <button
                 onClick={() => toggleSection(group)}
                 aria-expanded={isOpen}
+                className="bf-nav-group"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -223,7 +287,7 @@ export default function Sidebar({ onNavClick }: SidebarProps = {}) {
                   padding: '12px 24px 4px',
                   textTransform: 'uppercase',
                   lineHeight: 1.4,
-                  background: C.headerBg,
+                  background: 'transparent',
                   border: 'none',
                   cursor: 'pointer',
                   textAlign: 'left',
@@ -255,17 +319,12 @@ export default function Sidebar({ onNavClick }: SidebarProps = {}) {
                   return (
                     <a
                       key={href}
-                      href={href}
+                      href={pathname === '/' ? href : '/' + href}
                       onMouseEnter={() => setHovered(href)}
                       onMouseLeave={() => setHovered(null)}
                       onClick={(e) => {
                         e.preventDefault()
-                        onNavClick?.()
-                        setActive(href)
-                        requestAnimationFrame(() => {
-                          const el = document.getElementById(href.slice(1))
-                          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                        })
+                        navigateToSection(href)
                       }}
                       style={{
                         display: 'block',
