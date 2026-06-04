@@ -1,0 +1,552 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap");
+
+:root {
+  /* Brand — DESIGN.md (não alterar) */
+  --bf-black:       #2a2c2b;
+  --bf-power-black: #061015;
+  --bf-white:       #ffffff;
+  --bf-steel:       #6d7886;
+  --bf-aluminium:   #e2eaf2;
+  --bf-platinum:    #a8c9e5;
+  --bf-accent:      #BFA37A;
+
+  /* Casa Nostra — paleta editorial (EXCEÇÃO documentada em DESIGN.md) */
+  --bf-cn-crema:    #f3ebd4;  /* fc bicofino crema — fundo do site */
+  --bf-cn-caffe:    #33111a;  /* fc bicofino caffè — texto principal */
+  --bf-cn-nocciola: #d8d7d3;  /* nocciola — apoio / borders sutis */
+  --bf-cn-napoli:   #77deff;  /* napoli — accent info */
+  --bf-cn-sep:      #2fd298;  /* bf SEP — accent success/positivo */
+  --bf-cn-spfc:     #f0535e;  /* bf SPFC — accent destrutivo (apagar) */
+  --bf-cn-torino:   #821324;  /* torino — score máximo (5/5) */
+  --bf-cn-platinum: #a8c9e5;  /* bf platinum — score parcial (1-4) */
+  --bf-cn-amber:    #c2862a;  /* âmbar — cadência em atenção */
+
+  --bf-bg-page:         var(--bf-cn-crema);
+  --bf-surface:         #ffffff;
+  --bf-surface-subtle:  rgba(216,215,211,0.45);  /* nocciola tint */
+  --bf-text-primary:    var(--bf-cn-caffe);
+  --bf-text-secondary:  rgba(51,17,26,0.62);
+  --bf-text-subtle:     rgba(51,17,26,0.40);
+  --bf-border:          #d8d7d3;                 /* nocciola sólida */
+  --bf-border-strong:   #b8b6ae;                 /* nocciola mais densa */
+
+  /* Ops — derivados da paleta editorial Casa Nostra */
+  --bf-ops-success:        var(--bf-cn-sep);    /* verde BF SEP */
+  --bf-ops-success-hover:  #25B582;
+  --bf-ops-success-fg:     #FFFFFF;
+  --bf-ops-edit:           var(--bf-cn-napoli); /* napoli pra editar/info */
+  --bf-ops-edit-hover:     #5BC8F5;
+  --bf-ops-edit-fg:        var(--bf-cn-caffe);
+  --bf-ops-danger:         var(--bf-cn-spfc);   /* bf SPFC */
+  --bf-ops-danger-hover:   #d8443d;
+  --bf-ops-danger-fg:      #ffffff;
+}
+
+[data-theme="dark"] {
+  --bf-bg-page:         #061015;
+  --bf-surface:         #11181d;
+  --bf-surface-subtle:  rgba(226,234,242,0.04);
+  --bf-text-primary:    #f2f8ff;
+  --bf-text-secondary:  #a8b4bf;
+  --bf-text-subtle:     #6d7886;
+  --bf-border:          rgba(226,234,242,0.10);
+  --bf-border-strong:   rgba(226,234,242,0.20);
+
+  --bf-ops-success:        #2FD298;
+  --bf-ops-success-hover:  #45E0AB;
+  --bf-ops-success-fg:     #FFFFFF;
+  --bf-ops-edit:           #5188C2;
+  --bf-ops-edit-hover:     #6FA0D6;
+  --bf-ops-danger:         #f0535e;
+  --bf-ops-danger-hover:   #d8443d;
+  --bf-ops-danger-fg:      #ffffff;
+}
+
+html[data-theme-loaded] body { transition: background 200ms ease-out, color 200ms ease-out; }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bf-bg-page);
+  color: var(--bf-text-primary);
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 { text-wrap: balance; font-weight: 600; line-height: 1.2; }
+p { text-wrap: pretty; hyphens: auto; }
+
+::selection { background: var(--bf-text-primary); color: var(--bf-bg-page); }
+
+a { color: inherit; text-decoration: none; }
+
+:focus-visible {
+  outline: 1.5px solid rgba(42,44,43,0.6);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+[data-theme="dark"] :focus-visible { outline-color: rgba(226,234,242,0.6); }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(42,44,43,0.15); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(42,44,43,0.3); }
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: rgba(226,234,242,0.1); }
+
+/* Hero do PersonForm — strip de logos com scroll horizontal silencioso */
+.cn-orglogo-strip::-webkit-scrollbar { display: none; }
+
+.mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+/* Focus ring suave napoli — borda + halo nos controles do PersonForm */
+.cn-field-shell:focus-within > input,
+.cn-field-shell:focus-within > textarea,
+.cn-field-shell:focus-within > select,
+.cn-field-shell:focus-within > div[role="radiogroup"] + *,
+.cn-field-shell input:focus,
+.cn-field-shell textarea:focus,
+.cn-field-shell select:focus {
+  border-color: var(--bf-cn-napoli) !important;
+  box-shadow: 0 0 0 4px rgba(119, 222, 255, 0.18);
+  outline: none;
+}
+
+/* ============================================================
+   Sidebar / nav / mobile drawer
+   ============================================================ */
+
+.cn-app-shell {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 100vh;
+}
+@media (min-width: 1024px) {
+  .cn-app-shell {
+    grid-template-columns: 240px 1fr;
+  }
+}
+
+.cn-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--bf-text-primary);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background 140ms ease-out, color 140ms ease-out, transform 140ms ease-out;
+}
+.cn-nav-item:hover { background: rgba(51, 17, 26, 0.05); }
+.cn-nav-item:active { transform: translateX(1px); }
+.cn-nav-item[data-active="true"] {
+  background: rgba(51, 17, 26, 0.06);
+}
+.cn-nav-item[data-active="true"] .cn-nav-icon {
+  color: var(--bf-cn-napoli);
+}
+.cn-nav-icon {
+  color: var(--bf-text-secondary);
+  flex-shrink: 0;
+  transition: color 140ms ease-out;
+}
+.cn-nav-item:hover .cn-nav-icon { color: var(--bf-text-primary); }
+
+.cn-sidebar-static { display: none; }
+.cn-mobile-header { display: flex; }
+@media (min-width: 1024px) {
+  .cn-sidebar-static { display: block; }
+  .cn-mobile-header { display: none !important; }
+}
+
+/* ============================================================
+   Page shell + toolbar + filters (responsive)
+   ============================================================ */
+
+.cn-page {
+  width: 100%;
+  max-width: 1280px;
+  padding: 32px 20px 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+@media (min-width: 720px) {
+  .cn-page {
+    padding: 40px 32px 60px;
+    gap: 32px;
+  }
+}
+@media (min-width: 1024px) {
+  .cn-page {
+    padding: 48px 56px 64px;
+  }
+}
+
+.cn-page--narrow { max-width: 1100px; }
+
+.cn-toolbar {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+}
+@media (min-width: 720px) {
+  .cn-toolbar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+}
+
+.cn-toolbar-filters { min-width: 0; }
+@media (min-width: 720px) {
+  .cn-toolbar-filters { flex: 1; }
+}
+
+.cn-filters {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+@media (min-width: 560px) {
+  .cn-filters { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 960px) {
+  .cn-filters { grid-template-columns: minmax(0, 1fr) 180px 220px 180px; }
+}
+
+.cn-toolbar-add {
+  width: 100%;
+  text-align: center;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1),
+              background 160ms ease-out;
+}
+.cn-toolbar-add:hover {
+  background: var(--bf-ops-success-hover) !important;
+  animation: cn-pulse 1.6s ease-in-out infinite;
+}
+.cn-toolbar-add:active { transform: scale(0.97); }
+@media (min-width: 720px) {
+  .cn-toolbar-add { width: auto; }
+}
+
+@keyframes cn-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--bf-cn-sep) 0%, transparent);
+  }
+  50% {
+    transform: scale(1.035);
+    box-shadow: 0 0 0 10px color-mix(in srgb, var(--bf-cn-sep) 18%, transparent);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cn-toolbar-add:hover { animation: none; }
+}
+
+/* ============================================================
+   Entrance motion — stagger via animation-delay
+   ============================================================ */
+
+@keyframes cn-fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.cn-fade-up {
+  animation: cn-fade-up 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.cn-stagger > * {
+  animation: cn-fade-up 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.cn-stagger > *:nth-child(1) { animation-delay: 40ms; }
+.cn-stagger > *:nth-child(2) { animation-delay: 80ms; }
+.cn-stagger > *:nth-child(3) { animation-delay: 120ms; }
+.cn-stagger > *:nth-child(4) { animation-delay: 160ms; }
+.cn-stagger > *:nth-child(5) { animation-delay: 200ms; }
+.cn-stagger > *:nth-child(6) { animation-delay: 240ms; }
+.cn-stagger > *:nth-child(7) { animation-delay: 280ms; }
+
+/* ============================================================
+   Filtros pill
+   ============================================================ */
+
+.cn-filter-input {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 12px 18px;
+  background: var(--bf-surface);
+  color: var(--bf-text-primary);
+  border: 1px solid var(--bf-border);
+  border-radius: 9999px;
+  outline: none;
+  transition: border-color 140ms ease-out, box-shadow 140ms ease-out;
+  width: 100%;
+  min-width: 0;
+}
+.cn-filter-input:hover { border-color: var(--bf-border-strong); }
+.cn-filter-input:focus {
+  border-color: var(--bf-cn-napoli);
+  box-shadow: 0 0 0 4px rgba(119, 222, 255, 0.18);
+}
+select.cn-filter-input {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='%2333111a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='1 1.5 6 6.5 11 1.5'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+  padding-right: 42px;
+}
+
+/* ============================================================
+   People list — pill cards
+   ============================================================ */
+
+.cn-people-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cn-people-head {
+  display: none;
+  padding: 14px 28px;
+  border-radius: 9999px;
+  background: var(--bf-surface-subtle);
+  border: 1px solid var(--bf-border);
+}
+@media (min-width: 960px) {
+  .cn-people-head { display: grid; }
+}
+
+.cn-people-row {
+  display: grid;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  border-radius: 9999px;
+  background: var(--bf-surface);
+  border: 1px solid var(--bf-border);
+  cursor: pointer;
+  transition: background 140ms ease-out, border-color 140ms ease-out, transform 140ms ease-out;
+  grid-template-columns: 44px minmax(0, 1.4fr) minmax(0, 1fr);
+}
+.cn-people-row:hover {
+  background: var(--bf-surface-subtle);
+  border-color: var(--bf-border-strong);
+  transform: translateX(2px);
+}
+.cn-people-row:focus-visible {
+  outline: none;
+  border-color: var(--bf-cn-napoli);
+  box-shadow: 0 0 0 4px rgba(119, 222, 255, 0.18);
+}
+
+.cn-people-head {
+  grid-template-columns: 56px minmax(0, 1.6fr) minmax(0, 1.2fr) 88px 160px 120px;
+  padding: 14px 28px;
+}
+@media (min-width: 960px) {
+  .cn-people-row {
+    grid-template-columns: 56px minmax(0, 1.6fr) minmax(0, 1.2fr) 88px 160px 120px;
+    padding: 14px 28px;
+  }
+}
+
+.cn-col-hide-mobile { display: none; }
+@media (min-width: 960px) {
+  .cn-col-hide-mobile { display: block; }
+}
+
+/* Handle de arrastar + botão de apagar: discretos, revelados no hover/foco da linha. */
+.cn-row-handle,
+.cn-row-delete {
+  opacity: 0;
+  transition: opacity 140ms ease-out, color 140ms ease-out;
+}
+.cn-people-row:hover .cn-row-handle,
+.cn-people-row:focus-within .cn-row-handle,
+.cn-people-row:hover .cn-row-delete,
+.cn-people-row:focus-within .cn-row-delete {
+  opacity: 1;
+}
+.cn-row-handle:active { cursor: grabbing; }
+.cn-row-delete:hover { color: var(--bf-ops-danger); }
+/* Touch (sem hover): mantém sempre visível pra ser acessível. */
+@media (hover: none) {
+  .cn-row-handle,
+  .cn-row-delete { opacity: 1; }
+}
+
+/* ============================================================
+   Form row — sub-grid usado em useFieldArray das sections
+   ============================================================ */
+
+.cn-form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding: 16px;
+  background: var(--bf-surface-subtle);
+  border-radius: 12px;
+  border: 1px solid var(--bf-border);
+  align-items: end;
+  min-width: 0;
+}
+@media (min-width: 720px) {
+  .cn-form-row {
+    grid-template-columns: var(--cols, 1fr);
+  }
+}
+
+/* Botão circular de ação destrutiva (trash) */
+.cn-icon-btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--bf-cn-spfc);
+  color: var(--bf-ops-danger-fg);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 160ms ease-out, transform 160ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 160ms ease-out;
+}
+.cn-icon-btn-danger:hover {
+  background: var(--bf-ops-danger-hover);
+  transform: scale(1.06);
+  box-shadow: 0 0 0 4px rgba(240, 83, 94, 0.18);
+}
+.cn-icon-btn-danger:active { transform: scale(0.94); }
+.cn-icon-btn-danger:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(240, 83, 94, 0.32);
+}
+
+/* PersonForm sticky footer — responsivo */
+.cn-form-footer {
+  position: sticky;
+  bottom: 12px;
+  margin-top: 8px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--bf-border);
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(51, 17, 26, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  z-index: 5;
+}
+@media (min-width: 720px) {
+  .cn-form-footer {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 22px;
+  }
+}
+
+.cn-form-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cn-form-footer-right {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+@media (min-width: 720px) {
+  .cn-form-footer-right {
+    margin-left: auto;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
+}
+
+.cn-form-footer-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Em mobile, botões do footer ocupam linha cheia pra não desalinhar */
+@media (max-width: 719px) {
+  .cn-form-footer .cn-form-footer-right > button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* SectionShell — card responsivo do PersonForm */
+.cn-section-shell {
+  background: var(--bf-surface);
+  border: 1px solid var(--bf-border);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+@media (min-width: 720px) {
+  .cn-section-shell { padding: 32px; }
+}
+.cn-section-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  min-width: 0;
+}
+@media (min-width: 720px) {
+  .cn-section-grid {
+    grid-template-columns: var(--section-cols, repeat(2, minmax(0, 1fr)));
+  }
+}
+
+/* ============================================================
+   Cadastro v2 — responsive collapse
+   ============================================================ */
+
+/* Em viewports estreitos, foto vai pra cima do bloco nome/cargo/empresa
+   e o grid 220px + 1fr inline (definido no TSX) é sobrescrito pra coluna
+   única. Sem isso, a 375px o input de Nome fica com ~91px de largura. */
+@media (max-width: 719px) {
+  .cn-cadastro-v2__top {
+    grid-template-columns: 1fr !important;
+    justify-items: center;
+  }
+  .cn-cadastro-v2__role-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
