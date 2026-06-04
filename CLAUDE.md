@@ -69,4 +69,4 @@ full container width).
 - Animation library: `motion` v12 (Framer Motion)
 - i18n: BR/EN/IT via `content/index.ts` — same pattern as docs-site
 - Run: `npm run web` (root) or `cd apps/web && npm run dev`
-- Never commit assets in `public/brand/` or `public/media/` — these are manual uploads
+- Never commit assets in `public/brand/` or `public/media/` — these are manual uploads. **Exceção:** os `.webm` em `public/media/` (~16M no total) SÃO versionados p/ deploy-via-main; só os `.mp4` gigantes ficam de fora (ver `.gitignore`: `media/*` + `!media/*.webm`)

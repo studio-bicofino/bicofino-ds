@@ -43,8 +43,10 @@ storybook-static/
 .turbo/
 
 # apps/web — uploads manuais grandes (NÃO versionar — ver CLAUDE.md)
+# Exceção: os .webm (~16MB no total) SÃO versionados p/ deploy-via-main; só os .mp4 gigantes ficam de fora
 apps/web/public/brand/
-apps/web/public/media/
+apps/web/public/media/*
+!apps/web/public/media/*.webm
 
 # Large local folders
 AI-OS-BASE/
