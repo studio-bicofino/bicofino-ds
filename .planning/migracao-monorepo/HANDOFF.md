@@ -145,9 +145,18 @@ Team empresa: `studio-bicofinos-projects` (`team_i0JJAtJE82qUjMOqY08RTD3o`). Rep
       `feature/casa-nostra`, `feature/vanguarda`. **Mantidas no `origin` (pessoal) como backup** (decisão §6).
 - [x] Lixo morto apagado (4× iCloud dups: `.gitignore 4` ×3 + `package-lock 4.json`).
 
-### Fase 7 — Conveniência (DEPOIS da limpeza)
-- [ ] Instalar comando `sync` (alias/script: `git add -A && git commit && git push`) — só agora que o `.gitignore` está limpo e não varre lixo.
-- [ ] Considerar hook do Claude Code: oferecer commit+push no fim de cada sessão.
+### Fase 7 — Conveniência (DEPOIS da limpeza) ✅
+- [x] Comando `sync` instalado: `npm run sync [-- "msg"]` → `scripts/sync.sh` (add+commit+push da
+      branch atual). Commit `deb87a8`/rebased `c92a01a`.
+- [x] **Pré-requisito de segurança feito junto:** `.gitignore` raiz agora exclui
+      `apps/web/public/{brand,media}` (uploads grandes never-commit) → `git add -A` do sync não varre mídia.
+- [ ] (opcional) Hook do Claude Code oferecendo commit+push no fim de sessão — não feito; um Stop hook
+      que auto-commita conflita com "commit só quando pedido". Deixado como decisão futura do Woney.
+
+### Merge à parte — docs-site (não era da migração) ✅
+- [x] `feat/sidebar-light-consigliere` (Consigliere no topo + sidebar clara + footer) mergeado no `main`
+      via PR #19 (merge commit `b964d65`). Escopo limpo: só `apps/docs-site/` (7 arquivos). Deploy
+      do projeto `bicofino-ds` rebuildado do `main`.
 
 ---
 
