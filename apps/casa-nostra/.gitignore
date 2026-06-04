@@ -1,0 +1,9 @@
+node_modules
+.next
+.vercel
+.env
+.env.local
+*.tsbuildinfo
+
+# Infisical: .infisical.json É commitável (só ID do workspace).
+# Mas o login local fica em ~/.infisical e não toca neste repo.
