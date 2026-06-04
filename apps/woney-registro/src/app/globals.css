@@ -1,0 +1,345 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+/* ─── Gotham — self-hosted, impact only (M-02) — DS v3.1 Fase 2 ───
+   Reservada para 1–2 palavras de impacto, uppercase. Nunca corpo. */
+@font-face { font-family: "Gotham"; src: url("/fonts/Gotham-Light.woff2") format("woff2"); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: "Gotham"; src: url("/fonts/Gotham-Book.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Gotham"; src: url("/fonts/Gotham-Bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Gotham"; src: url("/fonts/Gotham-Black.woff2") format("woff2"); font-weight: 900; font-style: normal; font-display: swap; }
+
+/* ─────────────────────────────────────────────────────────────
+   Registro de Impacto — Design tokens (Bicofino DS v3.1)
+   Token canon reconciliado com packages/design-system/tokens.css.
+   SYSTEM mode · SHARP corners · 90/10 com um vibrante (--current-accent).
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Palette · Básicas ── */
+  --bf-black:       #2a2c2b;
+  --bf-power-black: #061015;
+  --bf-white:       #ffffff;
+  --bf-steel:       #6d7886;
+  --bf-aluminium:   #e2eaf2;
+  --bf-platinum:    #a8c9e5;
+  --bf-bg:          #f2f8ff;
+
+  /* ── Highlights — candidatos a vibrante ── */
+  --bf-spfc:       #f0535e;
+  --bf-sep:        #2fd298;
+  --bf-usa:        #05185c;
+  --bf-niederland: #fe4600;
+  --bf-australia:  #e5ff78;
+  --bf-benfica:    #ed0007;
+  --bf-miami:      #f4b3cb;
+  --bf-napoli:     #77deff;
+  --bf-torino:     #821324;
+  --bf-como:       #0d8aff;
+  --bf-venezia:    #38e0e3;
+  --bf-fiorentina: #711cfe;
+
+  /* O único vibrante da composição. SSR fallback = coral SPFC;
+     randomizado por refresh pelo AccentRandomizer (assinatura da casa). */
+  --current-accent: var(--bf-spfc);
+  --bf-signal:      var(--current-accent);
+  /* Foreground a usar SOBRE o fundo accent (preto ou branco, conforme a cor sorteada). */
+  --current-accent-on: #ffffff;
+  /* Accent como TEXTO sobre fundo claro — cai para preto quando o accent é claro demais. */
+  --current-accent-ink: var(--bf-spfc);
+
+  /* ── Semantic ── */
+  --bf-bg-page:        #ffffff;
+  --bf-surface:        #f2f8ff;
+  --bf-surface-subtle: #f8fafc;
+  --bf-text-primary:   #2a2c2b;
+  --bf-text-secondary: #5f6b77;
+  --bf-text-subtle:    #98a4b2;
+  --bf-border:         rgba(42, 44, 43, 0.08);
+  --bf-border-strong:  rgba(42, 44, 43, 0.16);
+  --bf-hairline:       1px solid rgba(42, 44, 43, 0.08);
+  /* Linhas/pontos sobre fundo escuro (M-01 · grafismo técnico) */
+  --bf-line-on-dark:        rgba(168, 201, 229, 0.20);
+  --bf-line-on-dark-strong: rgba(168, 201, 229, 0.32);
+
+  /* ── Spacing ── */
+  --sp-1: 0.25rem;  --sp-2: 0.5rem;  --sp-3: 0.75rem;  --sp-4: 1rem;
+  --sp-5: 1.5rem;   --sp-6: 2rem;    --sp-7: 3rem;     --sp-8: 4rem;  --sp-9: 6rem;
+
+  /* ── Motion ── */
+  --dur-fast: 120ms;  --dur-base: 200ms;  --dur-slow: 360ms;
+  --dur-reveal: 280ms; /* entrada de scroll-reveal — sob o teto de 300ms */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ── Corner languages (SHARP default) ── */
+  --bf-sharp-1: 2px;  --bf-sharp-2: 4px;  --bf-sharp-3: 8px;
+  --bf-soft-1: 12px;  --bf-soft-2: 18px;  --bf-soft-3: 28px;
+  --bf-radius-pill: 9999px;
+  --bf-corner-1: var(--bf-sharp-1);
+  --bf-corner-2: var(--bf-sharp-2);
+  --bf-corner-3: var(--bf-sharp-3);
+
+  /* Fontes */
+  --bf-font: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --bf-font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --bf-font-impact: "Gotham", "Inter", ui-sans-serif, system-ui, sans-serif; /* M-02 — 1–2 palavras */
+}
+
+[data-corners="soft"] {
+  --bf-corner-1: var(--bf-soft-1);
+  --bf-corner-2: var(--bf-soft-2);
+  --bf-corner-3: var(--bf-soft-3);
+}
+
+/* ─── Reset ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; background: var(--bf-surface); }
+
+body {
+  background: var(--bf-bg-page);
+  color: var(--bf-text-primary);
+  font-family: var(--bf-font);
+  font-weight: 400;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100svh;
+}
+
+h1, h2, h3, h4, h5, h6 { text-wrap: balance; font-weight: 400; }
+p { text-wrap: pretty; }
+a { color: inherit; text-decoration: none; }
+
+::selection { background: var(--bf-text-primary); color: var(--bf-bg-page); }
+
+:focus-visible {
+  outline: 2px solid var(--current-accent);
+  outline-offset: 2px;
+  border-radius: var(--bf-corner-1);
+}
+
+button { font-family: inherit; cursor: pointer; }
+
+/* ─── Type presets (DESIGN.md §6) ─── */
+.bf-display {
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+.bf-h1 { font-size: clamp(1.75rem, 3.5vw, 2.75rem); font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; }
+.bf-h2 { font-size: clamp(1.25rem, 2vw, 1.6rem); font-weight: 600; line-height: 1.15; letter-spacing: -0.01em; }
+.bf-h3 { font-size: 1.05rem; font-weight: 600; line-height: 1.25; }
+.bf-body { font-size: 1rem; line-height: 1.7; color: var(--bf-text-secondary); }
+.bf-body-sm { font-size: 0.875rem; line-height: 1.6; color: var(--bf-text-secondary); }
+.bf-eyebrow {
+  font-family: var(--bf-font-mono);
+  font-size: 0.6875rem; /* 11px — editorial, intencional */
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bf-text-subtle);
+}
+.bf-mono { font-family: var(--bf-font-mono); font-size: 0.8125rem; letter-spacing: 0.01em; }
+/* Impact — M-02, Gotham, uppercase, 1–2 palavras */
+.bf-impact {
+  font-family: var(--bf-font-impact);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+  line-height: 0.92;
+  text-wrap: balance;
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(42, 44, 43, 0.12); border-radius: var(--bf-corner-1); }
+::-webkit-scrollbar-thumb:hover { background: rgba(42, 44, 43, 0.24); }
+
+/* ─── Reveal (entrada suave, DESIGN.md §8) ─── */
+@keyframes bf-reveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.bf-reveal { animation: bf-reveal var(--dur-slow) var(--ease-out) both; }
+
+/* Scroll-reveal (IntersectionObserver via componente Reveal) — entrada de cards,
+   títulos e blocos ao entrar em tela. Reduced-motion: o hook mostra na hora e a
+   media query global zera a transição. */
+.bf-reveal-io {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity var(--dur-reveal) var(--ease-out), transform var(--dur-reveal) var(--ease-out);
+}
+.bf-reveal-io.is-in { opacity: 1; transform: none; }
+
+/* ─────────────────────────────────────────────────────────────
+   M-05 — Bento de Dados (o chassi dos dashboards)
+   ───────────────────────────────────────────────────────────── */
+.shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 var(--sp-5);
+}
+
+/* Conteúdo principal de cada rota. Padding via classe (não inline) para que
+   os media queries abaixo alcancem a área de conteúdo, não só a nav.
+   Vertical fixo; lateral acompanha o .shell e encolhe no celular. */
+.shell-main {
+  padding: var(--sp-7) var(--sp-5) var(--sp-9);
+}
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--sp-4);
+}
+
+.cell {
+  background: var(--bf-bg-page);
+  border: var(--bf-hairline);
+  border-radius: var(--bf-corner-3);
+  padding: var(--sp-6);
+}
+.cell--quiet { background: var(--bf-surface-subtle); }
+.cell--dark {
+  background: var(--bf-power-black);
+  color: var(--bf-platinum);
+  border-color: rgba(168, 201, 229, 0.2);
+}
+
+/* Pills */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-1) var(--sp-3);
+  border-radius: var(--bf-radius-pill);
+  border: var(--bf-hairline);
+  font-family: var(--bf-font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: var(--bf-text-secondary);
+  background: var(--bf-bg-page);
+  white-space: nowrap;
+}
+.pill--accent {
+  border-color: color-mix(in srgb, var(--current-accent) 40%, transparent);
+  color: color-mix(in srgb, var(--current-accent) 80%, var(--bf-black));
+  background: color-mix(in srgb, var(--current-accent) 8%, transparent);
+}
+.pill--ok {
+  border-color: color-mix(in srgb, var(--bf-sep) 40%, transparent);
+  color: color-mix(in srgb, var(--bf-sep) 70%, var(--bf-black));
+  background: color-mix(in srgb, var(--bf-sep) 8%, transparent);
+}
+
+/* Big number — o argumento */
+.bignum {
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+  color: var(--bf-text-primary);
+}
+
+/* Hairline divider */
+.rule { height: 1px; background: var(--bf-border); border: 0; }
+
+/* Botões */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--bf-corner-2);
+  border: 1px solid var(--bf-border-strong);
+  background: var(--bf-bg-page);
+  color: var(--bf-text-primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background var(--dur-fast) var(--ease-standard),
+              border-color var(--dur-fast) var(--ease-standard);
+}
+.btn:hover { background: var(--bf-surface-subtle); border-color: var(--bf-text-primary); }
+.btn--primary {
+  background: var(--bf-text-primary);
+  color: var(--bf-bg-page);
+  border-color: var(--bf-text-primary);
+}
+.btn--primary:hover { background: var(--bf-power-black); }
+.btn--ghost { border-color: transparent; background: transparent; padding-left: 0; padding-right: 0; }
+
+/* ─────────────────────────────────────────────────────────────
+   Responsivo — colapso editorial (1440 → 375px)
+   Preserva a direção visual; só impede overflow e empilha grades.
+   ───────────────────────────────────────────────────────────── */
+
+/* Bento de 12 colunas: abaixo de 900px empilha em coluna única.
+   Os spans 4/5/3 são inline (alta especificidade) → !important. */
+@media (max-width: 900px) {
+  .bento { grid-template-columns: 1fr; }
+  .bento > * { grid-column: 1 / -1 !important; min-width: 0 !important; }
+}
+
+/* Nav: abaixo de 720px a marca fica em cima e os links viram
+   uma fileira rolável; a tag mono some para ganhar espaço. */
+@media (max-width: 720px) {
+  .nav-inner {
+    height: auto !important;
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+    padding-top: var(--sp-3);
+    padding-bottom: var(--sp-3);
+  }
+  .nav-tag { display: none; }
+  .nav-links {
+    width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links > * { white-space: nowrap; flex: 0 0 auto; }
+}
+
+/* Folga lateral menor no celular — mais largura útil.
+   Aplica à nav (.shell) e ao conteúdo (.shell-main) mantendo o alinhamento. */
+@media (max-width: 480px) {
+  .shell { padding-left: var(--sp-4); padding-right: var(--sp-4); }
+  .shell-main {
+    padding-left: var(--sp-4);
+    padding-right: var(--sp-4);
+    padding-top: var(--sp-6);
+  }
+}
+
+/* Decomposição (Painel): no celular a equação empilha. Os operadores
+   +/−/= ficariam órfãos numa linha própria → escondidos; cada Decomp
+   recebe a largura total e os termos lêem-se de cima a baixo. */
+@media (max-width: 560px) {
+  .decomp-eq { gap: var(--sp-3); }
+  .decomp-eq > .decomp-op { display: none; }
+  .decomp-eq > .decomp-term { flex: 1 1 100%; }
+}
+
+/* ─── Print (fechamento → PDF) ─── */
+@media print {
+  @page { margin: 18mm; }
+  .no-print { display: none !important; }
+  body { background: var(--bf-white); }
+  .cell { border: 1px solid var(--bf-border-strong); break-inside: avoid; }
+  a { color: inherit; }
+  /* Garante que o scroll-reveal nunca esconda conteúdo no PDF, mesmo sem rolar. */
+  .bf-reveal-io { opacity: 1 !important; transform: none !important; }
+}
