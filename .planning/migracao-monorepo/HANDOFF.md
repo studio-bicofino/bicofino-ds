@@ -168,13 +168,17 @@ Team empresa: `studio-bicofinos-projects` (`team_i0JJAtJE82qUjMOqY08RTD3o`). Rep
 ### Fase 8 — `bicofino-web` entra no deploy-via-main (2026-06-04) ✅
 - [x] **Os 6 `.webm` que o app realmente usa (~16M no total) agora SÃO versionados** → web passa a
       deployar pelo `main` como os outros. Arquivos: `herovideo[2].webm`, `video-on/offpitch.webm`,
-      `video-on/offfield.webm`.
+      `video-on/offfield.webm`. (commit `9a29f64`)
 - [x] **`.gitignore` ajustado:** a regra `apps/web/public/media/` virou `media/*` + exceção
       `!media/*.webm`. Os `.mp4` gigantes (199M/84M/47M…) **continuam fora** — a regra "never commit media"
-      do CLAUDE.md sempre mirou neles. (Atualiza a nota da Fase 7 sobre `apps/web/public/media`.)
-- [x] Com isso, **9/9 apps no padrão deploy-automático-via-main**.
-- [ ] **CLAUDE.md** ainda diz "Never commit assets in `public/media/`" sem a exceção `.webm` — ajustar
-      a nota lá depois pra não confundir o próximo chat / o iMac.
+      do CLAUDE.md sempre mirou neles.
+- [x] **CLAUDE.md** atualizado: a nota "never commit `public/media/`" agora registra a exceção `.webm`.
+- [x] **Projeto `bicofino-web` git-connected** (faltava — era o "9º app" fora do padrão; deploys antigos
+      eram via CLI). Via REST: `rootDirectory=apps/web`, `commandForIgnoringBuildStep=git diff --quiet HEAD^
+      HEAD .`; `vercel git connect studio-bicofino/bicofino-ds`; `productionBranch=main`.
+- [x] **1º deploy git-connected READY** (`dpl_BpWb8HA7…`): `bicofino-web-brown.vercel.app` HTTP 200 e
+      `/media/video-onpitch.webm` servindo `video/webm` 200.
+- [x] Com isso, **9/9 apps no padrão deploy-automático-via-main**. ✅
 
 ---
 
