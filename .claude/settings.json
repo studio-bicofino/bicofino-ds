@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash scripts/sync-reminder.sh",
+            "statusMessage": "Checando se há mudanças para sincronizar…"
+          }
+        ]
+      }
+    ]
+  }
+}
