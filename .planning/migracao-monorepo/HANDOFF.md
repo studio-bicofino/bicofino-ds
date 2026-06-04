@@ -150,8 +150,15 @@ Team empresa: `studio-bicofinos-projects` (`team_i0JJAtJE82qUjMOqY08RTD3o`). Rep
       branch atual). Commit `deb87a8`/rebased `c92a01a`.
 - [x] **Pré-requisito de segurança feito junto:** `.gitignore` raiz agora exclui
       `apps/web/public/{brand,media}` (uploads grandes never-commit) → `git add -A` do sync não varre mídia.
-- [ ] (opcional) Hook do Claude Code oferecendo commit+push no fim de sessão — não feito; um Stop hook
-      que auto-commita conflita com "commit só quando pedido". Deixado como decisão futura do Woney.
+- [x] Hook do Claude Code: **Stop hook que LEMBRA** de rodar `npm run sync` (NÃO auto-commita —
+      auto-commit conflita com "commit só quando pedido"). `scripts/sync-reminder.sh` + project-level
+      `.claude/settings.json` (viaja pro iMac). Silencioso a menos que >=3 arquivos mudados ou commits
+      não enviados. Commit `7f3e4c7`.
+
+### Regra de trabalho firmada (2026-06-03)
+- **Antes de todo `sync` de mudança relevante, atualizar este HANDOFF.** A memória auto é por-máquina
+  e NÃO viaja pro iMac; só o repo (HANDOFF/CLAUDE.md/.planning) atravessa via git. Logo o HANDOFF
+  commitado é o que dá continuidade entre chats E entre os 2 computadores. (Memória: feedback-handoff-before-sync.)
 
 ### Merge à parte — docs-site (não era da migração) ✅
 - [x] `feat/sidebar-light-consigliere` (Consigliere no topo + sidebar clara + footer) mergeado no `main`
