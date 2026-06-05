@@ -1,12 +1,24 @@
 # STATUS — Registro de Impacto
 
-> Handoff para continuar em outro chat. Última atualização: 2026-06-03.
+> Handoff para continuar em outro chat. Última atualização: 2026-06-05.
 > App em `apps/woney-registro/`. Dashboard interno que mostra, em horas e reais,
 > o valor que os sistemas do Woney (designer + dev com Claude Code) devolvem ao Studio Bicofino.
 
-## ⏩ Onde paramos (2026-06-03) — ler primeiro
+## ⏩ Onde paramos (2026-06-05) — ler primeiro
 
-Duas rodadas registradas no acervo desde o deploy inicial, ambas **no ar** em produção
+**+2 stories de jogos (2026-06-05)** — 2 motions reais do `card-jogos-motion` adicionados como
+usos do Template: **Jean — Paulista (06/jun)** e **Cialone — Paulista (07/jun)**. MP4 copiados
+p/ `public/pecas/` (`jean-paulista-s17-06jun.mp4`, `cialone-paulista-s14-07jun.mp4`), usos
+`uso-9`/`uso-10` no seed. Template subiu de **6 → 8 usos**. Reflexo no realizado (a recorrência
+NÃO muda — usa `stories_mes`, não a contagem): peças **R$ 920,83 → R$ 1.168,75**, realizado
+**R$ 13.671 → R$ 13.919**. Testes do `calc.ts` atualizados (13/13 ok) + tsc limpo. Contexto: o
+Woney automatizou mais um passo do pipeline de vídeo — Claude agora puxa as fotos direto do
+Drive do Atleta, abre no Photoshop, recorta/trata e devolve no Drive certo (≈15 min/vídeo a
+menos). Ver memória `image-pipeline`.
+
+---
+
+Rodadas anteriores (2026-06-03), ambas **no ar** em produção
 (`https://woney-registro.vercel.app`), branch `feat/woney-registro`, commit **`c4b07d3`**:
 
 1. **Drive do Atleta** (commit `c968c97`) — novo sistema **`infraestrutura`** (`sis-drive-atleta`,
@@ -74,13 +86,13 @@ Espelha o bloco 5 do `PROMPT_MASTER_Registro_de_Impacto.md`. Números atuais do 
 | Métrica | Valor (atualizado 2026-06-03) |
 |---|---|
 | custo/hora | R$ 106,25 (17000/160) |
-| Economia até hoje (realizado) | **R$ 13.671** (R$ 921 peças + R$ 12.750 site) |
-| Peças (eficiência) | R$ 920,83 = 6 stories (7,0h) + 2 propostas (1,67h) |
+| Economia até hoje (realizado) | **R$ 13.919** (R$ 1.169 peças + R$ 12.750 site) |
+| Peças (eficiência) | R$ 1.168,75 = 8 stories (9,33h) + 2 propostas (1,67h) |
 | Capital de infraestrutura | R$ 17.744 (DS 160h + Drive do Atleta 7h) |
 | Líquido recorrente/ano | **R$ 61.712** (inalterado — usa volume mensal, não contagem de usos) |
 | Líquido recorrente/mês | R$ 5.143 = eficiência 1.169 + dev 4.500 − Claude 526 |
 | Claude Max se paga | **10,8×**/mês (custa US$ 100 ≈ R$ 526) |
-| Story | 20 min em vez de 1h30 (template **pago**: 6 usos ≥ payback 4) · Proposta 40 min em vez de 1h30 |
+| Story | 20 min em vez de 1h30 (template **pago**: 8 usos ≥ payback 4) · Proposta 40 min em vez de 1h30 |
 
 > **Correções 2026-06-01:** vaga de dev júnior = **R$ 4.500/mês** (era 9.000 carregado no card;
 > `custoFixoEvitado` já era 4.500, recorrente não mudou). Propostas: tempo antes **90 min** (era 180).
@@ -97,7 +109,7 @@ blocos das 5 telas (acima da dobra segue `.bf-reveal` de load). Auditado pelo mo
 
 Seed (`src/lib/seed.ts`): **5 sistemas** (template stories `eficiencia`, propostas `eficiencia`,
 Design System `infraestrutura`, site v1 `projeto`, **Drive do Atleta `infraestrutura`**) +
-**10 usos** (6 stories até jun, 2 propostas, 2 showcases infra/projeto, 1 showcase Drive).
+**13 usos** (8 stories até jun, 2 propostas, 2 showcases infra/projeto, 1 showcase Drive).
 
 ## Telas (todas prontas, seed-first)
 

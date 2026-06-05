@@ -79,7 +79,7 @@ export const sistemas: Sistema[] = [
 ]
 
 export const usos: Uso[] = [
-  // Template de stories — 6 usos (vídeos reais gerados pelo card-jogos-motion)
+  // Template de stories — 8 usos (vídeos reais gerados pelo card-jogos-motion)
   {
     id: 'uso-1',
     sistema_id: 'sis-template-stories',
@@ -127,6 +127,22 @@ export const usos: Uso[] = [
     legenda: 'Story Ronaldo — Copa Rio',
     imagem_url: null,
     video_url: '/pecas/ronaldo-copario-s16-07jun.mp4',
+  },
+  {
+    id: 'uso-9',
+    sistema_id: 'sis-template-stories',
+    data: '2026-06-06',
+    legenda: 'Story Jean — Paulista',
+    imagem_url: null,
+    video_url: '/pecas/jean-paulista-s17-06jun.mp4',
+  },
+  {
+    id: 'uso-10',
+    sistema_id: 'sis-template-stories',
+    data: '2026-06-07',
+    legenda: 'Story Cialone — Paulista',
+    imagem_url: null,
+    video_url: '/pecas/cialone-paulista-s14-07jun.mp4',
   },
   // Propostas via DS — 2 usos reais (O Outro Mapa, BoviClass). imagem_url aponta pro
   // PNG em /public/pecas/; PecaMedia trata 404 com placeholder limpo.
