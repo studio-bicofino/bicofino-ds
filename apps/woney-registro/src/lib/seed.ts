@@ -29,10 +29,11 @@ export const sistemas: Sistema[] = [
     tipo: 'eficiencia',
     criado_em: '2026-03-10',
     investimento_horas: 4,
-    tempo_antes_min: 90,
+    tempo_antes_min: 120, // 2h totalmente manual: tratamento da foto + montagem do motion
     tempo_depois_min: 20,
     papel: 'template',
-    notas: 'Gerador 9:16 HTML/React → MP4. Cada jogo é um uso novo.',
+    notas:
+      'Gerador 9:16 HTML/React → MP4. Cada jogo é um uso novo. Baseline real medido pelo Woney: o story completo (tratar a foto + fazer o motion) saía em ~2h no fluxo manual; com o template + o Pipeline de tratamento de imagem, sai em 20 min.',
   },
   {
     id: 'sis-propostas-ds',
@@ -75,6 +76,18 @@ export const sistemas: Sistema[] = [
     destravou:
       'Upload catalogado direto do celular do atleta para o Drive — cada arquivo cai já nomeado (atleta, data, jogo) e na pasta certa. Acaba com baixar, renomear e organizar um a um.',
     natureza_valor: 'Ativo permanente — pipeline que faz o acervo se organizar sozinho',
+  },
+  {
+    id: 'sis-image-pipeline',
+    nome: 'Pipeline de tratamento de imagem',
+    tipo: 'infraestrutura',
+    criado_em: '2026-06-05',
+    investimento_horas: 3.5, // uma tarde para montar a automação
+    tempo_antes_min: 20, // tratamento manual por imagem (recorte + granulado + P&B)
+    tempo_depois_min: 4, // mesma imagem pela automação
+    destravou:
+      'Tratamento da foto do atleta — recorte, granulado e preto e branco — direto do Drive, pelo Photoshop, de volta ao Drive certo. Derruba o story completo de ~2h para 20 min e roda em lote, sem desgaste a cada peça.',
+    natureza_valor: 'Ativo permanente — a automação que faz a foto do jogo virar peça sozinha',
   },
 ]
 
