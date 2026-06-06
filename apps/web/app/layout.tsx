@@ -13,9 +13,8 @@ export const metadata: Metadata = {
       'Bicofino Group — curation, connection, and creativity at the highest level.',
     images: [{ url: '/og-image.png' }],
   },
-  icons: {
-    icon: '/favicon.ico',
-  },
+  // Favicons resolved from app/{favicon.ico,icon.svg,icon.png,apple-icon.png}
+  // via Next's file-based metadata convention (the Bicofino sparkle).
 }
 
 /* Anti-FOUC: runs before paint, sets data-theme from localStorage */
