@@ -1,10 +1,24 @@
 'use client'
 
 import React from 'react'
+import { motion, type Variants } from 'motion/react'
 import { FourCsHeading } from './FourCsHeading'
 import { useLang } from '@/content/index'
 
-export function HeroBlock() {
+const EASE_OUT = [0.16, 1, 0.3, 1] as const
+
+// Mensch text column — staggers in last, after the video and the 4Cs.
+const menschContainer: Variants = {
+  hidden: {},
+  // delayChildren = sequencing (uncapped); stagger stays in the §8 55–70ms window
+  show: { transition: { delayChildren: 0.5, staggerChildren: 0.07 } },
+}
+const menschItem: Variants = {
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.36, ease: EASE_OUT } },
+}
+
+export function HeroBlock({ revealed = true }: { revealed?: boolean }) {
   const { t } = useLang()
 
   return (
@@ -26,7 +40,11 @@ export function HeroBlock() {
         <div className="bf-hero-grid">
           {/* Col 1 — Video */}
           <div className="bf-hero-video-col">
-            <div
+            <motion.div
+              className="bf-reveal"
+              initial={{ opacity: 0, y: 12 }}
+              animate={revealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+              transition={{ duration: 0.36, delay: 0.08, ease: EASE_OUT }}
               style={{
                 width: '100%',
                 maxWidth: 400,
@@ -52,17 +70,24 @@ export function HeroBlock() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/media/herovideo.gif" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
               </video>
-            </div>
+            </motion.div>
           </div>
 
           {/* Col 2 — 4Cs */}
           <div className="bf-hero-4cs-col">
-            <FourCsHeading />
+            <FourCsHeading start={revealed} baseDelay={0.24} />
           </div>
 
           {/* Col 3 — Mensch */}
-          <div className="bf-hero-mensch-col">
-            <p
+          <motion.div
+            className="bf-hero-mensch-col"
+            variants={menschContainer}
+            initial="hidden"
+            animate={revealed ? 'show' : 'hidden'}
+          >
+            <motion.p
+              className="bf-reveal"
+              variants={menschItem}
               style={{
                 fontFamily: '"JetBrains Mono", ui-monospace, monospace',
                 fontSize: 11,
@@ -74,11 +99,13 @@ export function HeroBlock() {
               }}
             >
               {t('home.mensch.eyebrow')}
-            </p>
+            </motion.p>
 
             {(['home.mensch.p1', 'home.mensch.p2', 'home.mensch.p3'] as const).map((key) => (
-              <p
+              <motion.p
                 key={key}
+                className="bf-reveal"
+                variants={menschItem}
                 style={{
                   fontFamily: '"Inter", ui-sans-serif, system-ui, sans-serif',
                   fontSize: 12,
@@ -92,9 +119,9 @@ export function HeroBlock() {
                 } as React.CSSProperties}
               >
                 {t(key)}
-              </p>
+              </motion.p>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
 

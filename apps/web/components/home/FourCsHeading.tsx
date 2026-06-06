@@ -11,21 +11,26 @@ const KEYS = [
   'home.4cs.consult',
 ] as const
 
-export function FourCsHeading() {
+export function FourCsHeading({ start, baseDelay = 0 }: { start?: boolean; baseDelay?: number } = {}) {
   const { t } = useLang()
   const ref = useRef<HTMLDivElement>(null)
-  const [visible, setVisible] = useState(false)
+  const [obsVisible, setObsVisible] = useState(false)
+
+  // When `start` is controlled (hero intro), follow it; otherwise fall back to
+  // the in-viewport observer so the component still works standalone.
+  const visible = start !== undefined ? start : obsVisible
 
   useEffect(() => {
+    if (start !== undefined) return
     const el = ref.current
     if (!el) return
     const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect() } },
+      ([entry]) => { if (entry.isIntersecting) { setObsVisible(true); obs.disconnect() } },
       { threshold: 0.1 }
     )
     obs.observe(el)
     return () => obs.disconnect()
-  }, [])
+  }, [start])
 
   return (
     <div
@@ -37,10 +42,11 @@ export function FourCsHeading() {
         <motion.span
           key={key}
           aria-hidden="true"
-          initial={{ opacity: 0, y: 16 }}
-          animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+          className="bf-reveal"
+          initial={{ opacity: 0, y: 12 }}
+          animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
           transition={{
-            delay: i * 0.06,
+            delay: baseDelay + i * 0.06,
             duration: 0.28,
             ease: [0.16, 1, 0.3, 1],
           }}

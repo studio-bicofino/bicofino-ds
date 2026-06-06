@@ -215,6 +215,28 @@ nothing is large. The sensation is *alive*, never *busy*. **Always** gate it beh
 legible as a still. Reserve it for M-01 surfaces and the occasional seal; UI and editorial type
 stay calm.
 
+### Sanctioned exception — the brand intro
+
+A **second named exception** to the interaction rules, alongside the M-01 ambient loop. The public
+site (`apps/web`) opens with a **brand reveal**: a full-screen `--bf-power-black` overlay that
+clears to expose the site rendered underneath. One of several variants is **randomised per visit**
+(currently *star-spin*, *glitch*, *split*, *fractured-fall*, *lake-ripples*).
+
+Within this overlay — **and nowhere else** — motion may **enter from `scale(0)` / `r=0`** (the star,
+the drops): the whole gesture *is* something appearing from a point, so the §8 "nothing from
+nothing" rule is deliberately lifted. It still obeys the spirit of the system: animates **only
+`transform` / `opacity`** (plus SVG `r` / `mask`), eases on **`--ease-out`** (or a paired ease-in
+for a punch), uses **only canon tokens** (the overlay is `--bf-power-black`; the star is the brand
+asset), and runs **short** (≤ ~3s). Hard safeguards, all mandatory:
+
+- **`prefers-reduced-motion: reduce` → the intro is skipped entirely** (no overlay, content shown).
+- **Once per session** (`sessionStorage`) — returning navigations don't replay it.
+- **Content renders underneath** (the overlay is purely visual) → no SEO / LCP cost; a `<noscript>`
+  rule hides the overlay and force-reveals entrance-gated content when JS is off.
+
+Lives in `apps/web/components/intro/`. Treat any new variant as part of this one exception — do not
+let "intro freedom" leak into product UI, which stays at the calm `120 / 200 / 360ms` register.
+
 ---
 
 ## 9 · Pattern library — the five modules
@@ -266,6 +288,11 @@ re-declares the same set in **`apps/docs-site/src/app/globals.css`**. New in thi
   First principle folded in via the *Design Craft Layer* (`CLAUDE.md`), from `web-design-guidelines`.
 - **Motion properties & focus** — §8: animate only `transform`/`opacity`, no `transition: all`,
   no `scale(0)` entries, focus via `:focus-visible`. From `emil-design-eng` + `web-design-guidelines`.
+- **Brand intro (sanctioned exception)** — §8: the `apps/web` opening overlay, a once-per-session
+  randomised reveal (star-spin · glitch · split · fractured-fall · lake-ripples). The *only* place
+  motion may enter from `scale(0)`/`r=0`; still `transform`/`opacity`-only, `--ease-out`, canon
+  tokens, ≤~3s, skipped under `prefers-reduced-motion`, content rendered underneath. Mirrors the
+  M-01 ambient precedent. (`apps/web/components/intro/`)
 
 Interaction durations stay at the live `120 / 200 / 360ms`. `--radius` (2px) remains as the legacy
 base; new work should prefer `--bf-corner-*`.

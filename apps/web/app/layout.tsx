@@ -35,6 +35,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* eslint-disable-next-line @next/next/no-sync-scripts */}
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <style>{`.bf-skip-link{position:absolute;left:-9999px;top:16px;z-index:9999;padding:8px 16px;background:var(--bf-bg-page);color:var(--bf-text-primary);font-family:"Inter",ui-sans-serif,sans-serif;font-size:14px;text-decoration:none;border-radius:var(--bf-radius-md);border:1px solid var(--bf-border)}.bf-skip-link:focus{left:16px}`}</style>
+        {/* No-JS fallback: hide the intro overlay and force-reveal any content
+            that waits on entrance motion, so nothing is trapped behind JS. */}
+        <noscript><style>{`.bf-intro-overlay{display:none!important}.bf-reveal{opacity:1!important;transform:none!important}`}</style></noscript>
       </head>
       <body>
         <a href="#main-content" className="bf-skip-link">Pular para o conteúdo</a>

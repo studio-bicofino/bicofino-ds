@@ -73,25 +73,32 @@ Nome de marca é único → #1 é muito alcançável. Nada disso usa cookie.
       o passo-a-passo pra ele.
 - [ ] Conferir performance/LCP (a intro NÃO pode degradar — conteúdo renderiza por baixo).
 
-## Frente C — Intro Motion (sistema de variantes random)
+## Frente C — Intro Motion (sistema de variantes random) ✅ FEITA (2026-06-05)
 
-Abertura animada de marca, sorteada a cada acesso. Tratar como **exceção sancionada** no DESIGN.md.
+Abertura animada de marca, sorteada a cada acesso. Exceção sancionada no DESIGN.md. **Entregue** —
+ver `.planning/lancamento-web/HANDOFF.md` para detalhes. Resumo:
 
-- [ ] **4 variantes** sorteadas no client (evitar hydration mismatch — sorteio pós-hydrate):
-      1. **Star-spin reveal** — tela preta → estrela Bicofino minúscula no centro → gira → escala e
-         abre tomando a tela, revelando o site. (a ideia-base do Woney)
-      2. **Glitch** — entrada com efeito glitch.
-      3. **Tela formando** — site "se monta" (blocos/linhas formando o layout).
-      4. **Parallax** — camadas entrando em profundidade.
-- [ ] **Salvaguardas obrigatórias:**
-      - `prefers-reduced-motion` → **pula a intro** inteira (acessibilidade + regra DESIGN.md).
-      - **Conteúdo renderiza por baixo** (intro é overlay) → não prejudica SEO/LCP.
-      - **Curta (~0.8–1.2s)**, `ease-out`.
-      - Frequência: avaliar **1×/sessão** (`sessionStorage`) vs. toda visita. Woney pediu "random a
-        cada acesso" — confirmar se quer mesmo a cada navegação (cansa quem volta) ou 1×/sessão.
-- [ ] **DESIGN.md:** adicionar a intro como exceção nomeada (seção de motion + linha no §11 changelog),
-      espelhando o tratamento do M-01. (Enrichment loop — regra do projeto.)
-- [ ] Usar só tokens/durações do sistema; sem cores/raios fora do canon. A estrela = asset de marca.
+- [x] **5 variantes** sorteadas no client (sorteio pós-hydrate, sem hydration mismatch). Em vez das 4
+      do plano original, o set virou (validado com Woney, iterando ao vivo):
+      1. **star** — estrela Bicofino gira no eixo e o "buraco" escala em direção ao leitor.
+      2. **glitch** — blocos irregulares tremem/piscam e debandam caoticamente.
+      3. **split** — duas metades pretas com costura accent se abrem do centro.
+      4. **fragments** — cacos fractais (subdivisão BSP) desabam com gravidade real.
+      5. **rain** — gotas num lago: discos de borda nítida + anéis de ripple (trem concêntrico +
+         secundários propagantes), revelação atrasada (`ease-in`) pra ripples liderarem.
+      ↳ Override de teste: `?intro=star|glitch|split|fragments|rain|random` (ignora o guard de sessão).
+- [x] **Salvaguardas obrigatórias:**
+      - `prefers-reduced-motion` → **pula a intro** inteira.
+      - **Conteúdo renderiza por baixo** (overlay), sai no SSR sem flash → não prejudica SEO/LCP.
+        `<noscript>` esconde overlay + força reveal do conteúdo gated.
+      - `ease-out`; durações ≤ ~3s (cap da exceção).
+      - **Frequência: 1×/sessão** (`sessionStorage`) — decidido (não cansa quem volta).
+- [x] **Cascata sequencial do hero** após o preto sumir: vídeo → 4 Cs → texto (gated em `revealed`).
+      Coreografia via delays; durações/stagger/translate clampados ao registro calmo do §8.
+- [x] **DESIGN.md:** intro adicionada como exceção nomeada no §8 + linha no §11 changelog (espelha M-01).
+      Auditado pelo `bicofino-motion-curator`.
+- [x] Só tokens/durações do canon; overlay = `--bf-power-black`, estrela = asset de marca, costura
+      do split = `--bf-accent` (local apps/web).
 
 ---
 
