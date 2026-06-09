@@ -1,0 +1,305 @@
+/* ─── Bicofino Motion Lab — tokens + base ───
+   Zona franca de experimentação: as regras de duração do DESIGN.md §8
+   estão deliberadamente suspensas AQUI (e só aqui). Tokens de cor/tipo
+   continuam valendo — nenhuma cor fora do set. */
+
+/* Gotham — impact only (1–2 palavras, uppercase). Self-hosted, copiada do docs-site. */
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham-LightItalic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Core */
+  --bf-bg:          #f2f8ff;
+  --bf-black:       #2a2c2b;
+  --bf-power-black: #061015;
+  --bf-white:       #ffffff;
+  --bf-steel:       #6d7886;
+  --bf-aluminium:   #e2eaf2;
+  --bf-platinum:    #a8c9e5;
+
+  /* Highlights — subset legível sobre power-black (lab roda dark) */
+  --bf-spfc:        #f0535e;
+  --bf-sep:         #2fd298;
+  --bf-niederland:  #fe4600;
+  --bf-australia:   #e5ff78;
+  --bf-miami:       #f4b3cb;
+  --bf-napoli:      #77deff;
+  --bf-como:        #0d8aff;
+  --bf-venezia:     #38e0e3;
+  --bf-fiorentina:  #711cfe;
+
+  /* One vibrant per composition — randomizado no layout; fallback SSR coral */
+  --current-accent: var(--bf-spfc);
+
+  /* Superfícies do lab (dark) */
+  --lab-surface:      rgba(242, 248, 255, 0.04);
+  --lab-surface-2:    rgba(242, 248, 255, 0.08);
+  --lab-border:       rgba(242, 248, 255, 0.12);
+  --bf-line-on-dark:  rgba(242, 248, 255, 0.22);
+  --lab-text:         var(--bf-aluminium);
+  --lab-text-dim:     var(--bf-steel);
+
+  /* Type — famílias setadas pelo next/font no layout */
+  --bf-font-display: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --bf-font-mono:    var(--font-jetbrains), ui-monospace, "SFMono-Regular", monospace;
+  --bf-font-impact:  "Gotham", var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* Eases canon (referência — experimentos podem testar outras) */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  background: var(--bf-power-black);
+  color: var(--lab-text);
+  font-family: var(--bf-font-display);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+::selection { background: var(--current-accent); color: var(--bf-power-black); }
+
+/* ─── Utilitários de tipo ─── */
+
+.lab-eyebrow {
+  font-family: var(--bf-font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--current-accent);
+}
+
+.lab-mono {
+  font-family: var(--bf-font-mono);
+  font-size: 12px;
+  color: var(--lab-text-dim);
+}
+
+.lab-chip {
+  display: inline-block;
+  font-family: var(--bf-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1px solid var(--lab-border);
+  border-radius: 2px;
+  color: var(--lab-text-dim);
+}
+
+.lab-chip--status { color: var(--current-accent); border-color: var(--current-accent); }
+
+/* ─── Galeria (index) ─── */
+
+.lab-card {
+  display: block;
+  border: 1px solid var(--lab-border);
+  border-radius: 4px;
+  padding: 24px;
+  background: var(--lab-surface);
+  transition: border-color 200ms var(--ease-standard), background 200ms var(--ease-standard);
+}
+
+.lab-card:hover {
+  border-color: var(--current-accent);
+  background: var(--lab-surface-2);
+}
+
+/* ─── Tuner — painel de tunagem ─── */
+
+.tuner {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 100;
+  width: 264px;
+  background: rgba(6, 16, 21, 0.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--lab-border);
+  border-radius: 4px;
+  font-family: var(--bf-font-mono);
+  font-size: 11px;
+  color: var(--lab-text);
+}
+
+.tuner__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--lab-border);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--current-accent);
+}
+
+.tuner__replay {
+  font-family: var(--bf-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: none;
+  border: 1px solid var(--lab-border);
+  border-radius: 2px;
+  color: var(--lab-text);
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: border-color 120ms var(--ease-standard), color 120ms var(--ease-standard);
+}
+
+.tuner__replay:hover { border-color: var(--current-accent); color: var(--current-accent); }
+
+.tuner__body { padding: 10px 12px 12px; display: grid; gap: 10px; }
+
+.tuner__field { display: grid; gap: 4px; }
+
+.tuner__label {
+  display: flex;
+  justify-content: space-between;
+  color: var(--lab-text-dim);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+.tuner__value { color: var(--lab-text); }
+
+.tuner input[type="range"] {
+  width: 100%;
+  height: 2px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--lab-border);
+  border-radius: 1px;
+  outline: none;
+  cursor: pointer;
+}
+
+.tuner input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--current-accent);
+  border: none;
+  cursor: pointer;
+}
+
+.tuner input[type="range"]:focus-visible {
+  outline: 2px solid var(--current-accent);
+  outline-offset: 2px;
+}
+
+.tuner__options { display: flex; flex-wrap: wrap; gap: 4px; }
+
+.tuner__opt {
+  font-family: var(--bf-font-mono);
+  font-size: 10px;
+  background: none;
+  border: 1px solid var(--lab-border);
+  border-radius: 2px;
+  color: var(--lab-text-dim);
+  padding: 3px 7px;
+  cursor: pointer;
+  transition: border-color 120ms var(--ease-standard), color 120ms var(--ease-standard);
+}
+
+.tuner__opt:hover { color: var(--lab-text); }
+
+.tuner__opt--on { border-color: var(--current-accent); color: var(--current-accent); }
+
+.tuner__toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: var(--lab-text);
+}
+
+.tuner__toggle input { accent-color: var(--current-accent); cursor: pointer; }
+
+/* ─── Shell do experimento ─── */
+
+.exp-head {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px 32px;
+  border-bottom: 1px solid var(--lab-border);
+}
+
+.exp-head__back {
+  font-family: var(--bf-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lab-text-dim);
+  transition: color 120ms var(--ease-standard);
+}
+
+.exp-head__back:hover { color: var(--current-accent); }
+
+.exp-head__row {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.exp-head__index {
+  font-family: var(--bf-font-mono);
+  font-size: 12px;
+  color: var(--current-accent);
+}
+
+.exp-head__title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--bf-white);
+  margin: 0;
+}
+
+.exp-head__summary {
+  max-width: 48ch;
+  margin: 0;
+  font-size: 13px;
+  color: var(--lab-text-dim);
+}
+
+.exp-head__chips { display: flex; gap: 6px; flex-wrap: wrap; }

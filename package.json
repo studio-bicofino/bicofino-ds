@@ -9,6 +9,7 @@
     "drive": "cd apps/drive-atleta && npm run dev",
     "registro": "cd apps/woney-registro && npm run dev",
     "casa-nostra": "cd apps/casa-nostra && npm run dev",
+    "motion-lab": "cd apps/motion-lab && npm run dev",
     "masterclass": "cd apps/propostas/masterclass-bovichain && npm run dev",
     "vanguarda:mercados": "cd apps/vanguarda/mercados-globais && npm run dev",
     "vanguarda:ideias": "cd apps/vanguarda/100-ideias && npm run dev",
