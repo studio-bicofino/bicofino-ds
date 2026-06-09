@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import { Search, RotateCcw } from 'lucide-react'
+import Link from 'next/link'
+import { Search, RotateCcw, Link2 } from 'lucide-react'
 import type { MediaItem, Status, Category, MediaKind } from '@/lib/types'
 import { loadItems, updateStatus } from '@/lib/storage'
 import { CATEGORIES, STATUSES, KIND_LABEL } from '@/lib/categories'
@@ -77,13 +78,18 @@ export default function PanelPage() {
             <span className="bf-eyebrow">// painel bicofino</span>
             <div className="between" style={{ alignItems: 'flex-end' }}>
               <h1 className="bf-h1">Acervo</h1>
-              <button
-                className="btn btn--ghost bf-mono"
-                title="Recarrega o acervo do Supabase"
-                onClick={refresh}
-              >
-                <RotateCcw size={14} strokeWidth={1.5} aria-hidden /> atualizar
-              </button>
+              <div className="row-wrap" style={{ gap: 'var(--sp-3)' }}>
+                <Link href="/painel/links" className="btn btn--ghost bf-mono" title="Links de envio por atleta">
+                  <Link2 size={14} strokeWidth={1.5} aria-hidden /> links dos atletas
+                </Link>
+                <button
+                  className="btn btn--ghost bf-mono"
+                  title="Recarrega o acervo do Supabase"
+                  onClick={refresh}
+                >
+                  <RotateCcw size={14} strokeWidth={1.5} aria-hidden /> atualizar
+                </button>
+              </div>
             </div>
           </div>
 
