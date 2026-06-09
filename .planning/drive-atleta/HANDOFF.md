@@ -132,15 +132,31 @@ Ler este HANDOFF + `apps/drive-atleta/README.md` (fases 2/3/4) integralmente ant
 
 ---
 
-## ✅ NO AR E EM USO REAL (atualizado 2026-06-03)
+## ✅ NO AR E EM USO REAL (atualizado 2026-06-09)
 
 **Produção: https://drive-atleta.vercel.app** (projeto Vercel `drive-atleta`, time studio-bicofino,
 orgId `team_i0JJAtJE82qUjMOqY08RTD3o`). Hub em `/` (lista os atletas) · upload em `/a/<slug>` · Painel `/painel`.
-Fabio já está usando ao vivo — há uploads reais no acervo (Salvatore, Julio, Caio). Tudo mergeado na `main` (último PR #17). **Working tree limpo, nada pendente de commit.**
+Fabio já está usando ao vivo — há uploads reais no acervo (Salvatore, Julio, Caio). Tudo mergeado na `main` (último PR #17). **2026-06-09: Lucas Ovies + Gabriel Rigorfi adicionados (athletes.ts + pastas no Drive + deploy prod) — mudança em `athletes.ts` PENDENTE DE COMMIT no working tree (já no ar via deploy de working tree, mas não commitada/pushada).**
+
+### ⚠️ DEPLOY MUDOU — agora deploya da RAIZ do monorepo (não da pasta do app)
+O projeto Vercel agora tem **Root Directory = `apps/drive-atleta`** nas settings. Isso quebra o `cd apps/drive-atleta && vercel --prod` antigo (dobra o caminho → `apps/drive-atleta/apps/drive-atleta does not exist`). **Procedimento atual** (da raiz `/Users/woneymalian/Developer/Bicofino-ecossistema`):
+```bash
+mkdir -p .vercel && cp apps/drive-atleta/.vercel/project.json .vercel/project.json   # link temp do projeto na raiz
+printf 'AI-OS-BASE\napps/*/public/media\napps/*/public/brand\n.planning\n' > .vercelignore  # senão sobe 900MB+ e estoura 100MB/arquivo
+vercel --prod --scope studio-bicofinos-projects --yes
+rm -rf .vercel .vercelignore   # limpa os temporários (não commitar)
+```
+Sem o `.vercelignore` a CLI sobe os untracked gigantes do monorepo (`AI-OS-BASE/*.ai` 315MB, `apps/web/public/media/*.mp4` 199MB) e o Google/Vercel rejeita com "File size limit exceeded (100 MB)". Projeto NÃO é git-connected (sem auto-deploy por push) → deploy é só via CLI.
+
+**Criar pasta de atleta no Drive:** `scripts/create-athlete-folder.mjs` (acha-ou-cria `ATLETAS/<NOME>/{FOTOS,VIDEOS}`, idempotente). Roda sem Infisical usando o `.env.local` do app:
+```bash
+cd apps/drive-atleta && node --env-file=.env.local scripts/create-athlete-folder.mjs "GABRIEL RIGORFI"
+```
+(o `.env.local` tem as 4 chaves Google; o `infisical login` por browser NÃO funciona neste ambiente — "operation not supported by device". Build/deploy: Next carrega `.env.local` sozinho, NÃO passar `--env-file` pro `next build`/`vercel` senão `ERR_WORKER_INVALID_EXEC_ARGV`.)
 
 ### Funcionalidades no ar (entregues nesta fase, todas mergeadas + deployadas)
 - **Hub `/`** lista os atletas (cards `.hub-link` com hover/press/focus). Cada → `/a/<slug>`.
-- **14 atletas** em `lib/athletes.ts` (Caio Henrique, Eloi Gómez Saus, Gabriel Mendes, Guilherme Kerchner, Jean Jesus, Joaquim Miranda, Julio Cezar, Lucas Henrique, Luigi Brancatelli, Pedro Cialone, Rhian Marinho, Ronaldo Prado, Salvatore Brancatelli, Yuri Lima). Todos sem position/club. `driveFolder` = nome EXATO da pasta (acentos). Adicionar = 1 linha; confirmar nome com `scripts/drive-setup.mjs`-style antes.
+- **16 atletas** em `lib/athletes.ts` (Caio Henrique, Eloi Gómez Saus, Gabriel Mendes, **Gabriel Rigorfi**, Guilherme Kerchner, Jean Jesus, Joaquim Miranda, Julio Cezar, Lucas Henrique, **Lucas Ovies**, Luigi Brancatelli, Pedro Cialone, Rhian Marinho, Ronaldo Prado, Salvatore Brancatelli, Yuri Lima). Todos sem position/club. `driveFolder` = nome EXATO da pasta (acentos). Adicionar = 1 linha + rodar `create-athlete-folder.mjs` + deploy.
 - **Preview real das fotos no Painel** via proxy `/api/thumb?id=<driveFileId>` (thumbnailLink do Drive, ~10-50KB, com token de serviço; cache 1h no browser). `Thumb` cai no placeholder se a miniatura falhar.
 - **Detecção de foto repetida (arquivo idêntico):** SHA-256 dos bytes no navegador (`lib/hash.ts`) → coluna `media_items.content_hash` (migration 0002). `/api/check-duplicate` avisa no card ("Já no acervo (data)"), **nunca bloqueia**. Vídeo não é hasheado. Backfill do legado feito (`scripts/backfill-hash.mjs`).
 - **Nome do arquivo:** inclui Jogo (se houver) E Campeonato/Contexto (se houver) via `contextToken` CamelCase. Ex.: `CAIO_2025out20_ApresentacaoAlashkert_viagem_002.png`.
