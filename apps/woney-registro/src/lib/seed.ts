@@ -30,10 +30,10 @@ export const sistemas: Sistema[] = [
     criado_em: '2026-03-10',
     investimento_horas: 4,
     tempo_antes_min: 120, // 2h totalmente manual: tratamento da foto + montagem do motion
-    tempo_depois_min: 20,
+    tempo_depois_min: 24, // medição real da rodada 11–17/jun (ver notas)
     papel: 'template',
     notas:
-      'Gerador 9:16 HTML/React → MP4. Cada jogo é um uso novo. Baseline real medido pelo Woney: o story completo (tratar a foto + fazer o motion) saía em ~2h no fluxo manual; com o template + o Pipeline de tratamento de imagem, sai em 20 min.',
+      'Gerador 9:16 HTML/React → MP4. Cada jogo é um uso novo. Baseline real medido pelo Woney: o story completo (tratar a foto + fazer o motion) saía em ~2h no fluxo manual. Premissa revista em 2026-06-09 com medição de sessão inteira: a rodada 11–17/jun (7 stories) levou ~165 min de ponta a ponta — fotos novas do Drive, 3 escudos novos, 3 rodadas de ajuste do Fabio (build 1s, Ken Burns, escudos padronizados) e ainda a criação do gerador de cards estáticos no meio — ou seja, ~24 min por story com TUDO dentro. tempo_depois 20 → 24 min (mais honesto).',
   },
   {
     id: 'sis-propostas-ds',
@@ -89,10 +89,20 @@ export const sistemas: Sistema[] = [
       'Tratamento da foto do atleta — recorte, granulado e preto e branco — direto do Drive, pelo Photoshop, de volta ao Drive certo. Derruba o story completo de ~2h para 20 min e roda em lote, sem desgaste a cada peça.',
     natureza_valor: 'Ativo permanente — a automação que faz a foto do jogo virar peça sozinha',
   },
+  {
+    id: 'sis-cards-estaticos',
+    nome: 'Cards de jogos estáticos (Story PNG)',
+    tipo: 'infraestrutura',
+    criado_em: '2026-06-09',
+    investimento_horas: 0.5, // criado no meio da rodada 11–17/jun, sem parar a fila
+    destravou:
+      'A mesma arte do story animado vira PNG 1080×1920 com um comando — reusa cena, assets e config do template de motion. Card calibrado pro vídeo já sai calibrado pro estático: o formato extra custa zero retrabalho.',
+    natureza_valor: 'Ativo permanente — dobra o formato de saída (vídeo + estático) sem dobrar o trabalho',
+  },
 ]
 
 export const usos: Uso[] = [
-  // Template de stories — 8 usos (vídeos reais gerados pelo card-jogos-motion)
+  // Template de stories — 16 usos (vídeos reais gerados pelo card-jogos-motion)
   {
     id: 'uso-1',
     sistema_id: 'sis-template-stories',
@@ -157,6 +167,72 @@ export const usos: Uso[] = [
     imagem_url: null,
     video_url: '/pecas/cialone-paulista-s14-07jun.mp4',
   },
+  {
+    id: 'uso-11',
+    sistema_id: 'sis-template-stories',
+    data: '2026-06-09',
+    legenda: 'Story Júlio — Brasileirão',
+    imagem_url: null,
+    video_url: '/pecas/julio-brasileiro-s17-09jun.mp4',
+  },
+  // Rodada 11–17/jun (brief do Fabio em 09/06): 7 stories produzidos numa sessão
+  // de ~165 min — inclui 3 rodadas de ajuste e a criação do cards-jogos-estaticos.
+  {
+    id: 'uso-12',
+    sistema_id: 'sis-template-stories',
+    data: '2026-06-11',
+    legenda: 'Story Guilherme — Brasileirão',
+    imagem_url: null,
+    video_url: '/pecas/guilherme-brasileiro-s17-11jun.mp4',
+  },
+  {
+    id: 'uso-13',
+    sistema_id: 'sis-template-stories',
+    data: '2026-06-12',
+    legenda: 'Story Ronaldo — Copa Rio',
+    imagem_url: null,
+    video_url: '/pecas/ronaldo-copario-s16-12jun.mp4',
+  },
+  {
+    id: 'uso-14',
+    sistema_id: 'sis-template-stories',
+    data: '2026-06-13',
+    legenda: 'Story Júlio — Paulista',
+    imagem_url: null,
+    video_url: '/pecas/julio-paulista-s17-13jun.mp4',
+  },
+  {
+    id: 'uso-15',
+    sistema_id: 'sis-template-stories',
+    data: '2026-06-13',
+    legenda: 'Story Guilherme — Paulista',
+    imagem_url: null,
+    video_url: '/pecas/guilherme-paulista-s17-13jun.mp4',
+  },
+  {
+    id: 'uso-16',
+    sistema_id: 'sis-template-stories',
+    data: '2026-06-13',
+    legenda: 'Story Jean — Paulista',
+    imagem_url: null,
+    video_url: '/pecas/jean-paulista-s17-13jun.mp4',
+  },
+  {
+    id: 'uso-17',
+    sistema_id: 'sis-template-stories',
+    data: '2026-06-16',
+    legenda: 'Story Guilherme — Brasileirão',
+    imagem_url: null,
+    video_url: '/pecas/guilherme-brasileiro-s17-16jun.mp4',
+  },
+  {
+    id: 'uso-18',
+    sistema_id: 'sis-template-stories',
+    data: '2026-06-17',
+    legenda: 'Story Júlio — Brasileirão',
+    imagem_url: null,
+    video_url: '/pecas/julio-brasileiro-s17-17jun.mp4',
+  },
   // Propostas via DS — 2 usos reais (O Outro Mapa, BoviClass). imagem_url aponta pro
   // PNG em /public/pecas/; PecaMedia trata 404 com placeholder limpo.
   {
@@ -200,5 +276,12 @@ export const usos: Uso[] = [
     legenda: 'Drive do Atleta',
     imagem_url: '/pecas/drive-atleta.png',
     link: 'https://drive-atleta.vercel.app',
+  },
+  {
+    id: 'uso-estaticos',
+    sistema_id: 'sis-cards-estaticos',
+    data: '2026-06-09',
+    legenda: 'Cards de jogos estáticos',
+    imagem_url: '/pecas/cards-estaticos.png',
   },
 ]

@@ -1,10 +1,30 @@
 # STATUS — Registro de Impacto
 
-> Handoff para continuar em outro chat. Última atualização: 2026-06-05.
+> Handoff para continuar em outro chat. Última atualização: 2026-06-09.
 > App em `apps/woney-registro/`. Dashboard interno que mostra, em horas e reais,
 > o valor que os sistemas do Woney (designer + dev com Claude Code) devolvem ao Studio Bicofino.
 
-## ⏩ Onde paramos (2026-06-05) — ler primeiro
+## ⏩ Onde paramos (2026-06-09) — ler primeiro
+
+**Rodada 11–17/jun registrada + premissa do story medida de verdade (2026-06-09)** —
+8 usos novos do Template (uso-11 a uso-18): o Júlio×Flamengo 09/jun que estava pendente + os
+7 da rodada nova do Fabio (Gui×3, Ronaldo×Sampaio Corrêa, Júlio×2, Jean). Template **8 → 16
+usos**. A pedido do Woney, a premissa `tempo_depois_min` foi revista com a MEDIÇÃO REAL da
+sessão: 7 stories em ~165 min de cooking de ponta a ponta (fotos do Drive tratadas, 3 escudos
+novos, 3 rodadas de ajuste do Fabio — build 1s, Ken Burns 1.2, escudos padronizados — e ainda
+a criação de um projeto novo no meio) → **20 → 24 min/story** (eco por story 100 → 96 min;
+mais honesto). Novo sistema de infra **`sis-cards-estaticos`** (0,5h de capital): gerador de
+PNG estático 1080×1920 da MESMA arte do motion, criado durante a rodada (showcase na galeria
+com `/pecas/cards-estaticos.png`, sem link — ferramenta local). Reflexos: peças
+**R$ 1.594 → R$ 2.897**, realizado **R$ 14.344 → R$ 15.647**, recorrente **R$ 66,8k →
+R$ 66,1k/ano** (baseline mais honesto baixa um pouco o recorrente — feature, não bug),
+Claude paga **11,6× → 11,5×**, capital de infra **R$ 18.116 → R$ 18.169**. 8 MP4s + 1 PNG
+copiados p/ `public/pecas/`. Testes do `calc.ts` atualizados (13/13 ok) + tsc limpo.
+Pendência de jogos: ZERADA (não há story produzido fora do registro).
+
+---
+
+## Rodada anterior (2026-06-05)
 
 **Pipeline de tratamento de imagem registrado + baseline do story revisto (2026-06-05, parte 2)** —
 o Woney automatizou o tratamento de imagem (recorte + granulado + P&B) que alimenta o
