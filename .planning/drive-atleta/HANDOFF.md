@@ -154,6 +154,9 @@ cd apps/drive-atleta && node --env-file=.env.local scripts/create-athlete-folder
 ```
 (o `.env.local` tem as 4 chaves Google; o `infisical login` por browser NÃO funciona neste ambiente — "operation not supported by device". Build/deploy: Next carrega `.env.local` sozinho, NÃO passar `--env-file` pro `next build`/`vercel` senão `ERR_WORKER_INVALID_EXEC_ARGV`.)
 
+### 2026-06-09 — link individual do atleta (isolamento leve, sem login)
+Decisão do Woney: o link pra dar pra cada atleta é o próprio **`/a/<slug>`** (nome, adivinhável, fácil de manter — SEM token/capability-URL por ora; login fica p/ o futuro se precisar). Isolamento é só "não dar saída": a página do atleta NÃO expõe mais o hub (todos) nem o `/painel` (back-office de curadoria). Implementação: `TopBar` ganhou `brandHref`/`rightHref` (null = marca inerte + esconde a pill); `UploadFlow` chama `<TopBar brandHref={null} rightHref={null} />`; `SuccessState` perdeu o "Ver no Painel Bicofino". Woney acessa hub `/` e `/painel` direto pela URL. Atletas podem, em tese, adivinhar `/a/<outro-nome>` — aceito (Woney: "não é o fim do mundo").
+
 ### Funcionalidades no ar (entregues nesta fase, todas mergeadas + deployadas)
 - **Hub `/`** lista os atletas (cards `.hub-link` com hover/press/focus). Cada → `/a/<slug>`.
 - **16 atletas** em `lib/athletes.ts` (Caio Henrique, Eloi Gómez Saus, Gabriel Mendes, **Gabriel Rigorfi**, Guilherme Kerchner, Jean Jesus, Joaquim Miranda, Julio Cezar, Lucas Henrique, **Lucas Ovies**, Luigi Brancatelli, Pedro Cialone, Rhian Marinho, Ronaldo Prado, Salvatore Brancatelli, Yuri Lima). Todos sem position/club. `driveFolder` = nome EXATO da pasta (acentos). Adicionar = 1 linha + rodar `create-athlete-folder.mjs` + deploy.

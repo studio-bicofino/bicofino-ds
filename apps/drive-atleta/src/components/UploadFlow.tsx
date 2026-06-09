@@ -188,7 +188,8 @@ export function UploadFlow({ athlete }: { athlete: Athlete }) {
 
   return (
     <div className="surface-dark" data-surface="dark">
-      <TopBar />
+      {/* Página do atleta: marca inerte, sem pill p/ o painel interno. */}
+      <TopBar brandHref={null} rightHref={null} />
 
       <main className="shell-narrow shell-main">
         {stage === 'intro' && (

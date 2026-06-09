@@ -1,7 +1,6 @@
 'use client'
 
-import Link from 'next/link'
-import { Plus, ArrowRight, Check } from 'lucide-react'
+import { Plus, Check } from 'lucide-react'
 import type { MediaItem } from '@/lib/types'
 import type { Athlete } from '@/lib/athletes'
 import { CATEGORY_LABEL } from '@/lib/categories'
@@ -93,9 +92,6 @@ export function SuccessState({
         <button className="btn btn--primary" onClick={onAnother}>
           <Plus size={16} strokeWidth={1.5} /> Enviar outro material
         </button>
-        <Link href="/painel" className="btn btn--ghost">
-          Ver no Painel Bicofino <ArrowRight size={16} strokeWidth={1.5} />
-        </Link>
       </div>
     </div>
   )
