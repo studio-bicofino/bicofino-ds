@@ -22,7 +22,6 @@ const VIDEOS = [
   { src: '/showcase/card-02.mp4', label: 'Guilherme — Paulista 13/jun' },
   { src: '/showcase/card-03.mp4', label: 'Guilherme — Brasileirão 11/jun' },
   { src: '/showcase/card-04.mp4', label: 'Julio — Brasileirão 17/jun' },
-  { src: '/showcase/card-05.mp4', label: 'Jean — Paulista 13/jun' },
   { src: '/showcase/card-06.mp4', label: 'Julio — Paulista 13/jun' },
   { src: '/showcase/card-07.mp4', label: 'Ronaldo — Copa Rio 12/jun' },
 ] as const
@@ -70,7 +69,7 @@ export default function IphoneShowcasePage() {
     {
       modo: { value: 'catavento', options: MODOS, label: 'modo' },
       velocidade: { value: 28, min: 8, max: 60, step: 1, label: 'velocidade do loop (s)' },
-      raio: { value: 280, min: 180, max: 420, step: 10, label: 'raio do catavento (px)' },
+      raio: { value: 160, min: 100, max: 420, step: 10, label: 'raio do catavento (px)' },
       stagger: { value: 0.12, min: 0.05, max: 0.4, step: 0.01, label: 'stagger da cascata (s)' },
       vertical: { value: false, label: 'phones na vertical (catavento)' },
       pausaHover: { value: true, label: 'pausar esteira no hover' },
@@ -226,7 +225,9 @@ export default function IphoneShowcasePage() {
           display: block;
           width: 100%;
           height: 100%;
-          object-fit: cover;
+          /* contain: a arte 9:16 inteira na tela 9:19.2 — as faixas em cima/
+             embaixo ficam naturalmente pretas (o fundo da tela é power-black) */
+          object-fit: contain;
         }
         .exp11-phone__island {
           position: absolute;
@@ -303,7 +304,7 @@ export default function IphoneShowcasePage() {
           <span className="lab-eyebrow">{'// EXP-11 — PRODUÇÃO VIVA'}</span>
           <h2>O estúdio em movimento.</h2>
           <p>
-            Os 7 Stories da rodada 11–17/jun rodando ao vivo — a produção real
+            Os Stories da rodada 11–17/jun rodando ao vivo — a produção real
             do estúdio dentro do aparelho onde ela acontece. Troque a
             coreografia no tuner.
           </p>
@@ -313,7 +314,7 @@ export default function IphoneShowcasePage() {
           <div className="exp11-catavento" style={{ height: alturaCatavento }}>
             <div className="exp11-wheel">
               {VIDEOS.map((v, i) => {
-                const angulo = (i * 360) / 7
+                const angulo = (i * 360) / VIDEOS.length
                 return (
                   <div
                     key={v.src}
@@ -342,15 +343,7 @@ export default function IphoneShowcasePage() {
         {modo === 'cascata' && (
           <div className="exp11-cascata">
             {VIDEOS.map((v, i) => (
-              <div
-                key={v.src}
-                className="exp11-item"
-                style={{
-                  transform: `translateY(${(i - 3) * 26}px) rotate(${
-                    (i % 2 === 0 ? -1 : 1) * (3 + (i % 4) * 1.5)
-                  }deg)`,
-                }}
-              >
+              <div key={v.src} className="exp11-item">
                 <PhoneMock src={v.src} label={v.label} destaque={i === 0} />
               </div>
             ))}

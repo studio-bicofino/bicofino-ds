@@ -45,7 +45,12 @@ motion ("narrativa/scroll-driven" — scrub = o usuário é a timeline), ao lado
 | 08 | Gotham Impact — Heavy/Light (KERCHNER) | SplitText | DESIGN.md §6 |
 | 09 | Grafismo Segue-Mouse (quickTo, 3 camadas) | gsap.quickTo | madness.ai |
 | 10 | Card Stack — Pilha no Scroll | ScrollTrigger | madness.ai |
-| 11 | iPhone Showcase — 7 Stories reais, 3 modos (catavento/cascata/esteira) | ScrollTrigger | madness.ai + card-jogos-motion |
+| 11 | iPhone Showcase — 6 Stories reais, 3 modos (catavento/cascata/esteira) | ScrollTrigger | madness.ai + card-jogos-motion |
+
+Ajustes do EXP-11 após 1ª rodada de feedback (09/06): raio do catavento fecha até 100px
+(phones se tocam no mínimo), cascata alinhada (sem rotação alternada nem escadinha),
+vídeo em `object-fit: contain` (arte 9:16 inteira na tela 9:19.2, faixas naturalmente
+pretas), Jean removido (6 phones; card-05.mp4 fora do repo).
 
 ## Como adicionar um experimento (receita de 2 passos)
 
@@ -82,8 +87,9 @@ Detalhes no `apps/motion-lab/README.md`.
 
 - Projeto Vercel: `motion-lab` no time **studio-bicofinos-projects** (CLI da pasta
   `apps/motion-lab`, `.vercel/project.json` local). Deploy: `vercel --prod --yes`.
-- URL prod: **https://motion-lab-studio-bicofinos-projects.vercel.app** (primeiro deploy
-  2026-06-09, ● Ready). Responde 401 sem login Vercel do time — é o SSO default.
+- URL prod: **https://motion-lab-studio-bicofinos-projects.vercel.app** — **PÚBLICA**
+  desde 2026-06-09 (ssoProtection desligada via REST, a pedido do Woney, p/ compartilhar
+  com o grupo da Vanguarda).
 - Proteção de deployment do time (SSO) fica no default; abrir ao público só se Woney pedir
   (mesmo fluxo REST usado no casa-nostra).
 

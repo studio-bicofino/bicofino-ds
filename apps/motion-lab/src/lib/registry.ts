@@ -123,7 +123,7 @@ export const EXPERIMENTS: Experiment[] = [
     index: '11',
     title: 'iPhone Showcase — Produção Viva',
     summary:
-      'Os 7 Stories da rodada rodando em mockups de iPhone (CSS puro) — catavento girando, cascata surgindo ou esteira infinita, à escolha no tuner.',
+      'Os Stories da rodada rodando em mockups de iPhone (CSS puro) — catavento girando, cascata surgindo ou esteira infinita, à escolha no tuner.',
     tags: ['showcase', 'video', '3 modos'],
     libs: ['gsap', 'ScrollTrigger'],
     status: 'rascunho',
