@@ -20,6 +20,42 @@ export async function loadItems(): Promise<MediaItem[]> {
   return (data as MediaRow[]).map(rowToItem)
 }
 
+/** Lê só o material de um atleta (galeria read-only do /a/<slug>). */
+export async function loadItemsByAthlete(slug: string): Promise<MediaItem[]> {
+  const { data, error } = await supabaseBrowser
+    .from('media_items')
+    .select('*')
+    .eq('athlete_slug', slug)
+    .order('uploaded_at', { ascending: false })
+  if (error) throw new Error(error.message)
+  return (data as MediaRow[]).map(rowToItem)
+}
+
+/** Gera/garante a URL aberta ("qualquer um com o link") do arquivo (via /api/share). */
+export async function shareItem(id: string): Promise<string> {
+  const res = await fetch('/api/share', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ id }),
+  })
+  const json = await res.json()
+  if (!res.ok) throw new Error(json.error ?? 'Falha ao gerar o link aberto.')
+  return json.url as string
+}
+
+/** Manda o arquivo pra lixeira do Drive e remove a linha (via /api/delete). */
+export async function deleteItem(id: string): Promise<void> {
+  const res = await fetch('/api/delete', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ id }),
+  })
+  if (!res.ok) {
+    const json = await res.json().catch(() => ({}))
+    throw new Error(json.error ?? 'Falha ao apagar o arquivo.')
+  }
+}
+
 /** Muda o estágio de curadoria de um item (via /api/curate, service role). */
 export async function updateStatus(id: string, status: Status): Promise<MediaItem> {
   const res = await fetch('/api/curate', {

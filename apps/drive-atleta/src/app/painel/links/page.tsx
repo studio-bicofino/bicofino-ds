@@ -18,7 +18,7 @@ export default function LinksPage() {
           <div className="stack-3">
             <span className="bf-eyebrow">// links dos atletas</span>
             <h1 className="bf-h1">Links de envio</h1>
-            <p className="bf-body" style={{ color: 'var(--bf-text-subtle)', maxWidth: '56ch' }}>
+            <p className="bf-body" style={{ color: 'var(--bf-text-subtle)', maxWidth: '46ch' }}>
               Um link por atleta. Cada um abre só a área dele para enviar fotos e vídeos —
               copie e mande pelo WhatsApp.
             </p>

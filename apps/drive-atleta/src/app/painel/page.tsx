@@ -3,15 +3,14 @@
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { Search, RotateCcw, Link2 } from 'lucide-react'
-import type { MediaItem, Status, Category, MediaKind } from '@/lib/types'
-import { loadItems, updateStatus } from '@/lib/storage'
-import { CATEGORIES, STATUSES, KIND_LABEL } from '@/lib/categories'
+import type { MediaItem, Category, MediaKind } from '@/lib/types'
+import { loadItems, shareItem, deleteItem } from '@/lib/storage'
+import { CATEGORIES, KIND_LABEL } from '@/lib/categories'
 import { TopBar } from '@/components/TopBar'
 import { PanelCard } from '@/components/PanelCard'
 import { Reveal } from '@/components/Reveal'
 
 type CatFilter = Category | 'all'
-type StatusFilter = Status | 'all'
 type KindFilter = MediaKind | 'all'
 
 export default function PanelPage() {
@@ -20,7 +19,6 @@ export default function PanelPage() {
 
   const [query, setQuery] = useState('')
   const [cat, setCat] = useState<CatFilter>('all')
-  const [status, setStatus] = useState<StatusFilter>('all')
   const [kind, setKind] = useState<KindFilter>('all')
 
   const [error, setError] = useState<string | null>(null)
@@ -37,12 +35,17 @@ export default function PanelPage() {
     refresh()
   }, [])
 
-  function handleStatus(id: string, s: Status) {
+  function handleCopyLink(id: string) {
+    return shareItem(id)
+  }
+
+  function handleDelete(id: string) {
     const prev = items
-    setItems((list) => list.map((it) => (it.id === id ? { ...it, status: s } : it))) // otimista
-    updateStatus(id, s).catch(() => {
-      setError('Não consegui salvar o status. Restaurei o valor anterior.')
+    setItems((list) => list.filter((it) => it.id !== id)) // some na hora (otimista)
+    return deleteItem(id).catch((e) => {
+      setError(e instanceof Error ? e.message : 'Não consegui apagar. Restaurei o item.')
       setItems(prev)
+      throw e // o card volta ao estado normal
     })
   }
 
@@ -50,7 +53,6 @@ export default function PanelPage() {
     const q = query.trim().toLowerCase()
     return items.filter((it) => {
       if (cat !== 'all' && it.category !== cat) return false
-      if (status !== 'all' && it.status !== status) return false
       if (kind !== 'all' && it.kind !== kind) return false
       if (q) {
         const hay = [it.athleteName, it.match, it.competition, it.filename, ...it.tags]
@@ -59,7 +61,7 @@ export default function PanelPage() {
       }
       return true
     })
-  }, [items, query, cat, status, kind])
+  }, [items, query, cat, kind])
 
   const stats = useMemo(() => ({
     total: items.length,
@@ -126,7 +128,6 @@ export default function PanelPage() {
             </div>
             <div className="row-wrap" style={{ gap: 'var(--sp-3)' }}>
               <FilterSelect label="Categoria" value={cat} onChange={(v) => setCat(v as CatFilter)} options={[{ value: 'all', label: 'Todas' }, ...CATEGORIES]} />
-              <FilterSelect label="Status" value={status} onChange={(v) => setStatus(v as StatusFilter)} options={[{ value: 'all', label: 'Todos' }, ...STATUSES]} />
               <FilterSelect label="Tipo" value={kind} onChange={(v) => setKind(v as KindFilter)} options={[{ value: 'all', label: 'Todos' }, { value: 'foto', label: KIND_LABEL.foto }, { value: 'video', label: KIND_LABEL.video }]} />
             </div>
           </div>
@@ -140,7 +141,7 @@ export default function PanelPage() {
             <div className="cards-grid">
               {filtered.map((it, i) => (
                 <Reveal key={it.id} delay={Math.min(i * 40, 240)}>
-                  <PanelCard item={it} onStatusChange={handleStatus} />
+                  <PanelCard item={it} onCopyLink={handleCopyLink} onDelete={handleDelete} />
                 </Reveal>
               ))}
             </div>

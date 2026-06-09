@@ -157,6 +157,17 @@ cd apps/drive-atleta && node --env-file=.env.local scripts/create-athlete-folder
 ### 2026-06-09 — link individual do atleta (isolamento leve, sem login)
 Decisão do Woney: o link pra dar pra cada atleta é o próprio **`/a/<slug>`** (nome, adivinhável, fácil de manter — SEM token/capability-URL por ora; login fica p/ o futuro se precisar). Isolamento é só "não dar saída": a página do atleta NÃO expõe mais o hub (todos) nem o `/painel` (back-office de curadoria). Implementação: `TopBar` ganhou `brandHref`/`rightHref` (null = marca inerte + esconde a pill); `UploadFlow` chama `<TopBar brandHref={null} rightHref={null} />`; `SuccessState` perdeu o "Ver no Painel Bicofino". Woney acessa hub `/` e `/painel` direto pela URL. Atletas podem, em tese, adivinhar `/a/<outro-nome>` — aceito (Woney: "não é o fim do mundo").
 
+### 2026-06-09 — depósito (sem status) + galeria do atleta + ações no painel
+Virada de modelo: o app é **depósito**, não pipeline de curadoria. Mudanças:
+- **Página de links** `/painel/links` — lista os 16 atletas com o `/a/<slug>` e botão **copiar** (clipboard). Acesso pelo botão "links dos atletas" no cabeçalho do painel. Pra distribuir os links de upload.
+- **Galeria do atleta** (`AthleteGallery.tsx`) — seção "Meus envios" read-only na intro do `/a/<slug>`, filtrada por `athlete_slug` (`loadItemsByAthlete`). Só visualização; some quando o atleta não tem nada. Reusa `PanelCard readOnly` (esconde ações + link do Drive).
+- **Status removido do painel** — sem filtro nem controle de status nos cards (coluna `status` continua no banco, default 'recebido', só não é usada na UI). `PanelCard` agora tem **copiar link aberto** + **apagar** (confirmação inline).
+- **Ações (decisão Woney: SÓ no painel interno):**
+  - `POST /api/share` { id } → `shareAnyone(driveFileId)` cria permissão `anyone:reader` (idempotente, tolera 400/409) → devolve `web_view_link` (URL aberta, vale p/ vídeo grande via CDN do Google). `drive.ts: shareAnyone()`.
+  - `POST /api/delete` { id } → `trashFile(driveFileId)` (PATCH `trashed:true` — delete permanente é 404 p/ Content manager) + remove a linha do Supabase. Recuperável ~30 dias no Drive. `drive.ts: trashFile()`.
+  - Camada cliente em `storage.ts`: `loadItemsByAthlete`, `shareItem`, `deleteItem`. `updateStatus` segue lá mas sem uso.
+- ⚠️ **NÃO testei share/delete contra arquivos reais do acervo** (share tornaria público; delete mandaria pra lixeira) — só validei build + rotas vivas (400 em input vazio). Validar 1× na UI com item de teste (ou `test-e2e.mjs` + `cleanup-test.mjs`).
+
 ### Funcionalidades no ar (entregues nesta fase, todas mergeadas + deployadas)
 - **Hub `/`** lista os atletas (cards `.hub-link` com hover/press/focus). Cada → `/a/<slug>`.
 - **16 atletas** em `lib/athletes.ts` (Caio Henrique, Eloi Gómez Saus, Gabriel Mendes, **Gabriel Rigorfi**, Guilherme Kerchner, Jean Jesus, Joaquim Miranda, Julio Cezar, Lucas Henrique, **Lucas Ovies**, Luigi Brancatelli, Pedro Cialone, Rhian Marinho, Ronaldo Prado, Salvatore Brancatelli, Yuri Lima). Todos sem position/club. `driveFolder` = nome EXATO da pasta (acentos). Adicionar = 1 linha + rodar `create-athlete-folder.mjs` + deploy.

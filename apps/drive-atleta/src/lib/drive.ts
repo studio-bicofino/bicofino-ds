@@ -80,6 +80,36 @@ export async function resolveFolderId(segments: string[]): Promise<string> {
   return parent
 }
 
+/** Manda o arquivo para a lixeira do Shared Drive (delete permanente é
+    proibido p/ Content manager → `trashed:true`). Recuperável ~30 dias. */
+export async function trashFile(fileId: string): Promise<void> {
+  const url = new URL(`https://www.googleapis.com/drive/v3/files/${fileId}`)
+  url.searchParams.set('supportsAllDrives', 'true')
+  const res = await fetch(url, {
+    method: 'PATCH',
+    headers: { ...(await authHeaders()), 'content-type': 'application/json' },
+    body: JSON.stringify({ trashed: true }),
+    cache: 'no-store',
+  })
+  if (!res.ok) throw new Error(`Drive lixeira falhou (${res.status}): ${await res.text()}`)
+}
+
+/** Torna o arquivo acessível por "qualquer um com o link" (reader). Idempotente:
+    uma permissão `anyone` duplicada devolve 400/409 e a gente tolera. */
+export async function shareAnyone(fileId: string): Promise<void> {
+  const url = new URL(`https://www.googleapis.com/drive/v3/files/${fileId}/permissions`)
+  url.searchParams.set('supportsAllDrives', 'true')
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { ...(await authHeaders()), 'content-type': 'application/json' },
+    body: JSON.stringify({ type: 'anyone', role: 'reader' }),
+    cache: 'no-store',
+  })
+  if (!res.ok && res.status !== 400 && res.status !== 409) {
+    throw new Error(`Drive compartilhar falhou (${res.status}): ${await res.text()}`)
+  }
+}
+
 /** Inicia uma sessão de upload resumable e devolve a URL descartável p/ o PUT do navegador. */
 export async function startResumableUpload(opts: {
   name: string

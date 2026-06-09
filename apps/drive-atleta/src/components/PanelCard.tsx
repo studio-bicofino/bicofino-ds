@@ -1,22 +1,55 @@
 'use client'
 
 import { useState } from 'react'
-import { Eye, EyeOff } from 'lucide-react'
-import type { MediaItem, Status } from '@/lib/types'
-import { CATEGORY_LABEL, STATUSES } from '@/lib/categories'
+import { Eye, EyeOff, Copy, Check, Trash2, X } from 'lucide-react'
+import type { MediaItem } from '@/lib/types'
+import { CATEGORY_LABEL } from '@/lib/categories'
 import { formatBytes, formatDate } from '@/lib/format'
 import { Thumb } from './Thumb'
 
-/* Card de material no Painel — preview, metadados catalogados, caminho
-   no Drive e controle de curadoria (muda o status). */
+/* Card de material. No Painel (interno) traz as ações: copiar a URL aberta do
+   arquivo e apagar (lixeira do Drive). Em `readOnly` (galeria do atleta) é só
+   visualização — sem ações e sem o link do Drive (atleta não é membro). */
 export function PanelCard({
   item,
-  onStatusChange,
+  onCopyLink,
+  onDelete,
+  readOnly = false,
 }: {
   item: MediaItem
-  onStatusChange: (id: string, status: Status) => void
+  onCopyLink?: (id: string) => Promise<string>
+  onDelete?: (id: string) => Promise<void>
+  readOnly?: boolean
 }) {
   const [showNote, setShowNote] = useState(false)
+  const [copyState, setCopyState] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
+  const [confirming, setConfirming] = useState(false)
+  const [deleting, setDeleting] = useState(false)
+
+  async function handleCopy() {
+    if (!onCopyLink) return
+    setCopyState('loading')
+    try {
+      const url = await onCopyLink(item.id)
+      await navigator.clipboard.writeText(url)
+      setCopyState('done')
+      window.setTimeout(() => setCopyState('idle'), 1800)
+    } catch {
+      setCopyState('error')
+      window.setTimeout(() => setCopyState('idle'), 2400)
+    }
+  }
+
+  async function handleDelete() {
+    if (!onDelete) return
+    setDeleting(true)
+    try {
+      await onDelete(item.id) // o pai remove o card da lista em caso de sucesso
+    } catch {
+      setDeleting(false)
+      setConfirming(false)
+    }
+  }
 
   return (
     <div className="cell cell--pad-sm stack-3" style={{ borderRadius: 'var(--bf-corner-3)' }}>
@@ -31,7 +64,8 @@ export function PanelCard({
       </div>
 
       <div className="stack-2">
-        <span style={{ fontWeight: 500 }}>{item.athleteName}</span>
+        {!readOnly && <span style={{ fontWeight: 500 }}>{item.athleteName}</span>}
+        <span className="mono-path">{item.filename}</span>
         <span className="bf-mono" style={{ color: 'var(--bf-text-subtle)' }}>
           {formatDate(item.date)} · {formatBytes(item.sizeBytes)}
         </span>
@@ -45,21 +79,23 @@ export function PanelCard({
         </div>
       )}
 
-      <div className="stack-2">
-        <span className="bf-eyebrow">// destino</span>
-        <span className="mono-path">{item.drivePath}</span>
-        {item.webViewLink && (
-          <a
-            className="bf-mono"
-            href={item.webViewLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: 'var(--current-accent-ink)' }}
-          >
-            ver no Drive ↗
-          </a>
-        )}
-      </div>
+      {!readOnly && (
+        <div className="stack-2">
+          <span className="bf-eyebrow">// destino</span>
+          <span className="mono-path">{item.drivePath}</span>
+          {item.webViewLink && (
+            <a
+              className="bf-mono"
+              href={item.webViewLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: 'var(--current-accent-ink)' }}
+            >
+              ver no Drive ↗
+            </a>
+          )}
+        </div>
+      )}
 
       {item.notes && (
         <div className="stack-2">
@@ -82,21 +118,53 @@ export function PanelCard({
         </div>
       )}
 
-      <hr className="rule" />
+      {!readOnly && (
+        <>
+          <hr className="rule" />
+          <div className="between" style={{ gap: 'var(--sp-3)' }}>
+            <button
+              className="btn btn--ghost bf-mono"
+              onClick={handleCopy}
+              disabled={copyState === 'loading'}
+              title="Gera uma URL aberta (qualquer um com o link) e copia"
+              style={{ paddingLeft: 0, gap: 'var(--sp-2)' }}
+            >
+              {copyState === 'done' ? (
+                <><Check size={14} strokeWidth={1.5} aria-hidden /> copiado</>
+              ) : copyState === 'loading' ? (
+                'gerando…'
+              ) : copyState === 'error' ? (
+                'erro — tente de novo'
+              ) : (
+                <><Copy size={14} strokeWidth={1.5} aria-hidden /> copiar link</>
+              )}
+            </button>
 
-      <div className="between" style={{ gap: 'var(--sp-3)' }}>
-        <span className="field__label">Status</span>
-        <select
-          className="select"
-          value={item.status}
-          onChange={(e) => onStatusChange(item.id, e.target.value as Status)}
-          style={{ width: 'auto', padding: 'var(--sp-2) var(--sp-3)', fontSize: '0.8125rem' }}
-        >
-          {STATUSES.map((s) => (
-            <option key={s.value} value={s.value}>{s.label}</option>
-          ))}
-        </select>
-      </div>
+            {confirming ? (
+              <div className="row" style={{ gap: 'var(--sp-2)' }}>
+                <span className="bf-mono" style={{ color: 'var(--bf-text-subtle)' }}>
+                  {deleting ? 'apagando…' : 'apagar?'}
+                </span>
+                <button className="btn btn--ghost" onClick={handleDelete} disabled={deleting} aria-label="Confirmar apagar" style={{ padding: 'var(--sp-2)' }}>
+                  <Check size={14} strokeWidth={1.5} aria-hidden />
+                </button>
+                <button className="btn btn--ghost" onClick={() => setConfirming(false)} disabled={deleting} aria-label="Cancelar" style={{ padding: 'var(--sp-2)' }}>
+                  <X size={14} strokeWidth={1.5} aria-hidden />
+                </button>
+              </div>
+            ) : (
+              <button
+                className="btn btn--ghost bf-mono"
+                onClick={() => setConfirming(true)}
+                aria-label="Apagar do Drive"
+                style={{ gap: 'var(--sp-2)' }}
+              >
+                <Trash2 size={14} strokeWidth={1.5} aria-hidden /> apagar
+              </button>
+            )}
+          </div>
+        </>
+      )}
     </div>
   )
 }

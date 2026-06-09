@@ -16,6 +16,7 @@ import { Thumb } from './Thumb'
 import { SendingState } from './SendingState'
 import { SuccessState } from './SuccessState'
 import { BicofinoDiamond } from './BicofinoDiamond'
+import { AthleteGallery } from './AthleteGallery'
 
 type Stage = 'intro' | 'form' | 'sending' | 'success'
 
@@ -374,6 +375,8 @@ function Intro({ athlete, onStart }: { athlete: Athlete; onStart: () => void }) 
           Enviar material <ArrowRight size={18} strokeWidth={1.5} />
         </button>
       </div>
+
+      <AthleteGallery slug={athlete.slug} />
     </div>
   )
 }
