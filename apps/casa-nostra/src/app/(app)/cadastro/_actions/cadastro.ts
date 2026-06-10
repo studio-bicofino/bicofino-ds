@@ -99,6 +99,9 @@ async function createPersonV2Inner(input: CadastroV2Input): Promise<ActionResult
   // 1. Insert na tabela people
   const personRow = {
     full_name: data.full_name,
+    bicofino_id: emptyToNull(data.bicofino_id),
+    honorific: emptyToNull(data.honorific),
+    birth_date: emptyToNull(data.birth_date),
     current_title: emptyToNull(data.current_title),
     current_company: currentCompany,
     photo_url: emptyToNull(data.photo_url),
@@ -245,6 +248,9 @@ async function updatePersonV2Inner(
   // 1. UPDATE em people. Trigger cuida de updated_at.
   const personRow = {
     full_name: data.full_name,
+    bicofino_id: emptyToNull(data.bicofino_id),
+    honorific: emptyToNull(data.honorific),
+    birth_date: emptyToNull(data.birth_date),
     current_title: emptyToNull(data.current_title),
     current_company: currentCompany,
     photo_url: emptyToNull(data.photo_url),

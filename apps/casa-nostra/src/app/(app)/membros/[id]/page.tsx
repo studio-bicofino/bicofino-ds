@@ -22,6 +22,9 @@ export const dynamic = 'force-dynamic'
 type PersonRow = {
   id: string
   full_name: string
+  bicofino_id: string | null
+  honorific: string | null
+  birth_date: string | null
   current_title: string | null
   current_company: string | null
   photo_url: string | null
@@ -90,7 +93,7 @@ export default async function EditPersonPage({
       supabase
         .from('people')
         .select(
-          'id, full_name, current_title, current_company, photo_url, home_city, home_country, address_street, address_number, address_complement, address_state, address_zip',
+          'id, full_name, bicofino_id, honorific, birth_date, current_title, current_company, photo_url, home_city, home_country, address_street, address_number, address_complement, address_state, address_zip',
         )
         .eq('id', id)
         .maybeSingle(),
@@ -138,6 +141,9 @@ export default async function EditPersonPage({
 
   const initialData: CadastroV2Input = {
     full_name: person.full_name,
+    bicofino_id: person.bicofino_id,
+    honorific: person.honorific,
+    birth_date: person.birth_date,
     current_title: person.current_title,
     current_company: person.current_company,
     photo_url: person.photo_url,

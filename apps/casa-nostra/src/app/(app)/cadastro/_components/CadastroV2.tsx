@@ -83,7 +83,43 @@ const NAME_INPUT_STYLE: CSSProperties = {
   borderRadius: 8,
   outline: 'none',
   transition: 'border-color 120ms ease-out',
+  minHeight: 52,
+  boxSizing: 'border-box',
 }
+
+// Campos compactos que dividem a linha do Nome (tratamento + nascimento).
+// Mesma altura do input de nome pra linha ficar alinhada.
+const SIDE_FIELD_STYLE: CSSProperties = {
+  width: '100%',
+  fontFamily: 'inherit',
+  fontSize: 14,
+  padding: '12px 12px',
+  background: 'var(--bf-surface)',
+  color: 'var(--bf-text-primary)',
+  border: '1px solid var(--bf-border-strong)',
+  borderRadius: 8,
+  outline: 'none',
+  transition: 'border-color 120ms ease-out',
+  minHeight: 52,
+  boxSizing: 'border-box',
+}
+
+const BICOFINO_ID_STYLE: CSSProperties = {
+  fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+  fontSize: 13,
+  letterSpacing: '0.08em',
+  textTransform: 'uppercase',
+  padding: '8px 12px',
+  width: 160,
+  background: 'var(--bf-surface)',
+  color: 'var(--bf-text-primary)',
+  border: '1px solid var(--bf-border-strong)',
+  borderRadius: 8,
+  outline: 'none',
+  transition: 'border-color 120ms ease-out',
+}
+
+const HONORIFIC_OPTIONS = ['Mr', 'Mrs', 'Miss'] as const
 
 const BLOCK_LABEL_STYLE: CSSProperties = {
   fontFamily: '"JetBrains Mono", ui-monospace, monospace',
@@ -154,6 +190,9 @@ export function CadastroV2({
 
   // Estado do form — inicializado a partir de initialData quando edit.
   const [fullName, setFullName] = useState(initialData?.full_name ?? '')
+  const [bicofinoId, setBicofinoId] = useState(initialData?.bicofino_id ?? '')
+  const [honorific, setHonorific] = useState(initialData?.honorific ?? '')
+  const [birthDate, setBirthDate] = useState(initialData?.birth_date ?? '')
   const [currentTitle, setCurrentTitle] = useState(initialData?.current_title ?? '')
   const [currentCompany, setCurrentCompany] = useState(
     initialData?.current_company ?? '',
@@ -202,6 +241,9 @@ export function CadastroV2({
 
     const payload: CadastroV2Input = {
       full_name: trimmedName,
+      bicofino_id: bicofinoId.trim() || null,
+      honorific: honorific || null,
+      birth_date: birthDate || null,
       current_title: currentTitle.trim() || null,
       current_company: currentCompany.trim() || null,
       photo_url: photoUrl,
@@ -285,6 +327,21 @@ export function CadastroV2({
           )}
           <h1 style={TITLE_STYLE}>{headerTitle}</h1>
         </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <label htmlFor="cadastro-bicofino-id" style={{ ...BLOCK_LABEL_STYLE, marginBottom: 0 }}>
+            Bicofino ID
+          </label>
+          <input
+            id="cadastro-bicofino-id"
+            type="text"
+            value={bicofinoId}
+            onChange={(e) => setBicofinoId(e.target.value)}
+            placeholder="—"
+            disabled={pending}
+            style={BICOFINO_ID_STYLE}
+          />
+        </div>
       </header>
 
       {/* Linha 1 — Foto + Nome/Cargo/Empresa */}
@@ -301,21 +358,65 @@ export function CadastroV2({
         <PhotoUploaderHero value={photoUrl} onChange={setPhotoUrl} disabled={pending} />
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <div>
-            <label htmlFor="cadastro-full-name" style={BLOCK_LABEL_STYLE}>
-              Nome
-            </label>
-            <input
-              id="cadastro-full-name"
-              type="text"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              placeholder="Nome completo"
-              required
-              autoFocus
-              disabled={pending}
-              style={NAME_INPUT_STYLE}
-            />
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '96px 1fr 170px',
+              gap: 16,
+              alignItems: 'end',
+            }}
+            className="cn-cadastro-v2__name-grid"
+          >
+            <div>
+              <label htmlFor="cadastro-honorific" style={BLOCK_LABEL_STYLE}>
+                Tratamento
+              </label>
+              <select
+                id="cadastro-honorific"
+                value={honorific}
+                onChange={(e) => setHonorific(e.target.value)}
+                disabled={pending}
+                style={{ ...SIDE_FIELD_STYLE, cursor: 'pointer' }}
+              >
+                <option value="">—</option>
+                {HONORIFIC_OPTIONS.map((h) => (
+                  <option key={h} value={h}>
+                    {h}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="cadastro-full-name" style={BLOCK_LABEL_STYLE}>
+                Nome
+              </label>
+              <input
+                id="cadastro-full-name"
+                type="text"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                placeholder="Nome completo"
+                required
+                autoFocus
+                disabled={pending}
+                style={NAME_INPUT_STYLE}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="cadastro-birth-date" style={BLOCK_LABEL_STYLE}>
+                Nascimento
+              </label>
+              <input
+                id="cadastro-birth-date"
+                type="date"
+                value={birthDate}
+                onChange={(e) => setBirthDate(e.target.value)}
+                disabled={pending}
+                style={SIDE_FIELD_STYLE}
+              />
+            </div>
           </div>
 
           <div
@@ -382,9 +483,9 @@ export function CadastroV2({
         />
       </section>
 
-      {/* Linha 5 — Afiliações */}
+      {/* Linha 5 — Domínios (kind interno segue 'afiliacao') */}
       <section>
-        <label style={BLOCK_LABEL_STYLE}>Afiliações</label>
+        <label style={BLOCK_LABEL_STYLE}>Domínios</label>
         <TagInput
           kind="afiliacao"
           value={afiliacoes}

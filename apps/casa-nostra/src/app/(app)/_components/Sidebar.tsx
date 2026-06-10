@@ -9,6 +9,7 @@ import {
   X,
   IdCard,
   Plus,
+  Tags,
   type LucideIcon,
 } from 'lucide-react'
 import { LogoutButton } from '@/components/LogoutButton'
@@ -35,6 +36,7 @@ const SECTIONS: NavSection[] = [
     items: [
       { href: '/membros', label: 'Membros', icon: IdCard, isNew: true },
       { href: '/cadastro', label: 'Cadastrar', icon: Plus, isNew: true },
+      { href: '/grupos', label: 'Grupos', icon: Tags },
     ],
   },
   { kind: 'divider' },

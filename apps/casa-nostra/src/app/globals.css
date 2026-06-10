@@ -540,6 +540,9 @@ select.cn-filter-input {
   .cn-cadastro-v2__role-grid {
     grid-template-columns: 1fr !important;
   }
+  .cn-cadastro-v2__name-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
