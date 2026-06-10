@@ -20,9 +20,12 @@
 - **Valores escolhidos pelo Woney:** duração **0.9s**, ease **expo.out `[0.19, 1, 0.22, 1]`**,
   stagger **90ms** entre linhas. Usado nos 4 Cs e nos h1 das 3 seções (via `SplitReveal`
   com prop `ease`).
-- **Coreografia do hero (ordem final):** vídeo (0.08s) → 4 Cs (0.24s) → cascata do texto
-  (0.5s, 12ms/palavra) → signoff. Baseline do signoff alinhada à do "Consult." via trim
-  medido no browser (`margin-bottom: calc(clamp(40px,7vw,88px) * 0.1)`, desktop only).
+- **Coreografia do hero (ordem final):** vídeo (0.08s) → 4 Cs (0.24s) → texto mensch em
+  **cascata de BLOCOS** (0.5s base, cada parágrafo+signoff entra inteiro com y:24+opacity,
+  stagger 120ms, mesma dupla 0.9s/expo.out — split por palavra foi descartado pelo Woney).
+  Baseline do signoff alinhada à do "Consult." via trim medido no browser
+  (`margin-bottom: calc(clamp(40px,7vw,88px) * 0.1)`, desktop only). O `SplitReveal`
+  segue em uso nos h1 das seções.
 - ⚠️ **Emenda §8 pendente** (sessão motion-lab): formalizar no DESIGN.md o gesto masked-reveal,
   duração 0.9s + expo.out, stagger por palavra ~10–15ms, e o uso da Gotham em títulos de
   seção/4 Cs no §6 (hoje o texto fala "1–2 palavras de impacto").

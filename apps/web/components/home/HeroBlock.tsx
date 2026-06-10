@@ -3,18 +3,19 @@
 import React from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { FourCsHeading } from './FourCsHeading'
-import { SplitReveal } from '@/components/primitives/SplitReveal'
 import { useLang } from '@/content/index'
 
 const EASE_OUT = [0.16, 1, 0.3, 1] as const
+// mesmo expo.out fluido dos 4 Cs
+const EASE_FLUID = [0.19, 1, 0.22, 1] as const
 
-// Choreography order (Woney, 2026-06-10): video → 4Cs → mensch cascade.
-// One continuous word cascade through the whole column: each paragraph's
-// delay is the running word count, so the wave never breaks or stalls.
+// Choreography order (Woney, 2026-06-10): video → 4Cs → mensch.
+// Mensch entra em cascata de BLOCOS: cada parágrafo é uma unidade
+// (y + opacidade), escalonados — sem split por palavra/linha.
 const VIDEO_DELAY = 0.08
 const FOURCS_DELAY = 0.24
 const MENSCH_BASE_DELAY = 0.5
-const MENSCH_WORD_STAGGER = 0.012
+const MENSCH_BLOCK_STAGGER = 0.12
 
 const MENSCH_KEYS = ['home.mensch.p1', 'home.mensch.p2', 'home.mensch.p3'] as const
 
@@ -22,11 +23,16 @@ export function HeroBlock({ revealed = true }: { revealed?: boolean }) {
   const { t } = useLang()
   const reducedMotion = useReducedMotion()
 
-  const paragraphs = MENSCH_KEYS.map((key) => t(key))
-  const wordCounts = paragraphs.map((p) => p.split(' ').length)
-  const delayAt = (i: number) =>
-    MENSCH_BASE_DELAY +
-    wordCounts.slice(0, i).reduce((n, c) => n + c, 0) * MENSCH_WORD_STAGGER
+  const menschEntrance = (i: number) => ({
+    initial: reducedMotion ? false : ({ opacity: 0, y: 24 } as const),
+    animate:
+      revealed || reducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 },
+    transition: {
+      delay: MENSCH_BASE_DELAY + i * MENSCH_BLOCK_STAGGER,
+      duration: 0.9,
+      ease: EASE_FLUID,
+    },
+  })
 
   return (
     <section
@@ -90,12 +96,10 @@ export function HeroBlock({ revealed = true }: { revealed?: boolean }) {
           {/* Col 3 — Mensch */}
           <div className="bf-hero-mensch-col">
             {MENSCH_KEYS.map((key, i) => (
-              <SplitReveal
+              <motion.p
                 key={key}
-                text={paragraphs[i]}
-                start={revealed}
-                baseDelay={delayAt(i)}
-                stagger={MENSCH_WORD_STAGGER}
+                className="bf-reveal"
+                {...menschEntrance(i)}
                 style={{
                   fontFamily: '"Inter", ui-sans-serif, system-ui, sans-serif',
                   fontSize: 12,
@@ -107,15 +111,14 @@ export function HeroBlock({ revealed = true }: { revealed?: boolean }) {
                   marginBottom: 'var(--bf-space-md)',
                   textWrap: 'pretty',
                 } as React.CSSProperties}
-              />
+              >
+                {t(key)}
+              </motion.p>
             ))}
 
-            <SplitReveal
-              text={t('home.mensch.signoff')}
-              start={revealed}
-              baseDelay={delayAt(3)}
-              stagger={0.07}
-              mask
+            <motion.p
+              className="bf-reveal"
+              {...menschEntrance(3)}
               style={{
                 fontFamily: '"JetBrains Mono", ui-monospace, monospace',
                 fontSize: 11,
@@ -128,7 +131,9 @@ export function HeroBlock({ revealed = true }: { revealed?: boolean }) {
                    flush com a base do "Consult." (grid align-items: end) */
                 lineHeight: 1,
               }}
-            />
+            >
+              {t('home.mensch.signoff')}
+            </motion.p>
           </div>
         </div>
       </div>
