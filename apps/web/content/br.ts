@@ -22,11 +22,11 @@ export const br = {
   'home.mensch.signoff': 'Bicofino. Unlike Any Other.',
 
   // Footer
-  'footer.address': 'av. pedroso de morais 1619 | 05019 001 | pinheiros | são paulo | sp | brasil',
+  'footer.address': 'av pedroso de morais 1619 | 05019 001 | pinheiros | são paulo | sp | brasil',
   'footer.club': 'CLUB',
   'footer.club.label': 'Acesso ao Club',
   'footer.email': 'hello@bicofino.com',
-  'footer.instagram': '@bicofino',
+  'footer.instagram': 'bicofino',
   'footer.instagram.label': 'Bicofino no Instagram',
   'footer.copyright': '© 2010 — now | BICOFINO GROUP S.A.',
   'footer.location.label': 'Endereço Bicofino',
