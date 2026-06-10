@@ -1,8 +1,8 @@
 export const en = {
   // Nav
-  'nav.foundation': 'foundation',
-  'nav.off-field': 'off pitch',
-  'nav.on-field': 'on pitch',
+  'nav.foundation': 'Foundation',
+  'nav.off-field': 'Off Pitch',
+  'nav.on-field': 'On Pitch',
   'nav.menu.label': 'Menu',
   'nav.close.label': 'Close menu',
 
@@ -13,13 +13,13 @@ export const en = {
   'home.4cs.consult': 'Consult.',
 
   // Hero — Mensch
-  'home.mensch.eyebrow': 'UNLIKE ANY OTHER.',
   'home.mensch.p1':
-    'Sport speaks the language of emotion. Brand speaks the language of consumption. Between the two lies one of marketing\'s greatest untapped potentials — and that is where Bicofino operates.',
+    'Being good at many things is competence. Being native in all of them is something else: fluency. And fluency is when the translating stops. The agent translates football into brand. The agency translates brand into sport. The manager translates wealth for the athlete. Everyone translates — and something is lost in every translation.',
   'home.mensch.p2':
-    'We connect athletes, personalities and premium brands in activations that respect both rhythms. On Pitch and Off Pitch, with the same standard of excellence, the same visual language, the same commitment to detail.',
+    'Bicofino does not translate: it thinks, at once, in the language of the locker room and of the CEO\'s office, of the European scout and of São Paulo society. None of these worlds calls for translation, because it is native in all of them.',
   'home.mensch.p3':
-    'Genuine talent. Access that takes years to build. Curation in every connection. Every deliverable passes the filter of what is truly good.',
+    'Bicofino is not an agency, not a holding company, not a consultancy. It is a house — fluent in worlds that do not speak to each other. As rare as what it brings together.',
+  'home.mensch.signoff': 'Bicofino. Unlike Any Other.',
 
   // Footer
   'footer.address': 'av. pedroso de morais 1619 | 05019 001 | pinheiros | são paulo | sp | brasil',

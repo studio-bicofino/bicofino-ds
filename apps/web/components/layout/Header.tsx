@@ -76,7 +76,6 @@ export function Header({ onMenuOpen }: HeaderProps) {
                   letterSpacing: '0.04em',
                   color: isActive ? 'var(--bf-text-primary)' : 'var(--bf-text-secondary)',
                   transition: 'color 180ms ease-out',
-                  textTransform: 'lowercase',
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.color = 'var(--bf-text-primary)'

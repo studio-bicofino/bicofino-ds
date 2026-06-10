@@ -1,8 +1,8 @@
 export const br = {
   // Nav
-  'nav.foundation': 'foundation',
-  'nav.off-field': 'off pitch',
-  'nav.on-field': 'on pitch',
+  'nav.foundation': 'Foundation',
+  'nav.off-field': 'Off Pitch',
+  'nav.on-field': 'On Pitch',
   'nav.menu.label': 'Menu',
   'nav.close.label': 'Fechar menu',
 
@@ -13,13 +13,13 @@ export const br = {
   'home.4cs.consult': 'Consult.',
 
   // Hero — Mensch
-  'home.mensch.eyebrow': 'UNLIKE ANY OTHER.',
   'home.mensch.p1':
-    'Esporte fala a língua da emoção. Marca fala a língua do consumo. Entre uma e outra mora um dos maiores potenciais inexplorados do marketing — e é nele que o Bicofino opera.',
+    'Ser bom em muitas coisas é competência. Ser nativo em todas é outra coisa: é fluência. E fluência é quando se para de traduzir. O agente traduz futebol para marca. A agência traduz marca para esporte. O gestor traduz patrimônio para o atleta. Todos traduzem — e em toda tradução se perde alguma coisa.',
   'home.mensch.p2':
-    'Conectamos atletas, personalidades e marcas premium em ativações que respeitam os dois ritmos. On Pitch e Off Pitch, com o mesmo padrão de exigência, o mesmo vocabulário visual, o mesmo compromisso com o detalhe.',
+    'O Bicofino não traduz: pensa, ao mesmo tempo, no idioma do vestiário e no da sala do CEO, no do scout europeu e no da sociedade paulistana. Nenhum desses mundos pede tradução, porque em todos ele é nativo.',
   'home.mensch.p3':
-    'Talento real. Acesso que leva anos para construir. Curadoria em cada conexão. Cada entrega passa pelo filtro do que é verdadeiramente bom.',
+    'Bicofino não é uma agência, nem uma holding, nem uma consultoria. É uma casa — fluente em mundos que não conversam. Rara como aquilo que reúne.',
+  'home.mensch.signoff': 'Bicofino. Unlike Any Other.',
 
   // Footer
   'footer.address': 'av. pedroso de morais 1619 | 05019 001 | pinheiros | são paulo | sp | brasil',

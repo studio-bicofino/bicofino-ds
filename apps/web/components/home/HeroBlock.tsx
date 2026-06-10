@@ -1,25 +1,32 @@
 'use client'
 
 import React from 'react'
-import { motion, type Variants } from 'motion/react'
+import { motion, useReducedMotion } from 'motion/react'
 import { FourCsHeading } from './FourCsHeading'
+import { SplitReveal } from '@/components/primitives/SplitReveal'
 import { useLang } from '@/content/index'
 
 const EASE_OUT = [0.16, 1, 0.3, 1] as const
 
-// Mensch text column — staggers in last, after the video and the 4Cs.
-const menschContainer: Variants = {
-  hidden: {},
-  // delayChildren = sequencing (uncapped); stagger stays in the §8 55–70ms window
-  show: { transition: { delayChildren: 0.5, staggerChildren: 0.07 } },
-}
-const menschItem: Variants = {
-  hidden: { opacity: 0, y: 12 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.36, ease: EASE_OUT } },
-}
+// Choreography order (Woney, 2026-06-10): video → 4Cs → mensch cascade.
+// One continuous word cascade through the whole column: each paragraph's
+// delay is the running word count, so the wave never breaks or stalls.
+const VIDEO_DELAY = 0.08
+const FOURCS_DELAY = 0.24
+const MENSCH_BASE_DELAY = 0.5
+const MENSCH_WORD_STAGGER = 0.012
+
+const MENSCH_KEYS = ['home.mensch.p1', 'home.mensch.p2', 'home.mensch.p3'] as const
 
 export function HeroBlock({ revealed = true }: { revealed?: boolean }) {
   const { t } = useLang()
+  const reducedMotion = useReducedMotion()
+
+  const paragraphs = MENSCH_KEYS.map((key) => t(key))
+  const wordCounts = paragraphs.map((p) => p.split(' ').length)
+  const delayAt = (i: number) =>
+    MENSCH_BASE_DELAY +
+    wordCounts.slice(0, i).reduce((n, c) => n + c, 0) * MENSCH_WORD_STAGGER
 
   return (
     <section
@@ -42,9 +49,11 @@ export function HeroBlock({ revealed = true }: { revealed?: boolean }) {
           <div className="bf-hero-video-col">
             <motion.div
               className="bf-reveal"
-              initial={{ opacity: 0, y: 12 }}
-              animate={revealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-              transition={{ duration: 0.36, delay: 0.08, ease: EASE_OUT }}
+              initial={reducedMotion ? false : { opacity: 0, y: 12 }}
+              animate={
+                revealed || reducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }
+              }
+              transition={{ duration: 0.36, delay: VIDEO_DELAY, ease: EASE_OUT }}
               style={{
                 width: '100%',
                 maxWidth: 400,
@@ -75,53 +84,52 @@ export function HeroBlock({ revealed = true }: { revealed?: boolean }) {
 
           {/* Col 2 — 4Cs */}
           <div className="bf-hero-4cs-col">
-            <FourCsHeading start={revealed} baseDelay={0.24} />
+            <FourCsHeading start={revealed} baseDelay={FOURCS_DELAY} />
           </div>
 
           {/* Col 3 — Mensch */}
-          <motion.div
-            className="bf-hero-mensch-col"
-            variants={menschContainer}
-            initial="hidden"
-            animate={revealed ? 'show' : 'hidden'}
-          >
-            <motion.p
-              className="bf-reveal"
-              variants={menschItem}
-              style={{
-                fontFamily: '"JetBrains Mono", ui-monospace, monospace',
-                fontSize: 11,
-                fontWeight: 600,
-                letterSpacing: '0.14em',
-                textTransform: 'uppercase',
-                color: 'var(--bf-text-secondary)',
-                marginBottom: 'var(--bf-space-md)',
-              }}
-            >
-              {t('home.mensch.eyebrow')}
-            </motion.p>
-
-            {(['home.mensch.p1', 'home.mensch.p2', 'home.mensch.p3'] as const).map((key) => (
-              <motion.p
+          <div className="bf-hero-mensch-col">
+            {MENSCH_KEYS.map((key, i) => (
+              <SplitReveal
                 key={key}
-                className="bf-reveal"
-                variants={menschItem}
+                text={paragraphs[i]}
+                start={revealed}
+                baseDelay={delayAt(i)}
+                stagger={MENSCH_WORD_STAGGER}
                 style={{
                   fontFamily: '"Inter", ui-sans-serif, system-ui, sans-serif',
                   fontSize: 12,
-                  lineHeight: 1.45,
+                  lineHeight: 1.7,
                   letterSpacing: 0,
                   fontWeight: 400,
                   color: 'var(--bf-text-secondary)',
-                  maxWidth: 360,
+                  maxWidth: '60ch',
                   marginBottom: 'var(--bf-space-md)',
                   textWrap: 'pretty',
                 } as React.CSSProperties}
-              >
-                {t(key)}
-              </motion.p>
+              />
             ))}
-          </motion.div>
+
+            <SplitReveal
+              text={t('home.mensch.signoff')}
+              start={revealed}
+              baseDelay={delayAt(3)}
+              stagger={0.07}
+              mask
+              style={{
+                fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                color: 'var(--bf-text-primary)',
+                marginTop: 'var(--bf-space-sm)',
+                /* lineHeight 1: a base da coluna = baseline do signoff,
+                   flush com a base do "Consult." (grid align-items: end) */
+                lineHeight: 1,
+              }}
+            />
+          </div>
         </div>
       </div>
 
@@ -143,6 +151,14 @@ export function HeroBlock({ revealed = true }: { revealed?: boolean }) {
         .bf-hero-mensch-col {
           display: flex;
           flex-direction: column;
+        }
+        /* baseline trim: o "Consult." (Gotham Black, lh 1.0) carrega ~0.1em de
+           descent abaixo da baseline; sobe a coluna de texto pra alinhar
+           baseline com baseline (medido no browser, 2026-06-10) */
+        @media (min-width: 1024px) {
+          .bf-hero-mensch-col {
+            margin-bottom: calc(clamp(40px, 7vw, 88px) * 0.1);
+          }
         }
 
         /* Tablet */
@@ -181,9 +197,7 @@ export function HeroBlock({ revealed = true }: { revealed?: boolean }) {
           .bf-hero-4cs-col {
             justify-content: flex-start;
           }
-          .bf-hero-mensch-col p {
-            max-width: 100% !important;
-          }
+          /* measure rule (§6): the inline 60ch cap holds on mobile too */
         }
       `}</style>
     </section>

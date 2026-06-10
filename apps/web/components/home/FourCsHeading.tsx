@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
-import { motion } from 'motion/react'
+import { motion, useReducedMotion } from 'motion/react'
 import { useLang } from '@/content/index'
 
 const KEYS = [
@@ -13,6 +13,7 @@ const KEYS = [
 
 export function FourCsHeading({ start, baseDelay = 0 }: { start?: boolean; baseDelay?: number } = {}) {
   const { t } = useLang()
+  const reducedMotion = useReducedMotion()
   const ref = useRef<HTMLDivElement>(null)
   const [obsVisible, setObsVisible] = useState(false)
 
@@ -39,20 +40,13 @@ export function FourCsHeading({ start, baseDelay = 0 }: { start?: boolean; baseD
       style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.0 }}
     >
       {KEYS.map((key, i) => (
-        <motion.span
+        <span
           key={key}
           aria-hidden="true"
-          className="bf-reveal"
-          initial={{ opacity: 0, y: 12 }}
-          animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-          transition={{
-            delay: baseDelay + i * 0.06,
-            duration: 0.28,
-            ease: [0.16, 1, 0.3, 1],
-          }}
           style={{
             display: 'block',
-            fontFamily: '"Inter", ui-sans-serif, system-ui, sans-serif',
+            overflow: 'hidden',
+            fontFamily: 'var(--bf-font-impact)',
             fontWeight: 700,
             color: 'var(--bf-text-primary)',
             /* clamp: 40px mobile → 88px desktop */
@@ -60,8 +54,26 @@ export function FourCsHeading({ start, baseDelay = 0 }: { start?: boolean; baseD
             lineHeight: 1.0,
           }}
         >
-          {t(key)}
-        </motion.span>
+          {/* Split reveal vertical (EXP-01): cada linha sobe da própria dobra,
+              cascateando num expo.out longo e fluido. */}
+          <motion.span
+            className="bf-reveal"
+            initial={reducedMotion ? false : { opacity: 0, y: '110%' }}
+            animate={
+              visible || reducedMotion
+                ? { opacity: 1, y: '0%' }
+                : { opacity: 0, y: '110%' }
+            }
+            transition={{
+              delay: baseDelay + i * 0.09,
+              duration: 0.9,
+              ease: [0.19, 1, 0.22, 1],
+            }}
+            style={{ display: 'block' }}
+          >
+            {t(key)}
+          </motion.span>
+        </span>
       ))}
     </div>
   )

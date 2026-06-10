@@ -4,17 +4,67 @@ import { LanguageProvider } from '@/content/index'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://bicofino.com'),
-  title: 'Bicofino — Unlike Any Other',
+  title: {
+    default: 'Bicofino — Unlike Any Other',
+    template: '%s — Bicofino',
+  },
   description:
     'Bicofino Group — curadoria, conexão e criatividade ao mais alto nível. On Pitch. Off Pitch. São Paulo.',
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
+    type: 'website',
+    url: 'https://bicofino.com',
+    siteName: 'Bicofino',
+    locale: 'pt_BR',
     title: 'Bicofino — Unlike Any Other',
     description:
       'Bicofino Group — curation, connection, and creativity at the highest level.',
-    images: [{ url: '/og-image.png' }],
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Bicofino — Unlike Any Other' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Bicofino — Unlike Any Other',
+    description:
+      'Bicofino Group — curation, connection, and creativity at the highest level.',
+    images: ['/og-image.png'],
   },
   // Favicons resolved from app/{favicon.ico,icon.svg,icon.png,apple-icon.png}
   // via Next's file-based metadata convention (the Bicofino sparkle).
+}
+
+/* Structured data (JSON-LD) — Organization + WebSite, per Google Search Central. */
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://bicofino.com/#organization',
+      name: 'Bicofino Group',
+      url: 'https://bicofino.com',
+      logo: 'https://bicofino.com/icon.png',
+      slogan: 'Unlike Any Other.',
+      email: 'hello@bicofino.com',
+      sameAs: ['https://www.instagram.com/bicofino'],
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Av. Pedroso de Morais, 1619',
+        addressLocality: 'São Paulo',
+        addressRegion: 'SP',
+        postalCode: '05019-001',
+        addressCountry: 'BR',
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://bicofino.com/#website',
+      name: 'Bicofino',
+      url: 'https://bicofino.com',
+      publisher: { '@id': 'https://bicofino.com/#organization' },
+      inLanguage: ['pt-BR', 'en', 'it'],
+    },
+  ],
 }
 
 /* Anti-FOUC: runs before paint, sets data-theme from localStorage */
@@ -39,6 +89,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <noscript><style>{`.bf-intro-overlay{display:none!important}.bf-reveal{opacity:1!important;transform:none!important}`}</style></noscript>
       </head>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <a href="#main-content" className="bf-skip-link">Pular para o conteúdo</a>
         <LanguageProvider>
           {children}

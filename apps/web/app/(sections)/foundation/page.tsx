@@ -5,6 +5,7 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { MobileMenu } from '@/components/layout/MobileMenu'
 import { Accordion } from '@/components/primitives/Accordion'
+import { SplitReveal } from '@/components/primitives/SplitReveal'
 import { useLang } from '@/content/index'
 
 export default function FoundationPage() {
@@ -42,21 +43,25 @@ export default function FoundationPage() {
               marginBottom: 'var(--bf-space-md)',
             }}
           >
-            {t('foundation.eyebrow')}
+            // {t('foundation.heading')}
           </p>
 
-          <h1
+          <SplitReveal
+            text={t('foundation.title')}
+            as="h1"
+            mask
+            stagger={0.09}
+            duration={0.9}
+            ease={[0.19, 1, 0.22, 1]}
             style={{
-              fontFamily: '"Inter", ui-sans-serif, sans-serif',
+              fontFamily: 'var(--bf-font-impact)',
               fontSize: 'clamp(36px, 5vw, 56px)',
               fontWeight: 700,
               lineHeight: 1.05,
               color: 'var(--bf-text-primary)',
               marginBottom: 'var(--bf-space-lg)',
             }}
-          >
-            {t('foundation.heading')}
-          </h1>
+          />
 
           <p
             style={{

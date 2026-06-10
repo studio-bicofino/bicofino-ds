@@ -1,5 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
 
+/* ─── Gotham (impact) — self-hosted, Bold + Black (DESIGN.md Fase 2) ─── */
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ─── Bicofino Web — Design Tokens ─── */
 :root {
   /* Palette */
@@ -20,6 +36,9 @@
   --bf-border:         rgba(42, 44, 43, 0.08);
   --bf-border-strong:  rgba(42, 44, 43, 0.16);
   --bf-accent:         #bfa37a;
+
+  /* Impact type — Gotham Black, reservada a palavras de impacto (4 Cs) */
+  --bf-font-impact: 'Gotham', 'Inter', ui-sans-serif, system-ui, sans-serif;
 
   /* Spacing — canonical 8/16/32 */
   --bf-space-sm: 8px;
