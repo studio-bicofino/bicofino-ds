@@ -1,7 +1,30 @@
 # HANDOFF — Lançamento Web (apps/web)
 
 > Estado vivo da frente "lançamento oficial". Ler junto com `BRIEFING.md`.
-> Última atualização: **2026-06-10** (Gotham Fase 2 + split reveal final + hierarquia das seções).
+> Última atualização: **2026-06-10 (noite)** — TESTE DE COPY EM ABERTO, ler antes de tudo.
+
+## ⚠️ EM ABERTO — Teste das 5 variantes do texto de entrada (decidir com Woney)
+
+A abertura do manifesto (p1+p2) está em **teste A/B/C/D/E em prod**: 5 variantes sorteadas
+por refresh, marcador discreto `// copy vN` no topo da coluna, override `?copy=v1..v5`.
+p3 ("Bicofino não é uma agência…") + signoff são FIXOS — Woney aprovou.
+
+Direcionamento do Woney que gerou as variantes: (1) tirar o eco "coisas/coisa";
+(2) "gestor traduz patrimônio para a **família**" (family office, casa aconchegante);
+(3) repensar "sociedade paulistana" (só "sociedade"? SP-Milão-NY?); (4) arco narrativo
+= conectar/curar/criar/aconselhar → fluência em universos que não conversam → unlike any other.
+
+- **v1 Lapidada** — texto atual com arestas tiradas (mudança mínima)
+- **v2 Tríade** — v1 + sociedade paulistana/milanesa/novaiorquina (eixo internacional)
+- **v3 Caminho dos 4 Cs** — abre ecoando Conectar/curar/criar/aconselhar
+- **v4 A mesa** — a mais aconchegante ("recebe cada mundo", "sentar à mesma mesa")
+- **v5 Aforística** — subtração máxima, duas frases-lâmina
+- Chaves: `home.mensch.v{1-5}.p{1,2}` em br/en/it (paridade completa).
+  **Na escolha:** colapsar pra `home.mensch.p1/p2`, remover sorteio + marcador no
+  `HeroBlock.tsx` (blocos marcados com `⚠️ TEMP`), apagar chaves não usadas nos 3 idiomas.
+
+**Nota:** a intro de marca NÃO se perdeu — é o guard 1×/sessão (aba nova/anônima re-executa;
+`?intro=` força). Woney estranhou em 10/06; explicado e confirmado vivo em prod via Playwright.
 
 ## 2026-06-10 — Gotham Fase 2 + receita final do split reveal (3 rodadas com Woney)
 

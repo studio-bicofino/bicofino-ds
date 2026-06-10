@@ -13,10 +13,28 @@ export const en = {
   'home.4cs.consult': 'Consult.',
 
   // Hero — Mensch
-  'home.mensch.p1':
-    'Being good at many things is competence. Being native in all of them is something else: fluency. And fluency is when the translating stops. The agent translates football into brand. The agency translates brand into sport. The manager translates wealth for the athlete. Everyone translates — and something is lost in every translation.',
-  'home.mensch.p2':
-    'Bicofino does not translate: it thinks, at once, in the language of the locker room and of the CEO\'s office, of the European scout and of São Paulo society. None of these worlds calls for translation, because it is native in all of them.',
+  // ⚠️ TEMP: 5 copy variants under test (p1+p2) — randomised per refresh,
+  // override ?copy=v1..v5. Collapse to single p1/p2 once Woney picks.
+  'home.mensch.v1.p1':
+    'Being good at many things is competence. Being native in all of them is fluency. And fluency is when the translating stops. The agent translates football into brand. The agency translates brand into sport. The manager translates wealth for the family. Everyone translates — and in every translation, something is lost.',
+  'home.mensch.v1.p2':
+    'Bicofino does not translate: it thinks, at once, in the language of the locker room and of the CEO\'s office, of the European scout and of high society. None of these worlds calls for translation, because it is native in all of them.',
+  'home.mensch.v2.p1':
+    'Being good at many things is competence. Being native in all of them is fluency. And fluency is when the translating stops. The agent translates football into brand. The agency translates brand into sport. The manager translates wealth for the family. Everyone translates — and in every translation, something is lost.',
+  'home.mensch.v2.p2':
+    'Bicofino does not translate: it thinks, at once, in the language of the locker room and of the CEO\'s office, of the European scout and of high society — in São Paulo, in Milan, in New York. None of these worlds calls for translation, because it is native in all of them.',
+  'home.mensch.v3.p1':
+    'Connect, curate, create, consult — Bicofino\'s path runs through universes that rarely cross. And between distant universes, what usually exists is translation: the agent translates football into brand, the agency translates brand into sport, the manager translates wealth for the family. In every translation, something is lost.',
+  'home.mensch.v3.p2':
+    'Bicofino does not translate: it is fluent. It thinks, at once, in the language of the locker room and of the CEO\'s office, of the European scout and of high society. Distant worlds that understand one another here — because it is native in all of them.',
+  'home.mensch.v4.p1':
+    'Competence is speaking many languages. Fluency is never needing to translate any of them. The agent translates football into brand. The agency translates brand into sport. The manager translates wealth for the family. Everyone translates — and something always gets lost along the way.',
+  'home.mensch.v4.p2':
+    'Bicofino does not translate: it welcomes each world in its own language. The locker room and the CEO\'s office, the European scout and São Paulo society. Worlds that rarely sit at the same table — and that understand one another here, because the house is native in all of them.',
+  'home.mensch.v5.p1':
+    'Competence is being good in many worlds. Fluency is being native in all of them. The agent translates football into brand. The agency translates brand into sport. The manager translates wealth for the family. Everyone translates — and in every translation, something is lost.',
+  'home.mensch.v5.p2':
+    'Bicofino does not translate. Locker room and CEO\'s office, European scout and high society: none of these worlds calls for translation, because it is native in all of them.',
   'home.mensch.p3':
     'Bicofino is not an agency, not a holding company, not a consultancy. It is a house — fluent in worlds that do not speak to each other. As rare as what it brings together.',
   'home.mensch.signoff': 'Bicofino. Unlike Any Other.',

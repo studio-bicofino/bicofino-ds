@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { FourCsHeading } from './FourCsHeading'
 import { useLang } from '@/content/index'
@@ -17,11 +17,37 @@ const FOURCS_DELAY = 0.24
 const MENSCH_BASE_DELAY = 0.5
 const MENSCH_BLOCK_STAGGER = 0.12
 
-const MENSCH_KEYS = ['home.mensch.p1', 'home.mensch.p2', 'home.mensch.p3'] as const
+// ⚠️ TEMP — teste de copy: 5 variantes da abertura (p1+p2), sorteadas por
+// refresh; override ?copy=v1..v5. p3 + signoff são fixos. Quando o Woney
+// escolher, colapsar pra chaves únicas e remover o marcador "// copy vN".
+const COPY_VARIANTS = ['v1', 'v2', 'v3', 'v4', 'v5'] as const
+type CopyVariant = (typeof COPY_VARIANTS)[number]
+const VARIANT_KEYS = {
+  v1: ['home.mensch.v1.p1', 'home.mensch.v1.p2'],
+  v2: ['home.mensch.v2.p1', 'home.mensch.v2.p2'],
+  v3: ['home.mensch.v3.p1', 'home.mensch.v3.p2'],
+  v4: ['home.mensch.v4.p1', 'home.mensch.v4.p2'],
+  v5: ['home.mensch.v5.p1', 'home.mensch.v5.p2'],
+} as const
 
 export function HeroBlock({ revealed = true }: { revealed?: boolean }) {
   const { t } = useLang()
   const reducedMotion = useReducedMotion()
+
+  // SSR/hydration renderizam v1; o sorteio troca o texto pós-mount, ainda
+  // invisível (os parágrafos só entram depois do reveal da intro).
+  const [copyVariant, setCopyVariant] = useState<CopyVariant>('v1')
+  useEffect(() => {
+    const param = new URLSearchParams(window.location.search).get('copy')
+    const v =
+      param && (COPY_VARIANTS as readonly string[]).includes(param)
+        ? (param as CopyVariant)
+        : COPY_VARIANTS[Math.floor(Math.random() * COPY_VARIANTS.length)]
+    setCopyVariant(v)
+    console.info('[copy] variant:', v)
+  }, [])
+
+  const menschKeys = [...VARIANT_KEYS[copyVariant], 'home.mensch.p3'] as const
 
   const menschEntrance = (i: number) => ({
     initial: reducedMotion ? false : ({ opacity: 0, y: 24 } as const),
@@ -95,7 +121,21 @@ export function HeroBlock({ revealed = true }: { revealed?: boolean }) {
 
           {/* Col 3 — Mensch */}
           <div className="bf-hero-mensch-col">
-            {MENSCH_KEYS.map((key, i) => (
+            {/* ⚠️ TEMP — marcador da variante em teste (no topo pra não
+                mexer no alinhamento de baseline embaixo); remover na escolha */}
+            <p
+              aria-hidden="true"
+              style={{
+                fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+                fontSize: 9,
+                letterSpacing: '0.14em',
+                color: 'var(--bf-text-subtle)',
+                marginBottom: 'var(--bf-space-sm)',
+              }}
+            >
+              // copy {copyVariant}
+            </p>
+            {menschKeys.map((key, i) => (
               <motion.p
                 key={key}
                 className="bf-reveal"
