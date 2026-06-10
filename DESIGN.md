@@ -230,7 +230,9 @@ for a punch), uses **only canon tokens** (the overlay is `--bf-power-black`; the
 asset), and runs **short** (≤ ~3s). Hard safeguards, all mandatory:
 
 - **`prefers-reduced-motion: reduce` → the intro is skipped entirely** (no overlay, content shown).
-- **Once per session** (`sessionStorage`) — returning navigations don't replay it.
+- **Plays on every full page load** (amended 2026-06-10; was once-per-session via `sessionStorage` —
+  Chrome's session restore resurrects `sessionStorage`, which effectively hid the intro from
+  returning visitors). Client-side navigation within the site does not replay it.
 - **Content renders underneath** (the overlay is purely visual) → no SEO / LCP cost; a `<noscript>`
   rule hides the overlay and force-reveals entrance-gated content when JS is off.
 
@@ -288,11 +290,12 @@ re-declares the same set in **`apps/docs-site/src/app/globals.css`**. New in thi
   First principle folded in via the *Design Craft Layer* (`CLAUDE.md`), from `web-design-guidelines`.
 - **Motion properties & focus** — §8: animate only `transform`/`opacity`, no `transition: all`,
   no `scale(0)` entries, focus via `:focus-visible`. From `emil-design-eng` + `web-design-guidelines`.
-- **Brand intro (sanctioned exception)** — §8: the `apps/web` opening overlay, a once-per-session
-  randomised reveal (star-spin · glitch · split · fractured-fall · lake-ripples). The *only* place
-  motion may enter from `scale(0)`/`r=0`; still `transform`/`opacity`-only, `--ease-out`, canon
-  tokens, ≤~3s, skipped under `prefers-reduced-motion`, content rendered underneath. Mirrors the
-  M-01 ambient precedent. (`apps/web/components/intro/`)
+- **Brand intro (sanctioned exception)** — §8: the `apps/web` opening overlay, a randomised reveal
+  (star-spin · glitch · split · fractured-fall · lake-ripples) on every full page load (2026-06-10;
+  originally once-per-session — amended because browser session restore hid it from returning
+  visitors). The *only* place motion may enter from `scale(0)`/`r=0`; still `transform`/`opacity`-only,
+  `--ease-out`, canon tokens, ≤~3s, skipped under `prefers-reduced-motion`, content rendered
+  underneath. Mirrors the M-01 ambient precedent. (`apps/web/components/intro/`)
 
 Interaction durations stay at the live `120 / 200 / 360ms`. `--radius` (2px) remains as the legacy
 base; new work should prefer `--bf-corner-*`.

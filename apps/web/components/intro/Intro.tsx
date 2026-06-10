@@ -18,11 +18,15 @@ import { RainDrops } from './variants/RainDrops'
  *
  * Safeguards (briefing Frente C):
  *  - prefers-reduced-motion → skips the intro entirely.
- *  - Plays once per session (sessionStorage); returning visitors skip it.
  *  - Content renders underneath (overlay only) → no SEO/LCP cost.
  *
- * Testing: append ?intro=star|glitch|split|fragments (or ?intro=random) to force
- * a variant and bypass the once-per-session guard.
+ * Frequency: plays on EVERY full page load (Woney, 2026-06-10 — the old
+ * once-per-session guard hid the intro behind Chrome's session restore,
+ * which resurrects sessionStorage). Client-side navigations don't remount
+ * the home, so in-site browsing still doesn't replay it.
+ *
+ * Testing: append ?intro=star|glitch|split|fragments (or ?intro=random) to
+ * force a specific variant.
  */
 
 const VARIANTS = {
@@ -52,10 +56,6 @@ export function Intro({ onReveal }: { onReveal?: () => void }) {
     if (reduce) return finish()
 
     const forced = new URLSearchParams(window.location.search).get('intro')
-    const hasOverride = forced != null
-
-    if (!hasOverride && sessionStorage.getItem('bf-intro-played')) return finish()
-    sessionStorage.setItem('bf-intro-played', '1')
 
     const pick: VariantKey =
       forced && forced !== 'random' && (KEYS as string[]).includes(forced)

@@ -23,8 +23,11 @@ Direcionamento do Woney que gerou as variantes: (1) tirar o eco "coisas/coisa";
   **Na escolha:** colapsar pra `home.mensch.p1/p2`, remover sorteio + marcador no
   `HeroBlock.tsx` (blocos marcados com `⚠️ TEMP`), apagar chaves não usadas nos 3 idiomas.
 
-**Nota:** a intro de marca NÃO se perdeu — é o guard 1×/sessão (aba nova/anônima re-executa;
-`?intro=` força). Woney estranhou em 10/06; explicado e confirmado vivo em prod via Playwright.
+**Nota (atualizada):** a intro de marca NÃO se perdeu — era o guard 1×/sessão + o Chrome
+restaurando `sessionStorage` ao reabrir abas, o que escondia a intro de quem volta. **Decisão
+do Woney 10/06: intro toca em TODA visita** (guard de sessão removido do `Intro.tsx`; salvaguarda
+emendada no DESIGN.md §8 + §11). Navegação interna (client-side) segue sem replay; reduced-motion
+segue pulando tudo; `?intro=` força variante específica.
 
 ## 2026-06-10 — Gotham Fase 2 + receita final do split reveal (3 rodadas com Woney)
 
