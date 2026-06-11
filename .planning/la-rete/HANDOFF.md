@@ -65,12 +65,27 @@
   direita; linha divisória; embaixo nav à esquerda (Rete · Tendências · Radar) com
   ícones Lucide (Waypoints/TrendingUp/Radar, 16px — 20 engole o rótulo mono 11px) + meta à direita.
 
-### Avatares de mockup (11/06)
-- `Avatar.tsx`: busto vetorial circular, variações determinísticas por id
-  (4 cabelos × 4 peles × 4 camisas) — sem assets binários. Aparece no **hover do nó**
-  (balão acima, fade 200ms, gated reduced-motion) e no **cabeçalho do painel** (64px).
-- Trocar por foto real = substituir o componente por `<img>` com o `photo_url`
-  do Casa Nostra (bucket `people-photos`).
+### Avatares (11/06, fotos reais de mockup)
+- 20 retratos B&W aprovados pelo Woney em `public/avatars/` (w1–w8 mulheres,
+  m1–m12 homens; 256px JPEG, ~300KB). Curadoria explícita por pessoa em
+  `Avatar.tsx` (patriarcas com retratos maduros); 26 pessoas > 20 fotos → 6
+  repetições espalhadas entre clusters. Hover do nó (balão, fade 200ms, gated
+  reduced-motion) + cabeçalho do painel (64px). Foto real depois = mapear
+  `photo_url` do Casa Nostra (bucket `people-photos`) no mesmo componente.
+
+### Regra do padrone (11/06)
+- O **sócio nº 1 conecta a rede inteira**: `buildEdges` injeta fio de
+  apresentação (`via: 'A casa'`, peso 0.2, tracejado) com quem não tem laço
+  calculado. Genérico — com Supabase real, quem tiver `member_number = 1` herda.
+- Marca do header: **"la rete"** caixa baixa, Gotham Black, tracking 0;
+  masthead com respiro sp-7.
+
+### Deploy (11/06)
+- Projeto Vercel `la-rete` no team **studio-bicofinos-projects**, criado via
+  `vercel deploy` de dentro de `apps/la-rete` (o next.config tem fallback
+  standalone — sem monorepo root no upload, turbopack.root não é setado).
+- Deployment protection (SSO) desligada via REST para link público (padrão
+  motion-lab) — o Fabio abre sem login.
 
 ### Motores (puros, determinísticos, testáveis)
 - `src/lib/engine/edges.ts` — arestas por tags compartilhadas, peso por kind
