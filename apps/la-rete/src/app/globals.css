@@ -1,3 +1,19 @@
+/* Gotham — impact only (1–2 palavras, uppercase). Self-hosted, copiada do motion-lab. */
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ───────────────────────────────────────────────────────────────────────
    LA RETE — token canon (reconciliado com packages/design-system/tokens.css)
    Chão: power-black. Linguagem de canto: SHARP (dados/técnico).
@@ -66,6 +82,7 @@
   /* tipografia */
   --bf-font: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --bf-font-mono: var(--font-jetbrains), ui-monospace, 'SF Mono', monospace;
+  --bf-font-impact: 'Gotham', var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
 * {
@@ -133,8 +150,8 @@ button {
 .lr-chrome {
   display: flex;
   align-items: center;
-  gap: var(--sp-6);
-  height: 56px;
+  gap: var(--sp-5);
+  height: 64px;
   padding: 0 var(--sp-5);
   border-bottom: var(--bf-hairline-dark);
   flex-shrink: 0;
@@ -146,15 +163,16 @@ button {
   color: var(--lr-strong);
 }
 
-/* o logo já fecha no ✦ da marca; o brand mono vira eyebrow ao lado */
+/* nome do produto — Gotham Black, exceção de impacto sancionada (§6: 1–2 palavras) */
 .lr-chrome__brand {
-  font-family: var(--bf-font-mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  color: var(--lr-text-dim);
+  font-family: var(--bf-font-impact);
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lr-strong);
   white-space: nowrap;
-  margin-left: calc(-1 * var(--sp-4));
+  margin-left: calc(-1 * var(--sp-2));
 }
 
 .lr-chrome__brand .diamond {
@@ -186,8 +204,14 @@ button {
   border-bottom-color: var(--current-accent);
 }
 
-.lr-chrome__meta {
+.lr-chrome__right {
   margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+}
+
+.lr-chrome__meta {
   font-family: var(--bf-font-mono);
   font-size: 10px;
   letter-spacing: 0.08em;
@@ -858,10 +882,6 @@ button {
 /* ── dial de mood — portátil (contrato em MoodDial.tsx) ───────────── */
 
 .bf-mood {
-  position: fixed;
-  bottom: var(--sp-4);
-  left: var(--sp-4);
-  z-index: 20;
   display: flex;
   align-items: center;
   gap: var(--sp-2);
@@ -891,4 +911,48 @@ button {
   border-radius: var(--bf-radius-pill);
   border: 1px solid var(--bf-line-on-dark-strong);
   flex-shrink: 0;
+}
+
+/* ── radar — input de leitura ─────────────────────────────────────── */
+
+.lr-radar__input {
+  width: 100%;
+  font-family: var(--bf-font-mono);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--lr-text);
+  background: var(--lr-surface);
+  border: 1px solid var(--lr-border);
+  border-radius: var(--bf-corner-2);
+  padding: var(--sp-2) var(--sp-3);
+  resize: vertical;
+  transition: border-color var(--dur-base) var(--ease-standard);
+}
+
+.lr-radar__input::placeholder {
+  color: var(--lr-text-dim);
+}
+
+.lr-radar__input:hover,
+.lr-radar__input:focus {
+  border-color: var(--bf-line-on-dark);
+}
+
+.lr-radar__go {
+  margin-top: var(--sp-2);
+  font-family: var(--bf-font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--lr-ground);
+  background: var(--current-accent);
+  border-radius: var(--bf-corner-1);
+  padding: var(--sp-1) var(--sp-4);
+  transition: opacity var(--dur-fast) var(--ease-standard);
+}
+
+.lr-radar__go:disabled {
+  opacity: 0.35;
+  cursor: default;
 }

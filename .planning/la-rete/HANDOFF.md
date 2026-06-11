@@ -47,6 +47,23 @@
   renderizar `<MoodDial storageKey="bf-mood:<app>" />`. Persiste em localStorage.
 - Logo Bicofino no chrome (portado de casa-nostra, `currentColor` — acompanha o mood).
 
+### Radar — leitura de notícia externa (pedido 11/06)
+- Rota `/radar`: campo para **colar link OU texto** de notícia. Link → `/api/radar`
+  busca a página server-side (sem CORS), extrai título/descrição/corpo; texto → direto.
+- A leitura vira uma **Trend sintética** via léxico local (`src/lib/engine/radar.ts`:
+  ~20 padrões PT → tags do canon, título pesa 3x) e cai no MESMO motor de aderência —
+  grafo acende quem se beneficia, painel ranqueia com razões. Histórico de leituras na sessão.
+- **Fase IA (decidido como caminho):** mesma rota `/api/radar` passa a chamar um modelo
+  (AI SDK + Vercel AI Gateway, structured output no shape `Trend`) usando a extração
+  atual como contexto. Léxico vira fallback sem chave. Página não muda. Input estruturado
+  (link/texto → análise) escolhido em vez de chat aberto para a v1; thread de refinamento
+  conversacional fica para depois, se a calibragem pedir.
+
+### Header de produto (11/06)
+- 64px: logo Bicofino (16px) + **LA RETE em Gotham Black** (exceção de impacto §6,
+  fontes self-hosted copiadas do motion-lab) + nav (Rete · Tendências · Radar) +
+  meta + **MoodDial no topo à direita** (saiu do canto inferior).
+
 ### Motores (puros, determinísticos, testáveis)
 - `src/lib/engine/edges.ts` — arestas por tags compartilhadas, peso por kind
   (família 1.0 > empresa 0.8 > intro 0.6 > afiliação 0.5 > grupo 0.45 > skill 0.3).
