@@ -18,8 +18,6 @@ export const en = {
   'home.mensch.p2':
     'Bicofino does not translate. It is fluent. It thinks at once in the language of the locker room, of art, of numbers, of fashion, of the business that delivers results. Worlds so dissonant, yet in here they flow and amplify one another.',
   'home.mensch.p3':
-    'Bicofino is not a New Yorker, nor a Londoner. Not paulistano, nor carioca. Neither Sicilian nor Milanese. Bicofino is a citizen of the world.',
-  'home.mensch.p4':
     'Bicofino is not just an agency, nor just a holding company, nor just a consultancy. It is a house — fluent in worlds that do not speak to each other. As rare as what it brings together.',
   'home.mensch.signoff': 'Bicofino. Unlike Any Other.',
 

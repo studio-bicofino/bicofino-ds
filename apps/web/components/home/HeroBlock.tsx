@@ -21,7 +21,6 @@ const MENSCH_KEYS = [
   'home.mensch.p1',
   'home.mensch.p2',
   'home.mensch.p3',
-  'home.mensch.p4',
 ] as const
 
 export function HeroBlock({ revealed = true }: { revealed?: boolean }) {

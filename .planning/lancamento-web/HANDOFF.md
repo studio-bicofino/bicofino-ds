@@ -8,19 +8,18 @@
 **Woney bateu o martelo no texto final do manifesto.** O teste das 5 variantes (sorteio por
 refresh, `?copy=v1..v5`, marcador `// copy vN`) foi DESMONTADO:
 
-- Chaves finais: **`home.mensch.p1/p2/p3/p4`** + `home.mensch.signoff` (paridade BR/EN/IT).
-  São agora **4 parágrafos** — o texto final ganhou um parágrafo novo (p3 "cidadão global":
-  "não é new yorker, nem londrino… é cidadão global") e o antigo p3 da casa virou **p4**
-  com ajuste ("não é **só** uma agência, nem **só** uma holding…").
+- Chaves finais: **`home.mensch.p1/p2/p3`** + `home.mensch.signoff` (paridade BR/EN/IT).
+  **3 parágrafos** — o p3 "cidadão global" ("não é new yorker, nem londrino…") entrou na
+  1ª rodada mas foi CORTADO na 2ª ("texto acabou ficando muito comprido" — Woney, mesma
+  noite); o parágrafo da casa fechou como p3, com o ajuste "não é **só** uma agência,
+  nem **só** uma holding…".
 - Arco final: tradutores/algo se perde → não traduz, é fluente (vestiário/arte/números/moda/
-  negócio) → cidadão global → a casa → Unlike Any Other.
+  negócio) → a casa → Unlike Any Other.
 - `HeroBlock.tsx`: blocos `⚠️ TEMP` removidos (sorteio, `?copy`, marcador); `MENSCH_KEYS`
-  fixo com os 4 parágrafos; signoff entra como 5º bloco da cascata. Chaves `v1–v5` apagadas
+  fixo com os 3 parágrafos; signoff entra como 4º bloco da cascata. Chaves `v1–v5` apagadas
   dos 3 idiomas.
 - EN/IT traduzidos e auditados pelo `bicofino-copy-editor` (3 ajustes aplicados: "intersect"
-  no EN p1, vírgula em vez de travessão no EN p2, "eppure" no IT p2). **Judgment call aplicado,
-  reversível:** IT p3 usa "paulistano" (fidelidade ao par cidade×cidade do BR) em vez de
-  "paulista" (mais reconhecível na Itália) — trocar se Woney preferir.
+  no EN p1, vírgula em vez de travessão no EN p2, "eppure" no IT p2).
 
 **Intro de marca: só a STAR.** Decisão do Woney 10/06 — manter apenas a animação da estrela
 (`StarSpin`), descartar as outras 4. `Glitch/SplitScreen/Fragments/RainDrops.tsx` apagados,
@@ -168,3 +167,8 @@ Ver checklists no `BRIEFING.md`. Resumo do que falta pro lançamento oficial:
 ## Deploy
 `apps/web` é git-connected na Vercel da empresa (`studio-bicofinos-projects/bicofino-web`),
 deploy automático no push do `main` (rootDirectory `apps/web`). `npm run sync` commita+pusha.
+
+**Fix 10/06:** o projeto tinha um Ignored Build Step custom (`git diff --quiet HEAD^ HEAD .`)
+que comparava só o commit do TIP do push com o pai — se o último commit não tocasse `apps/web`,
+o build era cancelado mesmo com commits anteriores mudando o site (aconteceu no push do texto
+final). Removido via API; vale o comportamento padrão da Vercel (compara com o último deploy).

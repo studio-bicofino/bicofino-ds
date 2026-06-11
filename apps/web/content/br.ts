@@ -18,8 +18,6 @@ export const br = {
   'home.mensch.p2':
     'Bicofino não traduz. É fluente. Pensa ao mesmo tempo no idioma do vestiário, da arte, dos números, da moda, do negócio que gera resultado. Mundos tão dissonantes, mas que aqui dentro fluem e se potencializam.',
   'home.mensch.p3':
-    'Bicofino não é new yorker, nem londrino. Não é paulistano, nem carioca. Nem siciliano ou milanês. Bicofino é cidadão global.',
-  'home.mensch.p4':
     'Bicofino não é só uma agência, nem só uma holding, nem só uma consultoria. É uma casa — fluente em mundos que não conversam. Rara como aquilo que reúne.',
   'home.mensch.signoff': 'Bicofino. Unlike Any Other.',
 
