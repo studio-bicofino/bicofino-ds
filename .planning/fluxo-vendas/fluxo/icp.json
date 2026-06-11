@@ -1,0 +1,71 @@
+{
+  "projeto": "fluxo-vendas",
+  "modulo": "matchmaking",
+  "status": "mvp",
+  "versao": "0.1",
+  "nota": "Versão estruturada do icp.md. Sinais de fit têm peso (1-3); anti-sinais são bloqueios. Alimenta o score de matchmaking — ver matchmaking/README.md. Pesos e sinais a calibrar com Woney.",
+  "escala_peso": { "1": "sinal fraco / contextual", "2": "sinal relevante", "3": "sinal forte / quase decisivo" },
+  "icps": [
+    {
+      "id": "studio",
+      "vertical": "Studio",
+      "publico": "marcas e founders",
+      "no_entrada_sugerido": 1,
+      "sinais_fit": [
+        { "sinal": "tem tese de posicionamento de marca", "peso": 3 },
+        { "sinal": "setor onde percepção move valor (tech com narrativa, marca com ambição cultural)", "peso": 2 },
+        { "sinal": "decisor acessível — founder-led ou C-level com poder sobre marca", "peso": 3 },
+        { "sinal": "trata marca como investimento de longo prazo", "peso": 3 },
+        { "sinal": "sustenta recorrência (~R$30k+/mês) ou fee de projeto relevante", "peso": 2 },
+        { "sinal": "valoriza ofício, discrição e exclusividade", "peso": 1 },
+        { "sinal": "chega via Connection / Club / adjacência ao network", "peso": 2 }
+      ],
+      "exemplo_real": {
+        "nome": "BoviChain",
+        "contexto": "rastreabilidade bovina via IoT + blockchain + IA; agronegócio de alto valor; TAM R$8,1 bi/ano"
+      }
+    },
+    {
+      "id": "talent",
+      "vertical": "Talent",
+      "publico": "atletas",
+      "no_entrada_sugerido": 1,
+      "logica": "portfólio — critério é potencial e narrativa, não certeza",
+      "sinais_fit": [
+        { "sinal": "atleta jovem com narrativa internacionalizável", "peso": 3 },
+        { "sinal": "pipeline para a Europa (passaporte europeu acelera)", "peso": 2 },
+        { "sinal": "já tem ativos de credibilidade (clube grande, patrocínio)", "peso": 2 }
+      ],
+      "exemplo_real": {
+        "nome": "Guilherme Kerchner",
+        "contexto": "Palmeiras, 17 anos, Nike, passaporte italiano, narrativa 'From Palmeiras to the World'"
+      }
+    },
+    {
+      "id": "club",
+      "vertical": "Club",
+      "publico": "elite de SP",
+      "no_entrada_sugerido": 2,
+      "sinais_fit": [
+        { "sinal": "alto patrimônio em São Paulo", "peso": 3 },
+        { "sinal": "valoriza acesso, curadoria e discrição", "peso": 3 },
+        { "sinal": "busca experiências fora do alcance da maioria", "peso": 2 }
+      ],
+      "filosofia": "Don Corleone meets James Bond — seleção ultra-seletiva de membros"
+    }
+  ],
+  "sinais_fit_gerais": [
+    { "sinal": "fala em 'investimento na marca', 'longo prazo', 'percepção'", "peso": 2 },
+    { "sinal": "tem decisor acessível", "peso": 3 },
+    { "sinal": "aceita o critério do atelier — curadoria e o direito de dizer não", "peso": 2 },
+    { "sinal": "pensa em relação, não em transação avulsa", "peso": 3 }
+  ],
+  "anti_sinais": [
+    { "sinal": "busca 'algo bonito e barato'", "efeito": "bloqueio" },
+    { "sinal": "pede desconto ou compara por preço", "efeito": "bloqueio" },
+    { "sinal": "trata criação e marca como custo a minimizar", "efeito": "bloqueio" },
+    { "sinal": "mentalidade de peça avulsa, sem interesse em relação", "efeito": "bloqueio" },
+    { "sinal": "sem acesso a decisor", "efeito": "bloqueio" },
+    { "sinal": "pressa por volume", "efeito": "bloqueio" }
+  ]
+}

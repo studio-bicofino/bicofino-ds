@@ -1,0 +1,142 @@
+{
+  "$schema": "./funil.schema (informal)",
+  "projeto": "fluxo-vendas",
+  "status": "rascunho",
+  "nota": "Proposta saída das sessões de estratégia. Confirmar etapas, canais e gatilhos com Woney na mentoria antes de fixar. Estrutura legível por máquina — alimenta geração de roteiros e o matchmaking futuro.",
+  "versao": "0.1-draft",
+  "camadas": [
+    { "id": "connection", "c": "Connection", "nome": "Topo · account team", "papel": "Relacionamento executivo e presença contínua. Entrada pelo alto que dispensa a caça." },
+    { "id": "discovery", "c": "Curate", "nome": "Transição · discovery", "papel": "Diagnóstico cobrado e inteligência de conta. Decide quem entra; dizer não é parte do trabalho." },
+    { "id": "create", "c": "Create", "nome": "Execução do deal", "papel": "Co-desenho e entrega (o Studio)." },
+    { "id": "consult", "c": "Consult", "nome": "Long-term · expansão", "papel": "Cresce por aprofundamento de conta, não por novos logos." }
+  ],
+  "nos": [
+    {
+      "id": 1,
+      "camada": "connection",
+      "nome": "Identificação de conta nomeada",
+      "objetivo": "Decidir quem entra no radar.",
+      "conduz": ["Fábio", "Woney"],
+      "gatilho_saida": "Conta aprovada no filtro dos 4 Cs.",
+      "canais_propostos": ["interno"],
+      "icp_aplicavel": ["Studio", "Talent", "Club"]
+    },
+    {
+      "id": 2,
+      "camada": "connection",
+      "nome": "Entrada via Connection / Club",
+      "objetivo": "Acessar o decisor sem outbound.",
+      "conduz": ["Fábio"],
+      "gatilho_saida": "Relação aberta com o decisor.",
+      "canais_propostos": ["jantar", "evento", "WhatsApp"],
+      "icp_aplicavel": ["Studio", "Club"]
+    },
+    {
+      "id": 3,
+      "camada": "connection",
+      "nome": "Relacionamento executivo / presença contínua",
+      "objetivo": "Cultivar a relação até surgir a oportunidade.",
+      "conduz": ["Club", "Fábio", "Woney"],
+      "gatilho_saida": "Surge a oportunidade.",
+      "canais_propostos": ["jantar", "evento", "advisory board", "WhatsApp"],
+      "icp_aplicavel": ["Studio", "Club"]
+    },
+    {
+      "id": 4,
+      "camada": "discovery",
+      "nome": "Pente Fino (discovery cobrado)",
+      "objetivo": "Entregar o diagnóstico que substitui o RFP, faturado.",
+      "conduz": ["Woney"],
+      "gatilho_saida": "Diagnóstico entregue e aceito.",
+      "canais_propostos": ["call", "apresentação", "proposta-dossiê"],
+      "icp_aplicavel": ["Studio"]
+    },
+    {
+      "id": 5,
+      "camada": "discovery",
+      "nome": "Inteligência de conta / mapa de poder",
+      "objetivo": "Mapear 20-50 stakeholders (CFO, board, parceiros — não só marketing).",
+      "conduz": ["Woney", "Fábio"],
+      "gatilho_saida": "Mapa pronto.",
+      "canais_propostos": ["interno", "call"],
+      "icp_aplicavel": ["Studio"]
+    },
+    {
+      "id": 6,
+      "camada": "create",
+      "nome": "Co-desenho da solução / proposta dossiê",
+      "objetivo": "Apresentar a proposta no formato dossiê: Visão → Desafio de marca → Caminho Bicofino → Investimento → Prazos.",
+      "conduz": ["Woney"],
+      "gatilho_saida": "Dossiê apresentado.",
+      "canais_propostos": ["proposta-dossiê", "apresentação"],
+      "icp_aplicavel": ["Studio"],
+      "piloto": true
+    },
+    {
+      "id": 7,
+      "camada": "create",
+      "nome": "Business case / tradução criativo→ROI",
+      "objetivo": "Traduzir impacto criativo em linguagem de negócio para o decisor financeiro.",
+      "conduz": ["Woney"],
+      "gatilho_saida": "Business case aceito.",
+      "canais_propostos": ["apresentação", "call", "proposta-dossiê"],
+      "icp_aplicavel": ["Studio"]
+    },
+    {
+      "id": 8,
+      "camada": "create",
+      "nome": "Negociação",
+      "objetivo": "Acordar termos. Sem desconto; ajuste por escopo, nunca por valor.",
+      "conduz": ["Woney", "Fábio"],
+      "gatilho_saida": "Termos acordados.",
+      "canais_propostos": ["call", "jantar", "email"],
+      "icp_aplicavel": ["Studio"]
+    },
+    {
+      "id": 9,
+      "camada": "create",
+      "nome": "Fechamento",
+      "objetivo": "Assinar o contrato.",
+      "conduz": ["Woney", "Fábio"],
+      "gatilho_saida": "Início da entrega.",
+      "canais_propostos": ["email", "call"],
+      "icp_aplicavel": ["Studio"]
+    },
+    {
+      "id": 10,
+      "camada": "consult",
+      "nome": "Onboarding e entrega",
+      "objetivo": "Primeira entrega no padrão dos 6 princípios.",
+      "conduz": ["equipe dedicada"],
+      "gatilho_saida": "Primeira entrega aceita.",
+      "canais_propostos": ["call", "apresentação"],
+      "icp_aplicavel": ["Studio"]
+    },
+    {
+      "id": 11,
+      "camada": "consult",
+      "nome": "QBRs de parceria",
+      "objetivo": "Revisões periódicas sobre marca e estratégia, não só entrega de peças.",
+      "conduz": ["Woney"],
+      "gatilho_saida": "Oportunidade de expansão identificada.",
+      "canais_propostos": ["apresentação", "jantar", "call"],
+      "icp_aplicavel": ["Studio"]
+    },
+    {
+      "id": 12,
+      "camada": "consult",
+      "nome": "Expansão multi-vertical",
+      "objetivo": "Aprofundar a conta atravessando verticais (ex.: social media → branding + PR + identidade).",
+      "conduz": ["Woney", "Fábio"],
+      "gatilho_saida": "Novo escopo acordado (volta ao nó 6 com a conta já aberta).",
+      "canais_propostos": ["jantar", "apresentação", "proposta-dossiê"],
+      "icp_aplicavel": ["Studio"]
+    }
+  ],
+  "abertura_mentoria": [
+    "Confirmar os 12 nós ou ajustar (fundir, dividir, remover).",
+    "Definir o canal de cada etapa (quais nós são jantar, email, call, dossiê).",
+    "Mapear gatilhos de saída definitivos por nó.",
+    "Decidir se Talent e Club têm flows próprios (hoje os nós 4-12 assumem Studio)."
+  ]
+}
