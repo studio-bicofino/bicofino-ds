@@ -13,6 +13,13 @@
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham-LightItalic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
 
 /* ───────────────────────────────────────────────────────────────────────
    LA RETE — token canon (reconciliado com packages/design-system/tokens.css)
@@ -175,15 +182,25 @@ button {
 
 /* nome do produto — Gotham Black, exceção de impacto sancionada (§6: 1–2 palavras) */
 .lr-chrome__brand {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
   font-family: var(--bf-font-impact);
   font-size: 22px;
   font-weight: 900;
   letter-spacing: 0;
-  text-transform: lowercase;
   line-height: 1;
   color: var(--lr-strong);
   white-space: nowrap;
   margin-left: calc(-1 * var(--sp-2));
+}
+
+/* contracanto leve do lockup — LightItalic é o vizinho do Book no acervo */
+.lr-chrome__brand-la {
+  font-size: 13px;
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0.02em;
 }
 
 .lr-chrome__brand .diamond {

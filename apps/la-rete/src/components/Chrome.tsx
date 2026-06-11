@@ -22,7 +22,10 @@ export function Chrome({ meta }: { meta: string }) {
         <span className="lr-chrome__logo">
           <BicofinoLogo height={32} />
         </span>
-        <span className="lr-chrome__brand">la rete</span>
+        <span className="lr-chrome__brand">
+          <span className="lr-chrome__brand-la">LA</span>
+          Rete
+        </span>
         <div className="lr-chrome__right">
           <MoodDial storageKey="bf-mood:la-rete" />
         </div>
