@@ -20,6 +20,13 @@
   font-style: italic;
   font-display: swap;
 }
+@font-face {
+  font-family: 'Gotham';
+  src: url('/fonts/Gotham-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 /* ───────────────────────────────────────────────────────────────────────
    LA RETE — token canon (reconciliado com packages/design-system/tokens.css)
@@ -1161,4 +1168,33 @@ button {
 
 .lr-attach__remove:hover {
   color: var(--current-accent);
+}
+
+/* ── identidade do Consigliere (HUD) ─────────────────────────────── */
+
+.lr-consigliere-id {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.lr-consigliere-id__photo {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--bf-radius-pill);
+  border: 1px solid var(--bf-line-on-dark-strong);
+  object-fit: cover;
+  display: block;
+}
+
+/* Gotham Bold — nome do agente da casa (exceção de impacto §6, 1 palavra) */
+.lr-consigliere-id__name {
+  display: block;
+  font-family: var(--bf-font-impact);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  line-height: 1.2;
+  color: var(--lr-strong);
 }

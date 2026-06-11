@@ -50,32 +50,30 @@ const hashOf = (s: string) => {
   return h
 }
 
+/** arquivo do retrato de uma pessoa — usado também pelo balão de hover do grafo */
+export function avatarFileOf(personId: string): string {
+  return FILE_BY_PERSON[personId] ?? FALLBACK[hashOf(personId) % FALLBACK.length]
+}
+
+/** todos os retratos, para preload (primeiro hover sem flash de carregamento) */
+export const AVATAR_FILES = [...new Set(Object.values(FILE_BY_PERSON))]
+
 interface AvatarProps {
   personId: string
   size?: number
 }
 
 export function Avatar({ personId, size = 64 }: AvatarProps) {
-  const file = FILE_BY_PERSON[personId] ?? FALLBACK[hashOf(personId) % FALLBACK.length]
-  // size no id: a mesma pessoa pode estar no painel e no hover ao mesmo tempo
-  const clipId = `bf-av-${personId}-${size}`
-
+  /* <img> circular simples — contexto HTML (painel). No SVG do grafo o
+     balão de hover usa <image> direto com clipPath (ver ForceGraph). */
   return (
-    <svg viewBox="0 0 64 64" width={size} height={size} role="img" aria-label="Foto de mockup">
-      <defs>
-        <clipPath id={clipId}>
-          <circle cx="32" cy="32" r="32" />
-        </clipPath>
-      </defs>
-      <g clipPath={`url(#${clipId})`}>
-        <rect width="64" height="64" fill="rgba(242, 248, 255, 0.09)" />
-        <image
-          href={`/avatars/${file}`}
-          width="64"
-          height="64"
-          preserveAspectRatio="xMidYMid slice"
-        />
-      </g>
-    </svg>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={`/avatars/${avatarFileOf(personId)}`}
+      alt="Foto de mockup"
+      width={size}
+      height={size}
+      style={{ borderRadius: '50%', objectFit: 'cover', display: 'block' }}
+    />
   )
 }

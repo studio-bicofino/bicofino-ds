@@ -13,7 +13,7 @@ import {
   type SimulationLinkDatum,
 } from 'd3-force'
 import type { Edge, Person } from '@/lib/data/types'
-import { Avatar } from './Avatar'
+import { AVATAR_FILES, avatarFileOf } from './Avatar'
 
 interface SimNode extends SimulationNodeDatum {
   id: string
@@ -85,6 +85,14 @@ export function ForceGraph({
 
   const peopleKey = useMemo(() => people.map((p) => p.id).join('|'), [people])
   const edgesKey = useMemo(() => edges.map(edgeKey).join('|'), [edges])
+
+  /* preload dos retratos — o primeiro hover já abre com a foto */
+  useEffect(() => {
+    for (const f of AVATAR_FILES) {
+      const img = new Image()
+      img.src = `/avatars/${f}`
+    }
+  }, [])
 
   /* medir o palco */
   useEffect(() => {
@@ -262,6 +270,12 @@ export function ForceGraph({
         role="img"
         aria-label="Grafo da rede Casa Nostra"
       >
+        <defs>
+          {/* recorte circular do balão de foto — coordenadas locais do balão */}
+          <clipPath id="lr-photoclip">
+            <circle r={21} />
+          </clipPath>
+        </defs>
         <g>
           {edges.map((e) => (
             <line
@@ -341,13 +355,21 @@ export function ForceGraph({
                 </text>
                 {hoverId === p.id && (
                   /* g externo posiciona (attr); o interno anima (CSS transform
-                     sobrescreveria o attr se fosse no mesmo elemento) */
+                     sobrescreveria o attr se fosse no mesmo elemento).
+                     <image> direto no SVG do grafo — svg aninhado não pintava
+                     a foto de forma confiável (bug visto em 11/06). */
                   <g transform={`translate(0, ${-r - (isFamiglia ? 40 : 32)})`}>
                     <g className="lr-node__photo">
                       <circle className="lr-node__photo-ring" r={23} />
-                      <g transform="translate(-21, -21)">
-                        <Avatar personId={p.id} size={42} />
-                      </g>
+                      <image
+                        href={`/avatars/${avatarFileOf(p.id)}`}
+                        x={-21}
+                        y={-21}
+                        width={42}
+                        height={42}
+                        preserveAspectRatio="xMidYMid slice"
+                        clipPath="url(#lr-photoclip)"
+                      />
                     </g>
                   </g>
                 )}

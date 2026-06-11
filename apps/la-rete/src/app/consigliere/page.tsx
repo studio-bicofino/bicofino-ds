@@ -251,12 +251,24 @@ export default function ConsiglierePage() {
             hotPair={activeOpp && activeOpp.b ? [activeOpp.a, activeOpp.b] : null}
           />
           <div className="lr-hud lr-hud--tl">
-            <span className="lr-hud__line">// consigliere</span>
-            <span className="lr-hud__line">
-              {active?.trend
-                ? `${active.adherences.length}/${PEOPLE.length} membros acendem`
-                : 'aguardando leitura'}
-            </span>
+            <div className="lr-consigliere-id">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                className="lr-consigliere-id__photo"
+                src="/avatars/consigliere.jpg"
+                alt="O Consigliere"
+                width={44}
+                height={44}
+              />
+              <div>
+                <span className="lr-consigliere-id__name">Consigliere</span>
+                <span className="lr-hud__line">
+                  {active?.trend
+                    ? `${active.adherences.length}/${PEOPLE.length} membros acendem`
+                    : 'aguardando leitura'}
+                </span>
+              </div>
+            </div>
           </div>
           <div className="lr-hud lr-hud--bl">
             <span className="lr-hud__line">brilho = aderência à leitura</span>
