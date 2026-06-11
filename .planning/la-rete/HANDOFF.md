@@ -29,8 +29,8 @@ src/lib/data/trends.ts       ← 12 tendências seedadas (hooks referenciam NOME
 src/lib/engine/edges.ts      ← arestas por tags compartilhadas + REGRA DO PADRONE (ver §4)
 src/lib/engine/matchmaking.ts← 163 oportunidades, 3 kinds, scoring comentado em PT
 src/lib/engine/adherence.ts  ← tendência × pessoa (0–100)
-src/lib/engine/radar.ts      ← léxico local notícia→tags (modo mockup do Radar)
-src/app/api/radar/route.ts   ← fetch server-side de URL (futuro: ponto de entrada da IA)
+src/lib/engine/lexicon.ts    ← léxico local notícia→tags (fallback do Consigliere sem chave)
+src/app/api/consigliere/route.ts ← motor do Consigliere: Claude (Haiku) OU léxico
 src/components/ForceGraph.tsx← coração visual: d3-force + SVG (ver gotchas §7)
 src/components/MoodDial.tsx  ← dial de mood PORTÁTIL (contrato de 4 CSS vars, ver header do arquivo)
 src/components/Avatar.tsx    ← retratos B&W com curadoria por pessoa (public/avatars/)
@@ -59,9 +59,18 @@ src/app/globals.css          ← todos os estilos; tokens no topo; responsivo no
   via `dimAlpha`, accent ≥3:1). Para adicionar mood: medir ANTES (script de contraste
   no histórico ou refazer: luminância relativa WCAG), adicionar em `MOODS` com `dimAlpha` medido.
 - **Accent em chão escuro**: usa/torino fora do sorteio (DESIGN.md §5, emendado 11/06).
-- **Radar v1 = input estruturado** (link/texto → análise), NÃO chat aberto. Fase IA
-  decidida: AI SDK + Vercel AI Gateway na MESMA rota `/api/radar`, structured output
-  no shape `Trend`, léxico local como fallback sem chave.
+- **Consigliere** (ex-Radar, renomeado 11/06; /radar redireciona): input estruturado
+  (link/texto/PDF/imagem → análise), NÃO chat aberto na v1. **Fase IA IMPLEMENTADA**:
+  `/api/consigliere` chama Claude direto (SDK oficial `@anthropic-ai/sdk`), modelo
+  `claude-haiku-4-5` (override via env `CONSIGLIERE_MODEL`), structured output
+  `output_config.format json_schema` com os nomes de tag do canon como ENUM (hook
+  inválido é impossível). PDF = document block, imagem = image block (cola com Cmd+V
+  no campo). Gated por `ANTHROPIC_API_KEY` — sem chave, cai no léxico local
+  (links/texto) e arquivos retornam 503 com mensagem. PENDENTE: Woney criar a chave
+  no Console da Anthropic (console.anthropic.com — assinatura Claude.ai NÃO cobre
+  API; billing separado) e setar nos 3 envs do projeto Vercel `la-rete`.
+  Visão de longo prazo: Consigliere vira serviço único consumido por vários apps
+  (widget) — hoje a rota vive no la-rete; extrair quando o segundo app precisar.
 
 ## 5 · Receitas de mudanças comuns
 
@@ -110,8 +119,7 @@ src/app/globals.css          ← todos os estilos; tokens no topo; responsivo no
 ## 8 · Roadmap (ordem de valor)
 
 1. Calibragem com Fabio/Woney: pesos, topologia, copy das oportunidades.
-2. Fase IA do Radar (arquitetura pronta — ver §4; sessão de modelo forte recomendada
-   para o DESENHO do prompt/schema; a implementação um Opus faz).
+2. Chave da Anthropic no Vercel (la-rete) → Consigliere lê com Haiku em prod.
 3. Adapter Supabase (quando houver volume real no Casa Nostra).
 4. Ideias guardadas: zoom/pan no grafo, modo "só oportunidades", export de briefing
    por par, drag de nó em touch (hoje touch = tap/selecionar; drag só com mouse).

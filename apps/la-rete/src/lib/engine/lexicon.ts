@@ -1,15 +1,15 @@
 import type { Trend } from '../data/types'
 
 /**
- * Radar — leitura local de notícia/tendência → Trend sintética.
+ * Léxico do Consigliere — leitura local de notícia/tendência → Trend sintética.
  *
- * MODO MOCKUP (atual): um léxico determinístico mapeia palavras do texto
+ * MODO SEM CHAVE (fallback): um léxico determinístico mapeia palavras do texto
  * para nomes de tags do canon (tags.ts) e gera os hooks que o motor de
  * aderência já consome. Sem chave de API, sem custo, resultado na hora.
  *
- * MODO IA (próxima fase): a MESMA assinatura `analyzeText` passa a ser
- * preenchida por um modelo via AI Gateway (rota /api/radar com structured
- * output no shape de Trend). A página não muda — só a origem dos hooks.
+ * MODO IA: com ANTHROPIC_API_KEY no ambiente, quem lê é o Claude via
+ * /api/consigliere (structured output no shape de Trend) e este léxico
+ * só entra quando a chave falta ou a chamada falha.
  */
 
 interface LexEntry {

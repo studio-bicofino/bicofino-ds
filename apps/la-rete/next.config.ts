@@ -7,6 +7,10 @@ const isMonorepo = fs.existsSync(path.join(monorepoRoot, 'package.json'))
 
 const nextConfig: NextConfig = {
   ...(isMonorepo ? { turbopack: { root: monorepoRoot } } : {}),
+  async redirects() {
+    // o Radar virou Consigliere em 11/06
+    return [{ source: '/radar', destination: '/consigliere', permanent: true }]
+  },
 }
 
 export default nextConfig

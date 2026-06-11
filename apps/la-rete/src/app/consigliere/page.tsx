@@ -1,12 +1,13 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
+import { Paperclip, X } from 'lucide-react'
 import { PEOPLE, PERSON_BY_ID } from '@/lib/data/people'
 import { TAG_BY_ID } from '@/lib/data/tags'
 import { buildEdges } from '@/lib/engine/edges'
 import { computeAdherence } from '@/lib/engine/adherence'
 import { computeOpportunities, opportunitiesFor } from '@/lib/engine/matchmaking'
-import { analyzeText } from '@/lib/engine/radar'
+import { analyzeText } from '@/lib/engine/lexicon'
 import type { Adherence, Opportunity, Trend } from '@/lib/data/types'
 import { Chrome } from '@/components/Chrome'
 import { ForceGraph } from '@/components/ForceGraph'
@@ -14,21 +15,24 @@ import { PersonPanel } from '@/components/PersonPanel'
 
 interface Reading {
   id: string
-  /** o que foi colado */
   input: string
-  kind: 'link' | 'texto'
+  kind: 'link' | 'texto' | 'arquivo'
+  /** quem leu: claude ou o léxico local */
+  mode: 'ia' | 'lexico' | null
   trend: Trend | null
   adherences: Adherence[]
   error: string | null
 }
 
-export default function RadarPage() {
+export default function ConsiglierePage() {
   const [input, setInput] = useState('')
+  const [file, setFile] = useState<File | null>(null)
   const [busy, setBusy] = useState(false)
   const [readings, setReadings] = useState<Reading[]>([])
   const [activeId, setActiveId] = useState<string | null>(null)
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [activeOpp, setActiveOpp] = useState<Opportunity | null>(null)
+  const fileRef = useRef<HTMLInputElement>(null)
 
   const allEdges = useMemo(() => buildEdges(PEOPLE, TAG_BY_ID), [])
   const allOpps = useMemo(() => computeOpportunities(PEOPLE, TAG_BY_ID, allEdges), [allEdges])
@@ -49,64 +53,89 @@ export default function RadarPage() {
 
   const submit = async () => {
     const raw = input.trim()
-    if (!raw || busy) return
+    if ((!raw && !file) || busy) return
     setBusy(true)
     const isLink = /^https?:\/\/\S+$/i.test(raw)
     const observedAt = new Date().toISOString().slice(0, 10)
-    const id = `rd-${Date.now()}`
+    const id = `cs-${Date.now()}`
 
     let trend: Trend | null = null
+    let mode: Reading['mode'] = null
     let error: string | null = null
 
     try {
-      if (isLink) {
-        const res = await fetch('/api/radar', {
+      if (file) {
+        const form = new FormData()
+        form.append('file', file)
+        form.append('note', raw)
+        const res = await fetch('/api/consigliere', { method: 'POST', body: form })
+        const data = await res.json()
+        if (!res.ok) error = data.error
+        else {
+          trend = data.trend
+          mode = 'ia'
+        }
+      } else {
+        const body = isLink ? { url: raw } : { text: raw }
+        const res = await fetch('/api/consigliere', {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ url: raw }),
+          body: JSON.stringify(body),
         })
         const data = await res.json()
         if (!res.ok) {
-          error = `${data.error}. Cole o texto da notícia direto no campo.`
+          error = `${data.error}. Cole o texto do material direto no campo.`
+        } else if (data.mode === 'ia') {
+          trend = data.trend
+          mode = 'ia'
         } else {
-          trend = analyzeText({
-            title: data.title,
-            text: `${data.description} ${data.text}`,
-            source: data.source,
-            observedAt,
-          })
+          /* sem chave: léxico local sobre a extração (link) ou o texto cru */
+          mode = 'lexico'
+          trend = isLink
+            ? analyzeText({
+                title: data.title,
+                text: `${data.description} ${data.text}`,
+                source: data.source,
+                observedAt,
+              })
+            : analyzeText({
+                title: raw.split('\n')[0].slice(0, 120),
+                text: raw,
+                source: 'Consigliere · texto colado',
+                observedAt,
+              })
         }
-      } else {
-        const firstLine = raw.split('\n')[0].slice(0, 120)
-        trend = analyzeText({
-          title: firstLine,
-          text: raw,
-          source: 'Radar · texto colado',
-          observedAt,
-        })
       }
     } catch {
-      error = 'A leitura falhou. Cole o texto da notícia direto no campo.'
+      error = 'A leitura falhou. Tente de novo ou cole o texto direto.'
     }
 
     if (!error && !trend) {
       error = 'Nenhum tema do canon reconhecido nesta leitura.'
     }
+    if (trend && trend.hooks.length === 0) {
+      error = 'O material não acende nenhum tema da rede.'
+      trend = null
+    }
 
     const adherences = trend ? computeAdherence(trend, PEOPLE, TAG_BY_ID) : []
-    const reading: Reading = {
-      id,
-      input: raw,
-      kind: isLink ? 'link' : 'texto',
-      trend,
-      adherences,
-      error,
-    }
-    setReadings((rs) => [reading, ...rs])
+    setReadings((rs) => [
+      {
+        id,
+        input: file ? file.name : raw,
+        kind: file ? 'arquivo' : isLink ? 'link' : 'texto',
+        mode,
+        trend,
+        adherences,
+        error,
+      },
+      ...rs,
+    ])
     setActiveId(id)
     setSelectedId(null)
     setActiveOpp(null)
     setInput('')
+    setFile(null)
     setBusy(false)
   }
 
@@ -114,27 +143,68 @@ export default function RadarPage() {
     <div className="lr-app">
       <Chrome meta={`${readings.length} leituras nesta sessão`} />
       <div className="lr-stage">
-        <aside className="lr-rail" aria-label="Radar">
+        <aside className="lr-rail" aria-label="Consigliere">
           <section className="lr-rail__section">
             <div className="lr-rail__head" data-open="true">
-              <span className="lr-rail__eyebrow">// radar · leitura de fora</span>
+              <span className="lr-rail__eyebrow">// consigliere · leitura de fora</span>
             </div>
             <p className="lr-empty" style={{ marginBottom: 'var(--sp-3)' }}>
-              Cole um link de notícia ou o texto dela. A casa lê e mostra quem da rede acende.
+              Link, texto, transcript, PDF de análise ou print de gráfico (cole com Cmd+V). O
+              Consigliere lê e mostra quem da rede acende.
             </p>
             <textarea
               className="lr-radar__input"
               rows={4}
-              placeholder="https://… ou o parágrafo da notícia"
+              placeholder="https://… , o texto do material, ou uma nota sobre o anexo"
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onPaste={(e) => {
+                const pasted = e.clipboardData.files?.[0]
+                if (pasted && pasted.type.startsWith('image/')) {
+                  e.preventDefault()
+                  setFile(pasted)
+                }
+              }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) submit()
               }}
             />
-            <button className="lr-radar__go" onClick={submit} disabled={busy || !input.trim()}>
-              {busy ? 'lendo…' : 'ler'}
-            </button>
+            {file && (
+              <div className="lr-attach">
+                <span className="lr-attach__name">{file.name || 'imagem colada'}</span>
+                <button
+                  className="lr-attach__remove"
+                  onClick={() => setFile(null)}
+                  aria-label="Remover anexo"
+                >
+                  <X size={12} strokeWidth={1.5} />
+                </button>
+              </div>
+            )}
+            <div className="lr-radar__actions">
+              <button
+                className="lr-radar__go"
+                onClick={submit}
+                disabled={busy || (!input.trim() && !file)}
+              >
+                {busy ? 'lendo…' : 'ler'}
+              </button>
+              <button
+                className="lr-radar__attach"
+                onClick={() => fileRef.current?.click()}
+                aria-label="Anexar PDF ou imagem"
+                title="anexar PDF ou imagem"
+              >
+                <Paperclip size={14} strokeWidth={1.5} />
+              </button>
+              <input
+                ref={fileRef}
+                type="file"
+                accept="application/pdf,image/png,image/jpeg,image/webp"
+                hidden
+                onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+              />
+            </div>
           </section>
 
           {readings.length > 0 && (
@@ -157,7 +227,9 @@ export default function RadarPage() {
                     {r.trend ? r.trend.title : r.input.slice(0, 80)}
                   </div>
                   <div className="lr-trend__meta">
-                    {r.kind} · {r.trend ? `${r.adherences.length} acendem` : 'sem leitura'}
+                    {r.kind}
+                    {r.mode ? ` · ${r.mode === 'ia' ? 'via claude' : 'léxico local'}` : ''} ·{' '}
+                    {r.trend ? `${r.adherences.length} acendem` : 'sem leitura'}
                   </div>
                 </button>
               ))}
@@ -179,7 +251,7 @@ export default function RadarPage() {
             hotPair={activeOpp && activeOpp.b ? [activeOpp.a, activeOpp.b] : null}
           />
           <div className="lr-hud lr-hud--tl">
-            <span className="lr-hud__line">// radar</span>
+            <span className="lr-hud__line">// consigliere</span>
             <span className="lr-hud__line">
               {active?.trend
                 ? `${active.adherences.length}/${PEOPLE.length} membros acendem`
@@ -258,18 +330,18 @@ export default function RadarPage() {
           ) : (
             <>
               <div className="lr-panel__eyebrow">
-                <span className="diamond">✦</span> radar
+                <span className="diamond">✦</span> consigliere
               </div>
               <p className="lr-panel__bio">
-                O Radar cruza o que acontece fora com quem está dentro. Cole um link ou texto no
-                trilho ao lado; a leitura vira uma tendência momentânea e o grafo mostra quem se
-                beneficia ou conecta.
+                O Consigliere é a leitura da casa sobre o que vem de fora: notícia, análise de
+                mercado, gráfico, transcript. Entregue o material no trilho ao lado; ele devolve a
+                leitura e o grafo mostra quem se beneficia ou conecta.
               </p>
               <div className="lr-panel__section">
-                <div className="lr-panel__eyebrow">// como lê hoje</div>
+                <div className="lr-panel__eyebrow">// como lê</div>
                 <p className="lr-empty">
-                  Leitura local por léxico de temas do canon — determinística e sem custo. A
-                  próxima fase liga um modelo via API na mesma rota, com a mesma resposta.
+                  Com a chave da Anthropic no ambiente, quem lê é o Claude (Haiku) — inclusive PDF
+                  e imagem. Sem chave, um léxico local de temas cobre links e texto, sem custo.
                 </p>
               </div>
             </>

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Radar, TrendingUp, Waypoints } from 'lucide-react'
+import { Sparkle, TrendingUp, Waypoints } from 'lucide-react'
 import { BicofinoLogo } from './BicofinoLogo'
 import { MoodDial } from './MoodDial'
 
@@ -11,7 +11,7 @@ import { MoodDial } from './MoodDial'
 const NAV = [
   { href: '/', label: 'Rete', Icon: Waypoints },
   { href: '/tendencias', label: 'Tendências', Icon: TrendingUp },
-  { href: '/radar', label: 'Radar', Icon: Radar },
+  { href: '/consigliere', label: 'Consigliere', Icon: Sparkle },
 ]
 
 export function Chrome({ meta }: { meta: string }) {
