@@ -33,6 +33,20 @@
 - Motor: hooks de tag com peso + boosts (reach, disposição, sinal com keyword da
   tendência). Ex.: EUDR acende 9/26 membros.
 
+### MoodDial — dial de mood portátil (pedido 11/06)
+- Botão fixo embaixo à esquerda (referência: "Pick your vibe" do wantedfornothing.com):
+  cada clique cicla o esquema de cor inteiro da página. **11 moods do canon**, todos
+  medidos WCAG sobre o chão (tinta ≥4.5:1, tinta dim ≥4.5:1 via `dimAlpha` por mood,
+  accent ≥3:1): Notte (default, mantém o sorteio), USA, Torino, Caffè (escuros c/ tinta
+  clara), Crema, Cielo, Champagne (claros c/ tinta escura), Australia, Miami, SPFC,
+  Como (chãos vibrantes — ali o vibrante é o próprio chão, sinal vira a tinta, M-03).
+- **Portátil por contrato de 4 variáveis** (`--lr-ground`, `--lr-ink-rgb`,
+  `--lr-dim-alpha`, `--current-accent`): o CSS do app inteiro deriva da tinta via
+  `rgba(var(--lr-ink-rgb), alpha)` — o dial não conhece nenhum seletor do app. Para
+  levar a outro app: copiar `src/components/MoodDial.tsx`, derivar o CSS das 4 vars,
+  renderizar `<MoodDial storageKey="bf-mood:<app>" />`. Persiste em localStorage.
+- Logo Bicofino no chrome (portado de casa-nostra, `currentColor` — acompanha o mood).
+
 ### Motores (puros, determinísticos, testáveis)
 - `src/lib/engine/edges.ts` — arestas por tags compartilhadas, peso por kind
   (família 1.0 > empresa 0.8 > intro 0.6 > afiliação 0.5 > grupo 0.45 > skill 0.3).

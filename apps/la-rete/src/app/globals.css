@@ -18,17 +18,22 @@
   --current-accent: #f0535e;
   --bf-signal: var(--current-accent);
 
-  /* superfícies e fios no escuro */
-  --lr-surface: rgba(242, 248, 255, 0.04);
-  --lr-surface-2: rgba(242, 248, 255, 0.07);
-  --lr-border: rgba(242, 248, 255, 0.12);
-  /* base 242,248,255 segue o precedente do motion-lab; alpha 0.32 = canon */
-  --bf-line-on-dark: rgba(242, 248, 255, 0.22);
-  --bf-line-on-dark-strong: rgba(242, 248, 255, 0.32);
-  --bf-hairline-dark: 1px solid rgba(242, 248, 255, 0.12);
-  --lr-text: var(--bf-aluminium);
-  /* aluminium rebaixado em alpha (≈6:1 sobre power-black) — steel puro reprova WCAG no mono 9px */
-  --lr-text-dim: rgba(226, 234, 242, 0.55);
+  /* contrato de mood (ver MoodDial.tsx): chão + tinta + dim + accent.
+     Tudo abaixo deriva da tinta — trocar 4 variáveis re-skinna o app. */
+  --lr-ground: var(--bf-power-black);
+  --lr-ink-rgb: 242, 248, 255; /* base segue o precedente do motion-lab */
+  --lr-dim-alpha: 0.6; /* medido por chão p/ contraste (MoodDial) */
+  --lr-strong: rgb(var(--lr-ink-rgb));
+
+  /* superfícies e fios derivam da tinta; alpha 0.32 = canon */
+  --lr-surface: rgba(var(--lr-ink-rgb), 0.04);
+  --lr-surface-2: rgba(var(--lr-ink-rgb), 0.07);
+  --lr-border: rgba(var(--lr-ink-rgb), 0.12);
+  --bf-line-on-dark: rgba(var(--lr-ink-rgb), 0.22);
+  --bf-line-on-dark-strong: rgba(var(--lr-ink-rgb), 0.32);
+  --bf-hairline-dark: 1px solid rgba(var(--lr-ink-rgb), 0.12);
+  --lr-text: rgba(var(--lr-ink-rgb), 0.92);
+  --lr-text-dim: rgba(var(--lr-ink-rgb), var(--lr-dim-alpha));
 
   /* espaçamento — escala fechada */
   --sp-1: 4px;
@@ -75,8 +80,9 @@ body {
 }
 
 body {
-  background: var(--bf-power-black);
+  background: var(--lr-ground);
   color: var(--lr-text);
+  transition: background-color var(--dur-slow) var(--ease-standard);
   font-family: var(--bf-font);
   font-size: 14px;
   line-height: 1.6;
@@ -104,7 +110,7 @@ button {
 
 ::selection {
   background: var(--current-accent);
-  color: var(--bf-power-black);
+  color: var(--lr-ground);
 }
 
 /* scrollbar discreta */
@@ -134,13 +140,21 @@ button {
   flex-shrink: 0;
 }
 
+.lr-chrome__logo {
+  display: flex;
+  align-items: center;
+  color: var(--lr-strong);
+}
+
+/* o logo já fecha no ✦ da marca; o brand mono vira eyebrow ao lado */
 .lr-chrome__brand {
   font-family: var(--bf-font-mono);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--bf-white);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--lr-text-dim);
   white-space: nowrap;
+  margin-left: calc(-1 * var(--sp-4));
 }
 
 .lr-chrome__brand .diamond {
@@ -168,7 +182,7 @@ button {
 }
 
 .lr-chrome__link[data-active='true'] {
-  color: var(--bf-white);
+  color: var(--lr-strong);
   border-bottom-color: var(--current-accent);
 }
 
@@ -256,7 +270,7 @@ button {
 }
 
 .lr-chip[data-on='true'] {
-  color: var(--bf-white);
+  color: var(--lr-strong);
   border-color: var(--bf-line-on-dark-strong);
   background: var(--lr-surface-2);
 }
@@ -400,11 +414,11 @@ button {
 }
 
 .lr-node__fill {
-  fill: rgba(242, 248, 255, 0.08);
+  fill: rgba(var(--lr-ink-rgb), 0.08);
 }
 
 .lr-node:hover .lr-node__core {
-  stroke: var(--bf-white);
+  stroke: var(--lr-strong);
 }
 
 .lr-node[data-selected='true'] .lr-node__core {
@@ -445,7 +459,7 @@ button {
 
 .lr-node:hover .lr-node__label,
 .lr-node[data-selected='true'] .lr-node__label {
-  fill: var(--bf-aluminium);
+  fill: var(--lr-text);
 }
 
 .lr-node__seal {
@@ -456,7 +470,7 @@ button {
 }
 
 .lr-ghost {
-  fill: rgba(242, 248, 255, 0.1);
+  fill: rgba(var(--lr-ink-rgb), 0.1);
   pointer-events: none;
   transition: opacity var(--dur-slow) var(--ease-standard);
 }
@@ -518,7 +532,7 @@ button {
   font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 1.1;
-  color: var(--bf-white);
+  color: var(--lr-strong);
 }
 
 .lr-panel__sub {
@@ -677,7 +691,7 @@ button {
   font-size: 12px;
   font-weight: 700;
   line-height: 1.35;
-  color: var(--bf-white);
+  color: var(--lr-strong);
 }
 
 .lr-opp__score {
@@ -748,7 +762,7 @@ button {
 }
 
 .lr-trend[data-active='true'] .lr-trend__title {
-  color: var(--bf-white);
+  color: var(--lr-strong);
 }
 
 .lr-trend__meta {
@@ -839,4 +853,42 @@ button {
   color: var(--lr-text-dim);
   max-width: 36ch;
   line-height: 1.6;
+}
+
+/* ── dial de mood — portátil (contrato em MoodDial.tsx) ───────────── */
+
+.bf-mood {
+  position: fixed;
+  bottom: var(--sp-4);
+  left: var(--sp-4);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--bf-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lr-text-dim);
+  border: 1px solid var(--lr-border);
+  border-radius: var(--bf-radius-pill);
+  padding: var(--sp-1) var(--sp-3) var(--sp-1) var(--sp-1);
+  background: var(--lr-ground);
+  transition:
+    color var(--dur-base) var(--ease-standard),
+    border-color var(--dur-base) var(--ease-standard),
+    background-color var(--dur-slow) var(--ease-standard);
+}
+
+.bf-mood:hover {
+  color: var(--lr-text);
+  border-color: var(--bf-line-on-dark);
+}
+
+.bf-mood__swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--bf-radius-pill);
+  border: 1px solid var(--bf-line-on-dark-strong);
+  flex-shrink: 0;
 }
