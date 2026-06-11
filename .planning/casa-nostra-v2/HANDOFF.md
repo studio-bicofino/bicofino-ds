@@ -20,6 +20,15 @@
 
 **Migration `0006_people_bicofino_id_honorific_birth.sql`** (bicofino_id, honorific, birth_date) — APLICADA no SQL Editor em 2026-06-10 ("Success. No rows returned").
 
+### Onda 13 — segunda rodada da mesma sessão (Fabio aprovou a 12)
+
+1. **Sócio nº** — campo só-numerais no header, ANTES do Bicofino ID (ordem de associado). Coluna `people.member_number integer` (form envia string de dígitos, action converte via `toIntOrNull`).
+2. **Geração** — dropdown 1ª/2ª/3ª/4ª Geração ao lado do Nascimento (grid do nome virou `96px 1fr 170px 150px`). Coluna `people.generation text` (guarda o label inteiro, ex. "2ª Geração").
+3. **Família** — novo bloco de tags entre Grupos e Domínios no cadastro. **Kind novo `'familia'`** em tags (check constraint ampliado). `/grupos` virou "Grupos, Famílias & Domínios" — seção Famílias com o mesmo CRUD.
+4. `TagKind` em `lib/db/types.ts` ampliado com `'familia'`.
+
+**Migration `0007_member_number_generation_familia.sql`** (member_number, generation, tags_kind_check c/ familia) — APLICADA no SQL Editor em 2026-06-10.
+
 **Deploy:** Vercel CLI da **raiz** do repo/worktree (rootDirectory do projeto = `apps/casa-nostra`), `vercel deploy --prod --yes --scope studio-bicofinos-projects`. NÃO deployar da raiz do checkout principal — os ~382MB de mídia untracked de `apps/web/public/media` estouram o upload; usar worktree limpo de main.
 
 ---

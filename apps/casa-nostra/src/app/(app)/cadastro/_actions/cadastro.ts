@@ -52,6 +52,13 @@ function emptyToNull(v: string | null | undefined): string | null {
   return t === '' ? null : t
 }
 
+// Sócio nº chega como string de dígitos do form; coluna é integer.
+function toIntOrNull(v: string | null | undefined): number | null {
+  const t = emptyToNull(v)
+  if (!t || !/^\d+$/.test(t)) return null
+  return Number(t)
+}
+
 // ============================================================
 // Action
 // ============================================================
@@ -100,8 +107,10 @@ async function createPersonV2Inner(input: CadastroV2Input): Promise<ActionResult
   const personRow = {
     full_name: data.full_name,
     bicofino_id: emptyToNull(data.bicofino_id),
+    member_number: toIntOrNull(data.member_number),
     honorific: emptyToNull(data.honorific),
     birth_date: emptyToNull(data.birth_date),
+    generation: emptyToNull(data.generation),
     current_title: emptyToNull(data.current_title),
     current_company: currentCompany,
     photo_url: emptyToNull(data.photo_url),
@@ -162,9 +171,10 @@ async function createPersonV2Inner(input: CadastroV2Input): Promise<ActionResult
   }
 
   // 3. Tags (skills / grupos / afiliações)
-  const tagPayload: Array<{ kind: 'skill' | 'grupo' | 'afiliacao'; names: string[] }> = [
+  const tagPayload: Array<{ kind: 'skill' | 'grupo' | 'afiliacao' | 'familia'; names: string[] }> = [
     { kind: 'skill', names: data.skills },
     { kind: 'grupo', names: data.grupos },
+    { kind: 'familia', names: data.familias },
     { kind: 'afiliacao', names: data.afiliacoes },
   ]
 
@@ -249,8 +259,10 @@ async function updatePersonV2Inner(
   const personRow = {
     full_name: data.full_name,
     bicofino_id: emptyToNull(data.bicofino_id),
+    member_number: toIntOrNull(data.member_number),
     honorific: emptyToNull(data.honorific),
     birth_date: emptyToNull(data.birth_date),
+    generation: emptyToNull(data.generation),
     current_title: emptyToNull(data.current_title),
     current_company: currentCompany,
     photo_url: emptyToNull(data.photo_url),
@@ -324,9 +336,10 @@ async function updatePersonV2Inner(
     return { ok: false, error: `person_tags.delete: ${delTagsErr.message}` }
   }
 
-  const tagPayload: Array<{ kind: 'skill' | 'grupo' | 'afiliacao'; names: string[] }> = [
+  const tagPayload: Array<{ kind: 'skill' | 'grupo' | 'afiliacao' | 'familia'; names: string[] }> = [
     { kind: 'skill', names: data.skills },
     { kind: 'grupo', names: data.grupos },
+    { kind: 'familia', names: data.familias },
     { kind: 'afiliacao', names: data.afiliacoes },
   ]
 

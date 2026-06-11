@@ -57,7 +57,7 @@ export type OrganizationKind =
   | 'escola'
   | 'entidade'
 
-export type TagKind = 'skill' | 'grupo' | 'afiliacao'
+export type TagKind = 'skill' | 'grupo' | 'afiliacao' | 'familia'
 
 export type CategoryValue =
   | 'cliente'

@@ -121,6 +121,13 @@ const BICOFINO_ID_STYLE: CSSProperties = {
 
 const HONORIFIC_OPTIONS = ['Mr', 'Mrs', 'Miss'] as const
 
+const GENERATION_OPTIONS = [
+  '1ª Geração',
+  '2ª Geração',
+  '3ª Geração',
+  '4ª Geração',
+] as const
+
 const BLOCK_LABEL_STYLE: CSSProperties = {
   fontFamily: '"JetBrains Mono", ui-monospace, monospace',
   fontSize: 11,
@@ -191,8 +198,10 @@ export function CadastroV2({
   // Estado do form — inicializado a partir de initialData quando edit.
   const [fullName, setFullName] = useState(initialData?.full_name ?? '')
   const [bicofinoId, setBicofinoId] = useState(initialData?.bicofino_id ?? '')
+  const [memberNumber, setMemberNumber] = useState(initialData?.member_number ?? '')
   const [honorific, setHonorific] = useState(initialData?.honorific ?? '')
   const [birthDate, setBirthDate] = useState(initialData?.birth_date ?? '')
+  const [generation, setGeneration] = useState(initialData?.generation ?? '')
   const [currentTitle, setCurrentTitle] = useState(initialData?.current_title ?? '')
   const [currentCompany, setCurrentCompany] = useState(
     initialData?.current_company ?? '',
@@ -225,6 +234,7 @@ export function CadastroV2({
   )
   const [skills, setSkills] = useState<string[]>(initialData?.skills ?? [])
   const [grupos, setGrupos] = useState<string[]>(initialData?.grupos ?? [])
+  const [familias, setFamilias] = useState<string[]>(initialData?.familias ?? [])
   const [afiliacoes, setAfiliacoes] = useState<string[]>(
     initialData?.afiliacoes ?? [],
   )
@@ -242,8 +252,10 @@ export function CadastroV2({
     const payload: CadastroV2Input = {
       full_name: trimmedName,
       bicofino_id: bicofinoId.trim() || null,
+      member_number: memberNumber.trim() || null,
       honorific: honorific || null,
       birth_date: birthDate || null,
+      generation: generation || null,
       current_title: currentTitle.trim() || null,
       current_company: currentCompany.trim() || null,
       photo_url: photoUrl,
@@ -264,6 +276,7 @@ export function CadastroV2({
       },
       skills,
       grupos,
+      familias,
       afiliacoes,
     }
 
@@ -328,19 +341,40 @@ export function CadastroV2({
           <h1 style={TITLE_STYLE}>{headerTitle}</h1>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <label htmlFor="cadastro-bicofino-id" style={{ ...BLOCK_LABEL_STYLE, marginBottom: 0 }}>
-            Bicofino ID
-          </label>
-          <input
-            id="cadastro-bicofino-id"
-            type="text"
-            value={bicofinoId}
-            onChange={(e) => setBicofinoId(e.target.value)}
-            placeholder="—"
-            disabled={pending}
-            style={BICOFINO_ID_STYLE}
-          />
+        <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <label
+              htmlFor="cadastro-member-number"
+              style={{ ...BLOCK_LABEL_STYLE, marginBottom: 0 }}
+            >
+              Sócio nº
+            </label>
+            <input
+              id="cadastro-member-number"
+              type="text"
+              inputMode="numeric"
+              value={memberNumber}
+              onChange={(e) => setMemberNumber(e.target.value.replace(/\D/g, ''))}
+              placeholder="—"
+              disabled={pending}
+              style={{ ...BICOFINO_ID_STYLE, width: 110 }}
+            />
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <label htmlFor="cadastro-bicofino-id" style={{ ...BLOCK_LABEL_STYLE, marginBottom: 0 }}>
+              Bicofino ID
+            </label>
+            <input
+              id="cadastro-bicofino-id"
+              type="text"
+              value={bicofinoId}
+              onChange={(e) => setBicofinoId(e.target.value)}
+              placeholder="—"
+              disabled={pending}
+              style={BICOFINO_ID_STYLE}
+            />
+          </div>
         </div>
       </header>
 
@@ -361,7 +395,7 @@ export function CadastroV2({
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: '96px 1fr 170px',
+              gridTemplateColumns: '96px 1fr 170px 150px',
               gap: 16,
               alignItems: 'end',
             }}
@@ -416,6 +450,26 @@ export function CadastroV2({
                 disabled={pending}
                 style={SIDE_FIELD_STYLE}
               />
+            </div>
+
+            <div>
+              <label htmlFor="cadastro-generation" style={BLOCK_LABEL_STYLE}>
+                Geração
+              </label>
+              <select
+                id="cadastro-generation"
+                value={generation}
+                onChange={(e) => setGeneration(e.target.value)}
+                disabled={pending}
+                style={{ ...SIDE_FIELD_STYLE, cursor: 'pointer' }}
+              >
+                <option value="">—</option>
+                {GENERATION_OPTIONS.map((g) => (
+                  <option key={g} value={g}>
+                    {g}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
@@ -483,7 +537,19 @@ export function CadastroV2({
         />
       </section>
 
-      {/* Linha 5 — Domínios (kind interno segue 'afiliacao') */}
+      {/* Linha 5 — Família */}
+      <section>
+        <label style={BLOCK_LABEL_STYLE}>Família</label>
+        <TagInput
+          kind="familia"
+          value={familias}
+          onChange={setFamilias}
+          allTags={allTags}
+          placeholder="Ex.: Família Rossi"
+        />
+      </section>
+
+      {/* Linha 6 — Domínios (kind interno segue 'afiliacao') */}
       <section>
         <label style={BLOCK_LABEL_STYLE}>Domínios</label>
         <TagInput

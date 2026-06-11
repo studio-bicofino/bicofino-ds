@@ -23,8 +23,10 @@ type PersonRow = {
   id: string
   full_name: string
   bicofino_id: string | null
+  member_number: number | null
   honorific: string | null
   birth_date: string | null
+  generation: string | null
   current_title: string | null
   current_company: string | null
   photo_url: string | null
@@ -42,7 +44,7 @@ type ContactRow = {
   value: string
 }
 
-type TagJoin = { name: string; kind: 'skill' | 'grupo' | 'afiliacao' }
+type TagJoin = { name: string; kind: 'skill' | 'grupo' | 'afiliacao' | 'familia' }
 type PersonTagJoinRow = {
   sort_order: number | null
   // Supabase tipa o join como array; pode vir objeto único também.
@@ -93,7 +95,7 @@ export default async function EditPersonPage({
       supabase
         .from('people')
         .select(
-          'id, full_name, bicofino_id, honorific, birth_date, current_title, current_company, photo_url, home_city, home_country, address_street, address_number, address_complement, address_state, address_zip',
+          'id, full_name, bicofino_id, member_number, honorific, birth_date, generation, current_title, current_company, photo_url, home_city, home_country, address_street, address_number, address_complement, address_state, address_zip',
         )
         .eq('id', id)
         .maybeSingle(),
@@ -129,6 +131,7 @@ export default async function EditPersonPage({
   // Tags: split por kind preservando ordem.
   const skills: string[] = []
   const grupos: string[] = []
+  const familias: string[] = []
   const afiliacoes: string[] = []
   for (const row of (personTagsResp.data ?? []) as unknown as PersonTagJoinRow[]) {
     const raw = row.tags
@@ -136,14 +139,17 @@ export default async function EditPersonPage({
     if (!t?.name) continue
     if (t.kind === 'skill') skills.push(t.name)
     else if (t.kind === 'grupo') grupos.push(t.name)
+    else if (t.kind === 'familia') familias.push(t.name)
     else if (t.kind === 'afiliacao') afiliacoes.push(t.name)
   }
 
   const initialData: CadastroV2Input = {
     full_name: person.full_name,
     bicofino_id: person.bicofino_id,
+    member_number: person.member_number != null ? String(person.member_number) : null,
     honorific: person.honorific,
     birth_date: person.birth_date,
+    generation: person.generation,
     current_title: person.current_title,
     current_company: person.current_company,
     photo_url: person.photo_url,
@@ -159,6 +165,7 @@ export default async function EditPersonPage({
     },
     skills,
     grupos,
+    familias,
     afiliacoes,
   }
 

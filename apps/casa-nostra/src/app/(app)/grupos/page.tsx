@@ -18,7 +18,7 @@ export default async function GruposPage() {
     supabase
       .from('tags')
       .select('*')
-      .in('kind', ['grupo', 'afiliacao'])
+      .in('kind', ['grupo', 'familia', 'afiliacao'])
       .order('name', { ascending: true }),
     supabase.from('person_tags').select('tag_id'),
   ])
@@ -40,20 +40,37 @@ export default async function GruposPage() {
   })
 
   const groups = tags.filter((t) => t.kind === 'grupo').map(toRow)
+  const families = tags.filter((t) => t.kind === 'familia').map(toRow)
   const domains = tags.filter((t) => t.kind === 'afiliacao').map(toRow)
 
   return (
     <div className="cn-page cn-page--narrow">
-      <Hero groupCount={groups.length} domainCount={domains.length} />
+      <Hero
+        groupCount={groups.length}
+        familyCount={families.length}
+        domainCount={domains.length}
+      />
 
       <div style={{ height: 1, background: 'var(--bf-border)' }} aria-hidden />
 
-      {error ? <ErrorBlock message={error} /> : <TagManager groups={groups} domains={domains} />}
+      {error ? (
+        <ErrorBlock message={error} />
+      ) : (
+        <TagManager groups={groups} families={families} domains={domains} />
+      )}
     </div>
   )
 }
 
-function Hero({ groupCount, domainCount }: { groupCount: number; domainCount: number }) {
+function Hero({
+  groupCount,
+  familyCount,
+  domainCount,
+}: {
+  groupCount: number
+  familyCount: number
+  domainCount: number
+}) {
   return (
     <header style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <p
@@ -76,7 +93,7 @@ function Hero({ groupCount, domainCount }: { groupCount: number; domainCount: nu
           color: 'var(--bf-text-primary)',
         }}
       >
-        Grupos &amp; Domínios
+        Grupos, Famílias &amp; Domínios
       </h1>
       <p
         style={{
@@ -88,7 +105,8 @@ function Hero({ groupCount, domainCount }: { groupCount: number; domainCount: nu
         Os rótulos que organizam a rede — crie, renomeie ou apague.
         {' '}
         <span className="mono" style={{ fontSize: 12, letterSpacing: '0.04em' }}>
-          {groupCount} {groupCount === 1 ? 'grupo' : 'grupos'} · {domainCount}{' '}
+          {groupCount} {groupCount === 1 ? 'grupo' : 'grupos'} · {familyCount}{' '}
+          {familyCount === 1 ? 'família' : 'famílias'} · {domainCount}{' '}
           {domainCount === 1 ? 'domínio' : 'domínios'}
         </span>
       </p>

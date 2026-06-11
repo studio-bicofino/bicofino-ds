@@ -24,6 +24,7 @@ export type TagRow = {
 
 type Props = {
   groups: TagRow[]
+  families: TagRow[]
   domains: TagRow[]
 }
 
@@ -83,7 +84,7 @@ function countLabel(count: number): string {
 // Manager (duas seções)
 // ============================================================
 
-export function TagManager({ groups, domains }: Props) {
+export function TagManager({ groups, families, domains }: Props) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 48 }}>
       <TagSection
@@ -92,6 +93,13 @@ export function TagManager({ groups, domains }: Props) {
         placeholder="Novo grupo…"
         emptyMessage="Nenhum grupo ainda. Crie o primeiro acima."
         tags={groups}
+      />
+      <TagSection
+        kind="familia"
+        label="Famílias"
+        placeholder="Nova família…"
+        emptyMessage="Nenhuma família ainda. Crie a primeira acima."
+        tags={families}
       />
       <TagSection
         kind="afiliacao"
