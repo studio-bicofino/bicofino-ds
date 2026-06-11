@@ -91,6 +91,8 @@ src/app/globals.css          ← todos os estilos; tokens no topo; responsivo no
 1. `npx tsc --noEmit` limpo e `npm run build` verde.
 2. Testar no browser em **1440px E 375px** (responsivo: <1100px vira pilha
    grafo→painel→filtros; já quebrou uma vez por pular este passo).
+   Se mexeu no globals.css por script: conferir que os tokens de fonte/motion
+   continuam dentro do `:root` (ver lição em §7) — build verde não cobre CSS.
 3. Se mexeu em UI: rodar agentes `bicofino-design-reviewer` e `bicofino-motion-curator`.
    Se mexeu em copy/dados: `bicofino-copy-editor`. Aplicar o que fizer sentido,
    surfacear tradeoffs pro Woney (nunca barrar skill em silêncio).
@@ -115,6 +117,13 @@ src/app/globals.css          ← todos os estilos; tokens no topo; responsivo no
 - **prefers-reduced-motion**: sim no breath/transições de movimento; o grafo
   pré-assenta (`sim.tick()` em loop) e revela parado.
 - **iCloud**: se aparecerem arquivos " 2"/" 3", é o iCloud duplicando — não commitar.
+- **Edição de CSS por script (LIÇÃO 11/06)**: um insert no meio do `:root` fechou o
+  bloco cedo e os tokens de fonte/motion ficaram escopados a `[data-corners='soft']` —
+  o app inteiro caiu em fonte de sistema E o build passou verde (CSS não valida var
+  órfã). Regra: depois de QUALQUER edição programática no globals.css, validar a
+  estrutura — confirmar que `--bf-font*`, `--dur-*`, `--ease-*` e `--sp-*` seguem
+  DENTRO do `:root` (assert por script ou olho no diff), e abrir o browser. O build
+  verde NÃO cobre CSS.
 
 ## 8 · Roadmap (ordem de valor)
 
