@@ -165,7 +165,7 @@ export default function RadarPage() {
           )}
         </aside>
 
-        <div style={{ position: 'relative', flex: 1, minWidth: 0, display: 'flex' }}>
+        <div className="lr-canvaswrap">
           <ForceGraph
             people={PEOPLE}
             ghosts={[]}

@@ -105,7 +105,7 @@ export default function RetePage() {
           hasActiveFilters={hasActiveFilters}
         />
 
-        <div style={{ position: 'relative', flex: 1, minWidth: 0, display: 'flex' }}>
+        <div className="lr-canvaswrap">
           <ForceGraph
             people={visiblePeople}
             ghosts={ghosts}

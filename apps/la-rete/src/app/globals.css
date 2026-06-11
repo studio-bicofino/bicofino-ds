@@ -257,6 +257,13 @@ button {
   min-height: 0;
 }
 
+.lr-canvaswrap {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+}
+
 /* ── trilho de filtros ────────────────────────────────────────────── */
 
 .lr-rail {
@@ -1029,4 +1036,74 @@ button {
 .lr-radar__go:disabled {
   opacity: 0.35;
   cursor: default;
+}
+
+/* ── responsivo — abaixo de 1100px as 3 colunas viram pilha:
+   grafo herói no topo, painel logo abaixo, filtros no fim. ─────────── */
+
+@media (max-width: 1100px) {
+  body {
+    overflow: auto;
+  }
+
+  .lr-app {
+    height: auto;
+    min-height: 100dvh;
+  }
+
+  .lr-chrome__top {
+    flex-wrap: wrap;
+    gap: var(--sp-3) var(--sp-4);
+    padding: var(--sp-5);
+  }
+
+  .lr-chrome__right {
+    margin-left: auto;
+  }
+
+  .lr-chrome__bottom {
+    flex-wrap: wrap;
+    gap: var(--sp-2) var(--sp-4);
+  }
+
+  .lr-stage {
+    flex-direction: column;
+  }
+
+  .lr-canvaswrap {
+    order: -1;
+    flex: none;
+    height: 62vh;
+    min-height: 380px;
+    border-bottom: var(--bf-hairline-dark);
+  }
+
+  .lr-panel {
+    order: 0;
+    width: 100%;
+    border-left: none;
+  }
+
+  .lr-rail {
+    order: 1;
+    width: 100%;
+    border-right: none;
+    border-top: var(--bf-hairline-dark);
+  }
+
+  /* num palco pequeno só a instrumentação do topo sobrevive */
+  .lr-hud--bl,
+  .lr-hud--br {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .lr-chrome__brand {
+    font-size: 18px;
+  }
+
+  .lr-chrome__meta {
+    display: none;
+  }
 }
