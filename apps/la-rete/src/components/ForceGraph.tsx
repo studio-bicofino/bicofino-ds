@@ -13,6 +13,7 @@ import {
   type SimulationLinkDatum,
 } from 'd3-force'
 import type { Edge, Person } from '@/lib/data/types'
+import { Avatar } from './Avatar'
 
 interface SimNode extends SimulationNodeDatum {
   id: string
@@ -338,6 +339,18 @@ export function ForceGraph({
                 <text className="lr-node__label" y={r + 14}>
                   {p.preferredName}
                 </text>
+                {hoverId === p.id && (
+                  /* g externo posiciona (attr); o interno anima (CSS transform
+                     sobrescreveria o attr se fosse no mesmo elemento) */
+                  <g transform={`translate(0, ${-r - (isFamiglia ? 40 : 32)})`}>
+                    <g className="lr-node__photo">
+                      <circle className="lr-node__photo-ring" r={23} />
+                      <g transform="translate(-21, -21)">
+                        <Avatar personId={p.id} size={42} />
+                      </g>
+                    </g>
+                  </g>
+                )}
               </g>
             )
           })}

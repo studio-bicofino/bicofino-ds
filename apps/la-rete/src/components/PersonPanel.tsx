@@ -1,6 +1,7 @@
 'use client'
 
 import type { Opportunity, Person, Tag, TagKind } from '@/lib/data/types'
+import { Avatar } from './Avatar'
 import { OpportunityCard } from './OpportunityCard'
 
 const SCORE_ROWS: { key: keyof Person; label: string }[] = [
@@ -53,13 +54,20 @@ export function PersonPanel({
       <button className="lr-panel__close" onClick={onClose}>
         ← rede
       </button>
-      <div className="lr-panel__eyebrow">
-        <span className="diamond">✦</span> sócio nº {person.memberNumber ?? '—'}
-        {person.generation ? ` · ${person.generation}` : ''}
-      </div>
-      <h2 className="lr-panel__name">{person.fullName}</h2>
-      <div className="lr-panel__sub">
-        {person.homeCity} · {person.citizenships.join(' / ')} · cluster {person.cluster}
+      <div className="lr-panel__head">
+        <span className="lr-panel__photo">
+          <Avatar personId={person.id} size={64} />
+        </span>
+        <div>
+          <div className="lr-panel__eyebrow">
+            <span className="diamond">✦</span> sócio nº {person.memberNumber ?? '—'}
+            {person.generation ? ` · ${person.generation}` : ''}
+          </div>
+          <h2 className="lr-panel__name">{person.fullName}</h2>
+          <div className="lr-panel__sub">
+            {person.homeCity} · {person.citizenships.join(' / ')} · cluster {person.cluster}
+          </div>
+        </div>
       </div>
       <p className="lr-panel__bio">{person.bio}</p>
 

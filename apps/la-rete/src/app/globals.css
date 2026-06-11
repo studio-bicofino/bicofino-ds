@@ -148,13 +148,23 @@ button {
 }
 
 .lr-chrome {
+  border-bottom: var(--bf-hairline-dark);
+  flex-shrink: 0;
+}
+
+.lr-chrome__top {
   display: flex;
   align-items: center;
   gap: var(--sp-5);
-  height: 64px;
-  padding: 0 var(--sp-5);
+  padding: var(--sp-4) var(--sp-5);
   border-bottom: var(--bf-hairline-dark);
-  flex-shrink: 0;
+}
+
+.lr-chrome__bottom {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+  padding: var(--sp-2) var(--sp-5);
 }
 
 .lr-chrome__logo {
@@ -166,10 +176,11 @@ button {
 /* nome do produto — Gotham Black, exceção de impacto sancionada (§6: 1–2 palavras) */
 .lr-chrome__brand {
   font-family: var(--bf-font-impact);
-  font-size: 15px;
+  font-size: 30px;
   font-weight: 900;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
+  line-height: 1;
   color: var(--lr-strong);
   white-space: nowrap;
   margin-left: calc(-1 * var(--sp-2));
@@ -185,6 +196,9 @@ button {
 }
 
 .lr-chrome__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
   font-family: var(--bf-font-mono);
   font-size: 11px;
   text-transform: uppercase;
@@ -493,6 +507,34 @@ button {
   pointer-events: none;
 }
 
+.lr-node__photo {
+  pointer-events: none;
+  animation: lr-photo-in var(--dur-base) var(--ease-out) both;
+}
+
+.lr-node__photo-ring {
+  fill: var(--lr-ground);
+  stroke: var(--bf-line-on-dark-strong);
+  stroke-width: 1;
+}
+
+@keyframes lr-photo-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lr-node__photo {
+    animation: none;
+  }
+}
+
 .lr-ghost {
   fill: rgba(var(--lr-ink-rgb), 0.1);
   pointer-events: none;
@@ -535,6 +577,21 @@ button {
   border-left: var(--bf-hairline-dark);
   overflow-y: auto;
   padding: var(--sp-5) var(--sp-5) var(--sp-7);
+}
+
+.lr-panel__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+}
+
+.lr-panel__photo {
+  display: block;
+  flex-shrink: 0;
+  border: 1px solid var(--lr-border);
+  border-radius: var(--bf-radius-pill);
+  overflow: hidden;
+  line-height: 0;
 }
 
 .lr-panel__eyebrow {

@@ -59,10 +59,18 @@
   (link/texto → análise) escolhido em vez de chat aberto para a v1; thread de refinamento
   conversacional fica para depois, se a calibragem pedir.
 
-### Header de produto (11/06)
-- 64px: logo Bicofino (16px) + **LA RETE em Gotham Black** (exceção de impacto §6,
-  fontes self-hosted copiadas do motion-lab) + nav (Rete · Tendências · Radar) +
-  meta + **MoodDial no topo à direita** (saiu do canto inferior).
+### Header de produto (11/06, revisado na mesma data)
+- **Dois níveis**: em cima logo Bicofino 32px + LA RETE em Gotham Black 30px
+  (exceção de impacto §6, fontes self-hosted copiadas do motion-lab) + MoodDial à
+  direita; linha divisória; embaixo nav à esquerda (Rete · Tendências · Radar) com
+  ícones Lucide (Waypoints/TrendingUp/Radar, 16px — 20 engole o rótulo mono 11px) + meta à direita.
+
+### Avatares de mockup (11/06)
+- `Avatar.tsx`: busto vetorial circular, variações determinísticas por id
+  (4 cabelos × 4 peles × 4 camisas) — sem assets binários. Aparece no **hover do nó**
+  (balão acima, fade 200ms, gated reduced-motion) e no **cabeçalho do painel** (64px).
+- Trocar por foto real = substituir o componente por `<img>` com o `photo_url`
+  do Casa Nostra (bucket `people-photos`).
 
 ### Motores (puros, determinísticos, testáveis)
 - `src/lib/engine/edges.ts` — arestas por tags compartilhadas, peso por kind
