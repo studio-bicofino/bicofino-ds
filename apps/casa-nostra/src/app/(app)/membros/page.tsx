@@ -13,6 +13,7 @@ type SearchParams = {
 type PersonRow = {
   id: string
   full_name: string
+  member_number: number | null
   current_title: string | null
   current_company: string | null
   photo_url: string | null
@@ -40,7 +41,7 @@ export default async function MembrosPage({
   let query = supabase
     .from('people')
     .select(
-      'id, full_name, current_title, current_company, photo_url, address_street, address_number, address_complement, address_state, address_zip, home_city, home_country',
+      'id, full_name, member_number, current_title, current_company, photo_url, address_street, address_number, address_complement, address_state, address_zip, home_city, home_country',
       { count: 'exact' },
     )
 
@@ -79,6 +80,7 @@ export default async function MembrosPage({
   const members: MemberRowData[] = peopleRaw.map((p) => ({
     id: p.id,
     full_name: p.full_name,
+    member_number: p.member_number,
     current_title: p.current_title,
     current_company: p.current_company,
     photo_url: p.photo_url,

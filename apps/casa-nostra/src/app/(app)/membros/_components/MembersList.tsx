@@ -14,6 +14,7 @@ import { GripVertical, Trash2, Undo2 } from 'lucide-react'
 import { deletePersonV2, reorderPeopleV2 } from '../_actions/members'
 
 export type MemberRowData = {
+  member_number: number | null
   id: string
   full_name: string
   current_title: string | null
@@ -312,15 +313,39 @@ function RowCells({
       <div style={{ minWidth: 0 }}>
         <div
           style={{
-            fontWeight: 500,
-            color: 'var(--bf-text-primary)',
-            fontSize: 14,
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
+            display: 'flex',
+            alignItems: 'baseline',
+            gap: 8,
+            minWidth: 0,
           }}
         >
-          {person.full_name}
+          <span
+            style={{
+              fontWeight: 500,
+              color: 'var(--bf-text-primary)',
+              fontSize: 14,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {person.full_name}
+          </span>
+          {person.member_number != null && (
+            <span
+              className="mono"
+              style={{
+                fontSize: 10,
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                color: 'var(--bf-text-subtle)',
+                whiteSpace: 'nowrap',
+                flexShrink: 0,
+              }}
+            >
+              Sócio nº {person.member_number}
+            </span>
+          )}
         </div>
         {person.current_title && (
           <div

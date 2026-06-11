@@ -50,6 +50,10 @@
 
 **Migration `0008_citizenship_ancestry_cargo_empresa_tags.sql`** (citizenships, ancestries, tags_kind_check c/ cargo+empresa) — APLICADA no SQL Editor em 2026-06-10.
 
+### Onda 15.1 — Sócio nº na listagem de /membros
+
+A linha de /membros mostra "SÓCIO Nº N" em mono 10px ao lado do nome (quando preenchido). `member_number` entrou na query da page e no `MemberRowData`. Sem migration (coluna já existia da 0007).
+
 ### Onda 15 — fix Bairro × Complemento
 
 Bug: o lookup de CEP (ViaCEP) jogava `bairro` em `address_complement`. Fix: **Bairro é campo próprio** (`people.address_neighborhood`, preenchido pelo CEP, lado a lado com Complemento no popover) e **Complemento é 100% manual** (ex. nº do apto — o ViaCEP não toca mais nele). `AddressValue` ganhou `neighborhood` em toda a cadeia (popover → CadastroV2 → schema → actions → edição → types).
