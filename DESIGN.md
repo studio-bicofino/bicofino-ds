@@ -141,6 +141,12 @@ may **pin** its own vibrant by overriding the variable locally:
 The randomiser sets `--current-accent` on `:root` after hydration (see `AccentRandomizer`); the
 SSR fallback is coral SPFC. More than one vibrant per composition is an **exception**, used only
 when explicitly requested.
+
+**Dark grounds.** On power-black surfaces the randomiser draws only from Highlights that hold
+**≥ 3:1 contrast** against the ground — `--bf-usa` (`#05185c`, 1.18:1) and `--bf-torino`
+(`#821324`, 1.89:1) are excluded. The vibrant is a signal; a signal that can't be seen isn't one.
+Pinning either as a local theme on light grounds remains fine. *(measured 2026-06-11; first
+applied in `apps/la-rete`.)*
 No new colors get invented to satisfy a brief — pick the Highlight that fits. **Non-intentional
 gradients are forbidden** in both modes.
 
@@ -299,6 +305,10 @@ re-declares the same set in **`apps/docs-site/src/app/globals.css`**. New in thi
   place motion may enter from `scale(0)`/`r=0`; still `transform`/`opacity`-only, `--ease-out`,
   canon tokens, ~1s, skipped under `prefers-reduced-motion`, content rendered underneath. Mirrors
   the M-01 ambient precedent. (`apps/web/components/intro/`)
+
+- **Dark-ground accent pool (2026-06-11)** — §5: on power-black the `--current-accent` randomiser
+  excludes Highlights below 3:1 contrast against the ground (usa 1.18:1, torino 1.89:1; the other
+  ten pass). Surfaced by the design-reviewer audit of `apps/la-rete`, approved by Woney.
 
 Interaction durations stay at the live `120 / 200 / 360ms`. `--radius` (2px) remains as the legacy
 base; new work should prefer `--bf-corner-*`.
