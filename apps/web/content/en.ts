@@ -16,9 +16,9 @@ export const en = {
   'home.mensch.p1':
     'Bicofino moves through universes that rarely intersect. And when they do, they need translators: the agent translates football for the brand, the agency translates the campaign for the athlete, the manager translates wealth for the family. The problem is that in every translation, something is lost.',
   'home.mensch.p2':
-    'Bicofino does not translate. It is fluent. It thinks at once in the language of the locker room, of art, of numbers, of fashion, of the business that delivers results. Worlds so dissonant, yet in here they flow and amplify one another.',
+    'Bicofino does not translate. It is fluent. It thinks at once in the language of the locker room, of art, of fashion, of the street, of numbers, of business. Worlds so dissonant, yet in here they flow and amplify one another.',
   'home.mensch.p3':
-    'Bicofino is not just an agency, nor just a holding company, nor just a consultancy. It is a house — fluent in worlds that do not speak to each other. As rare as what it brings together.',
+    'Bicofino is not just an agency, nor just a holding company, nor just a consultancy. It is a house. Fluent in worlds that do not speak to each other. As rare as what it brings together.',
   'home.mensch.signoff': 'Bicofino. Unlike Any Other.',
 
   // Footer
@@ -92,7 +92,7 @@ export const en = {
   'off-field.closing': 'Few clients, served in depth. Unlike Any Other.',
 
   // Club
-  'club.access': 'access',
+  'club.access': 'Bicofino-ID',
   'club.password': 'password',
   'club.enter': 'Enter',
   'club.back': '← back',
