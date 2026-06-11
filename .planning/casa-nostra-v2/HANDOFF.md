@@ -37,6 +37,12 @@
 
 **Migration `0008_citizenship_ancestry_cargo_empresa_tags.sql`** (citizenships, ancestries, tags_kind_check c/ cargo+empresa) — APLICADA no SQL Editor em 2026-06-10.
 
+### Onda 15 — fix Bairro × Complemento
+
+Bug: o lookup de CEP (ViaCEP) jogava `bairro` em `address_complement`. Fix: **Bairro é campo próprio** (`people.address_neighborhood`, preenchido pelo CEP, lado a lado com Complemento no popover) e **Complemento é 100% manual** (ex. nº do apto — o ViaCEP não toca mais nele). `AddressValue` ganhou `neighborhood` em toda a cadeia (popover → CadastroV2 → schema → actions → edição → types).
+
+**Migration `0009_address_neighborhood.sql`** — APLICADA em 2026-06-10. SQL opcional de correção de dados legados (mover address_complement→address_neighborhood) foi oferecido mas NÃO rodado — registros antigos com bairro no Complemento precisam de ajuste manual na edição.
+
 **Deploy:** Vercel CLI da **raiz** do repo/worktree (rootDirectory do projeto = `apps/casa-nostra`), `vercel deploy --prod --yes --scope studio-bicofinos-projects`. NÃO deployar da raiz do checkout principal — os ~382MB de mídia untracked de `apps/web/public/media` estouram o upload; usar worktree limpo de main.
 
 ---

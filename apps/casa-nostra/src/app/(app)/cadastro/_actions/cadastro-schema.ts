@@ -19,6 +19,7 @@ const addressBlockSchema = z.object({
   street: z.string().optional().nullable(),
   number: z.string().optional().nullable(),
   complement: z.string().optional().nullable(),
+  neighborhood: z.string().optional().nullable(),
   city: z.string().optional().nullable(),
   state: z.string().optional().nullable(),
   zip: z.string().optional().nullable(),

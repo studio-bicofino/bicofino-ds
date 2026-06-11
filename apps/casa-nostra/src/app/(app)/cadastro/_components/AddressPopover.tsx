@@ -23,6 +23,7 @@ export type AddressValue = {
   street: string
   number: string
   complement: string
+  neighborhood: string
   city: string
   state: string
   zip: string
@@ -33,6 +34,7 @@ export const EMPTY_ADDRESS: AddressValue = {
   street: '',
   number: '',
   complement: '',
+  neighborhood: '',
   city: '',
   state: '',
   zip: '',
@@ -187,10 +189,11 @@ export function AddressPopover({
           return
         }
         const cur = valueRef.current
+        // Complemento NÃO é tocado pelo CEP — é campo manual (ex. nº do apto).
         onChange({
           ...cur,
           street: data.logradouro || cur.street,
-          complement: data.bairro || cur.complement,
+          neighborhood: data.bairro || cur.neighborhood,
           city: data.localidade || cur.city,
           state: data.uf || cur.state,
           country: 'Brasil',
@@ -268,14 +271,27 @@ export function AddressPopover({
         </div>
       </div>
 
-      <div>
-        <label style={LABEL_STYLE}>Complemento</label>
-        <input
-          type="text"
-          value={value.complement}
-          onChange={(e) => patch('complement', e.target.value)}
-          style={INPUT_STYLE}
-        />
+      <div style={ROW_STYLE}>
+        <div>
+          <label style={LABEL_STYLE}>Complemento</label>
+          <input
+            type="text"
+            value={value.complement}
+            onChange={(e) => patch('complement', e.target.value)}
+            placeholder="Ex.: apto 121"
+            style={INPUT_STYLE}
+          />
+        </div>
+        <div>
+          <label style={LABEL_STYLE}>Bairro</label>
+          <input
+            type="text"
+            value={value.neighborhood}
+            onChange={(e) => patch('neighborhood', e.target.value)}
+            style={INPUT_STYLE}
+            autoComplete="address-level3"
+          />
+        </div>
       </div>
 
       <div style={ROW_STYLE}>
@@ -348,6 +364,7 @@ export function addressIsEmpty(a: AddressValue): boolean {
     a.street.trim() === '' &&
     a.number.trim() === '' &&
     a.complement.trim() === '' &&
+    a.neighborhood.trim() === '' &&
     a.city.trim() === '' &&
     a.state.trim() === '' &&
     a.zip.trim() === '' &&
