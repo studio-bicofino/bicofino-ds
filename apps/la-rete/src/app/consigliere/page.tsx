@@ -144,66 +144,78 @@ export default function ConsiglierePage() {
       <Chrome meta={`${readings.length} leituras nesta sessão`} />
       <div className="lr-stage">
         <aside className="lr-rail" aria-label="Consigliere">
-          <section className="lr-rail__section">
+          <section className="lr-rail__section" data-corners="soft">
             <div className="lr-rail__head" data-open="true">
-              <span className="lr-rail__eyebrow">// consigliere · leitura de fora</span>
+              <span className="lr-rail__eyebrow">// consigliere</span>
             </div>
             <p className="lr-empty" style={{ marginBottom: 'var(--sp-3)' }}>
-              Link, texto, transcript, PDF de análise ou print de gráfico (cole com Cmd+V). O
-              Consigliere lê e mostra quem da rede acende.
+              Bem-vindo ao Consigliere da Bicofino Rete.
             </p>
-            <textarea
-              className="lr-radar__input"
-              rows={4}
-              placeholder="https://… , o texto do material, ou uma nota sobre o anexo"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onPaste={(e) => {
-                const pasted = e.clipboardData.files?.[0]
-                if (pasted && pasted.type.startsWith('image/')) {
-                  e.preventDefault()
-                  setFile(pasted)
-                }
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) submit()
-              }}
-            />
-            {file && (
-              <div className="lr-attach">
-                <span className="lr-attach__name">{file.name || 'imagem colada'}</span>
+            <div className="lr-composer">
+              <textarea
+                className="lr-composer__input"
+                rows={3}
+                placeholder="Em que posso ajudar hoje, Don?"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onPaste={(e) => {
+                  const pasted = e.clipboardData.files?.[0]
+                  if (pasted && pasted.type.startsWith('image/')) {
+                    e.preventDefault()
+                    setFile(pasted)
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) submit()
+                }}
+              />
+              {file && (
+                <div className="lr-attach">
+                  <span className="lr-attach__name">{file.name || 'imagem colada'}</span>
+                  <button
+                    className="lr-attach__remove"
+                    onClick={() => setFile(null)}
+                    aria-label="Remover anexo"
+                  >
+                    <X size={12} strokeWidth={1.5} />
+                  </button>
+                </div>
+              )}
+              <div className="lr-composer__row">
                 <button
-                  className="lr-attach__remove"
-                  onClick={() => setFile(null)}
-                  aria-label="Remover anexo"
+                  className="lr-composer__attach"
+                  onClick={() => fileRef.current?.click()}
+                  aria-label="Anexar PDF ou imagem"
+                  title="anexar PDF ou imagem"
                 >
-                  <X size={12} strokeWidth={1.5} />
+                  <Paperclip size={14} strokeWidth={1.5} />
+                </button>
+                <input
+                  ref={fileRef}
+                  type="file"
+                  accept="application/pdf,image/png,image/jpeg,image/webp"
+                  hidden
+                  onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+                />
+                <button
+                  className="lr-bang"
+                  data-busy={busy}
+                  onClick={submit}
+                  disabled={busy || (!input.trim() && !file)}
+                >
+                  <svg
+                    className="lr-bang__star"
+                    viewBox="264.53 0 65.48 65.48"
+                    width="12"
+                    height="12"
+                    fill="currentColor"
+                    aria-hidden
+                  >
+                    <path d="M330.01,32.74c-24.55,0-32.74-8.18-32.74-32.74,0,24.56-8.18,32.74-32.74,32.74,24.56,0,32.74,8.18,32.74,32.74,0-24.56,8.19-32.74,32.74-32.74" />
+                  </svg>
+                  {busy ? 'lendo…' : 'Bang!'}
                 </button>
               </div>
-            )}
-            <div className="lr-radar__actions">
-              <button
-                className="lr-radar__go"
-                onClick={submit}
-                disabled={busy || (!input.trim() && !file)}
-              >
-                {busy ? 'lendo…' : 'ler'}
-              </button>
-              <button
-                className="lr-radar__attach"
-                onClick={() => fileRef.current?.click()}
-                aria-label="Anexar PDF ou imagem"
-                title="anexar PDF ou imagem"
-              >
-                <Paperclip size={14} strokeWidth={1.5} />
-              </button>
-              <input
-                ref={fileRef}
-                type="file"
-                accept="application/pdf,image/png,image/jpeg,image/webp"
-                hidden
-                onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-              />
             </div>
           </section>
 

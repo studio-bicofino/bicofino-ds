@@ -84,6 +84,14 @@
   --bf-corner-2: var(--bf-sharp-2);
   --bf-corner-3: var(--bf-sharp-3);
   --bf-radius-pill: 9999px;
+}
+
+/* flip de linguagem de canto por subtree (DESIGN.md D2) — um card pode ser
+   SOFT (circular, em movimento) num app SHARP; nunca misturar no mesmo card */
+[data-corners='soft'] {
+  --bf-corner-1: 12px;
+  --bf-corner-2: 18px;
+  --bf-corner-3: 28px;
 
   /* movimento */
   --dur-fast: 120ms;
@@ -1001,48 +1009,118 @@ button {
   flex-shrink: 0;
 }
 
-/* ── radar — input de leitura ─────────────────────────────────────── */
+/* ── composer do Consigliere — card SOFT, estilo chat ─────────────── */
 
-.lr-radar__input {
-  width: 100%;
-  font-family: var(--bf-font-mono);
-  font-size: 11px;
-  line-height: 1.5;
-  color: var(--lr-text);
+.lr-composer {
   background: var(--lr-surface);
   border: 1px solid var(--lr-border);
-  border-radius: var(--bf-corner-2);
-  padding: var(--sp-2) var(--sp-3);
-  resize: vertical;
+  border-radius: var(--bf-corner-3);
+  padding: var(--sp-3) var(--sp-3) var(--sp-2);
   transition: border-color var(--dur-base) var(--ease-standard);
 }
 
-.lr-radar__input::placeholder {
+.lr-composer:focus-within {
+  border-color: var(--bf-line-on-dark-strong);
+}
+
+.lr-composer__input {
+  width: 100%;
+  font-family: var(--bf-font-mono);
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--lr-text);
+  background: transparent;
+  border: none;
+  resize: none;
+}
+
+.lr-composer__input::placeholder {
   color: var(--lr-text-dim);
 }
 
-.lr-radar__input:hover,
-.lr-radar__input:focus {
+/* o foco visível vive na borda do composer (focus-within) */
+.lr-composer__input:focus-visible {
+  outline: none;
+}
+
+.lr-composer__row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-2);
+}
+
+.lr-composer__attach {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--lr-border);
+  border-radius: var(--bf-radius-pill);
+  color: var(--lr-text-dim);
+  transition:
+    color var(--dur-fast) var(--ease-standard),
+    border-color var(--dur-fast) var(--ease-standard);
+}
+
+.lr-composer__attach:hover {
+  color: var(--lr-text);
   border-color: var(--bf-line-on-dark);
 }
 
-.lr-radar__go {
-  margin-top: var(--sp-2);
+/* Bang! — gatilho do Consigliere */
+.lr-bang {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-left: auto;
   font-family: var(--bf-font-mono);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.04em;
   color: var(--lr-ground);
   background: var(--current-accent);
-  border-radius: var(--bf-corner-1);
-  padding: var(--sp-1) var(--sp-4);
+  border-radius: var(--bf-radius-pill);
+  padding: 6px var(--sp-4);
   transition: opacity var(--dur-fast) var(--ease-standard);
 }
 
-.lr-radar__go:disabled {
+.lr-bang:disabled {
   opacity: 0.35;
   cursor: default;
+}
+
+.lr-bang__star {
+  display: block;
+}
+
+/* indicador de atividade (funcional, como o breath): estrela gira e o
+   botão pulsa em opacity enquanto o Consigliere lê */
+@media (prefers-reduced-motion: no-preference) {
+  .lr-bang[data-busy='true'] {
+    animation: lr-bang-pulse 1.2s ease-in-out infinite;
+  }
+
+  .lr-bang[data-busy='true'] .lr-bang__star {
+    animation: lr-star-spin 0.9s linear infinite;
+  }
+}
+
+@keyframes lr-star-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes lr-bang-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
 }
 
 /* ── responsivo — abaixo de 1100px as 3 colunas viram pilha:
