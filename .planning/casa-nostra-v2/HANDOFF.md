@@ -4,6 +4,19 @@
 
 ---
 
+## FECHAMENTO DA SESSÃO 2026-06-10 — Ondas 12-15 EM PROD, Fabio aprovou
+
+**Estado ao encerrar:** tudo commitado e pushado (HEAD da sessão `1ba5c2a`), deployado e smoke-testado. Migrations 0006-0009 todas APLICADAS no SQL Editor. Banco com 3 membros reais cadastrados pelo Fabio (família Brancatelli: Fabio, Salvatore, Luigi — Jardim Europa/SP), dados de endereço já limpos (bairro no campo certo, nada preso no Complemento — verificado via REST).
+
+**Pra retomar em chat novo:** ler este HANDOFF (seções Onda 12→15 abaixo) + memória do projeto. Editar direto na main. Deploy: `git worktree add --detach /tmp/cn-deploy main` + copiar `.vercel/project.json` da raiz do checkout pra raiz do worktree + `vercel deploy --prod --yes --scope studio-bicofinos-projects` DO worktree (nunca da raiz do checkout principal — mídia untracked do apps/web estoura o upload). Migrations seguem manuais no SQL Editor (sem connection string).
+
+**Avisos operacionais:**
+- Sessão do **Infisical expirada** (login interativo falhou em 10/06). Fallback que funciona: `npx vercel env pull <arquivo> --environment=development --yes --scope studio-bicofinos-projects` da raiz (projeto linkado = casa-nostra) pra obter SUPABASE_URL + SERVICE_ROLE_KEY e operar via REST. Apagar o arquivo depois.
+- Colunas legadas `current_title`/`current_company` recebem o 1º valor das tags cargo/empresa — se um dia /membros passar a ler das tags, dá pra aposentar.
+- Backlog conhecido: fotos órfãs no storage após delete; Fase 2 (ontologia de tags) e matchmaking (Fases 4-5) não começaram; `/grupos` não gerencia kinds cargo/empresa/skill (só grupo/familia/afiliacao).
+
+---
+
 ## STATUS ATUAL — 2026-06-10 (Onda 12 — ajustes ao vivo com Fabio · SOURCE NA MAIN)
 
 **Source migrado pra `main`** (commit `9c0683c` de 03/06, idêntico ao HEAD `756dcfa` da `feature/casa-nostra`). A partir da Onda 12, **ajustes são feitos direto na main** — a branch vira histórico. Este HANDOFF foi portado da branch pra main nesta onda.
