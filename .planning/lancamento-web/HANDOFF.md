@@ -1,33 +1,36 @@
 # HANDOFF — Lançamento Web (apps/web)
 
 > Estado vivo da frente "lançamento oficial". Ler junto com `BRIEFING.md`.
-> Última atualização: **2026-06-10 (noite)** — TESTE DE COPY EM ABERTO, ler antes de tudo.
+> Última atualização: **2026-06-10 (noite, 2ª rodada)** — texto de entrada DEFINIDO + intro só star.
 
-## ⚠️ EM ABERTO — Teste das 5 variantes do texto de entrada (decidir com Woney)
+## ✅ RESOLVIDO 2026-06-10 — Texto de entrada definido (fim do teste A/E) + intro única (star)
 
-A abertura do manifesto (p1+p2) está em **teste A/B/C/D/E em prod**: 5 variantes sorteadas
-por refresh, marcador discreto `// copy vN` no topo da coluna, override `?copy=v1..v5`.
-p3 ("Bicofino não é uma agência…") + signoff são FIXOS — Woney aprovou.
+**Woney bateu o martelo no texto final do manifesto.** O teste das 5 variantes (sorteio por
+refresh, `?copy=v1..v5`, marcador `// copy vN`) foi DESMONTADO:
 
-Direcionamento do Woney que gerou as variantes: (1) tirar o eco "coisas/coisa";
-(2) "gestor traduz patrimônio para a **família**" (family office, casa aconchegante);
-(3) repensar "sociedade paulistana" (só "sociedade"? SP-Milão-NY?); (4) arco narrativo
-= conectar/curar/criar/aconselhar → fluência em universos que não conversam → unlike any other.
+- Chaves finais: **`home.mensch.p1/p2/p3/p4`** + `home.mensch.signoff` (paridade BR/EN/IT).
+  São agora **4 parágrafos** — o texto final ganhou um parágrafo novo (p3 "cidadão global":
+  "não é new yorker, nem londrino… é cidadão global") e o antigo p3 da casa virou **p4**
+  com ajuste ("não é **só** uma agência, nem **só** uma holding…").
+- Arco final: tradutores/algo se perde → não traduz, é fluente (vestiário/arte/números/moda/
+  negócio) → cidadão global → a casa → Unlike Any Other.
+- `HeroBlock.tsx`: blocos `⚠️ TEMP` removidos (sorteio, `?copy`, marcador); `MENSCH_KEYS`
+  fixo com os 4 parágrafos; signoff entra como 5º bloco da cascata. Chaves `v1–v5` apagadas
+  dos 3 idiomas.
+- EN/IT traduzidos e auditados pelo `bicofino-copy-editor` (3 ajustes aplicados: "intersect"
+  no EN p1, vírgula em vez de travessão no EN p2, "eppure" no IT p2). **Judgment call aplicado,
+  reversível:** IT p3 usa "paulistano" (fidelidade ao par cidade×cidade do BR) em vez de
+  "paulista" (mais reconhecível na Itália) — trocar se Woney preferir.
 
-- **v1 Lapidada** — texto atual com arestas tiradas (mudança mínima)
-- **v2 Tríade** — v1 + sociedade paulistana/milanesa/novaiorquina (eixo internacional)
-- **v3 Caminho dos 4 Cs** — abre ecoando Conectar/curar/criar/aconselhar
-- **v4 A mesa** — a mais aconchegante ("recebe cada mundo", "sentar à mesma mesa")
-- **v5 Aforística** — subtração máxima, duas frases-lâmina
-- Chaves: `home.mensch.v{1-5}.p{1,2}` em br/en/it (paridade completa).
-  **Na escolha:** colapsar pra `home.mensch.p1/p2`, remover sorteio + marcador no
-  `HeroBlock.tsx` (blocos marcados com `⚠️ TEMP`), apagar chaves não usadas nos 3 idiomas.
+**Intro de marca: só a STAR.** Decisão do Woney 10/06 — manter apenas a animação da estrela
+(`StarSpin`), descartar as outras 4. `Glitch/SplitScreen/Fragments/RainDrops.tsx` apagados,
+sorteio e override `?intro=` removidos do `Intro.tsx` (com 1 variante, basta recarregar pra
+testar). DESIGN.md §8 + §11 emendados: a exceção sancionada agora nomeia o star-spin como
+abertura única (~1s), com nota histórica das 5 variantes prototipadas.
 
-**Nota (atualizada):** a intro de marca NÃO se perdeu — era o guard 1×/sessão + o Chrome
-restaurando `sessionStorage` ao reabrir abas, o que escondia a intro de quem volta. **Decisão
-do Woney 10/06: intro toca em TODA visita** (guard de sessão removido do `Intro.tsx`; salvaguarda
-emendada no DESIGN.md §8 + §11). Navegação interna (client-side) segue sem replay; reduced-motion
-segue pulando tudo; `?intro=` força variante específica.
+**Nota (mantida):** intro toca em TODA visita — o guard 1×/sessão foi removido 10/06 porque o
+session restore do Chrome ressuscitava o `sessionStorage` e escondia a intro de quem volta.
+Navegação interna (client-side) segue sem replay; reduced-motion segue pulando tudo.
 
 ## 2026-06-10 — Gotham Fase 2 + receita final do split reveal (3 rodadas com Woney)
 
@@ -119,19 +122,17 @@ segue pulando tudo; `?intro=` força variante específica.
 
 ## Frente C — o que foi construído
 
-**Sistema de intro com 5 variantes**, sorteado 1×/sessão, como exceção sancionada no DESIGN.md (§8 + §11).
+**Sistema de intro** como exceção sancionada no DESIGN.md (§8 + §11). Nasceu com 5 variantes
+sorteadas; **desde 10/06 só a star** (decisão do Woney — ver topo deste doc).
 
 ### Arquivos
-- `apps/web/components/intro/Intro.tsx` — orquestrador: decide skip (reduced-motion / sessão),
-  sorteia variante (override `?intro=`), monta overlay. SSR mostra um preto liso (pré-decisão) → zero flash.
-- `apps/web/components/intro/shared.ts` — contrato `VariantProps`, `OVERLAY_BASE`, `POWER_BLACK`, eases.
-- `apps/web/components/intro/variants/`
-  - `StarSpin.tsx` — estrela (sparkle do logo) gira + escala como janela na máscara.
-  - `Glitch.tsx` — blocos irregulares (linhas de altura aleatória × segmentos), jitter + saída caótica.
-  - `SplitScreen.tsx` — duas metades + costura `--bf-accent` partem do centro.
-  - `Fragments.tsx` — subdivisão recursiva BSP → cacos fractais caindo com gravidade (ease-in).
-  - `RainDrops.tsx` — gotas/lago: máscara de discos (reveal, `ease-in` atrasado) + anéis de ripple outline
-    (trem concêntrico + secundários propagantes, `ease-out`). Pior-caso ~3.0s.
+- `apps/web/components/intro/Intro.tsx` — orquestrador: decide skip (reduced-motion),
+  monta overlay e toca a star. SSR mostra um preto liso (pré-decisão) → zero flash.
+- `apps/web/components/intro/shared.ts` — contrato `VariantProps`, `OVERLAY_BASE`, `POWER_BLACK`.
+- `apps/web/components/intro/variants/StarSpin.tsx` — estrela (sparkle do logo) gira + escala
+  como janela na máscara (~1.0s).
+- ~~`Glitch/SplitScreen/Fragments/RainDrops.tsx`~~ — apagados 10/06 (recuperáveis no git
+  history, commits até `6bad006`).
 - `apps/web/components/home/HeroBlock.tsx` — recebe `revealed`, orquestra cascata vídeo→4Cs→texto.
 - `apps/web/components/home/FourCsHeading.tsx` — aceita `start`/`baseDelay`; cai no IntersectionObserver standalone.
 - `apps/web/app/page.tsx` — estado `revealed`; `<Intro onReveal={...}>` no topo.
@@ -147,9 +148,9 @@ home seta `revealed=true` → cascata de entrada do hero. **Conteúdo sempre ren
 > (parecia "imperceptível"). Amarrar sempre ao elemento real que termina por último.
 
 ### Como testar
-`npm run web` (porta 3002) e abrir `http://localhost:3002/?intro=<variante>`. Override ignora o guard de
-sessão (reload re-executa). `<variante>` = `star|glitch|split|fragments|rain|random`. Em dev, o console
-loga `[intro] variant: …` no sorteio.
+`npm run web` (porta 3002) e abrir `http://localhost:3002/`. A intro toca em todo full page load —
+basta recarregar. (O override `?intro=` saiu junto com o sorteio; com uma variante só, não há o
+que forçar.)
 
 ### Regras / canon
 - DESIGN.md §8 ganhou a subseção **"Sanctioned exception — the brand intro"** + linha no §11.

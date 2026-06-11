@@ -12,31 +12,15 @@ export const it = {
   'home.4cs.create': 'Create.',
   'home.4cs.consult': 'Consult.',
 
-  // Hero — Mensch
-  // ⚠️ TEMP: 5 varianti di copy in test (p1+p2) — sorteggiate al refresh,
-  // override ?copy=v1..v5. Da unificare in p1/p2 quando Woney sceglie.
-  'home.mensch.v1.p1':
-    'Essere bravi in molte cose è competenza. Essere nativi in tutte è fluenza. E la fluenza è quando si smette di tradurre. L\'agente traduce il calcio in brand. L\'agenzia traduce il brand in sport. Il gestore traduce il patrimonio per la famiglia. Tutti traducono — e in ogni traduzione qualcosa si perde.',
-  'home.mensch.v1.p2':
-    'Bicofino non traduce: pensa, allo stesso tempo, nella lingua dello spogliatoio e in quella dell\'ufficio del CEO, in quella dello scout europeo e in quella dell\'alta società. Nessuno di questi mondi richiede traduzione, perché in tutti è nativo.',
-  'home.mensch.v2.p1':
-    'Essere bravi in molte cose è competenza. Essere nativi in tutte è fluenza. E la fluenza è quando si smette di tradurre. L\'agente traduce il calcio in brand. L\'agenzia traduce il brand in sport. Il gestore traduce il patrimonio per la famiglia. Tutti traducono — e in ogni traduzione qualcosa si perde.',
-  'home.mensch.v2.p2':
-    'Bicofino non traduce: pensa, allo stesso tempo, nella lingua dello spogliatoio e in quella dell\'ufficio del CEO, in quella dello scout europeo e in quella dell\'alta società — a San Paolo, a Milano, a New York. Nessuno di questi mondi richiede traduzione, perché in tutti è nativo.',
-  'home.mensch.v3.p1':
-    'Connettere, curare, creare, consigliare — il cammino di Bicofino attraversa universi che raramente si incrociano. E tra universi distanti, ciò che di solito esiste è la traduzione: l\'agente traduce il calcio in brand, l\'agenzia traduce il brand in sport, il gestore traduce il patrimonio per la famiglia. In ogni traduzione, qualcosa si perde.',
-  'home.mensch.v3.p2':
-    'Bicofino non traduce: è fluente. Pensa, allo stesso tempo, nella lingua dello spogliatoio e in quella dell\'ufficio del CEO, in quella dello scout europeo e in quella dell\'alta società. Mondi distanti, che qui si capiscono — perché in tutti è nativo.',
-  'home.mensch.v4.p1':
-    'Competenza è parlare molte lingue. Fluenza è non dover tradurre nessuna. L\'agente traduce il calcio in brand. L\'agenzia traduce il brand in sport. Il gestore traduce il patrimonio per la famiglia. Tutti traducono — e qualcosa resta sempre per strada.',
-  'home.mensch.v4.p2':
-    'Bicofino non traduce: accoglie ogni mondo nella sua lingua. Lo spogliatoio e l\'ufficio del CEO, lo scout europeo e l\'alta società di San Paolo. Mondi che raramente siedono allo stesso tavolo — e che qui si capiscono, perché la casa è nativa in tutti.',
-  'home.mensch.v5.p1':
-    'Competenza è essere bravi in molti mondi. Fluenza è essere nativi in tutti. L\'agente traduce il calcio in brand. L\'agenzia traduce il brand in sport. Il gestore traduce il patrimonio per la famiglia. Tutti traducono — e in ogni traduzione qualcosa si perde.',
-  'home.mensch.v5.p2':
-    'Bicofino non traduce. Spogliatoio e ufficio del CEO, scout europeo e alta società: nessuno di questi mondi richiede traduzione, perché in tutti è nativo.',
+  // Hero — Mensch (testo finale di Woney, 2026-06-10 — test A/E chiuso)
+  'home.mensch.p1':
+    'Bicofino attraversa universi che raramente si incrociano. E, quando si incrociano, servono traduttori: l\'agente traduce il calcio per il brand, l\'agenzia traduce la campagna per l\'atleta, il gestore traduce il patrimonio per la famiglia. Il problema è che, in ogni traduzione, qualcosa si perde.',
+  'home.mensch.p2':
+    'Bicofino non traduce. È fluente. Pensa allo stesso tempo nella lingua dello spogliatoio, dell\'arte, dei numeri, della moda, del business che genera risultati. Mondi così dissonanti, eppure qui dentro fluiscono e si potenziano a vicenda.',
   'home.mensch.p3':
-    'Bicofino non è un\'agenzia, né una holding, né una società di consulenza. È una casa — fluente in mondi che non si parlano. Rara come ciò che riunisce.',
+    'Bicofino non è newyorkese, né londinese. Non è paulistano, né carioca. Né siciliano o milanese. Bicofino è cittadino del mondo.',
+  'home.mensch.p4':
+    'Bicofino non è solo un\'agenzia, né solo una holding, né solo una società di consulenza. È una casa — fluente in mondi che non si parlano. Rara come ciò che riunisce.',
   'home.mensch.signoff': 'Bicofino. Unlike Any Other.',
 
   // Footer

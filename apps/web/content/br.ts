@@ -12,31 +12,15 @@ export const br = {
   'home.4cs.create': 'Create.',
   'home.4cs.consult': 'Consult.',
 
-  // Hero — Mensch
-  // ⚠️ TEMP: 5 variantes da abertura (p1+p2) em teste — sorteiam no refresh,
-  // override ?copy=v1..v5. Quando o Woney escolher, colapsar pra p1/p2 únicos.
-  'home.mensch.v1.p1':
-    'Ser bom em muitas coisas é competência. Ser nativo em todas é fluência. E fluência é quando se para de traduzir. O agente traduz futebol para marca. A agência traduz marca para esporte. O gestor traduz patrimônio para a família. Todos traduzem — e em toda tradução, algo se perde.',
-  'home.mensch.v1.p2':
-    'O Bicofino não traduz: pensa, ao mesmo tempo, no idioma do vestiário e no da sala do CEO, no do scout europeu e no da sociedade. Nenhum desses mundos pede tradução, porque em todos ele é nativo.',
-  'home.mensch.v2.p1':
-    'Ser bom em muitas coisas é competência. Ser nativo em todas é fluência. E fluência é quando se para de traduzir. O agente traduz futebol para marca. A agência traduz marca para esporte. O gestor traduz patrimônio para a família. Todos traduzem — e em toda tradução, algo se perde.',
-  'home.mensch.v2.p2':
-    'O Bicofino não traduz: pensa, ao mesmo tempo, no idioma do vestiário e no da sala do CEO, no do scout europeu e no da sociedade — a paulistana, a milanesa, a novaiorquina. Nenhum desses mundos pede tradução, porque em todos ele é nativo.',
-  'home.mensch.v3.p1':
-    'Conectar, curar, criar, aconselhar — o caminho do Bicofino atravessa universos que raramente se cruzam. E entre universos distantes, o que costuma existir é tradução: o agente traduz futebol para marca, a agência traduz marca para esporte, o gestor traduz patrimônio para a família. Em toda tradução, algo se perde.',
-  'home.mensch.v3.p2':
-    'O Bicofino não traduz: é fluente. Pensa, ao mesmo tempo, no idioma do vestiário e no da sala do CEO, no do scout europeu e no da sociedade. Mundos distantes, que aqui dentro se entendem — porque em todos ele é nativo.',
-  'home.mensch.v4.p1':
-    'Competência é falar muitas línguas. Fluência é não precisar traduzir nenhuma. O agente traduz futebol para marca. A agência traduz marca para esporte. O gestor traduz patrimônio para a família. Todos traduzem — e algo sempre fica pelo caminho.',
-  'home.mensch.v4.p2':
-    'O Bicofino não traduz: recebe cada mundo no idioma dele. O vestiário e a sala do CEO, o scout europeu e a sociedade paulistana. Mundos que não costumam sentar à mesma mesa — e que aqui se entendem, porque a casa é nativa em todos.',
-  'home.mensch.v5.p1':
-    'Competência é ser bom em muitos mundos. Fluência é ser nativo em todos. O agente traduz futebol para marca. A agência traduz marca para esporte. O gestor traduz patrimônio para a família. Todos traduzem — e em toda tradução, algo se perde.',
-  'home.mensch.v5.p2':
-    'O Bicofino não traduz. Vestiário e sala do CEO, scout europeu e sociedade: nenhum desses mundos pede tradução, porque em todos ele é nativo.',
+  // Hero — Mensch (texto final do Woney, 2026-06-10 — fim do teste A/E)
+  'home.mensch.p1':
+    'Bicofino circula por universos que raramente se cruzam. E, quando se cruzam, precisam de tradutores: o agente traduz futebol para a marca, a agência traduz campanha para o atleta, o gestor traduz patrimônio para a família. O problema é que, em toda tradução, algo se perde.',
+  'home.mensch.p2':
+    'Bicofino não traduz. É fluente. Pensa ao mesmo tempo no idioma do vestiário, da arte, dos números, da moda, do negócio que gera resultado. Mundos tão dissonantes, mas que aqui dentro fluem e se potencializam.',
   'home.mensch.p3':
-    'Bicofino não é uma agência, nem uma holding, nem uma consultoria. É uma casa — fluente em mundos que não conversam. Rara como aquilo que reúne.',
+    'Bicofino não é new yorker, nem londrino. Não é paulistano, nem carioca. Nem siciliano ou milanês. Bicofino é cidadão global.',
+  'home.mensch.p4':
+    'Bicofino não é só uma agência, nem só uma holding, nem só uma consultoria. É uma casa — fluente em mundos que não conversam. Rara como aquilo que reúne.',
   'home.mensch.signoff': 'Bicofino. Unlike Any Other.',
 
   // Footer

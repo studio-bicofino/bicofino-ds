@@ -219,15 +219,17 @@ stay calm.
 
 A **second named exception** to the interaction rules, alongside the M-01 ambient loop. The public
 site (`apps/web`) opens with a **brand reveal**: a full-screen `--bf-power-black` overlay that
-clears to expose the site rendered underneath. One of several variants is **randomised per visit**
-(currently *star-spin*, *glitch*, *split*, *fractured-fall*, *lake-ripples*).
+clears to expose the site rendered underneath. The opening is the **star-spin** — the brand sparkle
+punched out of the black as a window that spins, then scales open. (Five variants were prototyped
+and ran randomised per visit; on 2026-06-10 the star was chosen as the single opening and the
+others — glitch, split, fractured-fall, lake-ripples — were retired.)
 
-Within this overlay — **and nowhere else** — motion may **enter from `scale(0)` / `r=0`** (the star,
-the drops): the whole gesture *is* something appearing from a point, so the §8 "nothing from
+Within this overlay — **and nowhere else** — motion may **enter from `scale(0)` / `r=0`** (the
+star): the whole gesture *is* something appearing from a point, so the §8 "nothing from
 nothing" rule is deliberately lifted. It still obeys the spirit of the system: animates **only
 `transform` / `opacity`** (plus SVG `r` / `mask`), eases on **`--ease-out`** (or a paired ease-in
 for a punch), uses **only canon tokens** (the overlay is `--bf-power-black`; the star is the brand
-asset), and runs **short** (≤ ~3s). Hard safeguards, all mandatory:
+asset), and runs **short** (~1s). Hard safeguards, all mandatory:
 
 - **`prefers-reduced-motion: reduce` → the intro is skipped entirely** (no overlay, content shown).
 - **Plays on every full page load** (amended 2026-06-10; was once-per-session via `sessionStorage` —
@@ -290,12 +292,13 @@ re-declares the same set in **`apps/docs-site/src/app/globals.css`**. New in thi
   First principle folded in via the *Design Craft Layer* (`CLAUDE.md`), from `web-design-guidelines`.
 - **Motion properties & focus** — §8: animate only `transform`/`opacity`, no `transition: all`,
   no `scale(0)` entries, focus via `:focus-visible`. From `emil-design-eng` + `web-design-guidelines`.
-- **Brand intro (sanctioned exception)** — §8: the `apps/web` opening overlay, a randomised reveal
-  (star-spin · glitch · split · fractured-fall · lake-ripples) on every full page load (2026-06-10;
-  originally once-per-session — amended because browser session restore hid it from returning
-  visitors). The *only* place motion may enter from `scale(0)`/`r=0`; still `transform`/`opacity`-only,
-  `--ease-out`, canon tokens, ≤~3s, skipped under `prefers-reduced-motion`, content rendered
-  underneath. Mirrors the M-01 ambient precedent. (`apps/web/components/intro/`)
+- **Brand intro (sanctioned exception)** — §8: the `apps/web` opening overlay, the **star-spin**
+  reveal on every full page load (2026-06-10; originally once-per-session — amended because browser
+  session restore hid it from returning visitors. Same date: the star chosen as the single opening
+  from five prototyped variants; glitch · split · fractured-fall · lake-ripples retired). The *only*
+  place motion may enter from `scale(0)`/`r=0`; still `transform`/`opacity`-only, `--ease-out`,
+  canon tokens, ~1s, skipped under `prefers-reduced-motion`, content rendered underneath. Mirrors
+  the M-01 ambient precedent. (`apps/web/components/intro/`)
 
 Interaction durations stay at the live `120 / 200 / 360ms`. `--radius` (2px) remains as the legacy
 base; new work should prefer `--bf-corner-*`.
