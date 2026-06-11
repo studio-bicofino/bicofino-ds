@@ -13,10 +13,10 @@ refresh, `?copy=v1..v5`, marcador `// copy vN`) foi DESMONTADO:
   1ª rodada mas foi CORTADO na 2ª ("texto acabou ficando muito comprido" — Woney, mesma
   noite); o parágrafo da casa fechou como p3, com o ajuste "não é **só** uma agência,
   nem **só** uma holding…".
-- Arco final: tradutores/algo se perde → não traduz, é fluente (vestiário/arte/moda/rua/
-  números/negócios) → a casa → Unlike Any Other. **3ª rodada (mesma noite):** lista do p2
-  revisada ("da moda, da rua, dos números, dos negócios" no lugar de "dos números, da moda,
-  do negócio que gera resultado") e p3 com ponto ("É uma casa. Fluente em…" — caiu o travessão).
+- Arco final: tradutores/algo se perde → não traduz, é fluente (vestiário/arte/números/rua/
+  moda/negócios) → a casa → Unlike Any Other. **3ª rodada (mesma noite):** lista do p2
+  revisada + p3 com ponto ("É uma casa. Fluente em…" — caiu o travessão). **4ª rodada:**
+  moda↔números trocados ("…da arte, dos números, da rua, da moda, dos negócios").
 - **Login do Club:** placeholder do campo de usuário mudou de "acesso"/"access" → **"Bicofino-ID"**
   (chave `club.access`, BR+EN; IT cai no fallback BR — termo de marca, igual nos 3 idiomas).
 - `HeroBlock.tsx`: blocos `⚠️ TEMP` removidos (sorteio, `?copy`, marcador); `MENSCH_KEYS`

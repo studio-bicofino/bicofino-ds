@@ -16,7 +16,7 @@ export const br = {
   'home.mensch.p1':
     'Bicofino circula por universos que raramente se cruzam. E, quando se cruzam, precisam de tradutores: o agente traduz futebol para a marca, a agência traduz campanha para o atleta, o gestor traduz patrimônio para a família. O problema é que, em toda tradução, algo se perde.',
   'home.mensch.p2':
-    'Bicofino não traduz. É fluente. Pensa ao mesmo tempo no idioma do vestiário, da arte, da moda, da rua, dos números, dos negócios. Mundos tão dissonantes, mas que aqui dentro fluem e se potencializam.',
+    'Bicofino não traduz. É fluente. Pensa ao mesmo tempo no idioma do vestiário, da arte, dos números, da rua, da moda, dos negócios. Mundos tão dissonantes, mas que aqui dentro fluem e se potencializam.',
   'home.mensch.p3':
     'Bicofino não é só uma agência, nem só uma holding, nem só uma consultoria. É uma casa. Fluente em mundos que não conversam. Rara como aquilo que reúne.',
   'home.mensch.signoff': 'Bicofino. Unlike Any Other.',
