@@ -84,14 +84,6 @@
   --bf-corner-2: var(--bf-sharp-2);
   --bf-corner-3: var(--bf-sharp-3);
   --bf-radius-pill: 9999px;
-}
-
-/* flip de linguagem de canto por subtree (DESIGN.md D2) — um card pode ser
-   SOFT (circular, em movimento) num app SHARP; nunca misturar no mesmo card */
-[data-corners='soft'] {
-  --bf-corner-1: 12px;
-  --bf-corner-2: 18px;
-  --bf-corner-3: 28px;
 
   /* movimento */
   --dur-fast: 120ms;
@@ -105,6 +97,14 @@
   --bf-font: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --bf-font-mono: var(--font-jetbrains), ui-monospace, 'SF Mono', monospace;
   --bf-font-impact: 'Gotham', var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* flip de linguagem de canto por subtree (DESIGN.md D2) — um card pode ser
+   SOFT (circular, em movimento) num app SHARP; nunca misturar no mesmo card */
+[data-corners='soft'] {
+  --bf-corner-1: 12px;
+  --bf-corner-2: 18px;
+  --bf-corner-3: 28px;
 }
 
 * {
