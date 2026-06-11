@@ -34,9 +34,16 @@ const RAW_CAP = 2.0
 /** Ordem fixa de desempate do kind dominante — do laço mais forte ao mais fraco. */
 const KIND_PRIORITY: EdgeKind[] = ['familia', 'empresa', 'intro', 'afiliacao', 'grupo', 'skill']
 
+/** Peso do laço implícito do padrone com quem ainda não tem fio direto. */
+const PADRONE_WEIGHT = 0.2
+
 /**
  * Constrói as arestas do grafo: uma Edge por par (source < target),
  * acumulando o peso de cada relação compartilhada.
+ *
+ * Regra da casa (Woney, 11/06): o padrone — sócio nº 1 — se conecta à rede
+ * INTEIRA. Onde não existe laço calculado, entra um fio fino de
+ * apresentação ('A casa'): todo mundo chegou até aqui por ele.
  */
 export function buildEdges(people: Person[], tagById: Record<string, Tag>): Edge[] {
   // Ordena por id para garantir source < target e saída estável.
@@ -47,6 +54,20 @@ export function buildEdges(people: Person[], tagById: Record<string, Tag>): Edge
     for (let j = i + 1; j < sorted.length; j++) {
       const edge = edgeBetween(sorted[i], sorted[j], tagById)
       if (edge) edges.push(edge)
+    }
+  }
+
+  const padrone = people.find((p) => p.memberNumber === 1)
+  if (padrone) {
+    const linked = new Set<string>()
+    for (const e of edges) {
+      if (e.source === padrone.id) linked.add(e.target)
+      if (e.target === padrone.id) linked.add(e.source)
+    }
+    for (const p of sorted) {
+      if (p.id === padrone.id || linked.has(p.id)) continue
+      const [source, target] = p.id < padrone.id ? [p.id, padrone.id] : [padrone.id, p.id]
+      edges.push({ source, target, weight: PADRONE_WEIGHT, kind: 'intro', via: ['A casa'] })
     }
   }
 

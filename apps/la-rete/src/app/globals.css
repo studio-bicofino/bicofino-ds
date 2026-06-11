@@ -178,8 +178,8 @@ button {
   font-family: var(--bf-font-impact);
   font-size: 22px;
   font-weight: 900;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: lowercase;
   line-height: 1;
   color: var(--lr-strong);
   white-space: nowrap;

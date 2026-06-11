@@ -15,8 +15,8 @@ const FILE_BY_PERSON: Record<string, string> = {
   /* capital */
   'p-heitor': 'm1.jpg',
   'p-bianca': 'w1.jpg',
-  'p-rubens': 'm5.jpg',
-  'p-paula': 'w4.jpg',
+  'p-rubens': 'm1.jpg',
+  'p-paula': 'w8.jpg',
   'p-rodrigo': 'm9.jpg',
   'p-evelyn': 'w2.jpg',
   'p-sergio': 'm3.jpg',
@@ -30,15 +30,15 @@ const FILE_BY_PERSON: Record<string, string> = {
   'p-otto': 'm8.jpg',
   'p-renata': 'w3.jpg',
   /* futebol */
-  'p-marcela': 'w1.jpg',
-  'p-davi': 'm7.jpg',
+  'p-marcela': 'w7.jpg',
+  'p-davi': 'm12.jpg',
   'p-thiago': 'm3.jpg',
-  'p-otavio': 'm1.jpg',
-  'p-gennaro': 'm2.jpg',
+  'p-otavio': 'm10.jpg',
+  'p-gennaro': 'm11.jpg',
   /* luxo · Itália */
   'p-vittorio': 'm5.jpg',
   'p-alessandro': 'm6.jpg',
-  'p-chiara': 'w3.jpg',
+  'p-chiara': 'w6.jpg',
   'p-marisa': 'w5.jpg',
 }
 
