@@ -156,7 +156,7 @@ button {
   display: flex;
   align-items: center;
   gap: var(--sp-5);
-  padding: var(--sp-4) var(--sp-5);
+  padding: var(--sp-7) var(--sp-5);
   border-bottom: var(--bf-hairline-dark);
 }
 
@@ -176,7 +176,7 @@ button {
 /* nome do produto — Gotham Black, exceção de impacto sancionada (§6: 1–2 palavras) */
 .lr-chrome__brand {
   font-family: var(--bf-font-impact);
-  font-size: 30px;
+  font-size: 22px;
   font-weight: 900;
   letter-spacing: 0.12em;
   text-transform: uppercase;
