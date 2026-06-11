@@ -1,6 +1,9 @@
-# Canal YouTube Bicofino — BRIEFING (RASCUNHO)
+# Canal YouTube Bicofino — BRIEFING
 
-> Status: **rascunho para validação com Woney** — 2026-06-10.
+> Status: **parcialmente validado** — 2026-06-11.
+> Woney validou: highlights públicos + jogos completos não listados. Pediu handle
+> `@bicofino`, mas está TOMADO (ver §3). Canal ainda não criado — exige login
+> interativo na conta Google (passo a passo no §4).
 > Nascido de conversa sobre criar o canal: vídeos de atletas (material de análise
 > para scouts) + conteúdo Off Pitch (Bicofino FC × Loro Piana, Bicofino Fox × Vespa).
 
@@ -42,15 +45,20 @@ algoritmo. Scout recebe um link de playlist e vê tudo do menino em um lugar.
 - Os MP4 1080×1920 do card-jogos-motion **já são Shorts prontos** — publicar a
   rodada de cards também no YouTube (custo ~zero, ativa o canal toda semana)
 
-## 3. Decisões a validar com Woney
+## 3. Decisões
 
-1. **Visibilidade dos vídeos de atleta**: recomendação = highlights públicos
-   (visibilidade pro menino) + jogos completos não listados (canal público só
-   com o melhor material). Alternativa: tudo não listado, canal público = só marca.
-2. **Idioma das descrições**: PT/EN fixo na descrição, ou usar o recurso de
-   traduções de metadados do YouTube (BR/EN/IT, mesmo trio do site)?
-3. **Handle**: `@bicofino` (verificar disponibilidade e registrar já).
-4. Shorts dos cards de jogos: publicar mesmo, ou guardar YouTube só pra conteúdo longo?
+1. ✅ **Visibilidade** (validado por Woney 11/06): highlights públicos + jogos
+   completos não listados, agrupados na playlist do atleta.
+2. **Handle**: `@bicofino` está **TOMADO** por canal de terceiro
+   ("Elias cesar da silva Cesar" — youtube.com/@bicofino, checado 11/06).
+   Livres na mesma data: `@studiobicofino` · `@bicofinofc` · `@bicofinobr` ·
+   `@bicofinoagency` · `@bicofinooficial` · `@bicofino_`.
+   Recomendação: `@studiobicofino` (casa com o GitHub studio-bicofino) ou
+   `@bicofinofc`. **Woney escolhe na hora de criar.**
+3. **Idioma das descrições** (aberto): PT/EN fixo na descrição, ou traduções de
+   metadados do YouTube (BR/EN/IT, mesmo trio do site)?
+4. Shorts dos cards de jogos (aberto): publicar mesmo, ou guardar YouTube só
+   pra conteúdo longo?
 
 ## 4. Setup do canal (passo a passo)
 
