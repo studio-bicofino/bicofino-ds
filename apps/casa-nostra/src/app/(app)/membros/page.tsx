@@ -198,7 +198,7 @@ function Header() {
           fontWeight: 500,
         }}
       >
-        // CASA NOSTRA · v2
+        // CASA NOSTRA
       </p>
       <h1
         style={{
@@ -233,7 +233,7 @@ function Footer() {
           opacity: 0.5,
         }}
       >
-        // BICOFINO // CASA NOSTRA v2
+        // BICOFINO // CASA NOSTRA
       </span>
     </footer>
   )

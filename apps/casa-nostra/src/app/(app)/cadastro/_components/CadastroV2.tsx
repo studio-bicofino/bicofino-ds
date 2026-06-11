@@ -39,7 +39,6 @@ import { motion, useReducedMotion } from 'motion/react'
 import { Check } from 'lucide-react'
 
 import { PhotoUploaderHero } from './PhotoUploaderHero'
-import { AutocompleteField } from '@/app/(app)/p/_components/AutocompleteField'
 import type { Suggestion } from '@/lib/utils/strings'
 import type { Tag } from '@/lib/db/types'
 
@@ -202,9 +201,13 @@ export function CadastroV2({
   const [honorific, setHonorific] = useState(initialData?.honorific ?? '')
   const [birthDate, setBirthDate] = useState(initialData?.birth_date ?? '')
   const [generation, setGeneration] = useState(initialData?.generation ?? '')
-  const [currentTitle, setCurrentTitle] = useState(initialData?.current_title ?? '')
-  const [currentCompany, setCurrentCompany] = useState(
-    initialData?.current_company ?? '',
+  const [cargos, setCargos] = useState<string[]>(initialData?.cargos ?? [])
+  const [empresas, setEmpresas] = useState<string[]>(initialData?.empresas ?? [])
+  const [citizenships, setCitizenships] = useState<string[]>(
+    initialData?.citizenships ?? [],
+  )
+  const [ancestries, setAncestries] = useState<string[]>(
+    initialData?.ancestries ?? [],
   )
   const [photoUrl, setPhotoUrl] = useState<string | null>(
     initialData?.photo_url ?? null,
@@ -256,8 +259,10 @@ export function CadastroV2({
       honorific: honorific || null,
       birth_date: birthDate || null,
       generation: generation || null,
-      current_title: currentTitle.trim() || null,
-      current_company: currentCompany.trim() || null,
+      cargos,
+      empresas,
+      citizenships,
+      ancestries,
       photo_url: photoUrl,
       contacts: {
         whatsapp: contacts.whatsapp.trim() || null,
@@ -335,7 +340,7 @@ export function CadastroV2({
                 fontWeight: 500,
               }}
             >
-              // EDITAR · v2
+              // EDITAR
             </span>
           )}
           <h1 style={TITLE_STYLE}>{headerTitle}</h1>
@@ -481,22 +486,26 @@ export function CadastroV2({
             }}
             className="cn-cadastro-v2__role-grid"
           >
-            <AutocompleteField
-              id="cadastro-current-title"
-              label="Cargo"
-              value={currentTitle}
-              onChange={setCurrentTitle}
-              placeholder="Ex.: CEO"
-              suggestions={suggestions.current_title}
-            />
-            <AutocompleteField
-              id="cadastro-current-company"
-              label="Empresa"
-              value={currentCompany}
-              onChange={setCurrentCompany}
-              placeholder="Ex.: Julius Baer"
-              suggestions={suggestions.current_company}
-            />
+            <div>
+              <label style={BLOCK_LABEL_STYLE}>Cargo</label>
+              <TagInput
+                kind="cargo"
+                value={cargos}
+                onChange={setCargos}
+                allTags={allTags}
+                placeholder="Ex.: CEO, Conselheiro"
+              />
+            </div>
+            <div>
+              <label style={BLOCK_LABEL_STYLE}>Empresa</label>
+              <TagInput
+                kind="empresa"
+                value={empresas}
+                onChange={setEmpresas}
+                allTags={allTags}
+                placeholder="Ex.: Julius Baer, Bicofino"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -510,6 +519,10 @@ export function CadastroV2({
           address={address}
           onAddressChange={setAddress}
           citySuggestions={suggestions.home_city}
+          citizenships={citizenships}
+          onCitizenshipsChange={setCitizenships}
+          ancestries={ancestries}
+          onAncestriesChange={setAncestries}
         />
       </section>
 
@@ -582,7 +595,7 @@ export function CadastroV2({
       {/* Footer — selo */}
       <footer style={FOOTER_STYLE}>
         <span style={{ opacity: 0.7 }}>//</span> BICOFINO{' '}
-        <span style={{ opacity: 0.7 }}>//</span> CASA NOSTRA v2
+        <span style={{ opacity: 0.7 }}>//</span> CASA NOSTRA
       </footer>
 
       <style jsx>{`

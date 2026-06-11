@@ -29,6 +29,8 @@ type PersonRow = {
   generation: string | null
   current_title: string | null
   current_company: string | null
+  citizenships: string[] | null
+  ancestries: string[] | null
   photo_url: string | null
   home_city: string | null
   home_country: string | null
@@ -44,7 +46,10 @@ type ContactRow = {
   value: string
 }
 
-type TagJoin = { name: string; kind: 'skill' | 'grupo' | 'afiliacao' | 'familia' }
+type TagJoin = {
+  name: string
+  kind: 'skill' | 'grupo' | 'afiliacao' | 'familia' | 'cargo' | 'empresa'
+}
 type PersonTagJoinRow = {
   sort_order: number | null
   // Supabase tipa o join como array; pode vir objeto único também.
@@ -95,7 +100,7 @@ export default async function EditPersonPage({
       supabase
         .from('people')
         .select(
-          'id, full_name, bicofino_id, member_number, honorific, birth_date, generation, current_title, current_company, photo_url, home_city, home_country, address_street, address_number, address_complement, address_state, address_zip',
+          'id, full_name, bicofino_id, member_number, honorific, birth_date, generation, current_title, current_company, citizenships, ancestries, photo_url, home_city, home_country, address_street, address_number, address_complement, address_state, address_zip',
         )
         .eq('id', id)
         .maybeSingle(),
@@ -133,6 +138,8 @@ export default async function EditPersonPage({
   const grupos: string[] = []
   const familias: string[] = []
   const afiliacoes: string[] = []
+  const cargos: string[] = []
+  const empresas: string[] = []
   for (const row of (personTagsResp.data ?? []) as unknown as PersonTagJoinRow[]) {
     const raw = row.tags
     const t = Array.isArray(raw) ? raw[0] : raw
@@ -141,7 +148,13 @@ export default async function EditPersonPage({
     else if (t.kind === 'grupo') grupos.push(t.name)
     else if (t.kind === 'familia') familias.push(t.name)
     else if (t.kind === 'afiliacao') afiliacoes.push(t.name)
+    else if (t.kind === 'cargo') cargos.push(t.name)
+    else if (t.kind === 'empresa') empresas.push(t.name)
   }
+
+  // Pessoas anteriores à Onda 14 têm cargo/empresa só nas colunas legadas.
+  if (!cargos.length && person.current_title) cargos.push(person.current_title)
+  if (!empresas.length && person.current_company) empresas.push(person.current_company)
 
   const initialData: CadastroV2Input = {
     full_name: person.full_name,
@@ -150,8 +163,10 @@ export default async function EditPersonPage({
     honorific: person.honorific,
     birth_date: person.birth_date,
     generation: person.generation,
-    current_title: person.current_title,
-    current_company: person.current_company,
+    cargos,
+    empresas,
+    citizenships: person.citizenships ?? [],
+    ancestries: person.ancestries ?? [],
     photo_url: person.photo_url,
     contacts: contactsByType,
     address: {

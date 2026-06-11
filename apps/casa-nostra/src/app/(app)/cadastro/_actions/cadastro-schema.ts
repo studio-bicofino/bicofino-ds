@@ -32,8 +32,13 @@ export const cadastroV2Schema = z.object({
   honorific: z.string().optional().nullable(),
   birth_date: z.string().optional().nullable(),
   generation: z.string().optional().nullable(),
-  current_title: z.string().optional().nullable(),
-  current_company: z.string().optional().nullable(),
+  // Cargo e Empresa viraram tags (múltiplos) na Onda 14; o primeiro de cada
+  // lista ainda alimenta as colunas legadas current_title/current_company.
+  cargos: z.array(z.string().min(1)).optional().default([]),
+  empresas: z.array(z.string().min(1)).optional().default([]),
+  // Códigos ISO 3166-1 alpha-2 (ex. 'BR', 'IT')
+  citizenships: z.array(z.string().length(2)).optional().default([]),
+  ancestries: z.array(z.string().length(2)).optional().default([]),
   photo_url: z.string().optional().nullable(),
   contacts: contactBlockSchema.optional().default({}),
   address: addressBlockSchema.optional().default({}),

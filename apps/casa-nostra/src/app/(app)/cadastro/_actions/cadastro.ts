@@ -92,7 +92,7 @@ async function createPersonV2Inner(input: CadastroV2Input): Promise<ActionResult
 
   const homeCity = canonicalizeValue(data.address.city, cities)
   const homeCountry = canonicalizeValue(data.address.country, countries)
-  const currentCompany = canonicalizeValue(data.current_company, companies)
+  const currentCompany = canonicalizeValue(data.empresas[0] ?? null, companies)
 
   // Novo membro entra no fim da lista manual (list_order = max + 1).
   const { data: maxRow } = await supabase
@@ -111,7 +111,9 @@ async function createPersonV2Inner(input: CadastroV2Input): Promise<ActionResult
     honorific: emptyToNull(data.honorific),
     birth_date: emptyToNull(data.birth_date),
     generation: emptyToNull(data.generation),
-    current_title: emptyToNull(data.current_title),
+    citizenships: data.citizenships,
+    ancestries: data.ancestries,
+    current_title: emptyToNull(data.cargos[0] ?? null),
     current_company: currentCompany,
     photo_url: emptyToNull(data.photo_url),
     home_city: homeCity,
@@ -171,8 +173,10 @@ async function createPersonV2Inner(input: CadastroV2Input): Promise<ActionResult
   }
 
   // 3. Tags (skills / grupos / afiliações)
-  const tagPayload: Array<{ kind: 'skill' | 'grupo' | 'afiliacao' | 'familia'; names: string[] }> = [
+  const tagPayload: Array<{ kind: 'skill' | 'grupo' | 'afiliacao' | 'familia' | 'cargo' | 'empresa'; names: string[] }> = [
     { kind: 'skill', names: data.skills },
+    { kind: 'cargo', names: data.cargos },
+    { kind: 'empresa', names: data.empresas },
     { kind: 'grupo', names: data.grupos },
     { kind: 'familia', names: data.familias },
     { kind: 'afiliacao', names: data.afiliacoes },
@@ -253,7 +257,7 @@ async function updatePersonV2Inner(
 
   const homeCity = canonicalizeValue(data.address.city, cities)
   const homeCountry = canonicalizeValue(data.address.country, countries)
-  const currentCompany = canonicalizeValue(data.current_company, companies)
+  const currentCompany = canonicalizeValue(data.empresas[0] ?? null, companies)
 
   // 1. UPDATE em people. Trigger cuida de updated_at.
   const personRow = {
@@ -263,7 +267,9 @@ async function updatePersonV2Inner(
     honorific: emptyToNull(data.honorific),
     birth_date: emptyToNull(data.birth_date),
     generation: emptyToNull(data.generation),
-    current_title: emptyToNull(data.current_title),
+    citizenships: data.citizenships,
+    ancestries: data.ancestries,
+    current_title: emptyToNull(data.cargos[0] ?? null),
     current_company: currentCompany,
     photo_url: emptyToNull(data.photo_url),
     home_city: homeCity,
@@ -336,8 +342,10 @@ async function updatePersonV2Inner(
     return { ok: false, error: `person_tags.delete: ${delTagsErr.message}` }
   }
 
-  const tagPayload: Array<{ kind: 'skill' | 'grupo' | 'afiliacao' | 'familia'; names: string[] }> = [
+  const tagPayload: Array<{ kind: 'skill' | 'grupo' | 'afiliacao' | 'familia' | 'cargo' | 'empresa'; names: string[] }> = [
     { kind: 'skill', names: data.skills },
+    { kind: 'cargo', names: data.cargos },
+    { kind: 'empresa', names: data.empresas },
     { kind: 'grupo', names: data.grupos },
     { kind: 'familia', names: data.familias },
     { kind: 'afiliacao', names: data.afiliacoes },

@@ -221,9 +221,7 @@ export function Sidebar({ email }: Props) {
             textOverflow: 'ellipsis',
           }}
         >
-          Casa Nostra <span style={{ opacity: 0.5 }}>//</span> Bicofino{' '}
-          <span style={{ opacity: 0.5 }}>//</span> v1.0{' '}
-          <span style={{ opacity: 0.5 }}>//</span> Maio 2026
+          Casa Nostra <span style={{ opacity: 0.5 }}>//</span> Bicofino
         </span>
 
         {/* spacer pra centralizar o título */}

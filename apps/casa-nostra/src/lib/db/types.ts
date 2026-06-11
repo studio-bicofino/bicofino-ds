@@ -57,7 +57,7 @@ export type OrganizationKind =
   | 'escola'
   | 'entidade'
 
-export type TagKind = 'skill' | 'grupo' | 'afiliacao' | 'familia'
+export type TagKind = 'skill' | 'grupo' | 'afiliacao' | 'familia' | 'cargo' | 'empresa'
 
 export type CategoryValue =
   | 'cliente'
@@ -82,6 +82,14 @@ export interface Person {
   id: string
   full_name: string
   preferred_name: string | null
+  // Ondas 12-14 (jun/2026)
+  bicofino_id: string | null
+  member_number: number | null
+  honorific: string | null
+  birth_date: string | null
+  generation: string | null
+  citizenships: string[] | null
+  ancestries: string[] | null
   photo_url: string | null
   current_company: string | null
   current_title: string | null

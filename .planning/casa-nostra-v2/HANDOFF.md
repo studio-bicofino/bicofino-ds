@@ -29,6 +29,14 @@
 
 **Migration `0007_member_number_generation_familia.sql`** (member_number, generation, tags_kind_check c/ familia) — APLICADA no SQL Editor em 2026-06-10.
 
+### Onda 14 — terceira rodada da mesma sessão
+
+1. **Cidadania + Ascendência** — pills multi-select de países no ContactBlock, depois de Endereço (ícones lucide `Flag` e `Sprout`). Autocomplete pt-BR (digitou → bandeira+nome), seleção múltipla em chips removíveis; pill fechada mostra as bandeirinhas. Colunas `people.citizenships text[]` e `people.ancestries text[]` guardando códigos ISO alpha-2 (ex. `{BR,IT}`). Infra nova: `src/lib/utils/countries.ts` (~249 códigos ISO, `flagEmoji` via regional indicators, `countryName` via `Intl.DisplayNames(['pt'])` memoizado, `searchCountries` com normalização de acentos) + `cadastro/_components/CountryMultiSelect.tsx` (componente controlado `{label, icon, value: string[], onChange}`).
+2. **Cargo e Empresa viraram TAGS multi-valor** — kinds novos `'cargo'` e `'empresa'`. No form, os dois AutocompleteFields viraram TagInputs lado a lado. **Compat legado:** o PRIMEIRO valor de cada lista segue gravado em `people.current_title`/`current_company` (listagem e busca de /membros intactas); na edição, pessoa antiga sem tags de cargo/empresa cai no fallback das colunas legadas (vira chip). Schema do form: `cargos`/`empresas`/`citizenships`/`ancestries` substituem `current_title`/`current_company`.
+3. **"V2" removido das telas** — eyebrow de /membros ("// CASA NOSTRA"), header de edição ("// EDITAR"), selo do footer do form ("// BICOFINO // CASA NOSTRA") e header mobile (caiu "v1.0 // Maio 2026"). Decisão do Fabio: versão não é mais informação de UI.
+
+**Migration `0008_citizenship_ancestry_cargo_empresa_tags.sql`** (citizenships, ancestries, tags_kind_check c/ cargo+empresa) — APLICADA no SQL Editor em 2026-06-10.
+
 **Deploy:** Vercel CLI da **raiz** do repo/worktree (rootDirectory do projeto = `apps/casa-nostra`), `vercel deploy --prod --yes --scope studio-bicofinos-projects`. NÃO deployar da raiz do checkout principal — os ~382MB de mídia untracked de `apps/web/public/media` estouram o upload; usar worktree limpo de main.
 
 ---

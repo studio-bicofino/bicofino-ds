@@ -20,10 +20,13 @@ import {
   MapPin,
   Globe,
   Instagram,
+  Flag,
+  Sprout,
   type LucideIcon,
 } from 'lucide-react'
 
 import { AddressPopover, type AddressValue } from './AddressPopover'
+import { CountryMultiSelect } from './CountryMultiSelect'
 import type { Suggestion } from '@/lib/utils/strings'
 
 export type ContactValues = {
@@ -46,6 +49,12 @@ type Props = {
   address: AddressValue
   onAddressChange: (next: AddressValue) => void
   citySuggestions?: Suggestion[]
+  /** Códigos ISO 3166-1 alpha-2. */
+  citizenships: string[]
+  onCitizenshipsChange: (next: string[]) => void
+  /** Códigos ISO 3166-1 alpha-2. */
+  ancestries: string[]
+  onAncestriesChange: (next: string[]) => void
 }
 
 type SimpleField = keyof ContactValues
@@ -231,6 +240,10 @@ export function ContactBlock({
   address,
   onAddressChange,
   citySuggestions = [],
+  citizenships,
+  onCitizenshipsChange,
+  ancestries,
+  onAncestriesChange,
 }: Props) {
   const [active, setActive] = useState<SimpleField | null>(null)
   const [addressOpen, setAddressOpen] = useState(false)
@@ -371,6 +384,20 @@ export function ContactBlock({
           citySuggestions={citySuggestions}
         />
       </div>
+
+      {/* Cidadania / Ascendência — multi-select de países */}
+      <CountryMultiSelect
+        label="Cidadania"
+        icon={Flag}
+        value={citizenships}
+        onChange={onCitizenshipsChange}
+      />
+      <CountryMultiSelect
+        label="Ascendência"
+        icon={Sprout}
+        value={ancestries}
+        onChange={onAncestriesChange}
+      />
     </div>
   )
 }
