@@ -1,4 +1,5 @@
 import { BicofinoLogo } from '@/components/BicofinoLogo'
+import { MacbookFrame } from '@/components/MacbookFrame'
 import { Reveal } from '@/components/Reveal'
 import { AnimatedNumber } from '@/components/AnimatedNumber'
 import { produtos, ferramentas, portfolio } from '@/lib/produtos'
@@ -118,9 +119,9 @@ export default function Produtos() {
           <div style={{ display: 'grid', gap: 'var(--sp-4)' }}>
             {produtos.map((p, i) => (
               <Reveal key={p.id} delay={i * 60}>
-                <article className="cell" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sp-4)' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--sp-4)', alignItems: 'start', flexWrap: 'wrap' }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sp-2)', maxWidth: '68%', minWidth: 260 }}>
+                <article className="cell" style={{ display: 'flex', gap: 'var(--sp-6)', flexWrap: 'wrap' }}>
+                  <div style={{ flex: '1 1 420px', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 'var(--sp-4)' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sp-2)' }}>
                       <h3 className="bf-h3">
                         {p.nome}
                         {p.modulo && (
@@ -129,43 +130,56 @@ export default function Produtos() {
                           </span>
                         )}
                       </h3>
-                      <p className="bf-body-sm" style={{ margin: 0 }}>{p.pitch}</p>
+                      <p className="bf-body-sm" style={{ margin: 0, maxWidth: 560 }}>{p.pitch}</p>
                     </div>
-                    <span className="pill pill--accent">
-                      {fmtBRL(p.mercado.medio)}{p.mercado.porEntrega ? ' por entrega' : ' no mercado'}
+
+                    <div style={{ display: 'flex', gap: 'var(--sp-6)', flexWrap: 'wrap' }}>
+                      <Metric
+                        k="Faixa de mercado"
+                        v={fmtFaixa(p.mercado.min, p.mercado.max)}
+                        sub={p.mercado.porEntrega ? 'por entrega, em agência' : 'encomenda equivalente, BR'}
+                      />
+                      <Metric
+                        k="Prazo no mercado"
+                        v={`${p.mercado.prazoSemanas} sem${p.mercado.prazoSemanas > 1 ? 'anas' : 'ana'}`}
+                        sub={p.mercado.porEntrega ? 'cada entrega' : 'da encomenda ao entregue'}
+                      />
+                      <Metric k="Operação do cliente" v={p.infraMensal} sub="assinaturas e ferramentas" />
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sp-1)' }}>
+                      {p.infra.map((item) => (
+                        <span key={item.nome} className="bf-mono" style={{ fontSize: '0.6875rem', color: 'var(--bf-text-subtle)' }}>
+                          · {item.nome} — {item.custo}
+                        </span>
+                      ))}
+                      {p.infraNota && (
+                        <span className="bf-mono" style={{ fontSize: '0.6875rem', color: 'var(--bf-text-subtle)' }}>
+                          · {p.infraNota}
+                        </span>
+                      )}
+                    </div>
+
+                    <span className="bf-mono" style={{ fontSize: '0.6875rem', color: 'var(--bf-text-secondary)', marginTop: 'auto' }}>
+                      // prova — {p.prova}
                     </span>
                   </div>
 
-                  <div style={{ display: 'flex', gap: 'var(--sp-6)', flexWrap: 'wrap' }}>
-                    <Metric
-                      k="Faixa de mercado"
-                      v={fmtFaixa(p.mercado.min, p.mercado.max)}
-                      sub={p.mercado.porEntrega ? 'por entrega, em agência' : 'encomenda equivalente, BR'}
-                    />
-                    <Metric
-                      k="Prazo no mercado"
-                      v={`${p.mercado.prazoSemanas} sem${p.mercado.prazoSemanas > 1 ? 'anas' : 'ana'}`}
-                      sub={p.mercado.porEntrega ? 'cada entrega' : 'da encomenda ao entregue'}
-                    />
-                    <Metric k="Operação do cliente" v={p.infraMensal} sub="assinaturas e ferramentas" />
+                  <div
+                    style={{
+                      flex: '0 1 340px',
+                      minWidth: 240,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 'var(--sp-4)',
+                      alignItems: 'flex-end',
+                    }}
+                  >
+                    <span className="pill pill--accent" style={{ whiteSpace: 'nowrap' }}>
+                      {fmtBRL(p.mercado.medio)}{p.mercado.porEntrega ? ' por entrega' : ' no mercado'}
+                    </span>
+                    {p.tela && <MacbookFrame src={p.tela} alt={`Tela do produto ${p.nome}`} />}
                   </div>
-
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sp-1)' }}>
-                    {p.infra.map((item) => (
-                      <span key={item.nome} className="bf-mono" style={{ fontSize: '0.6875rem', color: 'var(--bf-text-subtle)' }}>
-                        · {item.nome} — {item.custo}
-                      </span>
-                    ))}
-                    {p.infraNota && (
-                      <span className="bf-mono" style={{ fontSize: '0.6875rem', color: 'var(--bf-text-subtle)' }}>
-                        · {p.infraNota}
-                      </span>
-                    )}
-                  </div>
-
-                  <span className="bf-mono" style={{ fontSize: '0.6875rem', color: 'var(--bf-text-secondary)' }}>
-                    // prova — {p.prova}
-                  </span>
                 </article>
               </Reveal>
             ))}

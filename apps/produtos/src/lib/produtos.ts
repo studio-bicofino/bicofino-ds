@@ -24,6 +24,7 @@ export interface Produto {
   infraMensal: string // soma aproximada do custo recorrente do cliente
   infraNota?: string // contexto extra (ex.: SaaS equivalente de mercado)
   modulo?: boolean // módulo adicional de outro produto
+  tela?: string // screenshot do produto (servido de /public/telas), exibido no mockup
 }
 
 /* ── Custos de referência das ferramentas (jun/2026) ── */
@@ -81,6 +82,7 @@ export const produtos: Produto[] = [
     nome: 'Brand System digital',
     pitch: 'A marca inteira num endereço próprio: cores, vozes, componentes e regras de uso.',
     prova: 'No ar em bicofino.com/brandsystem — 3 idiomas, modo escuro, 8 capítulos navegáveis.',
+    tela: '/telas/design-system.png',
     mercado: { min: 90000, medio: 150000, max: 300000, prazoSemanas: 16 },
     infra: [
       { nome: 'Vercel Pro', custo: '~R$ 110/mês' },
@@ -93,6 +95,7 @@ export const produtos: Produto[] = [
     nome: 'Site institucional em código',
     pitch: 'Site de marca com motion e vídeo em tela cheia, em código próprio do cliente.',
     prova: 'bicofino.com em produção — intro de marca, verticais On/Off Pitch, 3 idiomas.',
+    tela: '/telas/site-bicofino.png',
     mercado: { min: 50000, medio: 90000, max: 150000, prazoSemanas: 8 },
     infra: [
       { nome: 'Vercel Pro', custo: '~R$ 110/mês' },
@@ -105,6 +108,7 @@ export const produtos: Produto[] = [
     nome: 'CRM proprietário',
     pitch: 'O cadastro vivo das pessoas que importam — campos, vínculos e grupos do jeito da casa.',
     prova: 'Em produção em bicofino.com/casa-nostra — moldado em 18 rodadas de uso real com o decisor.',
+    tela: '/telas/casa-nostra.png',
     mercado: { min: 100000, medio: 140000, max: 220000, prazoSemanas: 16 },
     infra: [
       { nome: 'Vercel Pro', custo: '~R$ 110/mês' },
@@ -118,6 +122,7 @@ export const produtos: Produto[] = [
     nome: 'Acervo de mídia que se organiza sozinho',
     pitch: 'Upload direto do celular; cada arquivo cai nomeado, catalogado e na pasta certa do Drive.',
     prova: 'Em uso diário na operação Bicofino — 16 atletas, detecção de duplicata, painel de curadoria.',
+    tela: '/telas/drive-atleta.png',
     mercado: { min: 80000, medio: 115000, max: 160000, prazoSemanas: 14 },
     infra: [
       { nome: 'Vercel Pro', custo: '~R$ 110/mês' },
@@ -131,6 +136,7 @@ export const produtos: Produto[] = [
     nome: 'Mapa de rede com IA',
     pitch: 'A rede de contatos vira grafo navegável: oportunidades por complementaridade e leitura de tendências.',
     prova: 'Em produção para o grupo Bicofino — 70 sócios mapeados, motor de oportunidades, IA de tendências.',
+    tela: '/telas/la-rete.png',
     mercado: { min: 60000, medio: 90000, max: 140000, prazoSemanas: 9 },
     infra: [
       { nome: 'Vercel Pro', custo: '~R$ 110/mês' },
@@ -178,6 +184,7 @@ export const produtos: Produto[] = [
     nome: 'Propostas interativas',
     pitch: 'A proposta comercial como microsite: números animados, marca em movimento, enviada num link.',
     prova: 'Duas entregues e aprovadas — O Outro Mapa e BoviClass.',
+    tela: '/telas/proposta-boviclass.png',
     mercado: { min: 12000, medio: 18000, max: 30000, prazoSemanas: 3, porEntrega: true },
     infra: [{ nome: 'Vercel', custo: 'plano gratuito atende; Pro ~R$ 110/mês com domínio próprio' }],
     infraMensal: 'R$ 0 a 110/mês',
