@@ -837,6 +837,14 @@ html[data-theme-loaded] .bf-topbar {
   opacity: 0.85 !important;
 }
 
+/* ─── On Pitch — logos/badges monocromáticos escuros (#2a2c2b etc.) viram
+   claros no dark mode. Mesmo recurso dos sponsors; NÃO aplicar em marcas
+   coloridas (badge FC, passaporte, fotos de campanha). ─── */
+[data-theme="dark"] img.of-logo-mono {
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+}
+
 /* ─── Mobile sidebar drawer ─── */
 
 /* Desktop sidebar wrapper — transparent to layout; hidden on mobile */

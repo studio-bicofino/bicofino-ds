@@ -38,8 +38,8 @@ const A = {
   },
 }
 
-function SafeImg({ src, alt, style, width, height }: {
-  src: string; alt: string; style?: React.CSSProperties; width?: number; height?: number
+function SafeImg({ src, alt, style, width, height, className }: {
+  src: string; alt: string; style?: React.CSSProperties; width?: number; height?: number; className?: string
 }) {
   return (
     <img
@@ -48,6 +48,7 @@ function SafeImg({ src, alt, style, width, height }: {
       width={width}
       height={height}
       style={style}
+      className={className}
       onError={e => {
         const el = e.target as HTMLImageElement
         el.style.display = 'none'
@@ -225,6 +226,7 @@ export function OnFieldSection() {
                     src={A.wordmark}
                     alt="Guilherme Kerchner wordmark"
                     height={90}
+                    className="of-logo-mono"
                     style={{ display: 'block', maxWidth: '100%', objectFit: 'contain', objectPosition: 'left center' }}
                   />
                 </div>
@@ -235,8 +237,14 @@ export function OnFieldSection() {
                     // BICOFINO BADGES
                   </p>
                   <div style={{ display: 'flex', gap: 14, alignItems: 'center', flexWrap: 'wrap' }}>
-                    {[A.badgePro, A.badgeFc, A.badgeDay].map((b, i) => (
-                      <SafeImg key={i} src={b} alt={`Badge ${i+1}`} width={81} height={81} style={{ display: 'block' }} />
+                    {/* Pro e Day são monocromáticos escuros (viram claros no dark);
+                        o FC é colorido (marsala/creme) e fica como está */}
+                    {[
+                      { src: A.badgePro, mono: true },
+                      { src: A.badgeFc,  mono: false },
+                      { src: A.badgeDay, mono: true },
+                    ].map(({ src, mono }, i) => (
+                      <SafeImg key={i} src={src} alt={`Badge ${i+1}`} width={81} height={81} className={mono ? 'of-logo-mono' : undefined} style={{ display: 'block' }} />
                     ))}
                   </div>
                 </div>
@@ -266,7 +274,7 @@ export function OnFieldSection() {
                   <p style={{ fontFamily: mono, fontSize: 9, color: C.steel, margin: '0 0 10px', letterSpacing: '0.08em' }}>
                     // PALMEIRAS // BRASIL
                   </p>
-                  <SafeImg src={A.palmeiras} alt="Palmeiras" width={48} height={48} style={{ display: 'block' }} />
+                  <SafeImg src={A.palmeiras} alt="Palmeiras" width={48} height={48} className="of-logo-mono" style={{ display: 'block' }} />
                 </div>
 
                 {/* Sponsor */}
@@ -274,7 +282,7 @@ export function OnFieldSection() {
                   <p style={{ fontFamily: mono, fontSize: 9, color: C.steel, margin: '0 0 10px', letterSpacing: '0.08em' }}>
                     // SPONSORS
                   </p>
-                  <SafeImg src={A.nike} alt="Nike" height={20} style={{ display: 'block', opacity: 0.8 }} />
+                  <SafeImg src={A.nike} alt="Nike" height={20} className="of-logo-mono" style={{ display: 'block', opacity: 0.8 }} />
                 </div>
 
                 {/* Passport */}
