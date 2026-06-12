@@ -55,7 +55,13 @@ type Props = {
   /** Códigos ISO 3166-1 alpha-2. */
   ancestries: string[]
   onAncestriesChange: (next: string[]) => void
+  /** Campos marcados como "não disponível" ('website' | 'instagram' | 'address' | …). */
+  unavailable: string[]
+  onUnavailableChange: (next: string[]) => void
 }
+
+/** Campos do bloco que aceitam a marcação "não disponível". */
+const UNAVAILABLE_CAPABLE = new Set(['whatsapp', 'email', 'website', 'instagram'])
 
 type SimpleField = keyof ContactValues
 
@@ -226,6 +232,30 @@ const HINT_STYLE: CSSProperties = {
   opacity: 0.7,
 }
 
+const ND_SUMMARY_STYLE: CSSProperties = {
+  fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+  fontSize: 10,
+  letterSpacing: '0.08em',
+  color: 'var(--bf-text-subtle)',
+  whiteSpace: 'nowrap',
+}
+
+const ND_TOGGLE_STYLE: CSSProperties = {
+  fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+  fontSize: 9,
+  letterSpacing: '0.1em',
+  textTransform: 'uppercase',
+  padding: '6px 12px',
+  borderRadius: 9999,
+  border: '1px solid var(--bf-border)',
+  background: 'transparent',
+  color: 'var(--bf-text-subtle)',
+  cursor: 'pointer',
+  whiteSpace: 'nowrap',
+  minHeight: 36,
+  transition: 'color 140ms ease-out, border-color 140ms ease-out',
+}
+
 function addressSummary(a: AddressValue): string {
   const parts = [a.city, a.state, a.country].map((s) => s.trim()).filter(Boolean)
   if (parts.length) return parts.join(' · ')
@@ -244,6 +274,8 @@ export function ContactBlock({
   onCitizenshipsChange,
   ancestries,
   onAncestriesChange,
+  unavailable,
+  onUnavailableChange,
 }: Props) {
   const [active, setActive] = useState<SimpleField | null>(null)
   const [addressOpen, setAddressOpen] = useState(false)
@@ -254,8 +286,17 @@ export function ContactBlock({
   // então a escolha do país precisa viver em estado local até ter número).
   const [pendingDial, setPendingDial] = useState(DEFAULT_DIAL)
 
+  const isUnav = (k: string) => unavailable.includes(k)
+
+  function setUnav(k: string, on: boolean) {
+    const without = unavailable.filter((x) => x !== k)
+    onUnavailableChange(on ? [...without, k] : without)
+  }
+
   function patch(k: SimpleField, v: string) {
     onContactsChange({ ...contacts, [k]: v })
+    // Preencher de verdade desfaz a marcação "não disponível".
+    if (v.trim() !== '' && isUnav(k)) setUnav(k, false)
   }
 
   const waParsed = parseWhatsapp(contacts.whatsapp)
@@ -283,6 +324,8 @@ export function ContactBlock({
         const Icon = f.icon
         const filled = contacts[f.key].trim() !== ''
         const isActive = active === f.key
+        const canBeUnav = UNAVAILABLE_CAPABLE.has(f.key)
+        const unav = canBeUnav && !filled && isUnav(f.key)
         const showInput = isActive || filled
         const pillStyle = filled ? PILL_FILLED : PILL_BASE
 
@@ -303,6 +346,9 @@ export function ContactBlock({
               {!showInput && <span style={HINT_STYLE}>{f.label}</span>}
               {!isActive && filled && (
                 <span style={SUMMARY_STYLE}>{contacts[f.key]}</span>
+              )}
+              {!isActive && !filled && unav && (
+                <span style={ND_SUMMARY_STYLE}>não disponível</span>
               )}
             </button>
 
@@ -352,6 +398,26 @@ export function ContactBlock({
                 }}
               />
             )}
+
+            {isActive && canBeUnav && !filled && (
+              <button
+                type="button"
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => {
+                  setUnav(f.key, !unav)
+                  if (!unav) setActive(null)
+                }}
+                aria-pressed={unav}
+                title={
+                  unav
+                    ? 'Desmarcar "não disponível"'
+                    : `Marcar ${f.label} como não disponível`
+                }
+                style={ND_TOGGLE_STYLE}
+              >
+                {unav ? '✓ n/d' : 'n/d'}
+              </button>
+            )}
           </div>
         )
       })}
@@ -370,6 +436,8 @@ export function ContactBlock({
           <MapPin size={20} strokeWidth={1.5} />
           {addrFilled ? (
             <span style={SUMMARY_STYLE}>{addrSummary}</span>
+          ) : isUnav('address') ? (
+            <span style={ND_SUMMARY_STYLE}>não disponível</span>
           ) : (
             <span style={HINT_STYLE}>Endereço</span>
           )}
@@ -382,6 +450,8 @@ export function ContactBlock({
           open={addressOpen}
           onClose={() => setAddressOpen(false)}
           citySuggestions={citySuggestions}
+          unavailable={isUnav('address')}
+          onUnavailableChange={(on) => setUnav('address', on)}
         />
       </div>
 
@@ -391,12 +461,16 @@ export function ContactBlock({
         icon={Flag}
         value={citizenships}
         onChange={onCitizenshipsChange}
+        unavailable={isUnav('citizenships')}
+        onUnavailableChange={(on) => setUnav('citizenships', on)}
       />
       <CountryMultiSelect
         label="Ascendência"
         icon={Sprout}
         value={ancestries}
         onChange={onAncestriesChange}
+        unavailable={isUnav('ancestries')}
+        onUnavailableChange={(on) => setUnav('ancestries', on)}
       />
     </div>
   )

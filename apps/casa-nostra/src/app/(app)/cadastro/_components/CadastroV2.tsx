@@ -120,6 +120,66 @@ const BICOFINO_ID_STYLE: CSSProperties = {
 
 const HONORIFIC_OPTIONS = ['Mr', 'Mrs', 'Miss'] as const
 
+const LABEL_ROW_STYLE: CSSProperties = {
+  display: 'flex',
+  alignItems: 'baseline',
+  gap: 8,
+}
+
+/** Toggle "n/d" — marca um campo como não disponível (some o marcador de pendência). */
+function NdToggle({
+  on,
+  onToggle,
+  label,
+}: {
+  on: boolean
+  onToggle: () => void
+  label: string
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      onMouseDown={(e) => e.preventDefault()}
+      aria-pressed={on}
+      title={on ? 'Desmarcar "não disponível"' : `Marcar ${label} como não disponível`}
+      style={{
+        fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+        fontSize: 9,
+        letterSpacing: '0.1em',
+        textTransform: 'uppercase',
+        padding: '2px 10px',
+        borderRadius: 9999,
+        border: '1px solid var(--bf-border)',
+        background: 'transparent',
+        color: on ? 'var(--bf-text-primary)' : 'var(--bf-text-subtle)',
+        cursor: 'pointer',
+        transition: 'color 140ms ease-out',
+        flexShrink: 0,
+      }}
+    >
+      {on ? '✓ n/d' : 'n/d'}
+    </button>
+  )
+}
+
+function NdNote() {
+  return (
+    <p
+      className="mono"
+      style={{
+        fontSize: 11,
+        letterSpacing: '0.06em',
+        color: 'var(--bf-text-subtle)',
+        padding: '10px 0',
+        margin: 0,
+      }}
+    >
+      não disponível
+    </p>
+  )
+}
+
 const GENERATION_OPTIONS = [
   '1ª Geração',
   '2ª Geração',
@@ -209,6 +269,23 @@ export function CadastroV2({
   const [ancestries, setAncestries] = useState<string[]>(
     initialData?.ancestries ?? [],
   )
+  // Campos marcados como "não disponível" — suprime o marcador de pendência.
+  const [unavailable, setUnavailable] = useState<string[]>(
+    initialData?.unavailable_fields ?? [],
+  )
+  const cargoUnav = unavailable.includes('cargo') && cargos.length === 0
+
+  function setUnav(key: string, on: boolean) {
+    setUnavailable((prev) => {
+      const without = prev.filter((x) => x !== key)
+      return on ? [...without, key] : without
+    })
+  }
+
+  /** Marcado como n/d E ainda vazio — preencher sempre vence a marcação. */
+  function unavFor(key: string, isEmpty: boolean) {
+    return isEmpty && unavailable.includes(key)
+  }
   const [photoUrl, setPhotoUrl] = useState<string | null>(
     initialData?.photo_url ?? null,
   )
@@ -265,6 +342,7 @@ export function CadastroV2({
       citizenships,
       ancestries,
       photo_url: photoUrl,
+      unavailable_fields: unavailable,
       contacts: {
         whatsapp: contacts.whatsapp.trim() || null,
         email: contacts.email.trim() || null,
@@ -369,18 +447,39 @@ export function CadastroV2({
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            <label htmlFor="cadastro-bicofino-id" style={{ ...BLOCK_LABEL_STYLE, marginBottom: 0 }}>
-              Bicofino ID
-            </label>
-            <input
-              id="cadastro-bicofino-id"
-              type="text"
-              value={bicofinoId}
-              onChange={(e) => setBicofinoId(e.target.value)}
-              placeholder="—"
-              disabled={pending}
-              style={BICOFINO_ID_STYLE}
-            />
+            <div style={{ ...LABEL_ROW_STYLE, alignItems: 'center' }}>
+              <label
+                htmlFor="cadastro-bicofino-id"
+                style={{ ...BLOCK_LABEL_STYLE, marginBottom: 0 }}
+              >
+                Bicofino ID
+              </label>
+              {bicofinoId.trim() === '' && (
+                <NdToggle
+                  on={unavFor('bicofino_id', bicofinoId.trim() === '')}
+                  onToggle={() =>
+                    setUnav(
+                      'bicofino_id',
+                      !unavFor('bicofino_id', bicofinoId.trim() === ''),
+                    )
+                  }
+                  label="Bicofino ID"
+                />
+              )}
+            </div>
+            {unavFor('bicofino_id', bicofinoId.trim() === '') ? (
+              <NdNote />
+            ) : (
+              <input
+                id="cadastro-bicofino-id"
+                type="text"
+                value={bicofinoId}
+                onChange={(e) => setBicofinoId(e.target.value)}
+                placeholder="—"
+                disabled={pending}
+                style={BICOFINO_ID_STYLE}
+              />
+            )}
           </div>
         </div>
       </header>
@@ -396,7 +495,30 @@ export function CadastroV2({
         }}
         className="cn-cadastro-v2__top"
       >
-        <PhotoUploaderHero value={photoUrl} onChange={setPhotoUrl} disabled={pending} />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 8,
+          }}
+        >
+          <PhotoUploaderHero
+            value={photoUrl}
+            onChange={(url) => {
+              setPhotoUrl(url)
+              if (url) setUnav('photo', false)
+            }}
+            disabled={pending}
+          />
+          {!photoUrl && (
+            <NdToggle
+              on={unavFor('photo', !photoUrl)}
+              onToggle={() => setUnav('photo', !unavFor('photo', !photoUrl))}
+              label="Foto"
+            />
+          )}
+        </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div
@@ -446,37 +568,67 @@ export function CadastroV2({
             </div>
 
             <div>
-              <label htmlFor="cadastro-birth-date" style={BLOCK_LABEL_STYLE}>
-                Nascimento
-              </label>
-              <input
-                id="cadastro-birth-date"
-                type="date"
-                value={birthDate}
-                onChange={(e) => setBirthDate(e.target.value)}
-                disabled={pending}
-                style={SIDE_FIELD_STYLE}
-              />
+              <div style={LABEL_ROW_STYLE}>
+                <label htmlFor="cadastro-birth-date" style={BLOCK_LABEL_STYLE}>
+                  Nascimento
+                </label>
+                {birthDate === '' && (
+                  <NdToggle
+                    on={unavFor('birth_date', birthDate === '')}
+                    onToggle={() =>
+                      setUnav('birth_date', !unavFor('birth_date', birthDate === ''))
+                    }
+                    label="Nascimento"
+                  />
+                )}
+              </div>
+              {unavFor('birth_date', birthDate === '') ? (
+                <NdNote />
+              ) : (
+                <input
+                  id="cadastro-birth-date"
+                  type="date"
+                  value={birthDate}
+                  onChange={(e) => setBirthDate(e.target.value)}
+                  disabled={pending}
+                  style={SIDE_FIELD_STYLE}
+                />
+              )}
             </div>
 
             <div>
-              <label htmlFor="cadastro-generation" style={BLOCK_LABEL_STYLE}>
-                Geração
-              </label>
-              <select
-                id="cadastro-generation"
-                value={generation}
-                onChange={(e) => setGeneration(e.target.value)}
-                disabled={pending}
-                style={{ ...SIDE_FIELD_STYLE, cursor: 'pointer' }}
-              >
-                <option value="">—</option>
-                {GENERATION_OPTIONS.map((g) => (
-                  <option key={g} value={g}>
-                    {g}
-                  </option>
-                ))}
-              </select>
+              <div style={LABEL_ROW_STYLE}>
+                <label htmlFor="cadastro-generation" style={BLOCK_LABEL_STYLE}>
+                  Geração
+                </label>
+                {generation === '' && (
+                  <NdToggle
+                    on={unavFor('generation', generation === '')}
+                    onToggle={() =>
+                      setUnav('generation', !unavFor('generation', generation === ''))
+                    }
+                    label="Geração"
+                  />
+                )}
+              </div>
+              {unavFor('generation', generation === '') ? (
+                <NdNote />
+              ) : (
+                <select
+                  id="cadastro-generation"
+                  value={generation}
+                  onChange={(e) => setGeneration(e.target.value)}
+                  disabled={pending}
+                  style={{ ...SIDE_FIELD_STYLE, cursor: 'pointer' }}
+                >
+                  <option value="">—</option>
+                  {GENERATION_OPTIONS.map((g) => (
+                    <option key={g} value={g}>
+                      {g}
+                    </option>
+                  ))}
+                </select>
+              )}
             </div>
           </div>
 
@@ -489,24 +641,52 @@ export function CadastroV2({
             className="cn-cadastro-v2__role-grid"
           >
             <div>
-              <label style={BLOCK_LABEL_STYLE}>Cargo</label>
-              <TagInput
-                kind="cargo"
-                value={cargos}
-                onChange={setCargos}
-                allTags={allTags}
-                placeholder="Ex.: CEO, Conselheiro"
-              />
+              <div style={LABEL_ROW_STYLE}>
+                <label style={BLOCK_LABEL_STYLE}>Cargo</label>
+                {cargos.length === 0 && (
+                  <NdToggle
+                    on={cargoUnav}
+                    onToggle={() => setUnav('cargo', !cargoUnav)}
+                    label="Cargo"
+                  />
+                )}
+              </div>
+              {cargoUnav ? (
+                <NdNote />
+              ) : (
+                <TagInput
+                  kind="cargo"
+                  value={cargos}
+                  onChange={setCargos}
+                  allTags={allTags}
+                  placeholder="Ex.: CEO, Conselheiro"
+                />
+              )}
             </div>
             <div>
-              <label style={BLOCK_LABEL_STYLE}>Empresa</label>
-              <TagInput
-                kind="empresa"
-                value={empresas}
-                onChange={setEmpresas}
-                allTags={allTags}
-                placeholder="Ex.: Julius Baer, Bicofino"
-              />
+              <div style={LABEL_ROW_STYLE}>
+                <label style={BLOCK_LABEL_STYLE}>Empresa</label>
+                {empresas.length === 0 && (
+                  <NdToggle
+                    on={unavFor('empresa', empresas.length === 0)}
+                    onToggle={() =>
+                      setUnav('empresa', !unavFor('empresa', empresas.length === 0))
+                    }
+                    label="Empresa"
+                  />
+                )}
+              </div>
+              {unavFor('empresa', empresas.length === 0) ? (
+                <NdNote />
+              ) : (
+                <TagInput
+                  kind="empresa"
+                  value={empresas}
+                  onChange={setEmpresas}
+                  allTags={allTags}
+                  placeholder="Ex.: Julius Baer, Bicofino"
+                />
+              )}
             </div>
           </div>
         </div>
@@ -525,56 +705,76 @@ export function CadastroV2({
           onCitizenshipsChange={setCitizenships}
           ancestries={ancestries}
           onAncestriesChange={setAncestries}
+          unavailable={unavailable}
+          onUnavailableChange={setUnavailable}
         />
       </section>
 
-      {/* Linha 3 — Skills */}
-      <section>
-        <label style={BLOCK_LABEL_STYLE}>Skills · Atuação</label>
-        <TagInput
-          kind="skill"
-          value={skills}
-          onChange={setSkills}
-          allTags={allTags}
-          placeholder="Ex.: Tech, Futebol Atleta, Futebol Dirigente, Financeiro"
-        />
-      </section>
-
-      {/* Linha 4 — Grupos */}
-      <section>
-        <label style={BLOCK_LABEL_STYLE}>Grupos</label>
-        <TagInput
-          kind="grupo"
-          value={grupos}
-          onChange={setGrupos}
-          allTags={allTags}
-          placeholder="Ex.: Clube Pinheiros, Mercado Publicitário"
-        />
-      </section>
-
-      {/* Linha 5 — Família */}
-      <section>
-        <label style={BLOCK_LABEL_STYLE}>Família</label>
-        <TagInput
-          kind="familia"
-          value={familias}
-          onChange={setFamilias}
-          allTags={allTags}
-          placeholder="Ex.: Família Rossi"
-        />
-      </section>
-
-      {/* Linha 6 — Domínios (kind interno segue 'afiliacao') */}
-      <section>
-        <label style={BLOCK_LABEL_STYLE}>Domínios</label>
-        <TagInput
-          kind="afiliacao"
-          value={afiliacoes}
-          onChange={setAfiliacoes}
-          allTags={allTags}
-          placeholder="Ex.: FIFA, Palmeiras, Adidas, Federação Paulista de Futebol"
-        />
-      </section>
+      {/* Linhas 3-6 — blocos de tags (Skills / Grupos / Família / Domínios) */}
+      {(
+        [
+          {
+            key: 'skills',
+            label: 'Skills · Atuação',
+            kind: 'skill',
+            value: skills,
+            onChange: setSkills,
+            placeholder: 'Ex.: Tech, Futebol Atleta, Futebol Dirigente, Financeiro',
+          },
+          {
+            key: 'grupos',
+            label: 'Grupos',
+            kind: 'grupo',
+            value: grupos,
+            onChange: setGrupos,
+            placeholder: 'Ex.: Clube Pinheiros, Mercado Publicitário',
+          },
+          {
+            key: 'familias',
+            label: 'Família',
+            kind: 'familia',
+            value: familias,
+            onChange: setFamilias,
+            placeholder: 'Ex.: Família Rossi',
+          },
+          {
+            key: 'afiliacoes',
+            label: 'Domínios',
+            kind: 'afiliacao',
+            value: afiliacoes,
+            onChange: setAfiliacoes,
+            placeholder: 'Ex.: FIFA, Palmeiras, Adidas, Federação Paulista de Futebol',
+          },
+        ] as const
+      ).map((block) => {
+        const empty = block.value.length === 0
+        const unav = unavFor(block.key, empty)
+        return (
+          <section key={block.key}>
+            <div style={LABEL_ROW_STYLE}>
+              <label style={BLOCK_LABEL_STYLE}>{block.label}</label>
+              {empty && (
+                <NdToggle
+                  on={unav}
+                  onToggle={() => setUnav(block.key, !unav)}
+                  label={block.label}
+                />
+              )}
+            </div>
+            {unav ? (
+              <NdNote />
+            ) : (
+              <TagInput
+                kind={block.kind}
+                value={block.value}
+                onChange={block.onChange}
+                allTags={allTags}
+                placeholder={block.placeholder}
+              />
+            )}
+          </section>
+        )
+      })}
 
       {/* Salvar — fim do form, alinhado à direita */}
       <div style={SAVE_BUTTON_ROW_STYLE}>

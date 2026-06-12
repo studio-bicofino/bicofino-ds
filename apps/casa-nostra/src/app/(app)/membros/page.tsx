@@ -24,6 +24,7 @@ type PersonRow = {
   address_zip: string | null
   home_city: string | null
   home_country: string | null
+  unavailable_fields: string[] | null
 }
 
 export default async function MembrosPage({
@@ -41,7 +42,7 @@ export default async function MembrosPage({
   let query = supabase
     .from('people')
     .select(
-      'id, full_name, member_number, current_title, current_company, photo_url, address_street, address_number, address_complement, address_state, address_zip, home_city, home_country',
+      'id, full_name, member_number, current_title, current_company, photo_url, address_street, address_number, address_complement, address_state, address_zip, home_city, home_country, unavailable_fields',
       { count: 'exact' },
     )
 
@@ -84,8 +85,12 @@ export default async function MembrosPage({
     current_title: p.current_title,
     current_company: p.current_company,
     photo_url: p.photo_url,
-    missingPhoto: isMissingPhoto(p.photo_url),
-    missingAddress: isAddressEmpty(p),
+    // Campo marcado como "não disponível" não conta como pendência.
+    missingPhoto:
+      isMissingPhoto(p.photo_url) &&
+      !(p.unavailable_fields ?? []).includes('photo'),
+    missingAddress:
+      isAddressEmpty(p) && !(p.unavailable_fields ?? []).includes('address'),
   }))
 
   const pendencyCount = members.filter((m) => m.missingPhoto || m.missingAddress).length

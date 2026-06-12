@@ -54,6 +54,17 @@
 
 A linha de /membros mostra "SÓCIO Nº N" em mono 10px ao lado do nome (quando preenchido). `member_number` entrou na query da page e no `MemberRowData`. Sem migration (coluna já existia da 0007).
 
+### Onda 16 — "não disponível" (N/D) em todos os campos preenchíveis (2026-06-11)
+
+Pessoas que simplesmente NÃO TÊM site/instagram/cargo/endereço etc. não devem acusar pendência. Coluna `people.unavailable_fields text[]` guarda as marcações; chaves: `photo`, `bicofino_id`, `birth_date`, `generation`, `cargo`, `empresa`, `whatsapp`, `email`, `website`, `instagram`, `address`, `citizenships`, `ancestries`, `skills`, `grupos`, `familias`, `afiliacoes`. EXCLUÍDOS (sempre obrigatórios/sem N/D): Nome, Tratamento, Sócio nº.
+
+- UI: toggle mono `n/d` por campo — ao lado do label (campos do form e blocos de tags, helpers `NdToggle`/`NdNote` no CadastroV2), ao lado do input aberto (pills de contato e CountryMultiSelect), no topo do popover (Endereço), abaixo do uploader (Foto). Pills fechadas marcadas mostram "não disponível" em mono subtle.
+- Regras: toggle só aparece com o campo vazio; **preencher de verdade desfaz a marcação automaticamente** (`patch`/`addCountry`/`onChange` limpam a flag); helper `unavFor(key, isEmpty)` no CadastroV2.
+- **Pendência de /membros agora respeita N/D**: `missingPhoto` ignora se `photo` marcado, `missingAddress` ignora se `address` marcado.
+- Gotcha corrigido: botão n/d junto de input precisa de `onMouseDown={e => e.preventDefault()}` — sem isso o blur do input desmonta o botão antes do click registrar.
+
+**Migration `0010_unavailable_fields.sql`** — APLICADA em 2026-06-11 (verificada via REST).
+
 ### Onda 15 — fix Bairro × Complemento
 
 Bug: o lookup de CEP (ViaCEP) jogava `bairro` em `address_complement`. Fix: **Bairro é campo próprio** (`people.address_neighborhood`, preenchido pelo CEP, lado a lado com Complemento no popover) e **Complemento é 100% manual** (ex. nº do apto — o ViaCEP não toca mais nele). `AddressValue` ganhou `neighborhood` em toda a cadeia (popover → CadastroV2 → schema → actions → edição → types).

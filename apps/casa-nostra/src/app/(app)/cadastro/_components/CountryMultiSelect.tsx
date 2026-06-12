@@ -27,6 +27,9 @@ type Props = {
   /** Códigos ISO 3166-1 alpha-2 selecionados. */
   value: string[]
   onChange: (next: string[]) => void
+  /** Campo marcado como "não disponível". */
+  unavailable?: boolean
+  onUnavailableChange?: (on: boolean) => void
 }
 
 const PILL_BASE: CSSProperties = {
@@ -135,7 +138,14 @@ const ITEM_BASE: CSSProperties = {
   color: 'var(--bf-text-primary)',
 }
 
-export function CountryMultiSelect({ label, icon, value, onChange }: Props) {
+export function CountryMultiSelect({
+  label,
+  icon,
+  value,
+  onChange,
+  unavailable = false,
+  onUnavailableChange,
+}: Props) {
   const Icon = icon
   const [open, setOpen] = useState(false)
   const [draft, setDraft] = useState('')
@@ -154,6 +164,8 @@ export function CountryMultiSelect({ label, icon, value, onChange }: Props) {
 
   function addCountry(code: string) {
     if (!value.includes(code)) onChange([...value, code])
+    // Selecionar um país desfaz a marcação "não disponível".
+    if (unavailable) onUnavailableChange?.(false)
     setDraft('')
     setHighlight(0)
     inputRef.current?.focus()
@@ -211,6 +223,18 @@ export function CountryMultiSelect({ label, icon, value, onChange }: Props) {
         {!open && filled ? (
           <span style={SUMMARY_STYLE}>
             {flags} {names}
+          </span>
+        ) : !open && unavailable ? (
+          <span
+            style={{
+              fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+              fontSize: 10,
+              letterSpacing: '0.08em',
+              color: 'var(--bf-text-subtle)',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            não disponível
           </span>
         ) : (
           <span style={HINT_STYLE}>{label}</span>
@@ -294,6 +318,44 @@ export function CountryMultiSelect({ label, icon, value, onChange }: Props) {
               </div>
             )}
           </div>
+
+          {onUnavailableChange && value.length === 0 && (
+            <button
+              type="button"
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => {
+                const next = !unavailable
+                onUnavailableChange(next)
+                if (next) {
+                  setOpen(false)
+                  setDraft('')
+                }
+              }}
+              aria-pressed={unavailable}
+              title={
+                unavailable
+                  ? 'Desmarcar "não disponível"'
+                  : `Marcar ${label} como não disponível`
+              }
+              style={{
+                fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+                fontSize: 9,
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                padding: '6px 12px',
+                borderRadius: 9999,
+                border: '1px solid var(--bf-border)',
+                background: 'transparent',
+                color: unavailable ? 'var(--bf-text-primary)' : 'var(--bf-text-subtle)',
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+                minHeight: 36,
+                transition: 'color 140ms ease-out',
+              }}
+            >
+              {unavailable ? '✓ n/d' : 'n/d'}
+            </button>
+          )}
         </>
       )}
     </div>

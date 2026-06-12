@@ -90,6 +90,7 @@ export interface Person {
   generation: string | null
   citizenships: string[] | null
   ancestries: string[] | null
+  unavailable_fields: string[] | null
   photo_url: string | null
   current_company: string | null
   current_title: string | null

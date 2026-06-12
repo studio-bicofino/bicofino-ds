@@ -49,6 +49,9 @@ type Props = {
   onClose: () => void
   /** Cidades já cadastradas, pra typeahead canônico. */
   citySuggestions?: Suggestion[]
+  /** Endereço marcado como "não disponível" (suprime pendência). */
+  unavailable?: boolean
+  onUnavailableChange?: (on: boolean) => void
 }
 
 const PANEL_STYLE: CSSProperties = {
@@ -143,6 +146,8 @@ export function AddressPopover({
   open,
   onClose,
   citySuggestions = [],
+  unavailable = false,
+  onUnavailableChange,
 }: Props) {
   const panelRef = useRef<HTMLDivElement | null>(null)
   const valueRef = useRef(value)
@@ -212,6 +217,8 @@ export function AddressPopover({
 
   function patch<K extends keyof AddressValue>(k: K, v: AddressValue[K]) {
     onChange({ ...value, [k]: v })
+    // Preencher qualquer campo desfaz a marcação "não disponível".
+    if (unavailable && String(v).trim() !== '') onUnavailableChange?.(false)
   }
 
   function handleCepChange(raw: string) {
@@ -248,6 +255,34 @@ export function AddressPopover({
           <X size={20} strokeWidth={1.5} />
         </button>
       </div>
+
+      {onUnavailableChange && (
+        <button
+          type="button"
+          onClick={() => {
+            const next = !unavailable
+            onUnavailableChange(next)
+            if (next) onClose()
+          }}
+          aria-pressed={unavailable}
+          style={{
+            alignSelf: 'flex-start',
+            fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+            fontSize: 9,
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+            padding: '6px 12px',
+            borderRadius: 9999,
+            border: '1px solid var(--bf-border)',
+            background: 'transparent',
+            color: unavailable ? 'var(--bf-text-primary)' : 'var(--bf-text-subtle)',
+            cursor: 'pointer',
+            transition: 'color 140ms ease-out, border-color 140ms ease-out',
+          }}
+        >
+          {unavailable ? '✓ não disponível — desmarcar' : 'marcar como não disponível'}
+        </button>
+      )}
 
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 8 }}>
         <div>

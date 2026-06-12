@@ -31,6 +31,7 @@ type PersonRow = {
   current_company: string | null
   citizenships: string[] | null
   ancestries: string[] | null
+  unavailable_fields: string[] | null
   photo_url: string | null
   home_city: string | null
   home_country: string | null
@@ -101,7 +102,7 @@ export default async function EditPersonPage({
       supabase
         .from('people')
         .select(
-          'id, full_name, bicofino_id, member_number, honorific, birth_date, generation, current_title, current_company, citizenships, ancestries, photo_url, home_city, home_country, address_street, address_number, address_complement, address_neighborhood, address_state, address_zip',
+          'id, full_name, bicofino_id, member_number, honorific, birth_date, generation, current_title, current_company, citizenships, ancestries, unavailable_fields, photo_url, home_city, home_country, address_street, address_number, address_complement, address_neighborhood, address_state, address_zip',
         )
         .eq('id', id)
         .maybeSingle(),
@@ -168,6 +169,7 @@ export default async function EditPersonPage({
     empresas,
     citizenships: person.citizenships ?? [],
     ancestries: person.ancestries ?? [],
+    unavailable_fields: person.unavailable_fields ?? [],
     photo_url: person.photo_url,
     contacts: contactsByType,
     address: {

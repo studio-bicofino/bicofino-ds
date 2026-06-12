@@ -41,6 +41,9 @@ export const cadastroV2Schema = z.object({
   citizenships: z.array(z.string().length(2)).optional().default([]),
   ancestries: z.array(z.string().length(2)).optional().default([]),
   photo_url: z.string().optional().nullable(),
+  // Campos marcados como "não disponível" no form ('website' | 'instagram' |
+  // 'cargo' | 'address') — suprime o marcador de pendência correspondente.
+  unavailable_fields: z.array(z.string()).optional().default([]),
   contacts: contactBlockSchema.optional().default({}),
   address: addressBlockSchema.optional().default({}),
   skills: z.array(z.string().min(1)).optional().default([]),
