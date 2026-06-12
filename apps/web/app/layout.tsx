@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { LanguageProvider } from '@/content/index'
+import { PrivacyNotice } from '@/components/layout/PrivacyNotice'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://bicofino.com'),
@@ -96,6 +97,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main-content" className="bf-skip-link">Pular para o conteúdo</a>
         <LanguageProvider>
           {children}
+          <PrivacyNotice />
         </LanguageProvider>
       </body>
     </html>

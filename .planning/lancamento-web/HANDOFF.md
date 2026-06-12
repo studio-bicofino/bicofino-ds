@@ -1,7 +1,99 @@
 # HANDOFF — Lançamento Web (apps/web)
 
 > Estado vivo da frente "lançamento oficial". Ler junto com `BRIEFING.md`.
-> Última atualização: **2026-06-10 (noite, 2ª rodada)** — texto de entrada DEFINIDO + intro só star.
+> Última atualização: **2026-06-11** — domínio bicofino.com adicionado na Vercel (migração Framer→Vercel em andamento).
+
+## ✅ RESOLVIDO 2026-06-11 (noite) — Domínio NO AR + Frente A (Legal) construída
+
+**bicofino.com está servindo o site novo com HTTPS.** Woney trocou o DNS na Namecheap na
+mesma noite (apagou A/CNAME do Framer + TXT órfão `31.43.161.6`; manteve o SPF do Google —
+NUNCA apagar). Cert demorou; resolvido com `vercel certs issue bicofino.com www.bicofino.com`.
+Verificado: apex 200 · www→apex 308 · http→https 308. Falta: remover o custom domain no
+painel do Framer (limpeza) + Search Console (guia abaixo).
+
+**Frente A (Legal) construída na mesma sessão — pendente sync/deploy:**
+- **Fontes self-hosted:** Inter + JetBrains Mono (4 woff2 variáveis, ~176KB, latin+latin-ext)
+  em `public/fonts/`, `@font-face` no globals.css no padrão da Gotham; `@import` do Google
+  Fonts REMOVIDO → **site 100% sem request a terceiro**.
+- **`content/legal.ts`** — Política de Privacidade + Cookies estruturadas (Record<Lang, LegalDoc>,
+  paridade por tipo). Conteúdo bate com a auditoria (zero coleta; Club demonstrativo;
+  localStorage `bf-lang`/`bf-theme`/`bf-notice`; Vercel + Google Workspace como operadores;
+  LGPD art. 18 + GDPR, ANPD + Garante). ⚠️ pontos de revisão jurídica comentados no header.
+- **Rotas** `/privacidade` e `/cookies` — `app/(legal)/*/{layout,page}.tsx`, template editorial
+  da Foundation via `components/legal/LegalPageBody.tsx`; sitemap atualizado (priority 0.3).
+- **`PrivacyNotice.tsx`** — aviso discreto fixed-bottom, aparece 2,4s pós-load (não compete
+  com a intro), "Entendi" grava `bf-notice` no localStorage, reduced-motion ok. Montado no
+  RootLayout dentro do LanguageProvider.
+- **Footer** — links Privacidade · Cookies (3 idiomas).
+- **Auditorias dos 3 agentes APLICADAS:** motion-curator PASS; design-reviewer 6 fixes
+  (3 tamanhos de tipo na página legal, Inter 700, ease canônico, padding na grade, 200ms);
+  copy-editor 11 fixes (IT formal "Per saperne di più", calques EN/IT, aviso agora menciona
+  as 3 chaves, paridade da base legal GDPR/LGPD).
+- **Dívidas pré-existentes flagadas (decisão do Woney):** giro 8° do IconClub no hover
+  (Footer:78 — sancionar no §8 ou remover); ícones 12/14px vs canon 20; gaps 6px; 150ms no
+  lang switcher. Não mexidas.
+
+**Rodada MAGENTA (mesma noite, screenshots do Woney):**
+- **Viúvas do manifesto (BR):** "E," e "é" amarrados com NBSP (` `) no `home.mensch.p1`
+  — não ficam mais soltos no fim da linha. Só BR (quebras de linha são por idioma).
+- **p2 com vírgulas:** "Pensa, ao mesmo tempo, no idioma…" — espelhado em EN ("It thinks,
+  at once, in…") e IT ("Pensa, allo stesso tempo, nella…").
+- **On Pitch revisado (BR+EN; IT herda BR):** intro novo ("cuida de todo o resto…
+  transformando talento em carreira"); s1 = **"Agente FIFA"/"FIFA Agent"** c/ body novo
+  (agenciamento+contratos+representação); s2 = **"Evolução de Performance"/"Performance
+  Evolution"** + "refinamento técnico" no body (sem "do portfólio"); s3 body = "europeu e
+  outros centros… materiais bilíngues… o atleta se preocupe apenas com o campo".
+- **Footer:** links Privacidade | Cookies movidos pra junto do © (mesmo corpo 10, pipes),
+  saíram do cluster e-mail/instagram.
+
+**Rodada favicon + Club (mesma noite):**
+- **Favicon = estrela preta (#2a2c2b) em fundo transparente.** `app/icon.svg` reescrito (sem
+  o rect escuro); `icon.png` (512, transparente), `favicon.ico` (PNGs 16/32/48 embutidos) e
+  `apple-icon.png` (fundo BRANCO + estrela — iOS pinta transparência de preto) regenerados
+  via sharp do node_modules (script inline, sem dependência nova).
+- **Club com identidade própria:** navy `#05185c` (fundo) + crema `#f3ebd4` (logo fox,
+  bordas, botão; secundário = crema 45%). Logo `Club-logo-fox1.svg` copiado pra
+  `public/club/` em 2 versões (original navy + **crema** gerada por sed — o SVG é
+  monocromático, 271 fills). ⚠️ Paleta é **Club-local sancionada** (como o `--bf-accent`
+  do apps/web) — fora do token set v3.1; se virar canon, emendar DESIGN.md.
+- **Placeholders:** "Bicofino ID" (sem hífen) e "Senha"/"Password" — BR/EN/IT (IT ganhou as
+  2 chaves; resto do Club segue fallback BR).
+
+**Rodada MAGENTA 2 + ajustes finais (madrugada 11→12/06, SINCRONIZADO):**
+- **Foundation:** intro corta a frase "Quatro princípios…" (fecha em "A resposta é um
+  método."); Curate ganha "criativo" no critério + "parte do **processo**"; Consult vira
+  "O Bicofino **oferece mentoria** — entrega resultados e aprofundando o relacionamento…"
+  (⚠️ mistura verbal "entrega…e aprofundando" transcrita VERBATIM do magenta do Woney —
+  flagada, ele não pediu mudança; se incomodar depois: "entrega…e aprofunda").
+- **Off Pitch:** s1 body "atletas, **personalidades** e marcas"; s5 = "PR e Personal
+  Branding" (sem "Executivo"); intro "serve **marcas e atletas**" (sem "empresas").
+  Tudo espelhado no EN; IT herda BR.
+- **Aviso de privacidade** virou **barra full-bleed na base** (contraponto do Header:
+  mesmo bg, container 1280, minHeight 64, hairline no topo).
+- **Club invertido** (2ª rodada): fundo CREMA, logo fox NAVY original, textos navy
+  (45% p/ secundários), botão navy/crema; MEMBERS ONLY subiu pra baixo do botão,
+  "← voltar" desceu pra base.
+
+## (histórico) 2026-06-11 — Migração do domínio bicofino.com (Framer → Vercel)
+
+**Lado Vercel: FEITO via CLI/API.** `bicofino.com` + `www.bicofino.com` adicionados ao projeto
+`bicofino-web` (team studio-bicofinos-projects); `www` configurado com **redirect 308 → apex**
+(PATCH `/v9/projects/bicofino-web/domains/www.bicofino.com`, `redirectStatusCode: 308`) —
+consistente com o canonical do site (`metadataBase = https://bicofino.com`, sem www).
+
+**Lado DNS: pendente (ação do Woney na Namecheap** — nameservers `registrar-servers.com`):
+1. Apagar os registros do Framer: `A @ 31.43.160.6` e `CNAME www sites.framer.app`.
+2. Criar: `A @ 76.76.21.21` e `CNAME www cname.vercel-dns.com`.
+3. Aguardar propagação (Vercel verifica sozinha e manda e-mail); conferir com
+   `vercel domains inspect bicofino.com --scope studio-bicofinos-projects`.
+4. Remover o custom domain no Framer (Site Settings → Domains) — só limpeza, DNS é quem manda.
+5. Depois: seguir o **Guia Search Console** abaixo (a propriedade tipo "Domínio" + TXT).
+
+Nota SEO: o site antigo (Framer) vivia em `www.bicofino.com`; o 308 www→apex preserva o
+ranking das URLs indexadas. Auditoria legal (Frente A) feita 11/06: ZERO coleta de dados —
+sem forms funcionais (login do /club é decorativo, `type="button"` sem handler), sem API
+routes, sem trackers; só `localStorage` `bf-theme`/`bf-lang` + Google Fonts via `@import`
+(`globals.css:1` — único terceiro; candidato a self-host na Frente A).
 
 ## ✅ RESOLVIDO 2026-06-10 — Texto de entrada definido (fim do teste A/E) + intro única (star)
 

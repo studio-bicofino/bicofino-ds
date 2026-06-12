@@ -3,7 +3,13 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { useLang } from '@/content/index'
-import { LogoBicofino } from '@/components/primitives/BrandIcons'
+
+/* Paleta Club-local (sanção Woney 11/06) — identidade própria da área de
+   membros, como o --bf-accent é local do apps/web. NÃO propagar pro DS.
+   Esquema claro: fundo crema, logo/textos navy. */
+const NAVY = '#05185c'
+const CREMA = '#f3ebd4'
+const NAVY_SOFT = 'rgba(5, 24, 92, 0.45)'
 
 export default function ClubPage() {
   const { t } = useLang()
@@ -14,8 +20,8 @@ export default function ClubPage() {
     width: 280,
     display: 'block',
     background: 'transparent',
-    border: '1px solid var(--bf-steel)',
-    color: 'var(--bf-white)',
+    border: `1px solid ${NAVY_SOFT}`,
+    color: NAVY,
     padding: '12px var(--bf-space-md)',
     borderRadius: 'var(--bf-radius-md)',
     fontFamily: '"Inter", ui-sans-serif, sans-serif',
@@ -26,11 +32,14 @@ export default function ClubPage() {
   return (
     <div style={{
       minHeight: '100dvh',
-      background: 'var(--bf-power-black)',
+      background: CREMA,
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
     }}>
+      <style>{`
+        .club-input::placeholder { color: ${NAVY_SOFT}; }
+      `}</style>
       <div style={{
         flex: 1,
         display: 'flex',
@@ -39,28 +48,32 @@ export default function ClubPage() {
         justifyContent: 'center',
         padding: 'var(--bf-space-lg)',
       }}>
-        <div style={{ marginBottom: 'calc(var(--bf-space-lg) * 2)', filter: 'brightness(0) invert(1)' }}>
-          <LogoBicofino height={28} />
-        </div>
+        <img
+          src="/club/club-logo-fox.svg"
+          alt="Bicofino Club"
+          style={{ width: 280, height: 'auto', marginBottom: 'calc(var(--bf-space-lg) * 2)' }}
+        />
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--bf-space-md)', width: 280 }}>
           <input
             type="text"
+            className="club-input"
             placeholder={t('club.access')}
             value={access}
             onChange={(e) => setAccess(e.target.value)}
             style={inputStyle}
-            onFocus={(e) => { e.currentTarget.style.borderColor = 'var(--bf-white)' }}
-            onBlur={(e) => { e.currentTarget.style.borderColor = 'var(--bf-steel)' }}
+            onFocus={(e) => { e.currentTarget.style.borderColor = NAVY }}
+            onBlur={(e) => { e.currentTarget.style.borderColor = NAVY_SOFT }}
           />
           <input
             type="password"
+            className="club-input"
             placeholder={t('club.password')}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             style={inputStyle}
-            onFocus={(e) => { e.currentTarget.style.borderColor = 'var(--bf-white)' }}
-            onBlur={(e) => { e.currentTarget.style.borderColor = 'var(--bf-steel)' }}
+            onFocus={(e) => { e.currentTarget.style.borderColor = NAVY }}
+            onBlur={(e) => { e.currentTarget.style.borderColor = NAVY_SOFT }}
           />
         </div>
 
@@ -70,8 +83,8 @@ export default function ClubPage() {
             marginTop: 'var(--bf-space-md)',
             width: 280,
             height: 44,
-            background: 'var(--bf-white)',
-            color: 'var(--bf-black)',
+            background: NAVY,
+            color: CREMA,
             fontFamily: '"Inter", ui-sans-serif, sans-serif',
             fontWeight: 600,
             fontSize: 14,
@@ -84,34 +97,34 @@ export default function ClubPage() {
           {t('club.enter')}
         </button>
 
-        <Link
-          href="/"
-          style={{
-            marginTop: 'var(--bf-space-lg)',
-            fontFamily: '"JetBrains Mono", ui-monospace, monospace',
-            fontSize: 11,
-            letterSpacing: '0.08em',
-            color: 'var(--bf-steel)',
-            textDecoration: 'none',
-            transition: 'color 200ms ease-out',
-          }}
-          onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--bf-white)' }}
-          onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--bf-steel)' }}
-        >
-          {t('club.back')}
-        </Link>
+        <p style={{
+          marginTop: 'var(--bf-space-lg)',
+          fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+          fontSize: 11,
+          letterSpacing: '0.14em',
+          textTransform: 'uppercase',
+          color: NAVY_SOFT,
+        }}>
+          {t('club.members')}
+        </p>
       </div>
 
-      <p style={{
-        fontFamily: '"JetBrains Mono", ui-monospace, monospace',
-        fontSize: 11,
-        letterSpacing: '0.14em',
-        textTransform: 'uppercase',
-        color: 'var(--bf-steel)',
-        paddingBottom: 'var(--bf-space-lg)',
-      }}>
-        {t('club.members')}
-      </p>
+      <Link
+        href="/"
+        style={{
+          fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+          fontSize: 11,
+          letterSpacing: '0.08em',
+          color: NAVY_SOFT,
+          textDecoration: 'none',
+          transition: 'color 200ms ease-out',
+          paddingBottom: 'var(--bf-space-lg)',
+        }}
+        onMouseEnter={(e) => { e.currentTarget.style.color = NAVY }}
+        onMouseLeave={(e) => { e.currentTarget.style.color = NAVY_SOFT }}
+      >
+        {t('club.back')}
+      </Link>
     </div>
   )
 }

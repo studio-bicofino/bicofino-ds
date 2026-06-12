@@ -136,7 +136,27 @@ export function Footer() {
 
         {/* Right: copyright + lang switcher */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--bf-space-lg)' }}>
-          <span style={{ ...monoStyle, fontSize: 10 }}>{t('footer.copyright')}</span>
+          {/* Legal + copyright — mesmo corpo 10, separados por | (pedido Woney 11/06) */}
+          <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--bf-space-sm)', flexWrap: 'wrap' }}>
+            {([
+              { href: '/privacidade', key: 'footer.privacy', label: 'footer.privacy.label' },
+              { href: '/cookies', key: 'footer.cookies', label: 'footer.cookies.label' },
+            ] as const).map(({ href, key, label }) => (
+              <React.Fragment key={href}>
+                <a
+                  href={href}
+                  aria-label={t(label)}
+                  style={{ ...monoStyle, fontSize: 10, transition: 'color 200ms ease-out' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--bf-text-primary)' }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--bf-text-secondary)' }}
+                >
+                  {t(key)}
+                </a>
+                <span aria-hidden="true" style={{ ...monoStyle, fontSize: 10, opacity: 0.4 }}>|</span>
+              </React.Fragment>
+            ))}
+            <span style={{ ...monoStyle, fontSize: 10 }}>{t('footer.copyright')}</span>
+          </span>
 
           {/* Language switcher */}
           <div
