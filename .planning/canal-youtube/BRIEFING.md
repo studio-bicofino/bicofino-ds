@@ -53,8 +53,16 @@ algoritmo. Scout recebe um link de playlist e vê tudo do menino em um lugar.
    ("Elias cesar da silva Cesar" — youtube.com/@bicofino, checado 11/06).
    Livres na mesma data: `@studiobicofino` · `@bicofinofc` · `@bicofinobr` ·
    `@bicofinoagency` · `@bicofinooficial` · `@bicofino_`.
-   Recomendação: `@studiobicofino` (casa com o GitHub studio-bicofino) ou
-   `@bicofinofc`. **Woney escolhe na hora de criar.**
+   Rodada criativa (Woney pediu algo tipo "TV Bicofino"/"Bicofino Play") —
+   TODOS livres em 11/06: `@tvbicofino` · `@bicofinotv` · `@bicofinoplay` ·
+   `@canalbicofino` · `@bicofinocalcio` · `@bicofinofilms` · `@bicofinomedia` ·
+   `@casabicofino` · `@bicofinostudio` · `@bicofinoclub` · `@labicofino` ·
+   `@bicofinoshow`.
+   Lembrete: nome do canal ≠ handle — dá pra chamar "TV Bicofino" com qualquer
+   handle. Recomendação Claude: nome **Bicofino TV** (convenção do futebol BR:
+   FlaTV, CazéTV; busca por "Bicofino" acha primeiro) com handle `@bicofinotv`;
+   alternativa editorial **TV Bicofino** (charme retrô de emissora).
+   **Woney escolhe na hora de criar.**
 3. **Idioma das descrições** (aberto): PT/EN fixo na descrição, ou traduções de
    metadados do YouTube (BR/EN/IT, mesmo trio do site)?
 4. Shorts dos cards de jogos (aberto): publicar mesmo, ou guardar YouTube só

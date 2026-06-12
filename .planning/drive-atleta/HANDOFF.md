@@ -136,7 +136,9 @@ Ler este HANDOFF + `apps/drive-atleta/README.md` (fases 2/3/4) integralmente ant
 
 **Produção: https://drive-atleta.vercel.app** (projeto Vercel `drive-atleta`, time studio-bicofino,
 orgId `team_i0JJAtJE82qUjMOqY08RTD3o`). Hub em `/` (lista os atletas) · upload em `/a/<slug>` · Painel `/painel`.
-Fabio já está usando ao vivo — há uploads reais no acervo (Salvatore, Julio, Caio). Tudo mergeado na `main` (último PR #17). **2026-06-09: Lucas Ovies + Gabriel Rigorfi adicionados (athletes.ts + pastas no Drive + deploy prod) — mudança em `athletes.ts` PENDENTE DE COMMIT no working tree (já no ar via deploy de working tree, mas não commitada/pushada).**
+Fabio já está usando ao vivo — há uploads reais no acervo (Salvatore, Julio, Caio). Tudo mergeado na `main` (último PR #17). **2026-06-09: Lucas Ovies + Gabriel Rigorfi adicionados (athletes.ts + pastas no Drive + deploy prod).** *(Atualização 2026-06-12: o `athletes.ts` JÁ ESTÁ commitado na main — a nota antiga de "pendente de commit" foi resolvida.)*
+
+**2026-06-12 (auditoria): proteção opt-in do painel adicionada em `src/proxy.ts`** — HTTP Basic Auth cobrindo `/painel/*` + `/api/delete` + `/api/share` + `/api/curate`. **Só ativa quando `DRIVE_ATLETA_PANEL_USER` e `DRIVE_ATLETA_PANEL_PASS` existirem nas envs** (sem elas, comportamento atual: tudo aberto). Motivo: essas rotas fazem write/delete no Drive e no banco sem nenhuma auth, em URL pública. As rotas do atleta (`/a/[slug]`, `/api/upload*`, `/api/check-duplicate`, `/api/thumb`) ficam fora do matcher de propósito — o fluxo de upload do atleta não pode pedir senha. **Para ativar: setar as 2 envs na Vercel (prod/preview/dev) + redeploy.**
 
 ### ⚠️ DEPLOY MUDOU — agora deploya da RAIZ do monorepo (não da pasta do app)
 O projeto Vercel agora tem **Root Directory = `apps/drive-atleta`** nas settings. Isso quebra o `cd apps/drive-atleta && vercel --prod` antigo (dobra o caminho → `apps/drive-atleta/apps/drive-atleta does not exist`). **Procedimento atual** (da raiz `/Users/woneymalian/Developer/Bicofino-ecossistema`):

@@ -1,5 +1,10 @@
 # Consigliere Widget — Plano
 
+> **NOTA (2026-06-12):** a primeira implementação REAL do Consigliere saiu em outro contexto:
+> `apps/la-rete/src/app/api/consigliere/route.ts` (Claude Haiku, integrada ao motor de
+> matchmaking, em prod desde 11/06). Este PLAN.md descreve o widget do **docs-site**, que
+> segue como visão futura — ao retomá-lo, considerar reaproveitar/extrair o serviço de la-rete.
+
 **App:** `apps/docs-site` · **Branch:** criar `feat/consigliere` a partir de `main` após merge de `experiment/video-hero`
 **Escopo:** MVP sem auth. Híbrido: página dedicada + widget flutuante global.
 **Stack:** Next 16 (App Router), Vercel AI SDK, OpenRouter → Claude Sonnet 4.
