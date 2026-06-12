@@ -14,10 +14,12 @@ gsap.registerPlugin(useGSAP, ScrollTrigger)
 /* Card stack no scroll — portado do motion-lab EXP-10 com os valores calibrados
    no tuner (scrub 1 · recuo 0.05 · offset topo 24px · 100% de scroll por card ·
    snap). Container pinado; cada card entra de baixo e o deck recua em escala.
-   Só roda em viewport ≥900px com motion permitido — fora disso os cards fluem
-   como lista normal (gsap.matchMedia + CSS com a mesma media query). */
+   Roda em qualquer viewport com motion permitido — em reduced-motion os cards
+   fluem como lista normal (gsap.matchMedia + CSS com a mesma media query).
+   No mobile o card ganha dimensionamento próprio (92svh, padding menor,
+   mockups reduzidos) e overflow-y auto como válvula de segurança. */
 
-const STACK_MEDIA = '(min-width: 900px) and (prefers-reduced-motion: no-preference)'
+const STACK_MEDIA = '(prefers-reduced-motion: no-preference)'
 const SCRUB = 1
 const STEP = 0.05 // recuo de escala por profundidade
 const OFFSET = 24 // px de topo entre cards assentados
@@ -42,7 +44,6 @@ export function CardStack() {
 
         cards.forEach((card, i) => {
           gsap.set(card, {
-            xPercent: -50,
             y: OFFSET * i,
             yPercent: i === 0 ? 0 : 120,
             transformOrigin: 'center top',
@@ -144,11 +145,13 @@ export function CardStack() {
               </span>
               {p.tela &&
                 (p.telaFrame === 'iphone' ? (
-                  <div style={{ width: 'min(200px, 100%)' }}>
+                  <div className="tela-iphone">
                     <IphoneFrame src={`${BASE}${p.tela}`} alt={`Tela do produto ${p.nome}`} />
                   </div>
                 ) : (
-                  <MacbookFrame src={`${BASE}${p.tela}`} alt={`Tela do produto ${p.nome}`} />
+                  <div className="tela-macbook">
+                    <MacbookFrame src={`${BASE}${p.tela}`} alt={`Tela do produto ${p.nome}`} />
+                  </div>
                 ))}
             </div>
           </article>
@@ -156,27 +159,45 @@ export function CardStack() {
       </div>
 
       <style>{`
-        /* fluxo normal (mobile / reduced-motion): lista empilhada */
+        /* fluxo normal (reduced-motion): lista empilhada */
         .pstack-stage { display: grid; gap: var(--sp-4); }
+        .tela-iphone { width: min(200px, 100%); }
+        .tela-macbook { width: 100%; }
 
         @media ${STACK_MEDIA} {
           .pstack-stage {
             display: block;
             position: relative;
-            height: 100vh;
+            height: 100svh;
             overflow: hidden;
           }
           .pstack-card {
             position: absolute;
-            top: 6vh;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 6svh;
+            /* centralização sem transform — o transform é todo do GSAP */
+            left: 0;
+            right: 0;
+            margin-inline: auto;
             width: min(1080px, 94vw);
-            height: min(640px, 82vh);
+            height: min(640px, 82svh);
             overflow: hidden;
             will-change: transform;
             background: var(--bf-bg-page);
           }
+        }
+
+        /* mobile dentro do stack: card mais alto, respiro menor, mockups
+           reduzidos; overflow-y auto segura conteúdo que ainda passar */
+        @media (max-width: 899px) and ${STACK_MEDIA} {
+          .pstack-card {
+            top: 2svh;
+            height: 92svh;
+            padding: var(--sp-4);
+            overflow-y: auto;
+            gap: var(--sp-4);
+          }
+          .pstack-card .tela-iphone { width: min(150px, 100%); }
+          .pstack-card .tela-macbook { width: min(280px, 100%); }
         }
       `}</style>
     </div>
