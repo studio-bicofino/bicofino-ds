@@ -17,7 +17,7 @@ import { PostSystem } from '@/components/dsfase1/PostSystem'
 import { IntervencaoCor } from '@/components/dsfase1/IntervencaoCor'
 import { BentoData } from '@/components/dsfase1/BentoData'
 import { ThemeToggle } from '@/components/ThemeToggle'
-import { ConsigliereHero } from '@/components/ConsigliereHero'
+// import { ConsigliereHero } from '@/components/ConsigliereHero' // CONSIGLIERE-OFF
 import { SiteFooter } from '@/components/SiteFooter'
 import { useLang, type Lang } from '@/content'
 import { Clock, TrendingUp, ArrowDownRight, Zap, Cpu, Activity } from 'lucide-react'
@@ -1283,29 +1283,29 @@ function MotionPerformance() {
    ═══════════════════════════════════════════════════════════════════════════ */
 
 const TOP_ROW_LOGOS = [
-  '/assets/on-field/sponsors/sponsor-fifa.svg',
-  '/assets/on-field/sponsors/sponsor-audemar-piguet.svg',
-  '/assets/on-field/sponsors/sponsor-emirates.svg',
-  '/assets/on-field/sponsors/sponsor-btg.svg',
-  '/assets/on-field/sponsors/sponsor-redbull.svg',
-  '/assets/on-field/sponsors/sponsor-montblanc.svg',
-  '/assets/on-field/sponsors/sponsor-nike-swoosh.svg',
-  '/assets/on-field/sponsors/sponsor-procter-gamble.svg',
-  '/assets/on-field/sponsors/sponsor-ubs.svg',
-  '/assets/on-field/sponsors/sponsor-illy.svg',
+  '/brandsystem/assets/on-field/sponsors/sponsor-fifa.svg',
+  '/brandsystem/assets/on-field/sponsors/sponsor-audemar-piguet.svg',
+  '/brandsystem/assets/on-field/sponsors/sponsor-emirates.svg',
+  '/brandsystem/assets/on-field/sponsors/sponsor-btg.svg',
+  '/brandsystem/assets/on-field/sponsors/sponsor-redbull.svg',
+  '/brandsystem/assets/on-field/sponsors/sponsor-montblanc.svg',
+  '/brandsystem/assets/on-field/sponsors/sponsor-nike-swoosh.svg',
+  '/brandsystem/assets/on-field/sponsors/sponsor-procter-gamble.svg',
+  '/brandsystem/assets/on-field/sponsors/sponsor-ubs.svg',
+  '/brandsystem/assets/on-field/sponsors/sponsor-illy.svg',
 ]
 
 const BOTTOM_ROW_LOGOS = [
-  '/assets/on-field/sponsors/sponsor-ea-sports.svg',
-  '/assets/on-field/sponsors/sponsor-gillette.svg',
-  '/assets/on-field/sponsors/sponsor-panini.svg',
-  '/assets/on-field/sponsors/sponsor-playstation.svg',
-  '/assets/on-field/sponsors/sponsor-zegna.svg',
-  '/assets/on-field/sponsors/sponsor-bombardier.svg',
-  '/assets/on-field/sponsors/sponsor-on-cloud.svg',
-  '/assets/on-field/sponsors/sponsor-ralph-lauren.svg',
-  '/assets/on-field/sponsors/sponsor-perrier.svg',
-  '/assets/on-field/sponsors/sponsor-cape.svg',
+  '/brandsystem/assets/on-field/sponsors/sponsor-ea-sports.svg',
+  '/brandsystem/assets/on-field/sponsors/sponsor-gillette.svg',
+  '/brandsystem/assets/on-field/sponsors/sponsor-panini.svg',
+  '/brandsystem/assets/on-field/sponsors/sponsor-playstation.svg',
+  '/brandsystem/assets/on-field/sponsors/sponsor-zegna.svg',
+  '/brandsystem/assets/on-field/sponsors/sponsor-bombardier.svg',
+  '/brandsystem/assets/on-field/sponsors/sponsor-on-cloud.svg',
+  '/brandsystem/assets/on-field/sponsors/sponsor-ralph-lauren.svg',
+  '/brandsystem/assets/on-field/sponsors/sponsor-perrier.svg',
+  '/brandsystem/assets/on-field/sponsors/sponsor-cape.svg',
 ]
 
 const LOGO_SIZE = 120
@@ -1441,7 +1441,9 @@ export default function Page() {
   return (
     <>
       <TopBar />
-      <ConsigliereHero />
+      {/* CONSIGLIERE-OFF: desligado provisoriamente p/ apresentação (jun/2026).
+          Religar: descomentar aqui e o ícone na Sidebar.tsx. */}
+      {/* <ConsigliereHero /> */}
       <BrandSystem />
       <Overview />
       <Colors />

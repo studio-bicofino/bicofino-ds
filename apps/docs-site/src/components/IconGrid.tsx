@@ -233,7 +233,7 @@ export function IconGrid() {
   function handleCopy(entry: IconEntry) {
     const text = entry.kind === 'lucide'
       ? `<${entry.name} size={20} strokeWidth={1.5} />`
-      : `/assets/on-field/icons/${entry.file}`
+      : `/brandsystem/assets/on-field/icons/${entry.file}`
     navigator.clipboard.writeText(text).then(() => {
       setCopied(entry.name)
       setTimeout(() => setCopied(null), 1800)

@@ -354,7 +354,19 @@ export const br = {
   'footer.meta1': '// design system v1.0',
   'footer.meta2': '// abril · 2026',
   'footer.meta3': '// São Paulo · Brasil',
-  'page.footer.line': '// Bicofino Design System v1.0 — São Paulo, SP, Brasil — Abril 2026',
+  // Footer espelhado do apps/web (valores idênticos aos de apps/web/content/br.ts)
+  'footer.address': 'av pedroso de morais 1619 | 05019 001 | pinheiros | são paulo | sp | brasil',
+  'footer.club': 'CLUB',
+  'footer.club.label': 'Acesso ao Club',
+  'footer.email': 'hello@bicofino.com',
+  'footer.instagram': 'bicofino',
+  'footer.instagram.label': 'Bicofino no Instagram',
+  'footer.copyright': '© 2010 — now | BICOFINO GROUP S.A.',
+  'footer.privacy': 'Privacidade',
+  'footer.privacy.label': 'Política de Privacidade',
+  'footer.cookies': 'Cookies',
+  'footer.cookies.label': 'Política de Cookies',
+  'page.footer.line':'// Bicofino Design System v1.0 — São Paulo, SP, Brasil — Abril 2026',
 
   // Performance Intelligence
   'perf.eyebrow': '// 06.1 · Motion Intelligence',

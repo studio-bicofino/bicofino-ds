@@ -6,42 +6,42 @@
    Never use for body or running text. Weights: 300 / 500 / 700 / 900 (+ italics). */
 @font-face {
   font-family: "Gotham";
-  src: url("/fonts/Gotham-Light.woff2") format("woff2");
+  src: url("/brandsystem/fonts/Gotham-Light.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Gotham";
-  src: url("/fonts/Gotham-LightItalic.woff2") format("woff2");
+  src: url("/brandsystem/fonts/Gotham-LightItalic.woff2") format("woff2");
   font-weight: 300;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: "Gotham";
-  src: url("/fonts/Gotham-Book.woff2") format("woff2");
+  src: url("/brandsystem/fonts/Gotham-Book.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Gotham";
-  src: url("/fonts/Gotham-Bold.woff2") format("woff2");
+  src: url("/brandsystem/fonts/Gotham-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Gotham";
-  src: url("/fonts/Gotham-BoldItalic.woff2") format("woff2");
+  src: url("/brandsystem/fonts/Gotham-BoldItalic.woff2") format("woff2");
   font-weight: 700;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: "Gotham";
-  src: url("/fonts/Gotham-Black.woff2") format("woff2");
+  src: url("/brandsystem/fonts/Gotham-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;

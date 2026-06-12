@@ -20,21 +20,21 @@ const hairline = '1px solid var(--bf-border)'
 const PALMEIRAS_V = '?v=3'
 
 const A = {
-  portrait:  '/assets/on-field/athletes/guilherme-kerchner/portraits/gui-kerchner-portrait-cut01.png',
-  wordmark:  '/assets/on-field/athletes/guilherme-kerchner/brand/gui-kerchner-wordmark.svg',
-  badgePro:  '/assets/on-field/badges/badge-bicofino-pro.svg',
-  badgeFc:   '/assets/on-field/badges/badge-bicofino-fc.svg',
-  badgeDay:  '/assets/on-field/badges/badge-bicofino-day.svg',
-  palmeiras: `/assets/on-field/clubs/club-palmeiras.svg${PALMEIRAS_V}`,
-  nike:      '/assets/on-field/sponsors/sponsor-nike.svg',
-  passport:  '/assets/on-field/passports/passport-italy.svg',
+  portrait:  '/brandsystem/assets/on-field/athletes/guilherme-kerchner/portraits/gui-kerchner-portrait-cut01.png',
+  wordmark:  '/brandsystem/assets/on-field/athletes/guilherme-kerchner/brand/gui-kerchner-wordmark.svg',
+  badgePro:  '/brandsystem/assets/on-field/badges/badge-bicofino-pro.svg',
+  badgeFc:   '/brandsystem/assets/on-field/badges/badge-bicofino-fc.svg',
+  badgeDay:  '/brandsystem/assets/on-field/badges/badge-bicofino-day.svg',
+  palmeiras: `/brandsystem/assets/on-field/clubs/club-palmeiras.svg${PALMEIRAS_V}`,
+  nike:      '/brandsystem/assets/on-field/sponsors/sponsor-nike.svg',
+  passport:  '/brandsystem/assets/on-field/passports/passport-italy.svg',
   icons: {
-    fingerprint: '/assets/on-field/icons/icon-fingerprint.svg',
-    pitch:       '/assets/on-field/icons/icon-pitch.svg',
-    footbal:     '/assets/on-field/icons/icon-footbal.svg',
-    sneaker:     '/assets/on-field/icons/icon-sneaker.svg',
-    trophy:      '/assets/on-field/icons/icon-trophy.svg',
-    medal:       '/assets/on-field/icons/icon-medal.svg',
+    fingerprint: '/brandsystem/assets/on-field/icons/icon-fingerprint.svg',
+    pitch:       '/brandsystem/assets/on-field/icons/icon-pitch.svg',
+    footbal:     '/brandsystem/assets/on-field/icons/icon-footbal.svg',
+    sneaker:     '/brandsystem/assets/on-field/icons/icon-sneaker.svg',
+    trophy:      '/brandsystem/assets/on-field/icons/icon-trophy.svg',
+    medal:       '/brandsystem/assets/on-field/icons/icon-medal.svg',
   },
 }
 

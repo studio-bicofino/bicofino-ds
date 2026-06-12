@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 
 const mono = '"JetBrains Mono", monospace'
 const sans = '"Inter", sans-serif'
-const BASE = '/assets/on-field/icons/'
+const BASE = '/brandsystem/assets/on-field/icons/'
 
 const STATES = [
   { icon: 'icon-speed.svg',   value: 35,  unit: 'km/h', label: 'TOP SPEED'           },

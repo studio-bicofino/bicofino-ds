@@ -33,6 +33,30 @@
 | 6 | **HANDOFF drive-atleta corrigido** | `.planning/drive-atleta/HANDOFF.md` | Nota "athletes.ts pendente de commit" estava obsoleta (já commitado); documentada a proteção nova e como ativá-la. |
 | 7 | **Duplicata removida** | raiz: `club-logo-fox-1.svg` | Byte-idêntico ao `apps/web/public/club/club-logo-fox.svg` versionado. Lixo de export apagado. |
 
+### Adendo 12/06 (dia) — Brand System em `bicofino.com/brandsystem` + Consigliere OFF
+
+Feito depois da auditoria, a pedido do Woney (apresentação à vista):
+
+- **Multi-zone**: docs-site agora roda com `basePath: '/brandsystem'`; o apps/web ganhou
+  rewrites `/brandsystem(/:path*)` → `bicofino-ds.vercel.app/brandsystem/...`. Todas as
+  refs a `public/` do docs-site levaram o prefixo manualmente (37× `/assets`, 6 fontes no
+  globals.css) — o Next não prefixa `public/` sozinho. Rewrite cego de `/assets`/`/fonts`
+  era inviável (o web tem pastas homônimas). **Efeito colateral**: a raiz de
+  `bicofino-ds.vercel.app` vira 404 — o site vive sob `/brandsystem` em qualquer domínio.
+- **Consigliere desligado PROVISORIAMENTE** (p/ apresentação; religar depois): marcador
+  `CONSIGLIERE-OFF` em `apps/docs-site/src/app/page.tsx` (`<ConsigliereHero />`) e
+  `Sidebar.tsx` (ícone). Religar = descomentar os 2 blocos + imports. A rota
+  `/consigliere` existe mas nada aponta pra ela.
+- **Favicon + rodapé espelhados do apps/web**: favicons copiados p/ `src/app/`;
+  `SiteFooter.tsx` reescrito = Footer do web com 3 adaptações de sistema (espaçamento
+  `--sp-*`, hover do Club em `--current-accent` — nunca o `--bf-accent` web-local —,
+  links Club/Privacidade/Cookies em URL absoluta `bicofino.com`). Chaves `footer.*` novas
+  nos 3 dicts do docs-site, valores idênticos aos do web (já auditados pelo copy-editor
+  no lançamento — não re-auditadas). Pegadinha: o lucide novo do docs-site não tem ícones
+  de marca → `IconInstagram` replicado em `BrandIcons.tsx` local.
+- **Conferir após o deploy**: Deployment Protection do `bicofino-ds` precisa estar
+  "Standard" (prod pública), senão `bicofino.com/brandsystem` serve a página de SSO.
+
 ---
 
 ## 2 · AÇÕES QUE SÓ O WONEY PODE FAZER (em ordem de prioridade)

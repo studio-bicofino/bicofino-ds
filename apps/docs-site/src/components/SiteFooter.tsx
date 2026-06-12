@@ -1,57 +1,209 @@
 'use client'
 
-import { BicofinoLogo } from '@/components/BicofinoLogo'
+import React, { useState } from 'react'
+import { MapPin } from 'lucide-react'
 import { useLang } from '@/content'
+import type { Lang } from '@/content'
+import { IconDiamond, IconClub, IconInstagram } from '@/components/BrandIcons'
 
-const C = {
-  bg:       'var(--bf-bg-page)',
-  black:    'var(--bf-text-primary)',
-  steel:    'var(--bf-text-secondary)',
-  platinum: 'var(--bf-text-subtle)',
-}
-const mono = '"JetBrains Mono", monospace'
-const hairline = '1px solid var(--bf-border)'
-const H_PAD = 72
+/* Rodapé espelhado do site público (apps/web/components/layout/Footer.tsx).
+   Adaptações para o docs-site: tokens de espaçamento --sp-* (sm→2, md→4, lg→6),
+   hover do Club em --current-accent (o --bf-accent é local do apps/web e não
+   entra no DS), e links de páginas do site público em URL absoluta — o docs-site
+   vive sob /brandsystem, href relativo cairia na rota errada. */
+
+const WEB = 'https://bicofino.com'
 
 export function SiteFooter() {
-  const { t } = useLang()
+  const { t, lang, setLang } = useLang()
+  const [clubHover, setClubHover] = useState(false)
+
+  const langs: { code: Lang; label: string }[] = [
+    { code: 'en', label: 'EN' },
+    { code: 'it', label: 'IT' },
+    { code: 'br', label: 'BR' },
+  ]
+
+  const monoStyle: React.CSSProperties = {
+    fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+    fontSize: 12,
+    letterSpacing: '0.04em',
+    color: 'var(--bf-text-secondary)',
+  }
 
   return (
-    <footer style={{ borderTop: `3px solid var(--bf-border-strong)`, background: C.bg }}>
-      <div style={{ padding: `64px ${H_PAD}px 48px`, display: 'grid', gridTemplateColumns: '200px 1fr 240px', gap: 64 }}>
-        <div>
-          <BicofinoLogo color={C.black} width={130} />
-          <div style={{ marginTop: 20, display: 'flex', flexDirection: 'column', gap: 5 }}>
-            {[t('footer.meta1'), t('footer.meta2'), t('footer.meta3')].map(l => (
-              <p key={l} style={{ fontFamily: mono, fontSize: 9, color: C.steel, margin: 0, letterSpacing: '0.06em' }}>{l}</p>
+    <footer
+      style={{
+        background: 'var(--bf-surface)',
+        borderTop: '1px solid var(--bf-border)',
+      }}
+    >
+      {/* Row 1 */}
+      <div
+        style={{
+          maxWidth: 1280,
+          marginInline: 'auto',
+          paddingInline: 'var(--sp-6)',
+          paddingBlock: 'var(--sp-4)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 'var(--sp-4)',
+          flexWrap: 'wrap',
+          borderBottom: '1px solid var(--bf-border)',
+        }}
+      >
+        {/* Address */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <MapPin
+            size={14}
+            strokeWidth={1.5}
+            style={{ color: 'var(--bf-platinum)', flexShrink: 0 }}
+            aria-hidden="true"
+          />
+          <span style={monoStyle}>{t('footer.address')}</span>
+        </div>
+
+        {/* Club */}
+        <a
+          href={`${WEB}/club`}
+          aria-label={t('footer.club.label')}
+          onMouseEnter={() => setClubHover(true)}
+          onMouseLeave={() => setClubHover(false)}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+            ...monoStyle,
+            color: clubHover ? 'var(--current-accent)' : 'var(--bf-text-secondary)',
+            transition: 'color 180ms ease-out',
+          }}
+        >
+          <span style={{ letterSpacing: '0.08em' }}>{t('footer.club')}</span>
+          <IconClub
+            size={14}
+            style={{
+              transform: clubHover ? 'rotate(8deg)' : 'rotate(0deg)',
+              transition: 'transform 200ms ease-out',
+            }}
+          />
+        </a>
+      </div>
+
+      {/* Row 2 */}
+      <div
+        style={{
+          maxWidth: 1280,
+          marginInline: 'auto',
+          paddingInline: 'var(--sp-6)',
+          paddingBlock: 'var(--sp-4)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 'var(--sp-4)',
+          flexWrap: 'wrap',
+        }}
+      >
+        {/* Left: diamond + email + instagram */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-4)' }}>
+          <a
+            href={`mailto:${t('footer.email')}`}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+              ...monoStyle,
+              transition: 'color 180ms ease-out',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--bf-text-primary)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--bf-text-secondary)' }}
+          >
+            <IconDiamond size={14} style={{ color: 'var(--bf-platinum)', flexShrink: 0 }} aria-hidden="true" />
+            {t('footer.email')}
+          </a>
+
+          <a
+            href="https://instagram.com/bicofino"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={t('footer.instagram.label')}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+              ...monoStyle,
+              transition: 'color 180ms ease-out',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--bf-text-primary)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--bf-text-secondary)' }}
+          >
+            <IconInstagram size={12} style={{ color: 'var(--bf-platinum)', flexShrink: 0 }} />
+            {t('footer.instagram')}
+          </a>
+        </div>
+
+        {/* Right: copyright + lang switcher */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-6)' }}>
+          {/* Legal + copyright — mesmo corpo 10, separados por | (igual ao apps/web) */}
+          <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-2)', flexWrap: 'wrap' }}>
+            {([
+              { href: `${WEB}/privacidade`, key: 'footer.privacy', label: 'footer.privacy.label' },
+              { href: `${WEB}/cookies`, key: 'footer.cookies', label: 'footer.cookies.label' },
+            ] as const).map(({ href, key, label }) => (
+              <React.Fragment key={href}>
+                <a
+                  href={href}
+                  aria-label={t(label)}
+                  style={{ ...monoStyle, fontSize: 10, transition: 'color 200ms ease-out' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--bf-text-primary)' }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--bf-text-secondary)' }}
+                >
+                  {t(key)}
+                </a>
+                <span aria-hidden="true" style={{ ...monoStyle, fontSize: 10, opacity: 0.4 }}>|</span>
+              </React.Fragment>
+            ))}
+            <span style={{ ...monoStyle, fontSize: 10 }}>{t('footer.copyright')}</span>
+          </span>
+
+          {/* Language switcher */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4,
+            }}
+            role="group"
+            aria-label="Selecionar idioma"
+          >
+            {langs.map(({ code, label }, i) => (
+              <React.Fragment key={code}>
+                {i > 0 && (
+                  <span style={{ ...monoStyle, opacity: 0.4 }}>•</span>
+                )}
+                <button
+                  onClick={() => setLang(code)}
+                  aria-label={`Mudar para ${label}`}
+                  aria-pressed={lang === code}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: '2px 4px',
+                    ...monoStyle,
+                    color: lang === code
+                      ? 'var(--bf-text-primary)'
+                      : 'var(--bf-text-secondary)',
+                    fontWeight: lang === code ? 500 : 400,
+                    transition: 'color 150ms ease-out',
+                  }}
+                >
+                  {label}
+                </button>
+              </React.Fragment>
             ))}
           </div>
         </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 14, paddingTop: 4 }}>
-          {[
-            { label: t('footer.system'),    value: t('footer.system.value') },
-            { label: t('footer.docs'),      value: t('footer.docs.value') },
-            { label: t('footer.verticals'), value: t('footer.verticals.value') },
-          ].map(({ label, value }) => (
-            <p key={label} style={{ fontFamily: mono, fontSize: 10, color: C.steel, margin: 0, lineHeight: 1.6 }}>
-              <span style={{ color: C.black, marginRight: 12, letterSpacing: '0.08em' }}>{label}</span>
-              {value}
-            </p>
-          ))}
-        </div>
-
-        <div style={{ paddingTop: 4 }}>
-          <p style={{ fontFamily: mono, fontSize: 9, color: C.steel, margin: '0 0 14px', letterSpacing: '0.1em' }}>{t('footer.creative')}</p>
-          <p style={{ fontSize: 13, color: C.black, margin: '0 0 3px' }}>woney@bicofino.com</p>
-          <p style={{ fontSize: 13, color: C.black, margin: '0 0 16px' }}>branca@bicofino.com</p>
-          <p style={{ fontSize: 13, color: C.steel, margin: 0 }}>bicofino.com</p>
-        </div>
-      </div>
-
-      <div style={{ borderTop: hairline, padding: `14px ${H_PAD}px`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <p style={{ fontFamily: mono, fontSize: 10, color: C.steel, margin: 0, letterSpacing: '0.06em' }}>{t('footer.tagline')}</p>
-        <p style={{ fontFamily: mono, fontSize: 10, color: C.platinum, margin: 0, letterSpacing: '0.1em' }}>// v1.0 · 04 · 2026</p>
       </div>
     </footer>
   )

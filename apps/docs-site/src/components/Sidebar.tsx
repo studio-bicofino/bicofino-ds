@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
-import { ChevronRight, MessageCircle } from 'lucide-react'
+import { ChevronRight } from 'lucide-react' // CONSIGLIERE-OFF: MessageCircle sai junto com o ícone
 import { BicofinoLogo } from './BicofinoLogo'
 import { useLang } from '@/content'
 
@@ -239,8 +239,9 @@ export default function Sidebar({ onNavClick }: SidebarProps = {}) {
         </div>
       </div>
 
-      {/* Consigliere — IA contextual (layout/clique; sem backend ainda) */}
-      <a
+      {/* CONSIGLIERE-OFF: ícone desligado provisoriamente p/ apresentação (jun/2026).
+          Religar: descomentar este bloco e o <ConsigliereHero /> em app/page.tsx. */}
+      {/* <a
         href="/#consigliere"
         onClick={(e) => { e.preventDefault(); navigateToSection('#consigliere') }}
         aria-label="Bicofino Consigliere"
@@ -259,7 +260,7 @@ export default function Sidebar({ onNavClick }: SidebarProps = {}) {
         }}
       >
         <MessageCircle size={20} strokeWidth={1.5} />
-      </a>
+      </a> */}
 
       {/* Divider */}
       <div style={{ height: 1, background: C.divider, margin: '0 24px 20px' }} />

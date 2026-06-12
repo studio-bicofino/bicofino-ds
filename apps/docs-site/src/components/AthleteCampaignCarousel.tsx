@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 
 const mono = '"JetBrains Mono", monospace'
-const BASE = '/assets/on-field/athletes/guilherme-kerchner/campaigns/'
+const BASE = '/brandsystem/assets/on-field/athletes/guilherme-kerchner/campaigns/'
 
 const IMAGES = [
   { src: `${BASE}gui-kerchner-campaign01.png`, n: '01' },
