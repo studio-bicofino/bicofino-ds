@@ -9,8 +9,7 @@ export const metadata: Metadata = {
     default: 'Bicofino — Unlike Any Other',
     template: '%s — Bicofino',
   },
-  description:
-    'Bicofino Group — curadoria, conexão e criatividade ao mais alto nível. On Pitch. Off Pitch. São Paulo.',
+  description: 'Connect. Curate. Create. Consult.',
   alternates: {
     canonical: '/',
   },
