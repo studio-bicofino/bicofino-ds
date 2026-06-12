@@ -30,7 +30,6 @@ export type MemberRowData = {
 type PendingDelete = { id: string; person: MemberRowData; index: number }
 
 const GRID = '24px 44px minmax(0, 1.4fr) minmax(0, 1fr) 96px'
-const UNDO_MS = 5000
 const EASE_OUT = [0.16, 1, 0.3, 1] as const
 
 export function MembersList({
@@ -75,23 +74,21 @@ export function MembersList({
     pendingIds.current = new Set(pending.map((p) => p.id))
   }, [pending])
 
-  const timers = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map())
-
   // Ressincroniza quando a lista do servidor muda (delete confirmado, novo cadastro,
   // filtro). Exclui ids com delete pendente pra não "ressuscitar" linhas na tela.
   useEffect(() => {
     setOrder(members.map((m) => m.id).filter((id) => !pendingIds.current.has(id)))
   }, [members])
 
-  // Ao desmontar, executa os deletes ainda pendentes (não desfeitos).
+  // O toast de desfazer é PERSISTENTE (Onda 18.2): o delete só executa no OK.
+  // Ao desmontar (navegação) com toasts abertos, executa os deletes pendentes
+  // — sair da tela vale como confirmação.
   useEffect(() => {
-    const map = timers.current
+    const ids = pendingIds.current
     return () => {
-      map.forEach((t, id) => {
-        clearTimeout(t)
+      ids.forEach((id) => {
         void deletePersonV2(id)
       })
-      map.clear()
     }
   }, [])
 
@@ -103,7 +100,6 @@ export function MembersList({
 
   const commitDelete = useCallback(
     (id: string) => {
-      timers.current.delete(id)
       setPending((prev) => prev.filter((p) => p.id !== id))
       void deletePersonV2(id).then((r) => {
         if (!r.ok) console.error('[delete] falhou:', r.error)
@@ -113,23 +109,15 @@ export function MembersList({
     [router],
   )
 
-  const requestDelete = useCallback(
-    (id: string) => {
-      const person = byId.current.get(id)
-      if (!person) return
-      const index = Math.max(0, orderRef.current.indexOf(id))
-      setOrder((prev) => prev.filter((x) => x !== id))
-      setPending((prev) => [...prev, { id, person, index }])
-      const t = setTimeout(() => commitDelete(id), UNDO_MS)
-      timers.current.set(id, t)
-    },
-    [commitDelete],
-  )
+  const requestDelete = useCallback((id: string) => {
+    const person = byId.current.get(id)
+    if (!person) return
+    const index = Math.max(0, orderRef.current.indexOf(id))
+    setOrder((prev) => prev.filter((x) => x !== id))
+    setPending((prev) => [...prev, { id, person, index }])
+  }, [])
 
   const undoDelete = useCallback((entry: PendingDelete) => {
-    const t = timers.current.get(entry.id)
-    if (t) clearTimeout(t)
-    timers.current.delete(entry.id)
     setPending((prev) => prev.filter((p) => p.id !== entry.id))
     setOrder((prev) => {
       if (prev.includes(entry.id)) return prev
@@ -178,7 +166,7 @@ export function MembersList({
         </div>
       )}
 
-      <UndoToasts pending={pending} onUndo={undoDelete} />
+      <UndoToasts pending={pending} onUndo={undoDelete} onConfirm={commitDelete} />
     </>
   )
 }
@@ -452,9 +440,11 @@ function RowCells({
 function UndoToasts({
   pending,
   onUndo,
+  onConfirm,
 }: {
   pending: PendingDelete[]
   onUndo: (entry: PendingDelete) => void
+  onConfirm: (id: string) => void
 }) {
   const reduce = useReducedMotion()
   return (
@@ -527,6 +517,28 @@ function UndoToasts({
             >
               <Undo2 size={20} strokeWidth={1.5} />
               Desfazer
+            </button>
+            <button
+              type="button"
+              onClick={() => onConfirm(entry.id)}
+              aria-label={`Confirmar exclusão de ${entry.person.full_name}`}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6,
+                border: '1px solid var(--bf-bg-page)',
+                borderRadius: 9999,
+                background: 'transparent',
+                color: 'var(--bf-bg-page)',
+                fontSize: 13,
+                fontWeight: 600,
+                letterSpacing: '0.02em',
+                cursor: 'pointer',
+                padding: '4px 14px',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              OK
             </button>
           </motion.div>
         ))}
