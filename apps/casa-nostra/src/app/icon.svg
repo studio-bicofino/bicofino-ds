@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Favicon Casa Nostra: verde do token bf-ops-success (#2FD298) + "C" em
+       Gotham Black. O "C" é o glifo real extraído de GothamBlack.otf via
+       fontTools/SVGPathPen (favicon SVG não carrega fonte; contorno inline). -->
+  <rect width="64" height="64" rx="14" fill="#2FD298"/>
+  <g transform="translate(13.51, 49.33) scale(0.0495, -0.0495)">
+    <path fill="#FFFFFF" d="M399 -14C554 -14 643 53 709 144L563 248C521 197 478 163 405 163C307 163 238 245 238 350V352C238 454 307 537 405 537C472 537 518 505 558 455L704 568C642 654 550 714 407 714C195 714 38 554 38 350V348C38 139 199 -14 399 -14Z"/>
+  </g>
+</svg>
