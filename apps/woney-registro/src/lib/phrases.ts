@@ -24,6 +24,7 @@ export function gerarFrases(s: Settings, sistemas: Sistema[], imp: Impacto): Fra
   const site = sistemas.find((x) => x.tipo === 'projeto')
   const ds = sistemas.find((x) => x.tipo === 'infraestrutura')
   const drive = sistemas.find((x) => x.id === 'sis-drive-atleta')
+  const pipeline = sistemas.find((x) => x.id === 'sis-image-pipeline')
 
   const frases: Frase[] = []
 
@@ -100,6 +101,21 @@ export function gerarFrases(s: Settings, sistemas: Sistema[], imp: Impacto): Fra
       texto: `Cada foto e vídeo do atleta chega ao Drive já nomeado e na pasta certa. Trinta fotos entram em cerca de meio minuto; nomear uma a uma levaria mais de sete minutos. No ritmo de ${s.drive_fotos_semana} fotos por semana, isso devolve ${fmtHoras(
         horasMes,
       )} de catalogação por mês — e o acervo nasce organizado, sem caça a arquivo nem nome genérico.`,
+    })
+  }
+
+  if (pipeline) {
+    const antesImg = min(pipeline.tempo_antes_min)
+    const depoisImg = min(pipeline.tempo_depois_min)
+    const speedX = depoisImg > 0 ? antesImg / depoisImg : 0
+    frases.push({
+      id: 'pipeline',
+      destaque: { valor: fmtX(speedX), rotulo: 'mais rápido no tratamento de cada foto' },
+      texto: `Tratar a foto de um atleta — recorte, granulado e preto e branco — passou de cerca de ${fmtMin(
+        antesImg,
+      )} para ${fmtMin(
+        depoisImg,
+      )}, e o story completo, do tratamento ao motion, de duas horas para vinte minutos. A automação levou uma tarde para montar e roda sozinha: as imagens saem do Drive, passam pelo Photoshop e voltam tratadas, em lote e sem desgaste a cada peça.`,
     })
   }
 

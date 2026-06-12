@@ -1,12 +1,62 @@
 # STATUS — Registro de Impacto
 
-> Handoff para continuar em outro chat. Última atualização: 2026-06-03.
+> Handoff para continuar em outro chat. Última atualização: 2026-06-09.
 > App em `apps/woney-registro/`. Dashboard interno que mostra, em horas e reais,
 > o valor que os sistemas do Woney (designer + dev com Claude Code) devolvem ao Studio Bicofino.
 
-## ⏩ Onde paramos (2026-06-03) — ler primeiro
+## ⏩ Onde paramos (2026-06-09) — ler primeiro
 
-Duas rodadas registradas no acervo desde o deploy inicial, ambas **no ar** em produção
+**Rodada 11–17/jun registrada + premissa do story medida de verdade (2026-06-09)** —
+8 usos novos do Template (uso-11 a uso-18): o Júlio×Flamengo 09/jun que estava pendente + os
+7 da rodada nova do Fabio (Gui×3, Ronaldo×Sampaio Corrêa, Júlio×2, Jean). Template **8 → 16
+usos**. A pedido do Woney, a premissa `tempo_depois_min` foi revista com a MEDIÇÃO REAL da
+sessão: 7 stories em ~165 min de cooking de ponta a ponta (fotos do Drive tratadas, 3 escudos
+novos, 3 rodadas de ajuste do Fabio — build 1s, Ken Burns 1.2, escudos padronizados — e ainda
+a criação de um projeto novo no meio) → **20 → 24 min/story** (eco por story 100 → 96 min;
+mais honesto). Novo sistema de infra **`sis-cards-estaticos`** (0,5h de capital): gerador de
+PNG estático 1080×1920 da MESMA arte do motion, criado durante a rodada (showcase na galeria
+com `/pecas/cards-estaticos.png`, sem link — ferramenta local). Reflexos: peças
+**R$ 1.594 → R$ 2.897**, realizado **R$ 14.344 → R$ 15.647**, recorrente **R$ 66,8k →
+R$ 66,1k/ano** (baseline mais honesto baixa um pouco o recorrente — feature, não bug),
+Claude paga **11,6× → 11,5×**, capital de infra **R$ 18.116 → R$ 18.169**. 8 MP4s + 1 PNG
+copiados p/ `public/pecas/`. Testes do `calc.ts` atualizados (13/13 ok) + tsc limpo.
+Pendência de jogos: ZERADA (não há story produzido fora do registro).
+
+---
+
+## Rodada anterior (2026-06-05)
+
+**Pipeline de tratamento de imagem registrado + baseline do story revisto (2026-06-05, parte 2)** —
+o Woney automatizou o tratamento de imagem (recorte + granulado + P&B) que alimenta o
+`card-jogos-motion`: as fotos saem do Drive, passam pelo Photoshop e voltam tratadas, **20 → 4 min
+por imagem** (5× mais rápido), **3h30 para montar**. Com isso, o **story completo (tratar a foto +
+fazer o motion) caiu de ~2h para 20 min**. Decisão tomada com o Woney (escolheu "Baseline real
+2h→20min" numa pergunta explícita): **premissa do story `tempo_antes_min` 90 → 120** (o 90
+ignorava o tratamento) + **novo sistema de infra `sis-image-pipeline`** (3,5h de capital,
+`tempo_antes/depois_min` 20/4 guardados só p/ a frase do Connector — `calc` ignora campos de tempo
+em infra). Frase nova `id:'pipeline'` em `phrases.ts`. Reflexos: cada story passa a economizar
+**100 min** (era 70) → peças **R$ 1.168,75 → R$ 1.593,75**, realizado **R$ 13.919 → R$ 14.344**,
+capital de infra **R$ 17.744 → R$ 18.116**, **recorrente R$ 61,7k → R$ 66,8k/ano** (o baseline
+maior também sobe o recorrente, que usa `ecoTemplate`), Claude paga **10,8× → 11,6×**. Payback do
+template caiu p/ **3 usos** (eco maior). Testes do `calc.ts` atualizados (13/13 ok) + tsc limpo.
+Pipeline NÃO ganhou peça na galeria (é bastidor, sem screenshot/URL) — aparece só em `/sistemas`
+como capital. Ver memória `image-pipeline`.
+
+---
+
+**+2 stories de jogos (2026-06-05, parte 1)** — 2 motions reais do `card-jogos-motion` adicionados como
+usos do Template: **Jean — Paulista (06/jun)** e **Cialone — Paulista (07/jun)**. MP4 copiados
+p/ `public/pecas/` (`jean-paulista-s17-06jun.mp4`, `cialone-paulista-s14-07jun.mp4`), usos
+`uso-9`/`uso-10` no seed. Template subiu de **6 → 8 usos**. Reflexo no realizado (a recorrência
+NÃO muda — usa `stories_mes`, não a contagem): peças **R$ 920,83 → R$ 1.168,75**, realizado
+**R$ 13.671 → R$ 13.919**. Testes do `calc.ts` atualizados (13/13 ok) + tsc limpo. Contexto: o
+Woney automatizou mais um passo do pipeline de vídeo — Claude agora puxa as fotos direto do
+Drive do Atleta, abre no Photoshop, recorta/trata e devolve no Drive certo (≈15 min/vídeo a
+menos). Ver memória `image-pipeline`.
+
+---
+
+Rodadas anteriores (2026-06-03), ambas **no ar** em produção
 (`https://woney-registro.vercel.app`), branch `feat/woney-registro`, commit **`c4b07d3`**:
 
 1. **Drive do Atleta** (commit `c968c97`) — novo sistema **`infraestrutura`** (`sis-drive-atleta`,
@@ -54,7 +104,9 @@ npm run build    # build de produção ok (7 rotas)
 
 1. **CSS puro + tokens do DS** (não Tailwind) — coerência com web/docs-site/casa-nostra.
 2. **Seed-first** — dados reais em `src/lib/seed.ts`; sem Supabase ainda. Sem auth.
-3. **Premissa de cálculo:** vídeo/story sem sistema = **90 min** (não 60). Atualizado no seed.
+3. **Premissa de cálculo:** story completo sem sistema = **120 min** (2h: tratamento da foto +
+   motion). Era 90 (só o motion); revisto 2026-06-05 com o Woney ao registrar o Pipeline de
+   tratamento de imagem. `tempo_depois_min` segue 20.
 4. **Gotham self-hosted** — copiada do docs-site para `public/fonts/` (Black/Bold/Book/Light).
    `--bf-font-impact` + `.bf-impact` no globals.css. Usada só no título (M-02).
 5. **Sistema de accent curado (3 variáveis)** — `AccentRandomizer.tsx` sorteia entre 7 cores:
@@ -71,16 +123,17 @@ npm run build    # build de produção ok (7 rotas)
 
 Espelha o bloco 5 do `PROMPT_MASTER_Registro_de_Impacto.md`. Números atuais do seed:
 
-| Métrica | Valor (atualizado 2026-06-03) |
+| Métrica | Valor (atualizado 2026-06-05) |
 |---|---|
 | custo/hora | R$ 106,25 (17000/160) |
-| Economia até hoje (realizado) | **R$ 13.671** (R$ 921 peças + R$ 12.750 site) |
-| Peças (eficiência) | R$ 920,83 = 6 stories (7,0h) + 2 propostas (1,67h) |
-| Capital de infraestrutura | R$ 17.744 (DS 160h + Drive do Atleta 7h) |
-| Líquido recorrente/ano | **R$ 61.712** (inalterado — usa volume mensal, não contagem de usos) |
-| Líquido recorrente/mês | R$ 5.143 = eficiência 1.169 + dev 4.500 − Claude 526 |
-| Claude Max se paga | **10,8×**/mês (custa US$ 100 ≈ R$ 526) |
-| Story | 20 min em vez de 1h30 (template **pago**: 6 usos ≥ payback 4) · Proposta 40 min em vez de 1h30 |
+| Economia até hoje (realizado) | **R$ 14.344** (R$ 1.594 peças + R$ 12.750 site) |
+| Peças (eficiência) | R$ 1.593,75 = 8 stories (13,33h a 100min) + 2 propostas (1,67h) |
+| Capital de infraestrutura | R$ 18.116 (DS 160h + Drive 7h + Pipeline de imagem 3,5h) |
+| Líquido recorrente/ano | **R$ 66.812** (baseline do story 120min sobe o `ecoTemplate`) |
+| Líquido recorrente/mês | R$ 5.568 = eficiência 1.594 + dev 4.500 − Claude 526 |
+| Claude Max se paga | **11,6×**/mês (custa US$ 100 ≈ R$ 526) |
+| Story | 20 min em vez de 2h (template **pago**: 8 usos ≥ payback 3) · Proposta 40 min em vez de 1h30 |
+| Tratamento de imagem | 4 min em vez de 20 por foto (5×) · payback em ~14 imagens (3,5h de build) |
 
 > **Correções 2026-06-01:** vaga de dev júnior = **R$ 4.500/mês** (era 9.000 carregado no card;
 > `custoFixoEvitado` já era 4.500, recorrente não mudou). Propostas: tempo antes **90 min** (era 180).
@@ -95,9 +148,10 @@ fade+translateY(12px), `--dur-reveal: 280ms` ease-out, stagger `index*60ms`. Red
 na hora; `@media print` força `opacity:1` (PDF do fechamento seguro). Aplicado em cards, títulos e
 blocos das 5 telas (acima da dobra segue `.bf-reveal` de load). Auditado pelo motion-curator: PASS.
 
-Seed (`src/lib/seed.ts`): **5 sistemas** (template stories `eficiencia`, propostas `eficiencia`,
-Design System `infraestrutura`, site v1 `projeto`, **Drive do Atleta `infraestrutura`**) +
-**10 usos** (6 stories até jun, 2 propostas, 2 showcases infra/projeto, 1 showcase Drive).
+Seed (`src/lib/seed.ts`): **6 sistemas** (template stories `eficiencia`, propostas `eficiencia`,
+Design System `infraestrutura`, site v1 `projeto`, Drive do Atleta `infraestrutura`,
+**Pipeline de tratamento de imagem `infraestrutura`**) +
+**13 usos** (8 stories até jun, 2 propostas, 2 showcases infra/projeto, 1 showcase Drive).
 
 ## Telas (todas prontas, seed-first)
 
