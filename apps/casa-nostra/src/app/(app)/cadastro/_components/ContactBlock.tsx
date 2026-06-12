@@ -340,6 +340,7 @@ export function ContactBlock({
               aria-label={f.label}
               aria-pressed={isActive}
               title={f.label}
+              className="cn-contact-pill"
               style={pillStyle}
             >
               <Icon size={20} strokeWidth={1.5} />
@@ -431,6 +432,7 @@ export function ContactBlock({
           aria-label="Endereço"
           aria-expanded={addressOpen}
           title="Endereço"
+          className="cn-contact-pill"
           style={addrFilled ? PILL_FILLED : PILL_BASE}
         >
           <MapPin size={20} strokeWidth={1.5} />

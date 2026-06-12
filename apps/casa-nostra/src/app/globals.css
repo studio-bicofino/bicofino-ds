@@ -552,8 +552,12 @@ select.cn-filter-input {
    pra sobrescrever o style attribute no hover. */
 .cn-cadastro-v2 input:hover:not(:disabled):not(:focus),
 .cn-cadastro-v2 select:hover:not(:disabled):not(:focus),
-.cn-cadastro-v2 .cn-field-shell:hover {
+.cn-cadastro-v2 .cn-field-shell:hover,
+.cn-cadastro-v2 .cn-contact-pill:hover {
   border-color: var(--bf-cn-caffe) !important;
+}
+.cn-cadastro-v2 .cn-contact-pill:hover {
+  color: var(--bf-text-primary) !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

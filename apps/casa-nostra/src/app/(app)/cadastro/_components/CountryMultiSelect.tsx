@@ -217,6 +217,7 @@ export function CountryMultiSelect({
         aria-label={label}
         aria-expanded={open}
         title={label}
+        className="cn-contact-pill"
         style={filled ? PILL_FILLED : PILL_BASE}
       >
         <Icon size={20} strokeWidth={1.5} />

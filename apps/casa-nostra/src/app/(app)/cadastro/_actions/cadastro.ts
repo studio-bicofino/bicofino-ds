@@ -113,14 +113,40 @@ async function createPersonV2Inner(input: CadastroV2Input): Promise<ActionResult
     return { ok: false, error: `Sócio nº ${memberNumber} já está em uso.` }
   }
 
-  // Novo membro entra no fim da lista manual (list_order = max + 1).
-  const { data: maxRow } = await supabase
+  // Posição na lista: com Sócio nº, o card entra logo DEPOIS do maior nº menor
+  // que o dele (5 cai entre o 4 e o 9); sem nº, entra no fim. A inserção
+  // resequencia os list_order seguintes (+1) — barato, lista é pequena.
+  const { data: orderRows } = await supabase
     .from('people')
-    .select('list_order')
-    .order('list_order', { ascending: false, nullsFirst: false })
-    .limit(1)
-    .maybeSingle()
-  const nextOrder = (maxRow?.list_order ?? 0) + 1
+    .select('id, member_number, list_order')
+    .order('list_order', { ascending: true, nullsFirst: false })
+    .order('full_name', { ascending: true })
+  const ordered = (orderRows ?? []) as Array<{
+    id: string
+    member_number: number | null
+    list_order: number | null
+  }>
+
+  let nextOrder: number
+  if (memberNumber != null) {
+    // índice do último card com nº <= novo (cards sem nº não contam)
+    let insertAfter = -1
+    for (let i = 0; i < ordered.length; i++) {
+      const n = ordered[i].member_number
+      if (n != null && n <= memberNumber) insertAfter = i
+    }
+    nextOrder = insertAfter + 2 // list_order é 1-based
+    // abre espaço: todo mundo a partir da posição ganha +1
+    for (let i = insertAfter + 1; i < ordered.length; i++) {
+      await supabase
+        .from('people')
+        .update({ list_order: nextOrder + (i - insertAfter) })
+        .eq('id', ordered[i].id)
+    }
+  } else {
+    const maxOrder = ordered.reduce((m, r) => Math.max(m, r.list_order ?? 0), 0)
+    nextOrder = maxOrder + 1
+  }
 
   // 1. Insert na tabela people
   const personRow = {
