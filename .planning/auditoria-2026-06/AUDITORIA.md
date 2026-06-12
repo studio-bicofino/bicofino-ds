@@ -38,11 +38,15 @@
 Feito depois da auditoria, a pedido do Woney (apresentação à vista):
 
 - **Multi-zone**: docs-site agora roda com `basePath: '/brandsystem'`; o apps/web ganhou
-  rewrites `/brandsystem(/:path*)` → `bicofino-ds.vercel.app/brandsystem/...`. Todas as
-  refs a `public/` do docs-site levaram o prefixo manualmente (37× `/assets`, 6 fontes no
-  globals.css) — o Next não prefixa `public/` sozinho. Rewrite cego de `/assets`/`/fonts`
-  era inviável (o web tem pastas homônimas). **Efeito colateral**: a raiz de
-  `bicofino-ds.vercel.app` vira 404 — o site vive sob `/brandsystem` em qualquer domínio.
+  rewrites `/brandsystem(/:path*)` → `bicofino-ds-umber.vercel.app/brandsystem/...`.
+  **Gotcha que custou um fix**: o domínio prod do projeto é `bicofino-ds-umber.vercel.app`
+  — `bicofino-ds.vercel.app` (sem sufixo) pertence a OUTRO projeto (conta pessoal) e servia
+  o build antigo. Todas as refs a `public/` do docs-site levaram o prefixo manualmente
+  (37× `/assets`, 6 fontes no globals.css) — o Next não prefixa `public/` sozinho. Rewrite
+  cego de `/assets`/`/fonts` era inviável (o web tem pastas homônimas). **Efeito colateral**:
+  a raiz de `bicofino-ds-umber.vercel.app` vira 404 — o site vive sob `/brandsystem`.
+  **Validado em prod 12/06**: HTML/assets/fontes/favicon 200, sem SSO, consigliere ausente,
+  home do web intacta.
 - **Consigliere desligado PROVISORIAMENTE** (p/ apresentação; religar depois): marcador
   `CONSIGLIERE-OFF` em `apps/docs-site/src/app/page.tsx` (`<ConsigliereHero />`) e
   `Sidebar.tsx` (ícone). Religar = descomentar os 2 blocos + imports. A rota
