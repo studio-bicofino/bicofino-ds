@@ -7,12 +7,15 @@ function AccordionRow({
   heading,
   body,
   last,
+  open,
+  onToggle,
 }: {
   heading: string
   body: string
   last: boolean
+  open: boolean
+  onToggle: () => void
 }) {
-  const [open, setOpen] = useState(false)
   const [hover, setHover] = useState(false)
   const shouldReduce = useReducedMotion()
 
@@ -25,7 +28,7 @@ function AccordionRow({
     >
       <button
         className="bf-accordion-btn"
-        onClick={() => setOpen(!open)}
+        onClick={onToggle}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         aria-expanded={open}
@@ -103,6 +106,9 @@ export function Accordion({
 }: {
   items: { heading: string; body: string }[]
 }) {
+  /* Um item aberto por vez: abrir outro colapsa o anterior (pedido Woney 12/06). */
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
+
   return (
     <div>
       <style>{`.bf-accordion-btn:focus-visible{outline:2px solid var(--bf-accent);outline-offset:2px;border-radius:var(--bf-radius-sm)}`}</style>
@@ -112,6 +118,8 @@ export function Accordion({
           heading={heading}
           body={body}
           last={i === items.length - 1}
+          open={openIndex === i}
+          onToggle={() => setOpenIndex(openIndex === i ? null : i)}
         />
       ))}
     </div>
