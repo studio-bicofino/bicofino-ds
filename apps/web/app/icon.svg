@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <!-- estrela Bicofino preta, fundo transparente (pedido Woney 11/06) -->
-  <g transform="translate(256,256) scale(6.5) translate(-297.27,-32.74)">
+  <!-- estrela Bicofino preta, fundo transparente, máxima na área (512/65.48 ≈ 7.82) -->
+  <g transform="translate(256,256) scale(7.81) translate(-297.27,-32.74)">
     <path d="M330.01,32.74c-24.55,0-32.74-8.18-32.74-32.74,0,24.56-8.18,32.74-32.74,32.74,24.56,0,32.74,8.18,32.74,32.74,0-24.56,8.19-32.74,32.74-32.74" fill="#2a2c2b"/>
   </g>
 </svg>
