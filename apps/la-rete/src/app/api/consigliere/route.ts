@@ -61,6 +61,29 @@ function hasKey() {
   return Boolean(process.env.ANTHROPIC_API_KEY)
 }
 
+/* ── válvula de custo: limite diário de leituras com IA ──────────────
+   Contador em memória por instância (a Vercel reusa instâncias no Fluid
+   Compute, mas cold start zera — é um limite SOFT, suficiente pra uso
+   interno). O teto DURO fica no spend limit do Console da Anthropic. */
+const DAILY_LIMIT = Number(process.env.CONSIGLIERE_DAILY_LIMIT ?? 50)
+
+type Quota = { day: string; used: number }
+const quota: Quota = ((globalThis as { __csQuota?: Quota }).__csQuota ??= {
+  day: '',
+  used: 0,
+})
+
+function takeQuota(): boolean {
+  const today = new Date().toISOString().slice(0, 10)
+  if (quota.day !== today) {
+    quota.day = today
+    quota.used = 0
+  }
+  if (quota.used >= DAILY_LIMIT) return false
+  quota.used += 1
+  return true
+}
+
 async function readWithClaude(
   blocks: Anthropic.ContentBlockParam[],
   source: string,
@@ -105,6 +128,12 @@ export async function POST(req: Request) {
       return NextResponse.json(
         { error: 'leitura de arquivo exige a chave da Anthropic (ANTHROPIC_API_KEY) no ambiente' },
         { status: 503 },
+      )
+    }
+    if (!takeQuota()) {
+      return NextResponse.json(
+        { error: `limite diário de ${DAILY_LIMIT} leituras com IA atingido — amanhã tem mais, Don` },
+        { status: 429 },
       )
     }
     const form = await req.formData()
@@ -162,7 +191,8 @@ export async function POST(req: Request) {
 
   /* texto colado (notícia, transcript de vídeo…) */
   if (pastedText) {
-    if (!hasKey()) {
+    if (!hasKey() || !takeQuota()) {
+      /* sem chave ou cota do dia esgotada: o léxico local segura a leitura */
       return NextResponse.json({ mode: 'lexico' })
     }
     try {
@@ -182,7 +212,7 @@ export async function POST(req: Request) {
 
   try {
     const extracted = await extractFromUrl(url)
-    if (hasKey()) {
+    if (hasKey() && takeQuota()) {
       try {
         const trend = await readWithClaude(
           [

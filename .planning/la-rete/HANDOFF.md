@@ -71,6 +71,11 @@ src/app/globals.css          ← todos os estilos; tokens no topo; responsivo no
   API; billing separado) e setar nos 3 envs do projeto Vercel `la-rete`.
   Visão de longo prazo: Consigliere vira serviço único consumido por vários apps
   (widget) — hoje a rota vive no la-rete; extrair quando o segundo app precisar.
+  **Custo sob controle (12/06):** limite diário de leituras com IA na rota —
+  `CONSIGLIERE_DAILY_LIMIT` (default 50); estourou → links/texto caem no léxico,
+  arquivo recebe 429. Contador em memória por instância = limite SOFT; o teto
+  DURO é o spend limit no Console da Anthropic (Settings → Limits). Assinatura
+  Claude.ai NÃO serve de motor — produto separado da API, sem caminho suportado.
 
 ## 5 · Receitas de mudanças comuns
 
