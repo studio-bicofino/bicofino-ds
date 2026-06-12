@@ -14,8 +14,15 @@
    ───────────────────────────────────────────────────────────── */
 
 :root {
+  /* ── Mood dial — chão/tinta da composição (contrato do MoodDial) ──
+     O dial troca só estas 3 variáveis (+ --current-accent); o resto do
+     CSS deriva delas. Default = o visual branco original da página. */
+  --lr-ground:    #ffffff;
+  --lr-ink-rgb:   42, 44, 43; /* a tripla do --bf-black */
+  --lr-dim-alpha: 0.64;
+
   /* ── Palette · Básicas ── */
-  --bf-black:       #2a2c2b;
+  --bf-black:       rgb(var(--lr-ink-rgb));
   --bf-power-black: #061015;
   --bf-white:       #ffffff;
   --bf-steel:       #6d7886;
@@ -46,16 +53,16 @@
   /* Accent como TEXTO sobre fundo claro — cai para preto quando o accent é claro demais. */
   --current-accent-ink: var(--bf-spfc);
 
-  /* ── Semantic ── */
-  --bf-bg-page:        #ffffff;
-  --bf-surface:        #f2f8ff;
-  --bf-surface-subtle: #f8fafc;
-  --bf-text-primary:   #2a2c2b;
-  --bf-text-secondary: #5f6b77;
-  --bf-text-subtle:    #98a4b2;
-  --bf-border:         rgba(42, 44, 43, 0.08);
-  --bf-border-strong:  rgba(42, 44, 43, 0.16);
-  --bf-hairline:       1px solid rgba(42, 44, 43, 0.08);
+  /* ── Semantic — derivados do mood (chão/tinta) ── */
+  --bf-bg-page:        var(--lr-ground);
+  --bf-surface:        rgba(var(--lr-ink-rgb), 0.05);
+  --bf-surface-subtle: rgba(var(--lr-ink-rgb), 0.04);
+  --bf-text-primary:   rgb(var(--lr-ink-rgb));
+  --bf-text-secondary: rgba(var(--lr-ink-rgb), var(--lr-dim-alpha));
+  --bf-text-subtle:    rgba(var(--lr-ink-rgb), 0.52);
+  --bf-border:         rgba(var(--lr-ink-rgb), 0.10);
+  --bf-border-strong:  rgba(var(--lr-ink-rgb), 0.18);
+  --bf-hairline:       1px solid rgba(var(--lr-ink-rgb), 0.10);
   /* Linhas/pontos sobre fundo escuro (M-01 · grafismo técnico) */
   --bf-line-on-dark:        rgba(168, 201, 229, 0.20);
   --bf-line-on-dark-strong: rgba(168, 201, 229, 0.32);
@@ -348,3 +355,39 @@ button { font-family: inherit; cursor: pointer; }
    Desktop: encostada à direita. Responsivo: alinha à esquerda junto do conteúdo. */
 .produto-aside { align-items: flex-end; }
 @media (max-width: 900px) { .produto-aside { align-items: flex-start; } }
+
+/* ── Mood dial — pick your vibe (padrão la-rete) ── */
+.bf-mood {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--bf-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bf-text-subtle);
+  border: var(--bf-hairline);
+  border-radius: var(--bf-radius-pill);
+  padding: var(--sp-1) var(--sp-3) var(--sp-1) var(--sp-1);
+  background: var(--lr-ground);
+  cursor: pointer;
+  transition:
+    color var(--dur-base) var(--ease-standard),
+    border-color var(--dur-base) var(--ease-standard);
+}
+.bf-mood:hover {
+  color: var(--bf-text-primary);
+  border-color: var(--bf-border-strong);
+}
+.bf-mood__swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--bf-radius-pill);
+  border: 1px solid var(--bf-border-strong);
+  flex-shrink: 0;
+}
+
+/* o mood troca o chão da página inteira — transição suave entre vibes */
+body {
+  transition: background-color var(--dur-slow) var(--ease-standard);
+}

@@ -43,6 +43,13 @@ câmbio 5,40) + a **operação do cliente** (assinaturas por produto).
    `bf-ops-success` (#2FD298), espelhando o do Casa Nostra (`src/app/icon.svg`).
 5. Accent-fill no card grande do hero mantido de propósito (padrão aprovado do
    Painel do registro); copy auditada pelo bicofino-copy-editor.
+6. **Mood dial (pick your vibe)** — `MoodDial.tsx` portado do la-rete pelo
+   contrato portátil: o globals deriva TODO o semantic de `--lr-ground` /
+   `--lr-ink-rgb` / `--lr-dim-alpha` (+ `--current-accent`). Diferenças daqui:
+   primeiro mood é **Giorno** (o branco default, accent null = sorteio do
+   refresh) e o dial recalcula `--current-accent-on`/`-ink` por contraste WCAG
+   (o hero usa accent como fundo). 12 moods, persistido em
+   `localStorage['bf-mood:produtos']`. Pares chão/tinta = canon medido no la-rete.
 
 ## Como rodar / validar
 

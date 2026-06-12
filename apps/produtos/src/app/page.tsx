@@ -1,5 +1,6 @@
 import { BicofinoLogo } from '@/components/BicofinoLogo'
 import { CardStack } from '@/components/CardStack'
+import { MoodDial } from '@/components/MoodDial'
 import { Reveal } from '@/components/Reveal'
 import { AnimatedNumber } from '@/components/AnimatedNumber'
 import { ferramentas, portfolio } from '@/lib/produtos'
@@ -33,8 +34,11 @@ export default function Produtos() {
               // produtos
             </span>
           </span>
-          <span className="bf-mono nav-tag" style={{ fontSize: '0.6875rem', color: 'var(--bf-text-subtle)' }}>
-            uso interno · jun 2026
+          <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-3)' }}>
+            <span className="bf-mono nav-tag" style={{ fontSize: '0.6875rem', color: 'var(--bf-text-subtle)' }}>
+              uso interno · jun 2026
+            </span>
+            <MoodDial />
           </span>
         </div>
       </header>
