@@ -72,7 +72,13 @@ Pessoas que simplesmente NÃO TÊM site/instagram/cargo/endereço etc. não deve
 3. **Sidebar**: bloco email+Sair ("modo construção") REMOVIDO; Configurações foi pro rodapé da sidebar (FOOTER_ITEM). LogoutButton não é mais usado.
 4. **Configurações**: roadmap atualizado — "Vincular pessoas ao app La Rete Bicofino".
 5. Preview local: `vercel env pull apps/casa-nostra/.env.local` + `next start -p 3040` (driblando o Infisical expirado); URLs sob /casa-nostra por causa do basePath.
-6. **PENDENTE DE DEPLOY** (limite de 100 deploys/dia do team Free estourou em 12/06): Onda 18 + favicon (`src/app/icon.svg`, C em Gotham Black sobre #2FD298, commit d207040). Deployar quando a janela resetar.
+6. **PENDENTE DE DEPLOY** (limite de 100 deploys/dia do team Free estourou em 12/06) — deployar quando a janela resetar (1 deploy cobre tudo, código já na main):
+   - favicon (`src/app/icon.svg`, C em Gotham Black sobre #2FD298, `d207040`)
+   - Onda 18: Sócio nº auto-sugerido + unicidade, hover campos, sidebar limpa, La Rete (`7b4aa90`)
+   - Onda 18.1: inserção ordenada por Sócio nº na lista + hover nos pills de contato (`a4429f5`)
+   - Onda 18.2: toast de desfazer PERSISTENTE — delete só confirma no OK ou ao sair da tela (`10790ef`)
+   Tudo validado por Woney no preview local (`next start -p 3040` + .env.local via vercel env pull).
+7. **Login: decisão 12/06 — AINDA NÃO ligar.** Bypass segue ativo conscientemente; mitigação atual = obscuridade + noindex,nofollow (já no layout) + fora do sitemap. NÃO pôr /casa-nostra no robots.txt (Disallow anuncia o caminho). Revisitar quando Woney/Fabio pedirem.
 
 ### Onda 17 — hover verde, sparkles e bicofino.com/casa-nostra (2026-06-12)
 
