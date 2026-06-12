@@ -67,6 +67,73 @@ export function analisarProjeto(sistema: Sistema, s: Settings): ProjetoAnalise {
   return { sistema, diasEconomizados, horasProj, valorProjetoBrl }
 }
 
+/* ── Terceirização (benchmark de mercado) ──
+   Quanto custaria contratar fora o que foi construído por dentro.
+   Honestidade: o custo interno inclui as horas de execução, não só o build —
+   projeto conta os dias que o trabalho levou; por_uso conta o tempo por entrega. */
+
+/** Horas internas de construção de um sistema (sem a parcela por uso). */
+export function horasInternasBuild(x: Sistema): number {
+  if (x.tipo === 'projeto') return (x.tempo_depois_dias ?? 0) * 8 + x.investimento_horas
+  return x.investimento_horas
+}
+
+export interface TerceirizacaoItem {
+  sistema: Sistema
+  evitadoMinBrl: number
+  evitadoBrl: number
+  evitadoMaxBrl: number
+}
+
+export interface TerceirizacaoResumo {
+  itens: TerceirizacaoItem[]
+  totalMinBrl: number
+  totalBrl: number
+  totalMaxBrl: number
+  /** soma dos prazos de construção (itens por_uso fora) — fila sequencial, em semanas */
+  prazoSemanasTotal: number
+  /** o que os mesmos sistemas custaram por dentro (horas × custo/hora) */
+  custoInternoBrl: number
+  /** quantas vezes o mercado cobra o que custou por dentro */
+  multiploMercado: number
+}
+
+export function analisarTerceirizacao(s: Settings, sistemas: Sistema[], usos: Uso[]): TerceirizacaoResumo {
+  const ch = custoHora(s)
+  const comEstimativa = sistemas.filter((x) => x.terceirizacao)
+
+  const itens: TerceirizacaoItem[] = comEstimativa.map((x) => {
+    const t = x.terceirizacao!
+    const mult = t.por_uso ? usos.filter((u) => u.sistema_id === x.id).length : 1
+    return {
+      sistema: x,
+      evitadoMinBrl: t.valor_min_brl * mult,
+      evitadoBrl: t.valor_brl * mult,
+      evitadoMaxBrl: t.valor_max_brl * mult,
+    }
+  })
+
+  const totalMinBrl = itens.reduce((acc, i) => acc + i.evitadoMinBrl, 0)
+  const totalBrl = itens.reduce((acc, i) => acc + i.evitadoBrl, 0)
+  const totalMaxBrl = itens.reduce((acc, i) => acc + i.evitadoMaxBrl, 0)
+
+  const prazoSemanasTotal = comEstimativa
+    .filter((x) => !x.terceirizacao!.por_uso)
+    .reduce((acc, x) => acc + x.terceirizacao!.prazo_semanas, 0)
+
+  const horasInternas = comEstimativa.reduce((acc, x) => {
+    if (x.terceirizacao!.por_uso) {
+      const n = usos.filter((u) => u.sistema_id === x.id).length
+      return acc + x.investimento_horas + ((x.tempo_depois_min ?? 0) / 60) * n
+    }
+    return acc + horasInternasBuild(x)
+  }, 0)
+  const custoInternoBrl = horasInternas * ch
+  const multiploMercado = custoInternoBrl <= 0 ? 0 : totalBrl / custoInternoBrl
+
+  return { itens, totalMinBrl, totalBrl, totalMaxBrl, prazoSemanasTotal, custoInternoBrl, multiploMercado }
+}
+
 /* ── Agregação completa ── */
 
 export interface Impacto {

@@ -4,7 +4,7 @@
 
 import type { Settings, Sistema } from './types'
 import type { Impacto } from './calc'
-import { economiaPorUsoH } from './calc'
+import { economiaPorUsoH, horasInternasBuild } from './calc'
 import { fmtBRL, fmtHoras, fmtX, fmtMin } from './format'
 
 export interface Frase {
@@ -116,6 +116,24 @@ export function gerarFrases(s: Settings, sistemas: Sistema[], imp: Impacto): Fra
       )} para ${fmtMin(
         depoisImg,
       )}, e o story completo, do tratamento ao motion, de duas horas para vinte minutos. A automação levou uma tarde para montar e roda sozinha: as imagens saem do Drive, passam pelo Photoshop e voltam tratadas, em lote e sem desgaste a cada peça.`,
+    })
+  }
+
+  /* Benchmark de mercado — só os custos de construção (por_uso fica fora,
+     pois depende da contagem de usos, que não chega até aqui). */
+  const comBuild = sistemas.filter((x) => x.terceirizacao && !x.terceirizacao.por_uso)
+  if (comBuild.length > 0) {
+    const totalMercado = comBuild.reduce((acc, x) => acc + x.terceirizacao!.valor_brl, 0)
+    const semanas = comBuild.reduce((acc, x) => acc + x.terceirizacao!.prazo_semanas, 0)
+    const horasDentro = comBuild.reduce((acc, x) => acc + horasInternasBuild(x), 0)
+    frases.push({
+      id: 'mercado',
+      destaque: { valor: fmtBRL(totalMercado), rotulo: 'se fosse terceirizado' },
+      texto: `Levar estes sistemas a software houses e agências custaria por volta de ${fmtBRL(
+        totalMercado,
+      )}, com uma fila de ~${semanas} semanas de produção somadas. Por dentro, saíram por cerca de ${fmtHoras(
+        horasDentro,
+      )} registradas — construídos entre fevereiro e junho, em paralelo ao trabalho de design.`,
     })
   }
 

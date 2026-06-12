@@ -1,10 +1,37 @@
 # STATUS — Registro de Impacto
 
-> Handoff para continuar em outro chat. Última atualização: 2026-06-09.
+> Handoff para continuar em outro chat. Última atualização: 2026-06-12.
 > App em `apps/woney-registro/`. Dashboard interno que mostra, em horas e reais,
 > o valor que os sistemas do Woney (designer + dev com Claude Code) devolvem ao Studio Bicofino.
 
-## ⏩ Onde paramos (2026-06-09) — ler primeiro
+## ⏩ Onde paramos (2026-06-12) — ler primeiro
+
+**Dimensão nova: TERCEIRIZAÇÃO (benchmark de mercado) + sync pro main.** Duas frentes:
+
+1. **Source sincronizado com a `main`** — os 3 commits que só existiam na `feat/woney-registro`
+   (`edd6f55`, `91afca5`, `85efd12`: image-pipeline, rodada 11–17/jun, premissa 24min) foram
+   trazidos pro main via `git checkout feat/woney-registro -- apps/woney-registro`. A branch
+   `feat/woney-registro` agora é histórico; **daqui em diante o source vive na `main`**.
+2. **Terceirização** — a pedido do Woney (12/06): cada sistema ganhou um bloco
+   `terceirizacao` (`types.ts`) com faixa mín–média–máx em R$, prazo em semanas, escopo e
+   fontes — quanto custaria contratar o mesmo sistema de software house/agência BR
+   (pesquisa de mercado 2025/26 feita em 12/06: IT Show, UDS, Plathanus, Coruja Lab,
+   APPWRK/Taction p/ DAM, Via Agência Digital/ID7 p/ branding, câmbio 5,40).
+   - `calc.ts`: `analisarTerceirizacao()` agrega total (média R$ 773 mil · faixa
+     R$ 507 mil–1,26 mi), fila sequencial (81 semanas ≈ 19 meses), custo interno honesto
+     (~R$ 26,6 mil = 249h de build + horas por entrega) e múltiplo (~29×). Itens `por_uso: true`
+     (propostas, R$ 18 mil/entrega) multiplicam pelos usos.
+   - **2 sistemas NOVOS de infra**: `sis-casa-nostra` (CRM de sócios, 24h — **estimativa
+     provisória, calibrar com o Woney**, mercado R$ 100–220 mil/16 sem) e `sis-la-rete`
+     (grafo de matchmaking, 10h — **idem**, mercado R$ 60–140 mil/9 sem). Showcases na galeria
+     apontam p/ `/pecas/casa-nostra.png` e `/pecas/la-rete.png` — **PNGs ainda não existem**
+     (fallback `// sem preview` cobre); capturar screenshots e dropar em `public/pecas/`.
+   - UI: `/sistemas` ganhou grupo "No mercado" no topo (4 métricas) + métrica/linha
+     "No mercado" em cada card; Painel ganhou 3ª célula quiet na decomposição; frase
+     `id:'mercado'` no Connector. Capital de infra subiu R$ 18.169 → **R$ 21.781** (205h).
+   - Testes 19/19 ok (6 novos de terceirização) + tsc limpo + build ok.
+   - **Daqui pra frente (pedido do Woney):** todo sistema novo registrado deve nascer com o
+     bloco `terceirizacao` preenchido — valor e prazo que custaria fora.
 
 **Rodada 11–17/jun registrada + premissa do story medida de verdade (2026-06-09)** —
 8 usos novos do Template (uso-11 a uso-18): o Júlio×Flamengo 09/jun que estava pendente + os

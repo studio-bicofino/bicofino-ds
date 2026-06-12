@@ -22,6 +22,20 @@ export interface Settings {
   drive_seg_depois: number
 }
 
+/* Terceirização — o que custaria contratar o mesmo sistema fora
+   (software house / agência, mercado BR 2025/26, pesquisa 2026-06-12).
+   Valores em R$; faixa mín–média–máx + prazo de entrega. */
+export interface Terceirizacao {
+  valor_min_brl: number
+  valor_brl: number // média de mercado — o número citável
+  valor_max_brl: number
+  prazo_semanas: number
+  /* true = estimativa por entrega (multiplica pelos usos), não custo único de build */
+  por_uso?: boolean
+  escopo: string // o que a estimativa cobre
+  fontes?: string | null // referências curtas da pesquisa de mercado
+}
+
 export interface Sistema {
   id: string
   nome: string
@@ -40,6 +54,8 @@ export interface Sistema {
   notas?: string | null
   /* papel na projeção recorrente — não persiste no DB, derivado por nome no seed */
   papel?: 'template' | 'propostas' | null
+  /* benchmark de mercado — quanto custaria terceirizar este sistema */
+  terceirizacao?: Terceirizacao | null
 }
 
 export interface Uso {

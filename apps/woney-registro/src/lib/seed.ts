@@ -34,6 +34,16 @@ export const sistemas: Sistema[] = [
     papel: 'template',
     notas:
       'Gerador 9:16 HTML/React → MP4. Cada jogo é um uso novo. Baseline real medido pelo Woney: o story completo (tratar a foto + fazer o motion) saía em ~2h no fluxo manual. Premissa revista em 2026-06-09 com medição de sessão inteira: a rodada 11–17/jun (7 stories) levou ~165 min de ponta a ponta — fotos novas do Drive, 3 escudos novos, 3 rodadas de ajuste do Fabio (build 1s, Ken Burns, escudos padronizados) e ainda a criação do gerador de cards estáticos no meio — ou seja, ~24 min por story com TUDO dentro. tempo_depois 20 → 24 min (mais honesto).',
+    terceirizacao: {
+      valor_min_brl: 40000,
+      valor_brl: 65000,
+      valor_max_brl: 100000,
+      prazo_semanas: 8,
+      escopo:
+        'Ferramenta de render programático (HTML → MP4 1080×1920) + família de templates de marca, por software house BR',
+      fontes:
+        'hora BR R$ 150–200 (IT Show/UDS) · ferramenta interna R$ 35–100 mil (Coruja Lab) · SaaS análogo: Rocketium ~R$ 2,7 mil/mês',
+    },
   },
   {
     id: 'sis-propostas-ds',
@@ -45,6 +55,15 @@ export const sistemas: Sistema[] = [
     tempo_depois_min: 40,
     papel: 'propostas',
     notas: 'O capital viabilizador está no Design System.',
+    terceirizacao: {
+      valor_min_brl: 12000,
+      valor_brl: 18000,
+      valor_max_brl: 30000,
+      prazo_semanas: 3,
+      por_uso: true,
+      escopo: 'Por proposta — microsite interativo (design + dev + motion) entregue por agência digital',
+      fontes: 'UI/UX R$ 75–250/h (Awari/CROWD) · 40–60h por proposta com squad de agência',
+    },
   },
   {
     id: 'sis-design-system',
@@ -55,6 +74,15 @@ export const sistemas: Sistema[] = [
     destravou:
       'Base das propostas, do site e de toda peça, padrão de marca, capability de Claude Code do zero',
     natureza_valor: 'Ativo permanente — infraestrutura que sustenta o resto',
+    terceirizacao: {
+      valor_min_brl: 90000,
+      valor_brl: 150000,
+      valor_max_brl: 300000,
+      prazo_semanas: 16,
+      escopo:
+        'Branding completo + design system documentado + site editorial trilíngue (brandsystem) por agência de branding digital',
+      fontes: 'site premium R$ 50–300 mil (Via Agência Digital) · branding + guidelines R$ 100–250 mil (ID7/Shopify BR)',
+    },
   },
   {
     id: 'sis-site-v1',
@@ -66,6 +94,14 @@ export const sistemas: Sistema[] = [
     tempo_depois_dias: 5,
     notas:
       'Benchmark — site BoviChain levou 6 semanas no Framer; Bicofino é mais simples; base no Design System.',
+    terceirizacao: {
+      valor_min_brl: 50000,
+      valor_brl: 90000,
+      valor_max_brl: 150000,
+      prazo_semanas: 8,
+      escopo: 'Site institucional premium custom, com motion e vídeo full-bleed, por agência digital',
+      fontes: 'sites premium/enterprise R$ 50–300 mil, 2+ meses (Via Agência Digital/Upsites)',
+    },
   },
   {
     id: 'sis-drive-atleta',
@@ -76,6 +112,16 @@ export const sistemas: Sistema[] = [
     destravou:
       'Upload catalogado direto do celular do atleta para o Drive — cada arquivo cai já nomeado (atleta, data, jogo) e na pasta certa. Acaba com baixar, renomear e organizar um a um.',
     natureza_valor: 'Ativo permanente — pipeline que faz o acervo se organizar sozinho',
+    terceirizacao: {
+      valor_min_brl: 80000,
+      valor_brl: 115000,
+      valor_max_brl: 160000,
+      prazo_semanas: 14,
+      escopo:
+        'DAM custom — upload resumable browser → Drive, catalogação automática, dedup por hash, painel de curadoria',
+      fontes:
+        'DAM MVP US$ 18–30 mil + workflows US$ 40–80 mil (APPWRK/Taction, câmbio 5,40) · 500–900h à hora BR R$ 150–180',
+    },
   },
   {
     id: 'sis-image-pipeline',
@@ -88,6 +134,15 @@ export const sistemas: Sistema[] = [
     destravou:
       'Tratamento da foto do atleta — recorte, granulado e preto e branco — direto do Drive, pelo Photoshop, de volta ao Drive certo. Derruba o story completo de ~2h para 20 min e roda em lote, sem desgaste a cada peça.',
     natureza_valor: 'Ativo permanente — a automação que faz a foto do jogo virar peça sozinha',
+    terceirizacao: {
+      valor_min_brl: 55000,
+      valor_brl: 75000,
+      valor_max_brl: 110000,
+      prazo_semanas: 9,
+      escopo:
+        'Automação Photoshop (ExtendScript) + upscale por IA + integração Drive/Supabase — nicho de Adobe scripting',
+      fontes: '300–500h de especialista à hora BR R$ 150–200 (IT Show/UDS)',
+    },
   },
   {
     id: 'sis-cards-estaticos',
@@ -98,6 +153,54 @@ export const sistemas: Sistema[] = [
     destravou:
       'A mesma arte do story animado vira PNG 1080×1920 com um comando — reusa cena, assets e config do template de motion. Card calibrado pro vídeo já sai calibrado pro estático: o formato extra custa zero retrabalho.',
     natureza_valor: 'Ativo permanente — dobra o formato de saída (vídeo + estático) sem dobrar o trabalho',
+    terceirizacao: {
+      valor_min_brl: 8000,
+      valor_brl: 12000,
+      valor_max_brl: 20000,
+      prazo_semanas: 1,
+      escopo: 'Módulo de export PNG sobre a ferramenta de motion (mesma cena, novo alvo de render)',
+      fontes: '40–80h incrementais à hora BR R$ 150–200',
+    },
+  },
+  {
+    id: 'sis-casa-nostra',
+    nome: 'Casa Nostra (CRM de sócios)',
+    tipo: 'infraestrutura',
+    criado_em: '2026-06-01',
+    investimento_horas: 24, // estimativa provisória — calibrar com o Woney
+    destravou:
+      'Registro vivo dos sócios — Bicofino ID, Sócio nº, contatos, cidadania e ascendência, tags de família/cargo/empresa — num CRM próprio em bicofino.com/casa-nostra, moldado em 18 ondas de feedback com o Fabio.',
+    natureza_valor: 'Ativo permanente — a memória institucional da rede em software próprio',
+    notas: 'Investimento em horas é estimativa provisória (18 ondas entre maio e junho) — calibrar com o Woney.',
+    terceirizacao: {
+      valor_min_brl: 100000,
+      valor_brl: 140000,
+      valor_max_brl: 220000,
+      prazo_semanas: 16,
+      escopo:
+        'CRM web custom (~16 mil linhas, 10 migrations, busca, drag com desfazer, multi-país) por software house com squad completo',
+      fontes:
+        'plataforma web de complexidade média R$ 80–250 mil, 10–20 semanas (Plathanus) · projeto típico R$ 70–85 mil só dev (IT Show)',
+    },
+  },
+  {
+    id: 'sis-la-rete',
+    nome: 'La Rete (grafo de matchmaking)',
+    tipo: 'infraestrutura',
+    criado_em: '2026-06-10',
+    investimento_horas: 10, // estimativa provisória — calibrar com o Woney
+    destravou:
+      'A rede dos sócios desenhada como grafo vivo (d3-force) com motor de oportunidades por complementaridade e leitura de tendências com IA (Consigliere).',
+    natureza_valor: 'Ativo permanente — transforma o cadastro em inteligência de conexões',
+    notas: 'Investimento em horas é estimativa provisória — calibrar com o Woney.',
+    terceirizacao: {
+      valor_min_brl: 60000,
+      valor_brl: 90000,
+      valor_max_brl: 140000,
+      prazo_semanas: 9,
+      escopo: 'Visualização d3-force + motor de matchmaking + integração de IA — exige especialista em dataviz',
+      fontes: 'MVP especializado R$ 30–80 mil+ (Coruja Lab) · 350–550h à hora sênior R$ 160–200 (UDS)',
+    },
   },
 ]
 
@@ -283,5 +386,21 @@ export const usos: Uso[] = [
     data: '2026-06-09',
     legenda: 'Cards de jogos estáticos',
     imagem_url: '/pecas/cards-estaticos.png',
+  },
+  {
+    id: 'uso-casa-nostra',
+    sistema_id: 'sis-casa-nostra',
+    data: '2026-06-12',
+    legenda: 'Casa Nostra — CRM de sócios',
+    imagem_url: '/pecas/casa-nostra.png',
+    link: 'https://bicofino.com/casa-nostra',
+  },
+  {
+    id: 'uso-la-rete',
+    sistema_id: 'sis-la-rete',
+    data: '2026-06-11',
+    legenda: 'La Rete — grafo da rede',
+    imagem_url: '/pecas/la-rete.png',
+    link: 'https://la-rete.vercel.app',
   },
 ]

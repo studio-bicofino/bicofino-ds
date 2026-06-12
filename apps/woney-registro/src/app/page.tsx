@@ -5,8 +5,9 @@ import { MonthSelector } from '@/components/MonthSelector'
 import { CopyPhrase } from '@/components/CopyPhrase'
 import { PecaCard } from '@/components/PecaCard'
 import { getView, mesesDisponiveis } from '@/lib/data'
-import { settings } from '@/lib/seed'
-import { fmtBRL, fmtHoras, nomeMes } from '@/lib/format'
+import { settings, sistemas, usos } from '@/lib/seed'
+import { analisarTerceirizacao } from '@/lib/calc'
+import { fmtBRL, fmtHoras, fmtX, nomeMes } from '@/lib/format'
 import { AnimatedNumber } from '@/components/AnimatedNumber'
 import { Reveal } from '@/components/Reveal'
 
@@ -20,6 +21,8 @@ export default async function Painel({
   const view = getView(periodo)
   const imp = view.impacto
   const meses = mesesDisponiveis()
+  // Benchmark de mercado é acumulado por natureza — sempre sobre o seed inteiro.
+  const terc = analisarTerceirizacao(settings, sistemas, usos)
 
   const escopo = periodo === 'all' ? 'Tudo até hoje' : nomeMes(periodo)
 
@@ -98,6 +101,13 @@ export default async function Painel({
             style={{ flex: '1 1 280px', display: 'flex', alignItems: 'center', fontFamily: 'var(--bf-font-mono)', fontSize: '0.8125rem', color: 'var(--bf-black)' }}
           >
             {fmtHoras(imp.horasEconomizadasTotal)} já economizadas · pagamento Woney {fmtBRL(settings.salario_mensal)}
+          </div>
+          <div
+            className="cell cell--quiet bf-reveal"
+            style={{ flex: '1 1 280px', display: 'flex', alignItems: 'center', fontFamily: 'var(--bf-font-mono)', fontSize: '0.8125rem', color: 'var(--bf-black)' }}
+          >
+            no mercado, estes sistemas custariam {fmtBRL(terc.totalBrl)} e {terc.prazoSemanasTotal} semanas —{' '}
+            {fmtX(terc.multiploMercado)} o que custaram por dentro
           </div>
         </section>
 

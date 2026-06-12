@@ -6,6 +6,7 @@ import {
   economiaPorUsoH,
   analisarEficiencia,
   analisarProjeto,
+  analisarTerceirizacao,
   calcularImpacto,
 } from './calc'
 
@@ -74,7 +75,32 @@ describe('agregação — critérios de aceite (bloco 9)', () => {
   it('custo fixo evitado = R$ 4.500/mês', () => {
     expect(imp.custoFixoEvitado).toBeCloseTo(4500, 0)
   })
-  it('capital de infraestrutura = R$ 18.169 (DS 160h + Drive 7h + Pipeline 3,5h + Estáticos 0,5h)', () => {
-    expect(imp.capitalInfraBrl).toBeCloseTo(18168.75, 1)
+  it('capital de infraestrutura = R$ 21.781 (DS 160h + Drive 7h + Pipeline 3,5h + Estáticos 0,5h + Casa Nostra 24h + La Rete 10h)', () => {
+    expect(imp.capitalInfraBrl).toBeCloseTo(21781.25, 1)
+  })
+})
+
+describe('terceirização — benchmark de mercado (pesquisa 2026-06-12)', () => {
+  const terc = analisarTerceirizacao(settings, sistemas, usos)
+
+  it('terceirizar tudo custaria ~R$ 773 mil na média (builds R$ 737 mil + 2 propostas a R$ 18 mil)', () => {
+    expect(terc.totalBrl).toBeCloseTo(773000, 0)
+  })
+  it('faixa completa: R$ 507 mil – R$ 1,26 mi', () => {
+    expect(terc.totalMinBrl).toBeCloseTo(507000, 0)
+    expect(terc.totalMaxBrl).toBeCloseTo(1260000, 0)
+  })
+  it('fila sequencial de produção = 81 semanas (sem os itens por uso)', () => {
+    expect(terc.prazoSemanasTotal).toBe(81)
+  })
+  it('por dentro custou ~R$ 26,6 mil (249h de build + 1,33h de propostas, a R$ 106,25/h)', () => {
+    expect(terc.custoInternoBrl).toBeCloseTo(26597.92, 1)
+  })
+  it('o mercado cobra ~29× o custo interno', () => {
+    expect(terc.multiploMercado).toBeCloseTo(29.06, 1)
+  })
+  it('propostas multiplicam pelo nº de usos (por_uso)', () => {
+    const propostasItem = terc.itens.find((i) => i.sistema.id === 'sis-propostas-ds')!
+    expect(propostasItem.evitadoBrl).toBeCloseTo(36000, 0)
   })
 })
