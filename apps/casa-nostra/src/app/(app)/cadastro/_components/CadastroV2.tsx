@@ -59,6 +59,8 @@ type Props = {
   mode?: 'create' | 'edit'
   personId?: string
   initialData?: CadastroV2Input
+  /** Menor Sócio nº livre — pré-preenchido no create (editável). */
+  suggestedMemberNumber?: number | null
 }
 
 const TITLE_STYLE: CSSProperties = {
@@ -247,6 +249,7 @@ export function CadastroV2({
   mode = 'create',
   personId,
   initialData,
+  suggestedMemberNumber,
 }: Props) {
   const router = useRouter()
   const reduce = useReducedMotion()
@@ -269,7 +272,13 @@ export function CadastroV2({
   // Estado do form — inicializado a partir de initialData quando edit.
   const [fullName, setFullName] = useState(initialData?.full_name ?? '')
   const [bicofinoId, setBicofinoId] = useState(initialData?.bicofino_id ?? '')
-  const [memberNumber, setMemberNumber] = useState(initialData?.member_number ?? '')
+  // No create, pré-preenche com o menor Sócio nº livre (editável).
+  const [memberNumber, setMemberNumber] = useState(
+    initialData?.member_number ??
+      (mode === 'create' && suggestedMemberNumber != null
+        ? String(suggestedMemberNumber)
+        : ''),
+  )
   const [honorific, setHonorific] = useState(initialData?.honorific ?? '')
   const [birthDate, setBirthDate] = useState(initialData?.birth_date ?? '')
   const [generation, setGeneration] = useState(initialData?.generation ?? '')

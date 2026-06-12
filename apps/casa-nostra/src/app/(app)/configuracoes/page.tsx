@@ -372,7 +372,7 @@ function Roadmap() {
     'Editar allowlist via UI (hoje só env var)',
     'Exportar dados (CSV / JSON)',
     'Template editorial do email Supabase',
-    'Vincular pessoas a apps Vanguarda (matchmaking)',
+    'Vincular pessoas ao app La Rete Bicofino',
   ]
   return (
     <ul

@@ -65,6 +65,15 @@ Pessoas que simplesmente NÃO TÊM site/instagram/cargo/endereço etc. não deve
 
 **Migration `0010_unavailable_fields.sql`** — APLICADA em 2026-06-11 (verificada via REST).
 
+### Onda 18 — Sócio nº auto-sugerido, hover nos campos, sidebar limpa (2026-06-12)
+
+1. **Sócio nº auto-sugerido**: /cadastro pré-preenche com o MENOR número livre (preenche buracos: 1,2,4 → 3; `getNextMemberNumber` na page, prop `suggestedMemberNumber`). **Unicidade no servidor**: `memberNumberTaken` barra duplicata no create e no update (excluindo o próprio id) com erro "Sócio nº X já está em uso."
+2. **Hover sutil nos campos do cadastro**: border vira `--bf-cn-caffe` no hover (input/select/.cn-field-shell dentro de .cn-cadastro-v2; !important porque o border é inline).
+3. **Sidebar**: bloco email+Sair ("modo construção") REMOVIDO; Configurações foi pro rodapé da sidebar (FOOTER_ITEM). LogoutButton não é mais usado.
+4. **Configurações**: roadmap atualizado — "Vincular pessoas ao app La Rete Bicofino".
+5. Preview local: `vercel env pull apps/casa-nostra/.env.local` + `next start -p 3040` (driblando o Infisical expirado); URLs sob /casa-nostra por causa do basePath.
+6. **PENDENTE DE DEPLOY** (limite de 100 deploys/dia do team Free estourou em 12/06): Onda 18 + favicon (`src/app/icon.svg`, C em Gotham Black sobre #2FD298, commit d207040). Deployar quando a janela resetar.
+
 ### Onda 17 — hover verde, sparkles e bicofino.com/casa-nostra (2026-06-12)
 
 1. **Hover da linha de /membros** = verde do botão Novo membro (`--bf-ops-success` em background+border no `.cn-people-row:hover`).

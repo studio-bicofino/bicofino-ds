@@ -545,6 +545,17 @@ select.cn-filter-input {
   }
 }
 
+/* ============================================================
+   Cadastro — hover sutil nos campos (Onda 18)
+   ============================================================ */
+/* Os campos têm border inline (--bf-border-strong); o !important é necessário
+   pra sobrescrever o style attribute no hover. */
+.cn-cadastro-v2 input:hover:not(:disabled):not(:focus),
+.cn-cadastro-v2 select:hover:not(:disabled):not(:focus),
+.cn-cadastro-v2 .cn-field-shell:hover {
+  border-color: var(--bf-cn-caffe) !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {

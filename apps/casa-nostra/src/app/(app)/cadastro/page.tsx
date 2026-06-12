@@ -29,10 +29,28 @@ async function getFormSuggestions(): Promise<{
   }
 }
 
+/** Menor Sócio nº positivo ainda livre (preenche buracos: 1,2,4 → sugere 3). */
+async function getNextMemberNumber(): Promise<number> {
+  const supabase = await createClient()
+  const { data } = await supabase
+    .from('people')
+    .select('member_number')
+    .not('member_number', 'is', null)
+  const used = new Set(
+    ((data ?? []) as Array<{ member_number: number | null }>)
+      .map((r) => r.member_number)
+      .filter((n): n is number => n != null && n > 0),
+  )
+  let n = 1
+  while (used.has(n)) n++
+  return n
+}
+
 export default async function CadastroPage() {
-  const [allTags, suggestions] = await Promise.all([
+  const [allTags, suggestions, nextMemberNumber] = await Promise.all([
     listTags(),
     getFormSuggestions(),
+    getNextMemberNumber(),
   ])
 
   return (
@@ -46,7 +64,11 @@ export default async function CadastroPage() {
         flexDirection: 'column',
       }}
     >
-      <CadastroV2 allTags={allTags} suggestions={suggestions} />
+      <CadastroV2
+        allTags={allTags}
+        suggestions={suggestions}
+        suggestedMemberNumber={nextMemberNumber}
+      />
     </div>
   )
 }

@@ -59,6 +59,20 @@ function toIntOrNull(v: string | null | undefined): number | null {
   return Number(t)
 }
 
+type SupabaseServer = Awaited<ReturnType<typeof createClient>>
+
+/** Sócio nº é único — barra duplicata antes do insert/update. */
+async function memberNumberTaken(
+  supabase: SupabaseServer,
+  memberNumber: number,
+  excludeId?: string,
+): Promise<boolean> {
+  let q = supabase.from('people').select('id').eq('member_number', memberNumber)
+  if (excludeId) q = q.neq('id', excludeId)
+  const { data } = await q.limit(1).maybeSingle()
+  return Boolean(data)
+}
+
 // ============================================================
 // Action
 // ============================================================
@@ -93,6 +107,11 @@ async function createPersonV2Inner(input: CadastroV2Input): Promise<ActionResult
   const homeCity = canonicalizeValue(data.address.city, cities)
   const homeCountry = canonicalizeValue(data.address.country, countries)
   const currentCompany = canonicalizeValue(data.empresas[0] ?? null, companies)
+
+  const memberNumber = toIntOrNull(data.member_number)
+  if (memberNumber != null && (await memberNumberTaken(supabase, memberNumber))) {
+    return { ok: false, error: `Sócio nº ${memberNumber} já está em uso.` }
+  }
 
   // Novo membro entra no fim da lista manual (list_order = max + 1).
   const { data: maxRow } = await supabase
@@ -260,6 +279,11 @@ async function updatePersonV2Inner(
   const homeCity = canonicalizeValue(data.address.city, cities)
   const homeCountry = canonicalizeValue(data.address.country, countries)
   const currentCompany = canonicalizeValue(data.empresas[0] ?? null, companies)
+
+  const memberNumber = toIntOrNull(data.member_number)
+  if (memberNumber != null && (await memberNumberTaken(supabase, memberNumber, id))) {
+    return { ok: false, error: `Sócio nº ${memberNumber} já está em uso.` }
+  }
 
   // 1. UPDATE em people. Trigger cuida de updated_at.
   const personRow = {

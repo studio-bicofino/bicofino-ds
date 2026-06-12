@@ -13,7 +13,6 @@ import {
   Tags,
   type LucideIcon,
 } from 'lucide-react'
-import { LogoutButton } from '@/components/LogoutButton'
 import { BicofinoLogo } from '@/components/BicofinoLogo'
 
 type Props = {
@@ -40,12 +39,15 @@ const SECTIONS: NavSection[] = [
       { href: '/grupos', label: 'Grupos', icon: Tags },
     ],
   },
-  { kind: 'divider' },
-  {
-    kind: 'group',
-    items: [{ href: '/configuracoes', label: 'Configurações', icon: Settings }],
-  },
 ]
+
+// Configurações vive no rodapé da sidebar (no lugar do antigo bloco
+// email + Sair, removido na Onda 18).
+const FOOTER_ITEM: NavItem = {
+  href: '/configuracoes',
+  label: 'Configurações',
+  icon: Settings,
+}
 
 function isActive(pathname: string, href: string) {
   if (href === '/') return pathname === '/'
@@ -125,20 +127,18 @@ function SidebarInner({ email, onLinkClick }: { email: string; onLinkClick?: () 
         })}
       </nav>
 
-      <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <p
-          className="mono"
-          style={{
-            fontSize: 10,
-            color: 'var(--bf-text-secondary)',
-            letterSpacing: '0.04em',
-            wordBreak: 'break-all',
-          }}
+      <nav style={{ marginTop: 'auto' }}>
+        <Link
+          href={FOOTER_ITEM.href}
+          onClick={onLinkClick}
+          className="cn-nav-item"
+          data-active={isActive(pathname, FOOTER_ITEM.href) ? 'true' : undefined}
+          aria-current={isActive(pathname, FOOTER_ITEM.href) ? 'page' : undefined}
         >
-          {email}
-        </p>
-        <LogoutButton />
-      </div>
+          <Settings size={20} strokeWidth={1.5} aria-hidden className="cn-nav-icon" />
+          <span>{FOOTER_ITEM.label}</span>
+        </Link>
+      </nav>
     </div>
   )
 }
