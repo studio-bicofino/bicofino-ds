@@ -48,24 +48,30 @@ ou bagunçar a curadoria. O app tem uploads reais do Fabio.
 # na Vercel (projeto drive-atleta, team studio-bicofinos-projects), nos 3 ambientes:
 DRIVE_ATLETA_PANEL_USER=<escolher>
 DRIVE_ATLETA_PANEL_PASS=<senha forte>
-# depois: redeploy (procedimento worktree do HANDOFF do drive-atleta)
+# depois: Deployments → ⋯ no deploy mais recente → Redeploy
 ```
 O navegador pede usuário/senha uma vez ao abrir o `/painel` — combinar a senha com o Fabio.
 O fluxo do atleta (`/a/<slug>` + upload) continua sem senha, de propósito.
 
-### 2.2 🔴 Push da main local
-A auditoria deixou commits na main **local** (não pushei porque push = deploy automático
-do apps/web em produção, e o IT novo merece teu olho antes de ir ao ar). Revisar e:
-`git push` (vai pros 2 remotes). Conferir `bicofino.com` em IT depois do deploy.
+> **Atualização 12/06 (manhã):** o projeto drive-atleta está **git-connected na main**
+> (constatado no dashboard — Source: main, deploy automático). O procedimento de worktree
+> do HANDOFF caducou p/ esse app. E NÃO basta tirar o botão de deletar da interface:
+> a rota `/api/delete` continua pública pra quem chamar direto (curl/console) — o botão
+> é só UM jeito de chamar a rota; a tranca tem que ser no servidor (é o que o proxy faz).
 
-### 2.3 🟡 `ANTHROPIC_API_KEY` para o la-rete
-O Consigliere do la-rete precisa da chave nas envs da Vercel (3 ambientes). Criar em
-console.anthropic.com. Sem ela o endpoint falha em prod.
+### 2.2 ✅ Push da main local — FEITO 12/06 (manhã)
+Woney aprovou o italiano; os 4 commits da auditoria foram pushados (deploy automático
+dos apps git-connected, incluindo o proxy do drive-atleta — dormindo até as envs).
+Conferir `bicofino.com` em IT.
+
+### 2.3 🟡 `ANTHROPIC_API_KEY` para o la-rete — **EM ABERTO por decisão (12/06)**
+Woney: "ainda não fizemos a API, deixar em aberto". O Consigliere do la-rete fica sem
+IA em prod até criar a chave em console.anthropic.com e setar nas envs (3 ambientes).
 
 ### 2.4 🟡 Search Console do bicofino.com + aposentar o Framer
 Pendência do lançamento (11/06), registrada no HANDOFF de lancamento-web.
 
-### 2.5 🟡 Faxina de branches e stash (decisão tua, não fiz nada destrutivo)
+### 2.5 🟡 Faxina de branches e stash — Woney ainda decidindo (12/06: "ainda não sei")
 - `stash@{0}` (em `experiment/design-review`): contém WIP de HANDOFF da auditoria de
   design de maio. Decidir: `git stash apply` numa branch ou drop.
 - Branches locais sem remote: `experiment/design-review`, `experiment/ui-skills`,
@@ -96,7 +102,7 @@ de máquina/suspeita, rotacionar.
 4. **Atualizar o HANDOFF commitado ANTES de sincronizar** — memória de sessão não viaja entre máquinas, só o repo.
 5. **Texto user-visible** (br/en/it.ts): passar pelo agente `bicofino-copy-editor` antes de commitar; paridade BR/EN/IT sempre (skill `bicofino-i18n-pattern`).
 6. **Push na main = deploy em produção** dos apps git-connected (web, docs-site, la-rete, motion-lab, woney-registro, vanguarda, masterclass). Não pushar sem o usuário pedir/saber.
-7. **casa-nostra e drive-atleta deployam via worktree limpo** de main + cópia do `.vercel/project.json` — NUNCA `vercel` da raiz do checkout (media untracked estoura o upload). Procedimento exato nos HANDOFFs de cada um.
+7. **casa-nostra deploya via worktree limpo** de main + cópia do `.vercel/project.json` — NUNCA `vercel` da raiz do checkout (media untracked estoura o upload). Procedimento exato no HANDOFF. (drive-atleta ERA assim, mas está git-connected desde ~09/06 — push na main deploya.)
 8. **Sub-agentes em paralelo** em features grandes (preserva janela de contexto — pedido explícito do Woney).
 
 ### 3.2 Riscos conhecidos e ACEITOS (não "consertar" sem alinhar com o Woney)

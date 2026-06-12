@@ -140,7 +140,12 @@ Fabio já está usando ao vivo — há uploads reais no acervo (Salvatore, Julio
 
 **2026-06-12 (auditoria): proteção opt-in do painel adicionada em `src/proxy.ts`** — HTTP Basic Auth cobrindo `/painel/*` + `/api/delete` + `/api/share` + `/api/curate`. **Só ativa quando `DRIVE_ATLETA_PANEL_USER` e `DRIVE_ATLETA_PANEL_PASS` existirem nas envs** (sem elas, comportamento atual: tudo aberto). Motivo: essas rotas fazem write/delete no Drive e no banco sem nenhuma auth, em URL pública. As rotas do atleta (`/a/[slug]`, `/api/upload*`, `/api/check-duplicate`, `/api/thumb`) ficam fora do matcher de propósito — o fluxo de upload do atleta não pode pedir senha. **Para ativar: setar as 2 envs na Vercel (prod/preview/dev) + redeploy.**
 
-### ⚠️ DEPLOY MUDOU — agora deploya da RAIZ do monorepo (não da pasta do app)
+### ✅ DEPLOY MUDOU DE NOVO (constatado 2026-06-12): projeto está GIT-CONNECTED na main
+O dashboard mostra Source: `main` com deploy automático por push (deploy de 09/06 via commit
+`eba98d3`). **Push na main = deploy do drive-atleta.** O procedimento de worktree/CLI abaixo
+fica como histórico/fallback — não é mais o caminho normal.
+
+### ~~⚠️ DEPLOY MUDOU — agora deploya da RAIZ do monorepo (não da pasta do app)~~ (caducou)
 O projeto Vercel agora tem **Root Directory = `apps/drive-atleta`** nas settings. Isso quebra o `cd apps/drive-atleta && vercel --prod` antigo (dobra o caminho → `apps/drive-atleta/apps/drive-atleta does not exist`). **Procedimento atual** (da raiz `/Users/woneymalian/Developer/Bicofino-ecossistema`):
 ```bash
 mkdir -p .vercel && cp apps/drive-atleta/.vercel/project.json .vercel/project.json   # link temp do projeto na raiz
