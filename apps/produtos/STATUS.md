@@ -63,6 +63,15 @@ npm run build
 Validação local de prod: `npm run start` — se a porta 3043 estiver presa com build
 velho, `lsof -ti :3043 | xargs kill -9`.
 
+## ⚠️ Deploys pendentes (limite 100/dia da Vercel batido em 12/06)
+
+- [ ] **produtos**: prod está no commit `8922b55` (stack + outline + basePath + favicon);
+      o **mood dial (`9b895c8`) ainda NÃO está no ar** — redeploy quando o limite resetar:
+      `cd apps/produtos && vercel deploy --prod --yes --scope studio-bicofinos-projects`.
+- [ ] **web**: o rewrite `/produtos` (`42155a1`) está pushado mas o deploy não saiu —
+      **bicofino.com/produtos dá 404 até o web deployar**. Enquanto isso o link que
+      funciona é https://produtos-bicofino.vercel.app/produtos.
+
 ## Aberto / próximos passos
 
 - [ ] Revisão do stack com o Woney no ar (altura do card `min(640px, 82vh)` foi
