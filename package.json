@@ -8,6 +8,7 @@
     "web": "cd apps/web && npm run dev",
     "drive": "cd apps/drive-atleta && npm run dev",
     "registro": "cd apps/woney-registro && npm run dev",
+    "produtos": "cd apps/produtos && npm run dev",
     "casa-nostra": "cd apps/casa-nostra && npm run dev",
     "motion-lab": "cd apps/motion-lab && npm run dev",
     "la-rete": "cd apps/la-rete && npm run dev",
