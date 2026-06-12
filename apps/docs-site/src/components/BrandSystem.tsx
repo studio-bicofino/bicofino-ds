@@ -615,8 +615,18 @@ function BrandVerbal() {
     <section id="brand-verbal">
       <BsHeader eyebrow={c.header.eyebrow} title={c.header.title} />
 
-      {/* Manifesto */}
-      <BsSub label={c.manifesto.label} title={c.manifesto.title} />
+      {/* Manifesto de Entrada — texto canônico do site público (v1.1) */}
+      <BsSub label={c.manifestoEntrada.label} title={c.manifestoEntrada.title} />
+      <div style={{ padding: `0 ${H_PAD}px 56px` }}>
+        {c.manifestoEntrada.paras.map((p, i) => <P key={i}>{p}</P>)}
+        <p style={{ fontSize: 20, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: '0 0 20px', fontFamily: sans }}>{c.manifestoEntrada.tagline}</p>
+        <p style={{ fontFamily: mono, fontSize: 10, lineHeight: 1.7, letterSpacing: '0.04em', color: C.platinum, margin: 0, maxWidth: 560 }}>{c.manifestoEntrada.note}</p>
+      </div>
+
+      {/* Manifesto Editorial */}
+      <div style={{ borderTop: hairline }}>
+        <BsSub label={c.manifesto.label} title={c.manifesto.title} />
+      </div>
       <div style={{ padding: `0 ${H_PAD}px 56px` }}>
         {c.manifesto.paras.map((p, i) => <P key={i}>{p}</P>)}
         <p style={{ fontSize: 20, fontWeight: 700, letterSpacing: '-0.02em', color: C.black, margin: 0, fontFamily: sans }}>{c.manifesto.tagline}</p>

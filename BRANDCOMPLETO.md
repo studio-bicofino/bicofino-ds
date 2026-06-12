@@ -1,6 +1,6 @@
 # BRAND SYSTEM — BICOFINO
 ### O sistema vivo que organiza, protege e expande o universo Bicofino.
-*v3.0 · São Paulo, BR · Maio 2026*
+*v3.1 · São Paulo, BR · Junho 2026*
 
 ---
 
@@ -194,7 +194,7 @@ O Bicofino opera como quarteto de câmara, não como show de estádio. Numa quar
 
 ### O risco da autodeclaração
 
-O maior risco de uma marca premium é começar a proclamar o que deveria demonstrar. A sofisticação que precisa ser declarada não foi conquistada.
+O maior risco para uma marca como o Bicofino é começar a proclamar o que deveria demonstrar. A sofisticação que precisa ser declarada não foi conquistada.
 
 **Guard rail:** Antes de publicar qualquer comunicação, pergunte: isso mostra ou diz? Prefira sempre mostrar.
 
@@ -248,10 +248,10 @@ Empresa ou marca que quer que sua conexão com o universo esportivo gere cultura
 
 **Perfil de referência:** Nike, Loro Piana, Piaggio/Vespa — marcas com herança, estética e propósito que se complementam ao universo Bicofino.
 
-### Cluster 3 — O Cliente Premium Off Pitch
+### Cluster 3 — O Cliente Corporativo Off Pitch
 Empresa ou executivo que precisa de identidade visual, estratégia de marca, consultoria criativa ou acesso a players específicos de mercado no mais alto nível. Sabe que pagar pelo melhor é mais econômico do que corrigir o mediano.
 
-**Perfil de referência:** BoviChain — empresa de tech no agronegócio premium que entende que sua marca visual precisa refletir o padrão da tecnologia que entrega.
+**Perfil de referência:** BoviChain — empresa de tech no agronegócio de alto padrão que entende que sua marca visual precisa refletir o padrão da tecnologia que entrega.
 
 ### Cluster 4 — O Membro do Club *(Território da Raposa)*
 Ver seção Club em Operações.
@@ -274,7 +274,7 @@ Ver seção Club em Operações.
 
 ### B — O Executivo de Marca / Parceiro Estratégico
 
-**Perfil:** CMO, diretora de marketing ou fundador de empresa premium ou em processo de premiumização. Tem budget e aprovação interna, mas responde por resultado e percepção.
+**Perfil:** CMO, diretora de marketing ou fundador de empresa de alto padrão ou em processo de elevação de padrão. Tem budget e aprovação interna, mas responde por resultado e percepção.
 
 **O que ele quer — e onde o Bicofino é insubstituível:**
 
@@ -282,7 +282,7 @@ O executivo de marca não busca apenas execução criativa ou design de qualidad
 
 Quando o Bicofino conecta uma marca a um atleta, a um influenciador de peso ou a uma personalidade de mercado, a conexão já vem filtrada, contextualizada e estruturada para que todos os lados ganhem. Esse diferencial não se replica: o acesso não está à venda, é consequência de uma rede construída com décadas de presença consistente e caráter inabalável.
 
-**O que ele teme:** Pagar por entrega que parece premium mas não move agulha de percepção real. Ser apresentado a contatos de segunda linha disfarçados de grandes parcerias.
+**O que ele teme:** Pagar por entrega que parece sofisticada mas não move agulha de percepção real. Ser apresentado a contatos de segunda linha disfarçados de grandes parcerias.
 
 **Como o Bicofino fala com ele:** Linguagem de negócio primeiro, estética depois. ROI traduzido em percepção e métricas tangíveis. Com a segurança de quem sabe que as conexões entregues são genuínas.
 
@@ -304,7 +304,7 @@ Quando o Bicofino conecta uma marca a um atleta, a um influenciador de peso ou a
 
 ### A declaração interna
 
-O Bicofino é o único ecossistema que combina acesso genuíno ao mundo do esporte e do luxo com curadoria estética de nível de atelier e inteligência estratégica de longo prazo. Operamos com poucos para entregar profundo — e essa seletividade é o produto, não a limitação.
+O Bicofino é uma casa fluente nos mundos do esporte e do luxo: acesso construído com décadas, curadoria estética de nível de atelier e inteligência estratégica de longo prazo — sob o mesmo teto. Operamos com poucos para entregar profundo. A seletividade é o produto.
 
 ### O que nos diferencia na prática
 
@@ -315,7 +315,7 @@ O Bicofino é o único ecossistema que combina acesso genuíno ao mundo do espor
 | Entrega | Execução conforme briefing | Consultoria + execução + antecipação |
 | Preço | Negociável, pacotes com desconto | Fixo, ajuste apenas por escopo |
 | Relação | Transacional | Parceria de longo prazo |
-| Linguagem | Profissional genérica | Atelier premium — sofisticação pela execução |
+| Linguagem | Profissional genérica | Atelier — sofisticação pela execução |
 | IA | Ferramenta de corte de custo | Amplificador criativo — qualidade inalterada |
 | Cobertura | Local ou regional | Multicultural: Brasil · Europa · EUA |
 
@@ -391,7 +391,7 @@ Toda decisão, entrega e projeto Bicofino pode ser lido através dessas quatro l
 
 ### 1. CONNECT — O primeiro e mais fundamental
 
-A habilidade central e mais rara do Bicofino. Reunir e engajar dois ou mais players — pessoas, negócios, atletas, celebridades, marcas — que não estão ao alcance da maioria. Acesso genuíno a decisores, figuras de influência e marcas premium, combinado com a inteligência de criar encontros que geram valor real para todos os lados.
+A habilidade central e mais rara do Bicofino. Reunir e engajar dois ou mais players — pessoas, negócios, atletas, celebridades, marcas — que não estão ao alcance da maioria. Acesso genuíno a decisores, figuras de influência e marcas de primeira linha, combinado com a inteligência de criar encontros que geram valor real para todos os lados.
 
 CONNECT é o principal diferencial competitivo do Bicofino. Cada conexão foi construída com anos de caráter, presença consistente e negociação limpa. Nenhuma delas é superficial, nenhuma delas é descartável.
 
@@ -552,7 +552,19 @@ A mascote da marca. Ágil, inteligente, elegante sob pressão. Aparece quando te
 
 ## Manifesto
 
-### Quem decide o jogo raramente grita.
+### Manifesto de Entrada — Fluente em mundos que não conversam.
+
+Bicofino circula por universos que raramente se cruzam. E, quando se cruzam, precisam de tradutores: o agente traduz futebol para a marca, a agência traduz campanha para o atleta, o gestor traduz patrimônio para a família. O problema é que, em toda tradução, algo se perde.
+
+Bicofino não traduz. É fluente. Pensa, ao mesmo tempo, no idioma do vestiário, da arte, dos números, da rua, da moda, dos negócios. Mundos tão dissonantes, mas que aqui dentro fluem e se potencializam.
+
+Bicofino não é só uma agência, nem só uma holding, nem só uma consultoria. É uma casa. Fluente em mundos que não conversam. Rara como aquilo que reúne.
+
+**Bicofino. Unlike Any Other.**
+
+*Texto de entrada de bicofino.com, fechado pelos sócios em junho de 2026. É a resposta canônica à pergunta "o que é o Bicofino?" — e o exemplo de referência da negação com lastro, a exceção estreita documentada nas Restrições de Escrita.*
+
+### Manifesto Editorial — Quem decide o jogo raramente grita.
 
 Há uma geração inteira ensinada a acreditar que visibilidade é valor. Que presença é poder. Que se você não está sendo visto, não está acontecendo.
 
@@ -607,13 +619,13 @@ Superlativos vazios são o oposto do padrão Bicofino. Preferir sempre o concret
 
 ### Restrições de escrita — filtros obrigatórios
 
-**A construção "Não é X. É Y." é proibida no Bicofino.**
+**A construção "Não é X. É Y." é proibida como recurso declarativo.**
 
 Esta é a restrição verbal mais importante do Brand System. A estrutura — "Premium, não caro.", "Estratégia, não execução.", "Não é uma agência. É um atelier." — foi usada em excesso por marcas que querem soar sofisticadas mas precisam declarar essa sofisticação porque não a demonstram. O efeito hoje é exatamente o oposto do pretendido: em vez de força, sinaliza automação; em vez de posição, sinaliza insegurança.
 
 O padrão Bicofino exige frases que afirmem sem precisar negar, que demonstrem sem precisar explicar, que confiem no leitor para completar o raciocínio. A inteligência do texto está em nunca precisar dizer o que não é — apenas mostrar o que é, com precisão suficiente para que o contraste apareça sozinho.
 
-**Esta restrição vale para todo tipo de output:** copy de marca, posts de Instagram, propostas, manifestos, playbooks e análises estratégicas.
+**A exceção existe — e é estreita.** Em registro de manifesto, quando o texto constrói o raciocínio antes e a negação o resolve com lastro, a estrutura deixa de ser muleta e vira gesto: "Bicofino não traduz. É fluente." funciona porque o parágrafo anterior preparou o problema da tradução. Sem essa preparação, seria exatamente o clichê que esta regra proíbe. Fora do registro de manifesto — headings, descrições de serviço, propostas, posts, playbooks — a proibição é total.
 
 **Outras restrições:**
 - Superlativos sem referência concreta ("o mais", "o melhor", "o único")
@@ -640,12 +652,14 @@ O padrão Bicofino exige frases que afirmem sem precisar negar, que demonstrem s
 **Diamond** — O símbolo ✦. A marca isolada. O filtro com forma: quatro pontos de precisão.
 **On Pitch** — Tudo relativo ao atleta em campo e à sua performance integral.
 **Off Pitch** — Tudo que existe fora do campo: marca, negócio, imagem, legado, conexões.
+**Casa** — A identidade institucional. O que reúne agência, holding e consultoria sob o mesmo teto — e o teto importa mais que os cômodos. A maison como referência de padrão, o atelier como modo de fazer, o quarteto como tamanho certo.
+**Fluência** — O verbo do Connect. Pensar, ao mesmo tempo, no idioma do vestiário, da arte, dos números, da rua, da moda, dos negócios. Onde toda tradução perde algo, a fluência preserva o inteiro.
 
 ### Palavras a evitar
 
 | Evitar | Por quê | Alternativa |
 |---|---|---|
-| Premium (isolado) | Overused, perdeu significado | Descreva o padrão em vez de nomeá-lo |
+| Premium | Banida — veto da casa, em qualquer idioma e contexto | Descreva o padrão em vez de nomeá-lo |
 | Exclusivo | Idem | Diga o que torna a experiência singular |
 | Inovador | Jargão vazio | Especifique o que é diferente |
 | Soluções | Corporativês | Projetos, entregas, trabalho |
@@ -940,7 +954,7 @@ Off Pitch reúne todos os serviços que fazem o atleta, a marca ou a empresa cre
 - Family office e planejamento financeiro (Wealth)
 - Conexão entre marcas, empresas, atletas e personalidades
 
-**Quem serve:** Atletas do portfólio (no extra-campo), marcas que querem conexão com o universo esportivo e premium, executivos e empresas que buscam curadoria criativa e estratégica de alto nível.
+**Quem serve:** Atletas do portfólio (no extra-campo), marcas que querem conexão com o universo do esporte e do luxo, executivos e empresas que buscam curadoria criativa e estratégica de alto nível.
 
 **O diferencial Off Pitch:** O Bicofino conecta marcas e empresas a atletas, celebridades e personalidades que estão fora do alcance da grande maioria. Esse acesso foi construído com anos de relacionamentos éticos, negociações limpas e presença consistente nos mercados certos. Toda conexão é estruturada para que todos os lados ganhem.
 
@@ -1015,5 +1029,5 @@ Todo output do Bicofino passa pelo filtro dos 6 Princípios de Operação antes 
 *Brand System — Bicofino Group SA*
 *Elaborado e mantido pelo Studio Bicofino*
 *Woney Malian / Fabio Brancatelli*
-*v3.0 · São Paulo, BR · Maio 2026*
+*v3.1 · São Paulo, BR · Junho 2026*
 *Unlike Any Other.*

@@ -38,7 +38,7 @@ export const en = {
 
   // SEO
   'meta.description':
-    'Bicofino Group — curation, connection, and creativity at the highest level. On Pitch. Off Pitch. São Paulo.',
+    'Bicofino Group — connection, curation, and creativity at the highest level. On Pitch. Off Pitch. São Paulo.',
 
   // Placeholders
   'section.soon': 'Coming soon.',

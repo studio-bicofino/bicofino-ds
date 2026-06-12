@@ -39,7 +39,7 @@ export const br = {
 
   // SEO
   'meta.description':
-    'Bicofino Group — curadoria, conexão e criatividade ao mais alto nível. On Pitch. Off Pitch. São Paulo.',
+    'Bicofino Group — conexão, curadoria e criatividade ao mais alto nível. On Pitch. Off Pitch. São Paulo.',
 
   // Placeholders
   'section.soon': 'Em breve.',
@@ -59,7 +59,7 @@ export const br = {
   'foundation.create.heading': 'Create.',
   'foundation.create.body': 'A consequência natural dos dois primeiros. Criatividade aqui é precisão cirúrgica na escolha da melhor saída. O padrão interno é sempre buscar a solução mais simples e elegante possível — com o menor gasto de recursos, o maior impacto de resultado.',
   'foundation.consult.heading': 'Consult.',
-  'foundation.consult.body': 'O Bicofino oferece mentoria — entrega resultados e aprofundando o relacionamento ao longo do tempo. Conhecer o negócio em profundidade, antecipar necessidades, orientar além do escopo imediato. O valor cresce com o tempo de relação.',
+  'foundation.consult.body': 'O Bicofino oferece mentoria — entrega resultados e aprofunda o relacionamento ao longo do tempo. Conhecer o negócio em profundidade, antecipar necessidades, orientar além do escopo imediato. O valor cresce com o tempo de relação.',
   'foundation.closing': 'Uma agenda limitada, por escolha. Unlike Any Other.',
 
   // On Field — page content

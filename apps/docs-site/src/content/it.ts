@@ -2,11 +2,11 @@ export const it = {
   // TopBar
   'topbar.title': 'Bicofino',
   'topbar.subtitle': 'Brand System',
-  'topbar.version': 'V1.0',
-  'topbar.date': '// maggio · 2026',
+  'topbar.version': 'V1.1',
+  'topbar.date': '// giugno · 2026',
 
   // Overview
-  'meta.eyebrow': '// DESIGN SYSTEM · V1.0',
+  'meta.eyebrow': '// DESIGN SYSTEM · V1.1',
   'overview.lead':
     'Il sistema di design del Bicofino Group organizza i fondamenti visivi, verbali e operativi che sostengono la sua presenza di marca. Creato per preservare coerenza estetica, chiarezza strategica e riconoscibilità in tutte le vertenti — senza sacrificare la velocità operativa.',
   'overview.meta.version': 'VERSIONE',
@@ -226,7 +226,7 @@ export const it = {
   'verticais.onfield.desc':
     'Calcio. Competizione. Risultati. Comunicazione ad alta intensità — risalti visivi, colori di programma, urgenza editoriale.',
   'verticais.offfield.desc':
-    'Lifestyle. Cultura. Stile di vita premium. Comunicazione editoriale sofisticata — quiet luxury, spazio bianco, tipografia, moderazione.',
+    'Lifestyle. Cultura. Alto tenore di vita. Comunicazione editoriale sofisticata — quiet luxury, spazio bianco, tipografia, moderazione.',
 
   // Components — Buttons
   'buttons.title': 'Pulsanti',
@@ -301,7 +301,7 @@ export const it = {
   'resource.design.md': 'Manuale di Identità Visiva — fonte editoriale di verità',
   'resource.claude.md': 'Istruzioni per agenti AI',
   'resource.storybook': 'Componenti interattivi — laboratorio tecnico',
-  'resource.docs.site': 'Questo sito — documentazione editoriale premium',
+  'resource.docs.site': 'Questo sito — documentazione editoriale di alto livello',
   'resource.design.system': 'Token condivisi tra tutte le app',
 
   // Sidebar
@@ -339,7 +339,7 @@ export const it = {
   'nav.sponsors': 'Sponsors',
   'nav.icons': 'Icone',
   'sidebar.tagline': '// unlike any other.',
-  'sidebar.version': '// v1.0 · aprile 2026',
+  'sidebar.version': '// v1.1 · giugno 2026',
   'sidebar.location': '// São Paulo · BR',
 
   // Footer
@@ -351,8 +351,8 @@ export const it = {
   'footer.verticals.value': 'On Pitch · Off Pitch',
   'footer.creative': '// Direzione Creativa',
   'footer.tagline': '// unlike any other.',
-  'footer.meta1': '// design system v1.0',
-  'footer.meta2': '// aprile · 2026',
+  'footer.meta1': '// design system v1.1',
+  'footer.meta2': '// giugno · 2026',
   'footer.meta3': '// São Paulo · Brasil',
   // Footer espelhado do apps/web (valores idênticos aos de apps/web/content/it.ts)
   'footer.address': 'av pedroso de morais 1619 | 05019 001 | pinheiros | são paulo | sp | brasil',
@@ -366,7 +366,7 @@ export const it = {
   'footer.privacy.label': 'Informativa sulla privacy',
   'footer.cookies': 'Cookie',
   'footer.cookies.label': 'Informativa sui cookie',
-  'page.footer.line': '// Bicofino Design System v1.0 — São Paulo, SP, Brasil — Aprile 2026',
+  'page.footer.line': '// Bicofino Design System v1.1 — São Paulo, SP, Brasil — Giugno 2026',
 
   // Performance Intelligence
   'perf.eyebrow': '// 06.1 · Motion Intelligence',
@@ -462,7 +462,7 @@ export const it = {
   'ops.offfield.d6': 'Family office e pianificazione finanziaria (Wealth)',
   'ops.offfield.d7': 'Connessione tra brand, aziende, atleti e personalità',
   'ops.offfield.serves.label': 'Chi serve:',
-  'ops.offfield.serves.desc': "Atleti del portfolio (extra-campo), brand che vogliono connessione con l'universo sportivo e premium, dirigenti e aziende in cerca di curatela creativa e strategica di alto livello.",
+  'ops.offfield.serves.desc': "Atleti del portfolio (extra-campo), brand che vogliono connessione con i mondi dello sport e del lusso, dirigenti e aziende in cerca di curatela creativa e strategica di alto livello.",
   'ops.offfield.diff.label': 'Il differenziale Off Pitch:',
   'ops.offfield.diff.desc': "Bicofino connette brand e aziende ad atleti, celebrità e personalità fuori dalla portata della grande maggioranza. Questo accesso è stato costruito con anni di relazioni etiche, negoziazioni trasparenti e presenza costante nei mercati giusti. Ogni connessione è strutturata affinché tutte le parti guadagnino.",
   'ops.club.title': 'CLUB',
@@ -526,6 +526,6 @@ export const it = {
   'ops.brand.line1': 'Brand System — Bicofino Group SA',
   'ops.brand.line2': 'Elaborato e mantenuto dallo Studio Bicofino',
   'ops.brand.line3': 'Woney Malian / Fabio Brancatelli',
-  'ops.brand.version': 'v1.0 · São Paulo, BR · Maggio 2026',
+  'ops.brand.version': 'v1.1 · São Paulo, BR · Giugno 2026',
   'ops.brand.tagline': 'Unlike Any Other.',
 } as const

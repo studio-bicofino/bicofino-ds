@@ -2,11 +2,11 @@ export const en = {
   // TopBar
   'topbar.title': 'Bicofino',
   'topbar.subtitle': 'Brand System',
-  'topbar.version': 'V1.0',
-  'topbar.date': '// may · 2026',
+  'topbar.version': 'V1.1',
+  'topbar.date': '// june · 2026',
 
   // Overview
-  'meta.eyebrow': '// DESIGN SYSTEM · V1.0',
+  'meta.eyebrow': '// DESIGN SYSTEM · V1.1',
   'overview.lead':
     'The Bicofino Group design system codifies the Visual Identity Manual into tokens, components, and reusable patterns. Built to maintain fidelity across verticals — On Pitch and Off Pitch — without sacrificing operational velocity.',
   'overview.meta.version': 'VERSION',
@@ -226,7 +226,7 @@ export const en = {
   'verticais.onfield.desc':
     'Football. Competition. Results. High-intensity communication — visual highlights, program colors, editorial urgency.',
   'verticais.offfield.desc':
-    'Lifestyle. Culture. Premium living. Sophisticated editorial communication — quiet luxury, white space, typography, restraint.',
+    'Lifestyle. Culture. Refined living. Sophisticated editorial communication — quiet luxury, white space, typography, restraint.',
 
   // Components — Buttons
   'buttons.title': 'Buttons',
@@ -301,7 +301,7 @@ export const en = {
   'resource.design.md': 'Visual Identity Manual — editorial source of truth',
   'resource.claude.md': 'Instructions for AI agents',
   'resource.storybook': 'Interactive components — technical laboratory',
-  'resource.docs.site': 'This site — premium editorial documentation',
+  'resource.docs.site': 'This site — editorial documentation held to a high standard',
   'resource.design.system': 'Shared tokens across all apps',
 
   // Sidebar
@@ -339,7 +339,7 @@ export const en = {
   'nav.sponsors': 'Sponsors',
   'nav.icons': 'Icons',
   'sidebar.tagline': '// unlike any other.',
-  'sidebar.version': '// v1.0 · april 2026',
+  'sidebar.version': '// v1.1 · june 2026',
   'sidebar.location': '// São Paulo · BR',
 
   // Footer
@@ -351,8 +351,8 @@ export const en = {
   'footer.verticals.value': 'On Pitch · Off Pitch',
   'footer.creative': '// Creative Direction',
   'footer.tagline': '// unlike any other.',
-  'footer.meta1': '// design system v1.0',
-  'footer.meta2': '// april · 2026',
+  'footer.meta1': '// design system v1.1',
+  'footer.meta2': '// june · 2026',
   'footer.meta3': '// São Paulo · Brasil',
   // Footer espelhado do apps/web (valores idênticos aos de apps/web/content/en.ts)
   'footer.address': 'av pedroso de morais 1619 | 05019 001 | pinheiros | são paulo | sp | brasil',
@@ -366,7 +366,7 @@ export const en = {
   'footer.privacy.label': 'Privacy Policy',
   'footer.cookies': 'Cookies',
   'footer.cookies.label': 'Cookie Policy',
-  'page.footer.line': '// Bicofino Design System v1.0 — São Paulo, SP, Brasil — April 2026',
+  'page.footer.line': '// Bicofino Design System v1.1 — São Paulo, SP, Brasil — June 2026',
 
   // Performance Intelligence
   'perf.eyebrow': '// 06.1 · Motion Intelligence',
@@ -462,7 +462,7 @@ export const en = {
   'ops.offfield.d6': 'Family office and financial planning (Wealth)',
   'ops.offfield.d7': 'Connecting brands, companies, athletes and personalities',
   'ops.offfield.serves.label': 'Who it serves:',
-  'ops.offfield.serves.desc': 'Portfolio athletes (off-pitch), brands seeking connection to the sports and premium universe, executives and companies looking for high-level creative and strategic curation.',
+  'ops.offfield.serves.desc': 'Portfolio athletes (off-pitch), brands seeking connection to the worlds of sport and luxury, executives and companies looking for high-level creative and strategic curation.',
   'ops.offfield.diff.label': 'The Off Pitch differentiator:',
   'ops.offfield.diff.desc': 'Bicofino connects brands and companies to athletes, celebrities and personalities beyond the reach of most. This access was built over years of ethical relationships, clean negotiations and consistent presence in the right markets. Every connection is structured so all sides win.',
   'ops.club.title': 'CLUB',
@@ -526,6 +526,6 @@ export const en = {
   'ops.brand.line1': 'Brand System — Bicofino Group SA',
   'ops.brand.line2': 'Developed and maintained by Studio Bicofino',
   'ops.brand.line3': 'Woney Malian / Fabio Brancatelli',
-  'ops.brand.version': 'v1.0 · São Paulo, BR · May 2026',
+  'ops.brand.version': 'v1.1 · São Paulo, BR · June 2026',
   'ops.brand.tagline': 'Unlike Any Other.',
 } as const

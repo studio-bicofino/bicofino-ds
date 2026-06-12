@@ -38,7 +38,7 @@ export const it = {
 
   // SEO
   'meta.description':
-    'Bicofino Group — cura, connessione e creatività al massimo livello. On Pitch. Off Pitch. São Paulo.',
+    'Bicofino Group — connessione, curatela e creatività al massimo livello. On Pitch. Off Pitch. São Paulo.',
 
   // Placeholders
   'section.soon': 'Prossimamente.',

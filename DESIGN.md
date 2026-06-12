@@ -269,7 +269,12 @@ upload, client-data intake, …): same M-05 bento + hairlines + pills, each sett
 
 ## 10 · Anti-patterns
 
-- "**Not X. It's Y.**" copy. Empty superlatives. Corporate-speak. (See README §3.)
+- "**Not X. It's Y.**" copy *as a declarative device*. Empty superlatives. Corporate-speak. (See README §3.)
+  **Narrow exception (BS v1.1, jun/2026):** in manifesto register only, when the text builds the
+  reasoning first and the negation resolves it with substance — reference: "Bicofino não traduz.
+  É fluente." Outside manifesto register the prohibition is total.
+- **The word "premium"** — banned in any language, context or material (house veto, Fabio, jun/2026).
+  Describe the standard instead of naming it. Quoting it as a counter-example is the only permitted mention.
 - **Emoji** — ever. Only ✦ and `//`.
 - **Mixing two corner languages** in one piece.
 - **More than one vibrant** per composition (unless explicitly requested).
@@ -293,6 +298,10 @@ re-declares the same set in **`apps/docs-site/src/app/globals.css`**. New in thi
 - **Lines on dark** — `--bf-line-on-dark`, `--bf-line-on-dark-strong`, `--bf-dot-on-dark`,
   `--bf-hairline-dark`. (M-01)
 - **Ambient motion** — `--dur-ambient` (≈6s) + `--ease-out`, scoped to `.bf-schematic`. (§8)
+- **Verbal canon v1.1 (jun/2026)** — entry manifesto (fluência / a casa) registered as canonical text;
+  "Não é X. É Y." refined from absolute ban to a manifesto-register-only exception with substance (§10);
+  the word "premium" banned outright — house veto (§10). Canon: `BRANDCOMPLETO.md` v3.1 +
+  `apps/docs-site/src/content/brandSystemContent.ts`.
 - **`[data-mode="editorial"]`** — the expression-mode hook. (D1)
 - **Measure rule** — §6: no text runs full container width; short text tightens to ~34–48ch.
   First principle folded in via the *Design Craft Layer* (`CLAUDE.md`), from `web-design-guidelines`.

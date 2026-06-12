@@ -231,7 +231,7 @@ export default function Sidebar({ onNavClick }: SidebarProps = {}) {
           <BicofinoLogo color={C.text} width={120} />
         </a>
         <div style={{ marginTop: 20, display: 'flex', flexDirection: 'column', gap: 5 }}>
-          {(['// Brand System', '// v1.0 • maio 2026', '// São Paulo • BR'] as const).map(line => (
+          {(['// Brand System', '// v1.1 • junho 2026', '// São Paulo • BR'] as const).map(line => (
             <p key={line} style={{ fontFamily: mono, fontSize: 9, color: C.muted, margin: 0, letterSpacing: '0.06em' }}>
               {line}
             </p>
