@@ -1,4 +1,5 @@
 import { BicofinoLogo } from '@/components/BicofinoLogo'
+import { IphoneFrame } from '@/components/IphoneFrame'
 import { MacbookFrame } from '@/components/MacbookFrame'
 import { Reveal } from '@/components/Reveal'
 import { AnimatedNumber } from '@/components/AnimatedNumber'
@@ -178,7 +179,14 @@ export default function Produtos() {
                     <span className="pill pill--accent" style={{ whiteSpace: 'nowrap' }}>
                       {fmtBRL(p.mercado.medio)}{p.mercado.porEntrega ? ' por entrega' : ' no mercado'}
                     </span>
-                    {p.tela && <MacbookFrame src={p.tela} alt={`Tela do produto ${p.nome}`} />}
+                    {p.tela &&
+                      (p.telaFrame === 'iphone' ? (
+                        <div style={{ width: 'min(200px, 100%)' }}>
+                          <IphoneFrame src={p.tela} alt={`Tela do produto ${p.nome}`} />
+                        </div>
+                      ) : (
+                        <MacbookFrame src={p.tela} alt={`Tela do produto ${p.nome}`} />
+                      ))}
                   </div>
                 </article>
               </Reveal>

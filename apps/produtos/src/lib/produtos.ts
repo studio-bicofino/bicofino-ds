@@ -25,6 +25,7 @@ export interface Produto {
   infraNota?: string // contexto extra (ex.: SaaS equivalente de mercado)
   modulo?: boolean // módulo adicional de outro produto
   tela?: string // screenshot do produto (servido de /public/telas), exibido no mockup
+  telaFrame?: 'iphone' // moldura da tela; sem valor = MacBook (padrão p/ telas desktop)
 }
 
 /* ── Custos de referência das ferramentas (jun/2026) ── */
@@ -150,6 +151,8 @@ export const produtos: Produto[] = [
     nome: 'Fábrica de stories em vídeo',
     pitch: 'Artes 9:16 animadas geradas por comando: cada peça sai em minutos, no padrão da marca.',
     prova: '16 stories reais publicados — cada jogo vira vídeo 1080×1920 em ~24 min, ponta a ponta.',
+    tela: '/telas/fabrica-stories.png',
+    telaFrame: 'iphone',
     mercado: { min: 40000, medio: 65000, max: 100000, prazoSemanas: 8 },
     infra: [
       { nome: 'Estação local com Node, ffmpeg e Playwright', custo: 'R$ 0 (ferramentas abertas)' },
@@ -162,6 +165,8 @@ export const produtos: Produto[] = [
     nome: 'Cards estáticos',
     pitch: 'A mesma arte do vídeo vira PNG 1080×1920 com um comando — dois formatos pelo trabalho de um.',
     prova: 'Criado durante uma rodada de produção real; calibrou junto com o vídeo, custo extra zero.',
+    tela: '/telas/cards-estaticos.png',
+    telaFrame: 'iphone',
     mercado: { min: 8000, medio: 12000, max: 20000, prazoSemanas: 1 },
     infra: [{ nome: 'Incluída na Fábrica de stories', custo: 'R$ 0' }],
     infraMensal: 'R$ 0/mês',
@@ -172,6 +177,8 @@ export const produtos: Produto[] = [
     nome: 'Pipeline de tratamento de imagem',
     pitch: 'Foto bruta entra, peça tratada sai: recorte, granulado e P&B em lote, direto pelo Photoshop.',
     prova: 'Na operação Bicofino, cada imagem caiu de 20 para 4 min — rodando em lote desde junho.',
+    tela: '/telas/pipeline-imagem.png',
+    telaFrame: 'iphone',
     mercado: { min: 55000, medio: 75000, max: 110000, prazoSemanas: 9 },
     infra: [
       { nome: 'Adobe Photoshop (Creative Cloud)', custo: '~R$ 140/mês' },
