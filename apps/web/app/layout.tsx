@@ -20,15 +20,13 @@ export const metadata: Metadata = {
     siteName: 'Bicofino',
     locale: 'pt_BR',
     title: 'Bicofino — Unlike Any Other',
-    description:
-      'Bicofino Group — curation, connection, and creativity at the highest level.',
+    description: 'Connect. Curate. Create. Consult.',
     images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Bicofino — Unlike Any Other' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Bicofino — Unlike Any Other',
-    description:
-      'Bicofino Group — curation, connection, and creativity at the highest level.',
+    description: 'Connect. Curate. Create. Consult.',
     images: ['/og-image.png'],
   },
   // Favicons resolved from app/{favicon.ico,icon.svg,icon.png,apple-icon.png}
