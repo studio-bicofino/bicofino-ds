@@ -27,6 +27,10 @@ const nextConfig: NextConfig = {
       // team studio-bicofinos-projects.
       { source: '/casa-nostra', destination: 'https://casa-nostra-studio-bicofinos-projects.vercel.app/casa-nostra' },
       { source: '/casa-nostra/:path*', destination: 'https://casa-nostra-studio-bicofinos-projects.vercel.app/casa-nostra/:path*' },
+      // Multi-zone: bicofino.com/produtos serve a vitrine comercial dos sistemas
+      // próprios (apps/produtos), que roda com basePath '/produtos'.
+      { source: '/produtos', destination: 'https://produtos-bicofino.vercel.app/produtos' },
+      { source: '/produtos/:path*', destination: 'https://produtos-bicofino.vercel.app/produtos/:path*' },
     ]
   },
   async redirects() {
