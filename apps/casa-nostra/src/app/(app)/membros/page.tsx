@@ -8,6 +8,8 @@ const PAGE_SIZE = 50
 type SearchParams = {
   q?: string
   page?: string
+  /** id do membro recém-criado — dispara o burst de celebração na lista */
+  novo?: string
 }
 
 type PersonRow = {
@@ -147,6 +149,7 @@ export default async function MembrosPage({
           members={members}
           reorderable={!hasFilters && totalPages === 1}
           baseOffset={offset}
+          justAddedId={params.novo ?? null}
         />
       )}
 

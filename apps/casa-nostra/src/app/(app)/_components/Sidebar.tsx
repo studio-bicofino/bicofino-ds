@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
@@ -90,7 +91,7 @@ function SidebarInner({ email, onLinkClick }: { email: string; onLinkClick?: () 
                 const active = isActive(pathname, item.href)
                 const Icon = item.icon
                 return (
-                  <a
+                  <Link
                     key={item.href}
                     href={item.href}
                     onClick={onLinkClick}
@@ -116,7 +117,7 @@ function SidebarInner({ email, onLinkClick }: { email: string; onLinkClick?: () 
                         • novo
                       </span>
                     )}
-                  </a>
+                  </Link>
                 )
               })}
             </div>

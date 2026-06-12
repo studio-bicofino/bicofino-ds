@@ -65,6 +65,13 @@ Pessoas que simplesmente NÃO TÊM site/instagram/cargo/endereço etc. não deve
 
 **Migration `0010_unavailable_fields.sql`** — APLICADA em 2026-06-11 (verificada via REST).
 
+### Onda 17 — hover verde, sparkles e bicofino.com/casa-nostra (2026-06-12)
+
+1. **Hover da linha de /membros** = verde do botão Novo membro (`--bf-ops-success` em background+border no `.cn-people-row:hover`).
+2. **Sparkles de celebração** (exceção decorativa SANCIONADA, mesmo estatuto do cn-pulse): ao Salvar com sucesso, burst de 14 estrelinhas 4 pontas saindo do botão (~800ms, tokens cn: napoli/sep/spfc/amber/torino) e navegação adiada 650ms; em create navega pra `/membros?novo=<id>` e a linha do recém-criado dispara o mesmo burst 1×, limpando o param via `router.replace` após 1,5s. Componente `src/components/SparkleBurst.tsx` (tabela determinística, sem Math.random; reduced-motion → nada + onDone imediato).
+3. **MULTI-ZONE: bicofino.com/casa-nostra** — mesmo padrão do /brandsystem: `basePath: '/casa-nostra'` no next.config do app + rewrites no apps/web (`/casa-nostra` e `/casa-nostra/:path*` → casa-nostra-studio-bicofinos-projects.vercel.app). Sidebar convertida de `<a>` pra `next/link` (basePath não se aplica a `<a>` cru). **EFEITO COLATERAL: as URLs do vercel.app mudaram** — raiz dá 404, tudo vive sob `/casa-nostra/...`; canônico passa a ser bicofino.com/casa-nostra.
+4. **ALERTA privacidade**: bypass de login continua ATIVO — o CRM (dados pessoais da família) fica acessível publicamente sob o domínio público. Ligar o login real é o próximo passo recomendado.
+
 ### Onda 15 — fix Bairro × Complemento
 
 Bug: o lookup de CEP (ViaCEP) jogava `bairro` em `address_complement`. Fix: **Bairro é campo próprio** (`people.address_neighborhood`, preenchido pelo CEP, lado a lado com Complemento no popover) e **Complemento é 100% manual** (ex. nº do apto — o ViaCEP não toca mais nele). `AddressValue` ganhou `neighborhood` em toda a cadeia (popover → CadastroV2 → schema → actions → edição → types).

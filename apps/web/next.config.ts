@@ -22,6 +22,11 @@ const nextConfig: NextConfig = {
     return [
       { source: '/brandsystem', destination: 'https://bicofino-ds-umber.vercel.app/brandsystem' },
       { source: '/brandsystem/:path*', destination: 'https://bicofino-ds-umber.vercel.app/brandsystem/:path*' },
+      // Multi-zone: bicofino.com/casa-nostra serve o app casa-nostra (CRM interno),
+      // que roda com basePath '/casa-nostra'. Domínio prod estável do projeto no
+      // team studio-bicofinos-projects.
+      { source: '/casa-nostra', destination: 'https://casa-nostra-studio-bicofinos-projects.vercel.app/casa-nostra' },
+      { source: '/casa-nostra/:path*', destination: 'https://casa-nostra-studio-bicofinos-projects.vercel.app/casa-nostra/:path*' },
     ]
   },
   async redirects() {

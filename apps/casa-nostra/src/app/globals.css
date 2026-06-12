@@ -342,8 +342,8 @@ select.cn-filter-input {
   grid-template-columns: 44px minmax(0, 1.4fr) minmax(0, 1fr);
 }
 .cn-people-row:hover {
-  background: var(--bf-surface-subtle);
-  border-color: var(--bf-border-strong);
+  background: var(--bf-ops-success);
+  border-color: var(--bf-ops-success);
   transform: translateX(2px);
 }
 .cn-people-row:focus-visible {

@@ -11,6 +11,7 @@ import {
 } from 'motion/react'
 import { GripVertical, Trash2, Undo2 } from 'lucide-react'
 
+import { SparkleBurst } from '@/components/SparkleBurst'
 import { deletePersonV2, reorderPeopleV2 } from '../_actions/members'
 
 export type MemberRowData = {
@@ -36,15 +37,32 @@ export function MembersList({
   members,
   reorderable,
   baseOffset = 0,
+  justAddedId = null,
 }: {
   members: MemberRowData[]
   /** false quando há busca/filtro ou paginação — drag desligado pra não bagunçar a ordem global */
   reorderable: boolean
   baseOffset?: number
+  /** id vindo de /membros?novo=… — a linha recém-criada ganha um burst de sparkles (uma vez só) */
+  justAddedId?: string | null
 }) {
   const router = useRouter()
   const [order, setOrder] = useState<string[]>(() => members.map((m) => m.id))
   const [pending, setPending] = useState<PendingDelete[]>([])
+
+  // Burst de celebração: inicializa UMA vez a partir do param; depois do burst
+  // limpa a URL (replace) pra refresh não re-disparar. Flag em ref = uma vez só.
+  const [burstId, setBurstId] = useState<string | null>(justAddedId)
+  const burstCleanedRef = useRef(false)
+  useEffect(() => {
+    if (!justAddedId || burstCleanedRef.current) return
+    burstCleanedRef.current = true
+    const t = setTimeout(() => {
+      setBurstId(null)
+      router.replace('/membros', { scroll: false })
+    }, 1500)
+    return () => clearTimeout(t)
+  }, [justAddedId, router])
 
   const byId = useRef<Map<string, MemberRowData>>(new Map())
   byId.current = new Map(members.map((m) => [m.id, m]))
@@ -129,7 +147,12 @@ export function MembersList({
         <div className="cn-people-list">
           <Head reorderable={false} />
           {rows.map((m) => (
-            <StaticRow key={m.id} person={m} onDelete={requestDelete} />
+            <StaticRow
+              key={m.id}
+              person={m}
+              onDelete={requestDelete}
+              justAdded={m.id === burstId}
+            />
           ))}
         </div>
       ) : (
@@ -148,6 +171,7 @@ export function MembersList({
                 person={m}
                 onDelete={requestDelete}
                 onCommit={persistOrder}
+                justAdded={m.id === burstId}
               />
             ))}
           </Reorder.Group>
@@ -196,10 +220,12 @@ function DraggableRow({
   person,
   onDelete,
   onCommit,
+  justAdded = false,
 }: {
   person: MemberRowData
   onDelete: (id: string) => void
   onCommit: () => void
+  justAdded?: boolean
 }) {
   const router = useRouter()
   const reduce = useReducedMotion()
@@ -262,6 +288,7 @@ function DraggableRow({
         }}
       />
       <RowCells person={person} onDelete={onDelete} />
+      {justAdded && <SparkleBurst />}
     </Reorder.Item>
   )
 }
@@ -269,15 +296,18 @@ function DraggableRow({
 function StaticRow({
   person,
   onDelete,
+  justAdded = false,
 }: {
   person: MemberRowData
   onDelete: (id: string) => void
+  justAdded?: boolean
 }) {
   const router = useRouter()
   return (
     <div
       className="cn-people-row"
-      style={{ gridTemplateColumns: GRID }}
+      // position: relative — âncora do overlay SparkleBurst (não afeta o grid)
+      style={{ gridTemplateColumns: GRID, position: 'relative' }}
       onClick={() => router.push(`/membros/${person.id}`)}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -291,6 +321,7 @@ function StaticRow({
     >
       <span aria-hidden />
       <RowCells person={person} onDelete={onDelete} />
+      {justAdded && <SparkleBurst />}
     </div>
   )
 }

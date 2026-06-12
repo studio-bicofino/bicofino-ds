@@ -33,11 +33,12 @@
  */
 
 import type { CSSProperties } from 'react'
-import { useState, useTransition } from 'react'
+import { useCallback, useRef, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, useReducedMotion } from 'motion/react'
 import { Check } from 'lucide-react'
 
+import { SparkleBurst } from '@/components/SparkleBurst'
 import { PhotoUploaderHero } from './PhotoUploaderHero'
 import type { Suggestion } from '@/lib/utils/strings'
 import type { Tag } from '@/lib/db/types'
@@ -252,6 +253,17 @@ export function CadastroV2({
   const [pending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
 
+  // Celebração pós-save: burst de sparkles no botão Salvar, depois navega.
+  const [celebrating, setCelebrating] = useState(false)
+  const navigatedRef = useRef(false)
+  const destRef = useRef('/membros')
+
+  const finishCelebration = useCallback(() => {
+    if (navigatedRef.current) return
+    navigatedRef.current = true
+    router.push(destRef.current)
+  }, [router])
+
   const isEdit = mode === 'edit'
 
   // Estado do form — inicializado a partir de initialData quando edit.
@@ -371,7 +383,11 @@ export function CadastroV2({
           ? await updatePersonV2(personId, payload)
           : await createPersonV2(payload)
       if (result.ok) {
-        router.push('/membros')
+        // Burst de sparkles no botão, navegação após ~650ms (fallback caso o
+        // onDone do SparkleBurst não dispare); navigatedRef evita push duplo.
+        destRef.current = isEdit ? '/membros' : `/membros?novo=${result.id}`
+        setCelebrating(true)
+        setTimeout(finishCelebration, 650)
       } else {
         setError(result.error)
       }
@@ -779,19 +795,22 @@ export function CadastroV2({
       {/* Salvar — fim do form, alinhado à direita */}
       <div style={SAVE_BUTTON_ROW_STYLE}>
         {error && <span style={ERROR_STYLE}>{error}</span>}
-        <button
-          type="submit"
-          disabled={pending}
-          className="cn-cadastro-v2__save"
-          style={{
-            ...SAVE_BUTTON_STYLE,
-            opacity: pending ? 0.5 : 1,
-            cursor: pending ? 'not-allowed' : 'pointer',
-          }}
-        >
-          {pending ? 'Salvando…' : 'Salvar'}
-          <Check size={20} strokeWidth={1.5} />
-        </button>
+        <span style={{ position: 'relative', display: 'inline-flex' }}>
+          <button
+            type="submit"
+            disabled={pending || celebrating}
+            className="cn-cadastro-v2__save"
+            style={{
+              ...SAVE_BUTTON_STYLE,
+              opacity: pending ? 0.5 : 1,
+              cursor: pending || celebrating ? 'not-allowed' : 'pointer',
+            }}
+          >
+            {pending ? 'Salvando…' : 'Salvar'}
+            <Check size={20} strokeWidth={1.5} />
+          </button>
+          {celebrating && <SparkleBurst onDone={finishCelebration} />}
+        </span>
       </div>
 
       {/* Footer — selo */}
