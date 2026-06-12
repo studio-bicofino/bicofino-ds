@@ -63,14 +63,26 @@ npm run build
 Validação local de prod: `npm run start` — se a porta 3043 estiver presa com build
 velho, `lsof -ti :3043 | xargs kill -9`.
 
-## ⚠️ Deploys pendentes (limite 100/dia da Vercel batido em 12/06)
+## ⚠️ Deploy pendente (limite `api-deployments-free-per-day` — 100/dia do team)
 
-- [ ] **produtos**: prod está no commit `8922b55` (stack + outline + basePath + favicon);
-      o **mood dial (`9b895c8`) ainda NÃO está no ar** — redeploy quando o limite resetar:
-      `cd apps/produtos && vercel deploy --prod --yes --scope studio-bicofinos-projects`.
-- [ ] **web**: o rewrite `/produtos` (`42155a1`) está pushado mas o deploy não saiu —
-      **bicofino.com/produtos dá 404 até o web deployar**. Enquanto isso o link que
-      funciona é https://produtos-bicofino.vercel.app/produtos.
+- [x] **produtos**: COMPLETO em prod (12/06 fim do dia) — mood dial + card stack
+      mobile no ar em https://produtos-bicofino.vercel.app/produtos.
+- [ ] **web**: o rewrite `/produtos` (`42155a1`) está na main mas o deploy bateu no
+      limite 2× — **bicofino.com/produtos dá 404 até sair**. O bicofino-web NÃO é
+      git-connected (push não deploya; descoberto 12/06): deploy manual de worktree
+      limpo da main + `.vercel/project.json` de `apps/web/` copiado pra RAIZ do
+      worktree (Root Directory do projeto = `apps/web`), `vercel deploy --prod --yes`.
+      A janela é rolante — retentar em algumas horas.
+
+Sobre "outro grupo gratuito": não resolve o domínio — bicofino.com pertence ao
+projeto `bicofino-web` deste team; o rewrite tem que sair por ele. A página em si
+já tem cota própria atendida no projeto `produtos-bicofino`.
+
+Bug corrigido no caminho (`e793f14`): o stack era desktop-only e a centralização
+`left:50% + translateX(-50%)` duplicava com o transform do GSAP no mobile — agora
+é `left/right: 0 + margin-inline: auto` (transform 100% do GSAP) e o stack roda em
+qualquer viewport (só reduced-motion desliga), com card 92svh/padding sp-4/mockups
+reduzidos e `overflow-y: auto` de válvula no mobile.
 
 ## Aberto / próximos passos
 
