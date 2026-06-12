@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Favicon Produtos Bicofino: verde do token bf-ops-success (#2FD298) + "P" em
+       Gotham Black. O "P" é o glifo real extraído de Gotham-Black.woff2 via
+       fontTools/SVGPathPen (favicon SVG não carrega fonte; contorno inline). -->
+  <rect width="64" height="64" rx="14" fill="#2FD298"/>
+  <g transform="translate(14.30, 49.33) scale(0.0495, -0.0495)">
+    <path fill="#FFFFFF" d="M62 0H256V200H352C526 200 653 287 653 452V454C653 609 539 700 362 700H62ZM256 352V537H347C417 537 459 505 459 445V443C459 388 417 352 348 352Z"/>
+  </g>
+</svg>

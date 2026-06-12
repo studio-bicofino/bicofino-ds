@@ -2,10 +2,10 @@
 
 /* ─── Gotham — self-hosted, impact only (M-02) — DS v3.1 Fase 2 ───
    Reservada para 1–2 palavras de impacto, uppercase. Nunca corpo. */
-@font-face { font-family: "Gotham"; src: url("/fonts/Gotham-Light.woff2") format("woff2"); font-weight: 300; font-style: normal; font-display: swap; }
-@font-face { font-family: "Gotham"; src: url("/fonts/Gotham-Book.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
-@font-face { font-family: "Gotham"; src: url("/fonts/Gotham-Bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
-@font-face { font-family: "Gotham"; src: url("/fonts/Gotham-Black.woff2") format("woff2"); font-weight: 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Gotham"; src: url("/produtos/fonts/Gotham-Light.woff2") format("woff2"); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: "Gotham"; src: url("/produtos/fonts/Gotham-Book.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Gotham"; src: url("/produtos/fonts/Gotham-Bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Gotham"; src: url("/produtos/fonts/Gotham-Black.woff2") format("woff2"); font-weight: 900; font-style: normal; font-display: swap; }
 
 /* ─────────────────────────────────────────────────────────────
    Registro de Impacto — Design tokens (Bicofino DS v3.1)
@@ -343,3 +343,8 @@ button { font-family: inherit; cursor: pointer; }
   /* Garante que o scroll-reveal nunca esconda conteúdo no PDF, mesmo sem rolar. */
   .bf-reveal-io { opacity: 1 !important; transform: none !important; }
 }
+
+/* ── Produtos: coluna lateral do card (pill + mockup) ──
+   Desktop: encostada à direita. Responsivo: alinha à esquerda junto do conteúdo. */
+.produto-aside { align-items: flex-end; }
+@media (max-width: 900px) { .produto-aside { align-items: flex-start; } }

@@ -1,11 +1,12 @@
-/* Mockup flat de um iPhone — moldura em tokens fechados do DS, cantos na
-   linguagem soft via data-corners (sem sombra, sem gradiente). Para artes 9:16. */
+/* Mockup flat de um iPhone — moldura em outline (hairline), tokens fechados
+   do DS, cantos na linguagem soft via data-corners. Para artes 9:16. */
 export function IphoneFrame({ src, alt }: { src: string; alt: string }) {
   return (
     <figure data-corners="soft" style={{ margin: 0, width: '100%', position: 'relative' }}>
       <div
         style={{
-          background: 'var(--bf-black)',
+          background: 'var(--bf-bg-page)',
+          border: 'var(--bf-hairline)',
           padding: 'var(--sp-2)',
           borderRadius: 'var(--bf-corner-3)',
         }}
@@ -34,7 +35,8 @@ export function IphoneFrame({ src, alt }: { src: string; alt: string }) {
           transform: 'translateX(-50%)',
           width: 'var(--sp-7)',
           height: 'var(--sp-3)',
-          background: 'var(--bf-black)',
+          background: 'var(--bf-bg-page)',
+          border: 'var(--bf-hairline)',
           borderRadius: 9999,
         }}
       />

@@ -1,12 +1,13 @@
-/* Mockup flat de um MacBook aberto — moldura em tokens fechados do DS
-   (sem sombra, sem gradiente). A tela recebe o screenshot do produto. */
+/* Mockup flat de um MacBook aberto — moldura em outline (hairline), tokens
+   fechados do DS, sem sombra nem gradiente. A tela recebe o screenshot. */
 export function MacbookFrame({ src, alt }: { src: string; alt: string }) {
   return (
     <figure style={{ margin: 0, width: '100%' }}>
       {/* tampa/tela */}
       <div
         style={{
-          background: 'var(--bf-black)',
+          background: 'var(--bf-bg-page)',
+          border: 'var(--bf-hairline)',
           padding: 'var(--sp-2)',
           borderRadius: 'var(--bf-corner-3) var(--bf-corner-3) 0 0',
         }}

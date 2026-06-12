@@ -1,10 +1,9 @@
 import { BicofinoLogo } from '@/components/BicofinoLogo'
-import { IphoneFrame } from '@/components/IphoneFrame'
-import { MacbookFrame } from '@/components/MacbookFrame'
+import { CardStack } from '@/components/CardStack'
 import { Reveal } from '@/components/Reveal'
 import { AnimatedNumber } from '@/components/AnimatedNumber'
-import { produtos, ferramentas, portfolio } from '@/lib/produtos'
-import { fmtBRL, fmtFaixa } from '@/lib/format'
+import { ferramentas, portfolio } from '@/lib/produtos'
+import { fmtFaixa } from '@/lib/format'
 
 export default function Produtos() {
   return (
@@ -117,81 +116,7 @@ export default function Produtos() {
               </span>
             </div>
           </Reveal>
-          <div style={{ display: 'grid', gap: 'var(--sp-4)' }}>
-            {produtos.map((p, i) => (
-              <Reveal key={p.id} delay={i * 60}>
-                <article className="cell" style={{ display: 'flex', gap: 'var(--sp-6)', flexWrap: 'wrap' }}>
-                  <div style={{ flex: '1 1 420px', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 'var(--sp-4)' }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sp-2)' }}>
-                      <h3 className="bf-h3">
-                        {p.nome}
-                        {p.modulo && (
-                          <span className="bf-mono" style={{ fontSize: '0.6875rem', color: 'var(--bf-text-subtle)', marginLeft: 'var(--sp-2)' }}>
-                            // módulo da Fábrica de stories
-                          </span>
-                        )}
-                      </h3>
-                      <p className="bf-body-sm" style={{ margin: 0, maxWidth: 560 }}>{p.pitch}</p>
-                    </div>
-
-                    <div style={{ display: 'flex', gap: 'var(--sp-6)', flexWrap: 'wrap' }}>
-                      <Metric
-                        k="Faixa de mercado"
-                        v={fmtFaixa(p.mercado.min, p.mercado.max)}
-                        sub={p.mercado.porEntrega ? 'por entrega, em agência' : 'encomenda equivalente, BR'}
-                      />
-                      <Metric
-                        k="Prazo no mercado"
-                        v={`${p.mercado.prazoSemanas} sem${p.mercado.prazoSemanas > 1 ? 'anas' : 'ana'}`}
-                        sub={p.mercado.porEntrega ? 'cada entrega' : 'da encomenda ao entregue'}
-                      />
-                      <Metric k="Operação do cliente" v={p.infraMensal} sub="assinaturas e ferramentas" />
-                    </div>
-
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sp-1)' }}>
-                      {p.infra.map((item) => (
-                        <span key={item.nome} className="bf-mono" style={{ fontSize: '0.6875rem', color: 'var(--bf-text-subtle)' }}>
-                          · {item.nome} — {item.custo}
-                        </span>
-                      ))}
-                      {p.infraNota && (
-                        <span className="bf-mono" style={{ fontSize: '0.6875rem', color: 'var(--bf-text-subtle)' }}>
-                          · {p.infraNota}
-                        </span>
-                      )}
-                    </div>
-
-                    <span className="bf-mono" style={{ fontSize: '0.6875rem', color: 'var(--bf-text-secondary)', marginTop: 'auto' }}>
-                      // prova — {p.prova}
-                    </span>
-                  </div>
-
-                  <div
-                    style={{
-                      flex: '0 1 340px',
-                      minWidth: 240,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: 'var(--sp-4)',
-                      alignItems: 'flex-end',
-                    }}
-                  >
-                    <span className="pill pill--accent" style={{ whiteSpace: 'nowrap' }}>
-                      {fmtBRL(p.mercado.medio)}{p.mercado.porEntrega ? ' por entrega' : ' no mercado'}
-                    </span>
-                    {p.tela &&
-                      (p.telaFrame === 'iphone' ? (
-                        <div style={{ width: 'min(200px, 100%)' }}>
-                          <IphoneFrame src={p.tela} alt={`Tela do produto ${p.nome}`} />
-                        </div>
-                      ) : (
-                        <MacbookFrame src={p.tela} alt={`Tela do produto ${p.nome}`} />
-                      ))}
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
+          <CardStack />
         </section>
 
         {/* Ferramentas e assinaturas — visão geral */}
@@ -297,12 +222,3 @@ function BigStat({
   )
 }
 
-function Metric({ k, v, sub }: { k: string; v: string; sub: string }) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sp-1)' }}>
-      <span className="bf-eyebrow">{k}</span>
-      <span className="bignum" style={{ fontSize: '1.5rem' }}>{v}</span>
-      <span className="bf-mono" style={{ fontSize: '0.6875rem', color: 'var(--bf-text-subtle)' }}>{sub}</span>
-    </div>
-  )
-}
