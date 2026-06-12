@@ -17,9 +17,11 @@ const nextConfig: NextConfig = {
     // Multi-zone: bicofino.com/brandsystem serve o docs-site (projeto bicofino-ds),
     // que roda com basePath '/brandsystem'. Tudo sob o prefixo (HTML, _next/*,
     // public/*) é encaminhado para o deploy de produção do bicofino-ds.
+    // ATENÇÃO: o domínio prod do projeto é bicofino-ds-umber.vercel.app —
+    // bicofino-ds.vercel.app (sem sufixo) pertence a OUTRO projeto (conta pessoal).
     return [
-      { source: '/brandsystem', destination: 'https://bicofino-ds.vercel.app/brandsystem' },
-      { source: '/brandsystem/:path*', destination: 'https://bicofino-ds.vercel.app/brandsystem/:path*' },
+      { source: '/brandsystem', destination: 'https://bicofino-ds-umber.vercel.app/brandsystem' },
+      { source: '/brandsystem/:path*', destination: 'https://bicofino-ds-umber.vercel.app/brandsystem/:path*' },
     ]
   },
   async redirects() {
