@@ -13,6 +13,9 @@ import { Chrome } from '@/components/Chrome'
 import { ForceGraph } from '@/components/ForceGraph'
 import { PersonPanel } from '@/components/PersonPanel'
 
+/* basePath '/la-rete': fetch e <img> crus não ganham o prefixo automático do Next */
+const BASE = '/la-rete'
+
 interface Reading {
   id: string
   input: string
@@ -68,7 +71,7 @@ export default function ConsiglierePage() {
         const form = new FormData()
         form.append('file', file)
         form.append('note', raw)
-        const res = await fetch('/api/consigliere', { method: 'POST', body: form })
+        const res = await fetch(`${BASE}/api/consigliere`, { method: 'POST', body: form })
         const data = await res.json()
         if (!res.ok) error = data.error
         else {
@@ -77,7 +80,7 @@ export default function ConsiglierePage() {
         }
       } else {
         const body = isLink ? { url: raw } : { text: raw }
-        const res = await fetch('/api/consigliere', {
+        const res = await fetch(`${BASE}/api/consigliere`, {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
           body: JSON.stringify(body),
@@ -267,7 +270,7 @@ export default function ConsiglierePage() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 className="lr-consigliere-id__photo"
-                src="/avatars/consigliere.jpg"
+                src={`${BASE}/avatars/consigliere.jpg`}
                 alt="O Consigliere"
                 width={44}
                 height={44}

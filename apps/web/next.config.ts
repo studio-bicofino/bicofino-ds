@@ -31,6 +31,11 @@ const nextConfig: NextConfig = {
       // próprios (apps/produtos), que roda com basePath '/produtos'.
       { source: '/produtos', destination: 'https://produtos-bicofino.vercel.app/produtos' },
       { source: '/produtos/:path*', destination: 'https://produtos-bicofino.vercel.app/produtos/:path*' },
+      // Multi-zone: bicofino.com/la-rete serve o app de matchmaking da Casa Nostra
+      // (apps/la-rete), que roda com basePath '/la-rete'. la-rete.vercel.app é
+      // alias do projeto la-rete no team studio-bicofinos-projects.
+      { source: '/la-rete', destination: 'https://la-rete.vercel.app/la-rete' },
+      { source: '/la-rete/:path*', destination: 'https://la-rete.vercel.app/la-rete/:path*' },
     ]
   },
   async redirects() {

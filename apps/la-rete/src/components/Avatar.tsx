@@ -58,6 +58,11 @@ export function avatarFileOf(personId: string): string {
 /** todos os retratos, para preload (primeiro hover sem flash de carregamento) */
 export const AVATAR_FILES = [...new Set(Object.values(FILE_BY_PERSON))]
 
+/* basePath '/la-rete': <img>/<image>/Image() crus não ganham o prefixo do Next */
+const BASE = '/la-rete'
+/** URL de um retrato sob o basePath — usar em vez de `/avatars/...` cru */
+export const avatarUrl = (file: string) => `${BASE}/avatars/${file}`
+
 interface AvatarProps {
   personId: string
   size?: number
@@ -69,7 +74,7 @@ export function Avatar({ personId, size = 64 }: AvatarProps) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={`/avatars/${avatarFileOf(personId)}`}
+      src={avatarUrl(avatarFileOf(personId))}
       alt="Foto de mockup"
       width={size}
       height={size}

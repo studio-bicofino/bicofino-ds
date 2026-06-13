@@ -13,7 +13,7 @@ import {
   type SimulationLinkDatum,
 } from 'd3-force'
 import type { Edge, Person } from '@/lib/data/types'
-import { AVATAR_FILES, avatarFileOf } from './Avatar'
+import { AVATAR_FILES, avatarFileOf, avatarUrl } from './Avatar'
 
 interface SimNode extends SimulationNodeDatum {
   id: string
@@ -90,7 +90,7 @@ export function ForceGraph({
   useEffect(() => {
     for (const f of AVATAR_FILES) {
       const img = new Image()
-      img.src = `/avatars/${f}`
+      img.src = avatarUrl(f)
     }
   }, [])
 
@@ -362,7 +362,7 @@ export function ForceGraph({
                     <g className="lr-node__photo">
                       <circle className="lr-node__photo-ring" r={23} />
                       <image
-                        href={`/avatars/${avatarFileOf(p.id)}`}
+                        href={avatarUrl(avatarFileOf(p.id))}
                         x={-21}
                         y={-21}
                         width={42}
