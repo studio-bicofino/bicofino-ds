@@ -4,6 +4,16 @@
 
 ---
 
+## DEPLOY PENDENTE RESOLVIDO — 2026-06-13
+
+O deploy que tinha ficado pendente em 12/06 (limite de 100 deploys/dia do team Free) foi **FEITO em 13/06** quando a janela resetou. Um único deploy cobriu tudo que estava na main até `10790ef`: favicon (C Gotham sobre verde), Onda 18 (Sócio nº auto-sugerido + unicidade, hover, sidebar limpa, La Rete), inserção ordenada por Sócio nº + hover nos pills, e toast de desfazer persistente.
+
+- Deploy de produção `dpl_G586SZrdenRo9QhRtuZhF5t4kgNe` (READY, build 25s), via worktree limpo de `main` conforme procedimento abaixo.
+- Smoke test 200 em: `casa-nostra-studio-bicofinos-projects.vercel.app/casa-nostra/membros` (canônico empresa), `bicofino.com/casa-nostra/membros` (rewrite multi-zone) e `icon.svg` (favicon).
+- Login segue OFF por decisão (bypass ativo + noindex,nofollow + fora do sitemap) — inalterado.
+
+---
+
 ## FECHAMENTO DA SESSÃO 2026-06-10 — Ondas 12-15 EM PROD, Fabio aprovou
 
 **Estado ao encerrar:** tudo commitado e pushado (HEAD da sessão `1ba5c2a`), deployado e smoke-testado. Migrations 0006-0009 todas APLICADAS no SQL Editor. Banco com 3 membros reais cadastrados pelo Fabio (família Brancatelli: Fabio, Salvatore, Luigi — Jardim Europa/SP), dados de endereço já limpos (bairro no campo certo, nada preso no Complemento — verificado via REST).
