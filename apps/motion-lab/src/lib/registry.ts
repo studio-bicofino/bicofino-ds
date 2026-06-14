@@ -129,6 +129,61 @@ export const EXPERIMENTS: Experiment[] = [
     status: 'rascunho',
     reference: 'card-jogos-motion',
   },
+  {
+    slug: '12-orbital-figure',
+    index: '12',
+    title: 'Câmera Orbital + Figura 3D',
+    summary:
+      'A câmera gira sozinha (e ao arrasto) revelando uma figura 3D em wireframe — o gesto-assinatura do Hubtown trazido pro nosso WebGL: forma técnica, um único nó vibrante.',
+    tags: ['3d', 'webgl', 'câmera'],
+    libs: ['three', 'OrbitControls'],
+    status: 'rascunho',
+    reference: 'hubtown.co.in',
+  },
+  {
+    slug: '13-dolly-zoom',
+    index: '13',
+    title: 'Dolly — Aproximação no Scroll',
+    summary:
+      'Um corredor de anéis recuando no -Z; o scroll dá dolly na câmera pra dentro da profundidade, com névoa e dolly-zoom (vertigo) opcional. A "aproximação" do Hubtown.',
+    tags: ['3d', 'scroll', 'zoom'],
+    libs: ['three', 'gsap', 'ScrollTrigger'],
+    status: 'rascunho',
+    reference: 'hubtown.co.in',
+  },
+  {
+    slug: '14-particle-field',
+    index: '14',
+    title: 'Campo de Partículas',
+    summary:
+      'Milhares de partículas à deriva lenta em 3D, respondendo ao mouse com inércia — poeira que respira. O organismo M-01 virando campo de pontos WebGL.',
+    tags: ['3d', 'webgl', 'partículas', 'ambient'],
+    libs: ['three', 'Points'],
+    status: 'rascunho',
+    reference: 'hubtown.co.in',
+  },
+  {
+    slug: '15-depth-parallax',
+    index: '15',
+    title: 'Parallax de Profundidade 3D',
+    summary:
+      'Paralaxe de câmera de verdade: camadas de grafismo técnico em profundidades reais (Z), cada uma se movendo no seu ritmo pela perspectiva. O irmão 3D do EXP-09.',
+    tags: ['3d', 'cursor', 'parallax'],
+    libs: ['three'],
+    status: 'rascunho',
+    reference: 'hubtown.co.in',
+  },
+  {
+    slug: '16-cinematic-entry',
+    index: '16',
+    title: 'Entrada Cinematográfica',
+    summary:
+      'O contador 000%→100% que carrega e então revela a cena com um movimento de câmera — a entrada-assinatura do Hubtown ("ready to explore"), replayável pelo tuner.',
+    tags: ['3d', 'entrada', 'loader'],
+    libs: ['three', 'gsap'],
+    status: 'rascunho',
+    reference: 'hubtown.co.in',
+  },
 ]
 
 export function getExperiment(slug: string): Experiment | undefined {

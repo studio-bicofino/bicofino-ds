@@ -1,6 +1,6 @@
 # HANDOFF — Bicofino Motion Lab
 
-> Atualizado: 2026-06-09 · Status: **v0.1 em prod, aguardando sessão de escolha**
+> Atualizado: 2026-06-13 · Status: **v0.2 — leva 3D/WebGL (Three.js) adicionada; aguardando sessão de escolha**
 
 ## O que é
 
@@ -51,6 +51,39 @@ Ajustes do EXP-11 após 1ª rodada de feedback (09/06): raio do catavento fecha 
 (phones se tocam no mínimo), cascata alinhada (sem rotação alternada nem escadinha),
 vídeo em `object-fit: contain` (arte 9:16 inteira na tela 9:19.2, faixas naturalmente
 pretas), Jean removido (6 phones; card-05.mp4 fora do repo).
+
+## A leva 3D / WebGL — EXP 12–16 (13/06, ref. hubtown.co.in)
+
+Varredura do **hubtown.co.in** + **/map** (Nuxt + **OGL** + **Theatre.js** + d3): tudo o que
+aquele site faz — aproximação, zoom-in, câmera orbitando figura 3D, partículas, parallax de
+profundidade, entrada com loader 0→100% — é **WebGL/3D**. O lab até então era 100%
+GSAP/Lenis/SVG, sem uma linha de 3D. Esse era o vão. Introduzido **Three.js** (`three@0.171`
++ `@types/three`) — padrão da indústria, escolhido sobre OGL por manutenção/docs — orquestrado
+com GSAP onde faz sentido. Construídos em paralelo (workflow ultracode, 5 agentes).
+
+| EXP | Título | Libs | Técnica do Hubtown |
+|---|---|---|---|
+| 12 | Câmera Orbital + Figura 3D | three + OrbitControls | câmera girando, revela figura 3D (wireframe EdgesGeometry + 1 nó accent) |
+| 13 | Dolly — Aproximação no Scroll | three + ScrollTrigger | dolly da câmera por corredor de anéis no scroll; névoa power-black; toggle dolly-zoom (vertigo) |
+| 14 | Campo de Partículas | three (Points) | milhares de partículas à deriva + parallax de mouse; sprite redondo; ratio accent |
+| 15 | Parallax de Profundidade 3D | three | paralaxe de câmera REAL (perspectiva): camadas de grafismo em Z distintos — irmão 3D do EXP-09 |
+| 16 | Entrada Cinematográfica | three + gsap | loader 000%→100% → revela a cena com movimento de câmera (dolly/girar/subir); replayável pelo tuner |
+
+Regras 3D que valem como receita pra qualquer EXP WebGL futuro (todas seguidas nos 5):
+- **Cor por token em runtime**: nada de hex/rgb cru. Ler `getComputedStyle(documentElement)
+  .getPropertyValue('--current-accent'|…).trim()` → `new THREE.Color(...)`. **One-vibrant**:
+  só `--current-accent` é colorido; resto é steel/aluminium/line-on-dark sobre power-black.
+- **Renderer** `alpha:true` (deixa o power-black do body aparecer) + `THREE.Fog` na cor
+  power-black p/ profundidade. `setPixelRatio(min(dpr, 2))`.
+- **Tuner ao vivo**: valores lidos no rAF via `valuesRef` (slider não recria a cena);
+  **rebuild só em mudança estrutural** (count/figura) via dependência do `useEffect`.
+- **Lifecycle completo**: `cancelAnimationFrame` + `ResizeObserver.disconnect` +
+  `dispose()` de geometria/material/textura + `renderer.dispose()` + remove o canvas.
+- **`prefers-reduced-motion`**: renderiza UM frame estático, sem loop/scrub/autorotate.
+
+Verificação 13/06: `next build` ✓ (19 rotas, TS zerado), 5 rotas 200 no dev, sem hex cru,
+checklist de convenções verde nos 5. **Validação VISUAL no browser ainda pendente** (WebGL
+só roda client; build/SSR não exercita a cena) — entra na sessão de escolha.
 
 ## Como adicionar um experimento (receita de 2 passos)
 
